@@ -1,11 +1,10 @@
 {
   "name": "wColor",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "license": "MIT",
   "description": "Module in JavaScript providing convenient means for color conversion",
   "author": "Kostiantyn Wandalen <wtory.net@domainsbyproxy.com>",
-  "contributors":
-  [
+  "contributors": [
     {
       "name": "Kostiantyn Wandalen",
       "email": "wtory.net@domainsbyproxy.com>"
