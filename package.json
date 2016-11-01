@@ -1,6 +1,7 @@
 {
   "name": "wColor",
   "version": "0.3.0",
+  "license": "MIT",
   "description": "Module in JavaScript providing convenient means for color conversion",
   "author": "Kostiantyn Wandalen <wtory.net@domainsbyproxy.com>",
   "contributors":
@@ -14,7 +15,6 @@
       "email": "volodymyr.migdal@gmail.com"
     }
   ],
-  "license": "MIT",
   "main": "staging/amid/color/Color.s",
   "files": [
     "staging/abase",
@@ -22,7 +22,7 @@
   ],
   "directories": {
     "doc": "doc",
-    "main": "staging/amid/color/Color.s",
+    "main": "staging/amid/color/Color.s"
   },
   "scripts": {
     "test": "node ./staging/amid/z.test/Color.test.s",
