@@ -24,7 +24,7 @@ var Self = wTools;
 
 var colorByName = function( name,def )
 {
-  var o = this;
+  var o = this || {};
   if( Object.isPrototypeOf.call( Self,this ) )
   o = {};
 
@@ -40,7 +40,7 @@ var colorByName = function( name,def )
   name = name.toLowerCase();
   name = name.trim();
 
-  return _._colorByName( name,def,o.colorMap );
+  return _colorByName( name,def,o.colorMap );
 }
 
 colorByName.defaults =
@@ -60,20 +60,49 @@ var _colorByName = function( name,def,map )
 
   return result;
 }
+//
+
+var colorByBitmask = function colorByBitmask( src )
+{
+
+  _.assert( arguments.length === 1 );
+  _.assert( _.numberIs( src ) );
+
+  return _colorByBitmask( src );
+}
+
+//
+
+var _colorByBitmask = function _colorByBitmask( src )
+{
+
+  var result = [];
+
+  result[ 0 ] = ( ( src >> 16 ) & 0xff ) / 255;
+  result[ 1 ] = ( ( src >> 8 ) & 0xff ) / 255;
+  result[ 2 ] = ( ( src >> 0 ) & 0xff ) / 255;
+
+  return result;
+}
 
 //
 
 var colorFrom = function( name,def )
 {
-  var o = this;
-  if( Object.isPrototypeOf.call( Self,this ) )
-  o = {};
 
-  _.routineOptions( colorFrom,o );
+  var o = _.routineOptionsFromThis( colorFrom,this,Self );
   _.assert( arguments.length <= 2 );
 
-  name = name.toLowerCase();
-  name = name.trim();
+  if( _.strIs( name ) )
+  {
+    name = name.toLowerCase();
+    name = name.trim();
+  }
+
+  if( _.numberIs( name ) )
+  {
+    return _._colorByBitmask( name );
+  }
 
   var result = name;
 
@@ -183,6 +212,9 @@ var colorToHex = function( rgb, def )
 
 var hexToColor = function( hex )
 {
+
+  _.assert( arguments.length === 1 );
+  _.assert( _.strIs( hex ) );
 
   var shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
   hex = hex.replace( shorthandRegex, function( m, r, g, b )
@@ -542,6 +574,9 @@ var Proto =
   colorByName : colorByName,
   _colorByName : _colorByName,
 
+  colorByBitmask : colorByBitmask,
+  _colorByBitmask : _colorByBitmask,
+
   colorFrom : colorFrom,
 
   colorToHex : colorToHex,
@@ -568,7 +603,7 @@ var Proto =
 
   ColorMap : ColorMap,
 
-};
+}
 
 _.mapExtend( wTools,Proto );
 

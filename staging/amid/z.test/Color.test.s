@@ -33,9 +33,17 @@ var Self = {};
 var simplest = function( test )
 {
 
-  test.description = 'simple1';
+  test.description = 'colorFrom bitmask';
+  var color = 0xff0000;
+  var got = _.colorFrom( color );
+  var expected = [ 1,0,0 ];
+  test.identical( got,expected );
 
-  test.identical( 1,1 );
+  test.description = 'colorFrom name';
+  var color = 'red';
+  var got = _.colorFrom( color );
+  var expected = [ 1,0,0 ];
+  test.identical( got,expected );
 
 }
 
