@@ -2,6 +2,21 @@
 
 'use strict';
 
+if( typeof module !== 'undefined' )
+{
+
+  if( typeof wBase === 'undefined' )
+  try
+  {
+    require( '../wTools.s' );
+  }
+  catch( err )
+  {
+    require( 'wTools' );
+  }
+
+}
+
 var _ = wTools;
 var Self = wTools;
 
