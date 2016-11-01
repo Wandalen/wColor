@@ -16,7 +16,7 @@
   ],
   "main": "staging/amid/color/Color.s",
   "files": [
-    "staging/abase",
+    "staging/amid/color",
     "production"
   ],
   "directories": {
