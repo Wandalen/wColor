@@ -1,0 +1,55 @@
+{
+  "name": "wColor",
+  "version": "0.3.0",
+  "description": "Module in JavaScript providing convenient means for color conversion",
+  "author": "Kostiantyn Wandalen <wtory.net@domainsbyproxy.com>",
+  "contributors":
+  [
+    {
+      "name": "Kostiantyn Wandalen",
+      "email": "wtory.net@domainsbyproxy.com>"
+    },
+    {
+      "name": "Volodymyr M.",
+      "email": "volodymyr.migdal@gmail.com"
+    }
+  ],
+  "license": "MIT",
+  "main": "staging/amid/color/Color.s",
+  "files": [
+    "staging/abase",
+    "production"
+  ],
+  "directories": {
+    "doc": "doc",
+    "main": "staging/amid/color/Color.s",
+  },
+  "scripts": {
+    "test": "node ./staging/amid/z.test/Color.test.s",
+    "make_doc": "./doc.sh"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Wandalen/wColor.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Wandalen/wColor/issues"
+  },
+  "dependencies": {
+    "wTools": ""
+  },
+  "devDependencies": {
+    "wTesting": ""
+  },
+  "keywords": [
+    "wTools",
+    "color",
+    "colors",
+    "colorful",
+    "color conversion",
+    "convert color",
+    "rgb",
+    "rgba",
+    "hsl"
+  ]
+}
