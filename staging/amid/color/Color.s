@@ -148,7 +148,7 @@ var colorFrom = function( name,def )
   /* */
 
   if( _.strIs( name ) && result === null )
-  result = _.hexToColor( result );
+  result = _.hexToColor( name );
 
   if( result )
   return result;
@@ -242,7 +242,7 @@ var colorToRgbHtml = function( src )
 {
   var result = '';
 
-  _.assert( _.arrayIs( src ) );
+  // _.assert( _.arrayIs( src ) );
   _.assert( arguments.length === 1 );
 
   if( _.strIs( src ) )
@@ -559,6 +559,7 @@ var ColorMap =
   'red'         : [ 1.0,0.0,0.0 ],
   'green'       : [ 0.0,1.0,0.0 ],
   'blue'        : [ 0.0,0.0,1.0 ],
+  'yellow'      : [ 1.0,1.0,0.0 ],
 
 }
 
