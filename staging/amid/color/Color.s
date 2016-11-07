@@ -242,7 +242,7 @@ var colorToRgbHtml = function( src )
 {
   var result = '';
 
-  _.assert( _.arrayIs( src ) );
+  _.assert( _.arrayIs( src ) || _.objectIs( src ) );
   _.assert( arguments.length === 1 );
 
   if( _.strIs( src ) )
@@ -272,7 +272,7 @@ var colorToRgbaHtml = function( src )
 {
   var result = '';
 
-  _.assert( _.arrayIs( src ) );
+  _.assert( _.arrayIs( src ) || _.objectIs( src ) );
   _.assert( arguments.length === 1 );
 
   if( _.strIs( src ) )
