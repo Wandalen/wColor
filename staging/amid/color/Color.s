@@ -243,7 +243,7 @@ var colorToRgbHtml = function( src )
   var result = '';
 
   _.assert( _.strIs( src ) || _.objectIs( src ) || _.arrayIs( src ) );
-  _.assert( arguments.length === 1 );\
+  _.assert( arguments.length === 1 );
 
 
   if( _.strIs( src ) )
