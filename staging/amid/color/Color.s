@@ -607,6 +607,7 @@ var Proto =
 
 }
 
-_.mapExtend( wTools,Proto );
+_.mapSupplement( wTools,Proto );
+_.mapSupplement( wTools.ColorMap,ColorMap );
 
 })();

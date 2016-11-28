@@ -1,7 +1,7 @@
 
 if( typeof module !== 'undefined' )
-require( '../staging/amid/color/Color.s' );
-//require( 'wColor' );
+require( 'wColor' );
+//require( '../staging/amid/color/Color.s' );
 
 var _ = wTools;
 
