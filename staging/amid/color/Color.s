@@ -165,6 +165,60 @@ colorFrom.defaults =
 
 //
 
+var colorNearest = function( color )
+{
+  _.assert( arguments.length === 1 );
+  _.assert( _.strIs( color ) || _.arrayIs( color ) );
+
+  var self = this;
+
+  if ( _.strIs( color ) )
+  {
+    color = _.hexToColor( color );
+    if( !color )
+    return false;
+  }
+  else if( _.arrayIs( color ) )
+  {
+    for( var r = 0 ; r < color.length ; r++ )
+    {
+      color[ r ] = Number( color[ r ] );
+      if( color[ r ] > 1  || color[ r ] < 0 )
+      color[ r ] = 0;
+    }
+  }
+
+  var distance = function( c1, c2 )
+  {
+    return Math.sqrt
+    (
+      Math.pow( c1[ 0 ] - c2[ 0 ], 2 ) +
+      Math.pow( c1[ 1 ] - c2[ 1 ], 2 ) +
+      Math.pow( c1[ 2 ] - c2[ 2 ], 2 )
+    );
+  }
+
+  var names = Object.keys( self.ColorMap );
+  var nearest = names[ 0 ];
+  var diff = distance( self.ColorMap[ names[ 0 ] ], color );
+
+  for( var i = 1; i <= names.length - 1; i++ )
+  {
+    var d = distance( self.ColorMap[ names[ i ] ], color );
+    if( d < diff )
+    {
+      diff = d; nearest = names[ i ];
+    }
+
+    if( !d )
+    return names[ i ];
+  }
+
+  return nearest;
+}
+
+//
+
 var colorToHex = function( rgb, def )
 {
 
@@ -611,6 +665,8 @@ var Proto =
   _colorByBitmask : _colorByBitmask,
 
   colorFrom : colorFrom,
+  colorNearest : colorNearest,
+
 
   colorToHex : colorToHex,
   hexToColor : hexToColor,
