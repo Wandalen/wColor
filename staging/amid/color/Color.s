@@ -180,22 +180,28 @@ var colorNearest = function( color )
   }
   else if( _.arrayIs( color ) )
   {
-    for( var r = 0 ; r < color.length ; r++ )
+    if( !color.length )
+    return false;
+
+    for( var r = 0 ; r < 3 ; r++ )
     {
       color[ r ] = Number( color[ r ] );
       if( color[ r ] > 1  || color[ r ] < 0 )
       color[ r ] = 0;
     }
+
+    if( !color[ 3 ] || color[ 3 ] > 1  || color[ 3 ] < 0 )
+    color[ 3 ] = 1;
   }
 
   var distance = function( c1, c2 )
   {
-    return Math.sqrt
-    (
-      Math.pow( c1[ 0 ] - c2[ 0 ], 2 ) +
-      Math.pow( c1[ 1 ] - c2[ 1 ], 2 ) +
-      Math.pow( c1[ 2 ] - c2[ 2 ], 2 )
-    );
+    var a1 = c1[ 3 ] ? c1[ 3 ] : 1;
+    var a2 = c2[ 3 ] ? c2[ 3 ] : 1;
+
+    return Math.max( Math.pow( c1[ 0 ] - c2[ 0 ], 2 ), Math.pow( c1[ 0 ] - c2[ 0 ] - a1 + a2, 2 ) ) +
+           Math.max( Math.pow( c1[ 1 ] - c2[ 1 ], 2 ), Math.pow( c1[ 1 ] - c2[ 1 ] - a1 + a2, 2 ) ) +
+           Math.max( Math.pow( c1[ 2 ] - c2[ 2 ], 2 ), Math.pow( c1[ 2 ] - c2[ 2 ] - a1 + a2, 2 ) )
   }
 
   var names = Object.keys( self.ColorMap );
@@ -616,7 +622,7 @@ var ColorMap =
   'navy'            : [ 0.0,0.0,0.5 ],
   'olive'           : [ 0.5,0.5,0.0 ],
   'teal'            : [ 0.0,0.5,0.5 ],
-  'bright green'      : [ 0.5,1.0,0.0 ],
+  'bright green'    : [ 0.5,1.0,0.0 ],
   'spring green'    : [ 0.0,1.0,0.5 ],
   'pink'            : [ 1.0,0.0,0.5 ],
   'dark orange'     : [ 1.0,0.5,0.0 ],
