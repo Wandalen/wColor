@@ -18,21 +18,18 @@ if( typeof module !== 'undefined' )
 }
 
 var _ = wTools;
-var Self = wTools;
 
 //
 
-var colorByName = function( name,def )
+var colorByName = function colorByName( name,def )
 {
-  var o = this || {};
-  if( Object.isPrototypeOf.call( Self,this ) )
-  o = {};
+  var o = _.routineOptionsFromThis( colorByName,this,Self );
 
   _.routineOptions( colorByName,o );
 
   var result;
-  if( o.colorMap === undefined )
-  o.colorMap = _.ColorMap;
+  if( !o.colorMap )
+  o.colorMap = Self.ColorMap;
 
   _.assert( arguments.length <= 2 );
   _.assert( _.strIs( name ) );
@@ -52,7 +49,6 @@ colorByName.defaults =
 
 var _colorByName = function( name,def,map )
 {
-
   var result = map[ name ];
 
   if( !result )
@@ -75,7 +71,6 @@ var colorByBitmask = function colorByBitmask( src )
 
 var _colorByBitmask = function _colorByBitmask( src )
 {
-
   var result = [];
 
   result[ 0 ] = ( ( src >> 16 ) & 0xff ) / 255;
@@ -87,81 +82,155 @@ var _colorByBitmask = function _colorByBitmask( src )
 
 //
 
-var colorFrom = function( name,def )
+var _rgbaFromNotName = function _rgbaFromNotName( src )
 {
 
-  var o = _.routineOptionsFromThis( colorFrom,this,Self );
-  _.assert( arguments.length <= 2 );
+  _.assert( arguments.length === 1 );
+  _.assert( _.numberIs( src ) || _.arrayIs( src ) || _.mapIs( src ) );
 
-  if( _.strIs( name ) )
+  if( _.mapIs( src ) )
   {
-    name = name.toLowerCase();
-    name = name.trim();
+    var result = [];
+    result[ 0 ] = src.r === undefined ? 1 : src.r;
+    result[ 1 ] = src.g === undefined ? 1 : src.g;
+    result[ 2 ] = src.b === undefined ? 1 : src.b;
+    result[ 3 ] = src.a === undefined ? 1 : src.a;
+    return result;
   }
 
-  if( _.numberIs( name ) )
-  {
-    return _._colorByBitmask( name );
-  }
+  if( _.numberIs( src ) )
+  return _colorByBitmask( src );
 
-  var result = name;
+  var result = [];
 
   /* */
 
-  if( _.strIs( name ) )
-  {
+  for( var r = 0 ; r < src.length ; r++ )
+  result[ r ] = Number( src[ r ] );
 
-    if( name.indexOf( ',' ) !== -1 )
+  if( result.length < 4 )
+  result[ 4 ] = 1;
+
+  /* */
+
+  return result;
+}
+
+//
+
+var rgbaFrom = function rgbaFrom( src )
+{
+  var result;
+
+  _.assert( arguments.length === 1 );
+
+  if( _.numberIs( src ) || _.arrayIs( src ) || _.mapIs( src ) )
+  return _rgbaFromNotName( src );
+
+  /* */
+
+  if( _.strIs( src ) )
+  result = colorByName.call( this,src );
+
+  if( result )
+  {
+    if( result.length !== 4 )
     {
-      result = name.split( ',' );
+      _.arrayGrow( result,0,4 );
+      result[ 3 ] = 1;
     }
-    else if( name.indexOf( ' ' ) !== -1 )
-    {
-      result = name.split( ' ' );
-    }
-
-  }
-
-  /* */
-
-  if( _.arrayIs( result ) )
-  if( isNaN( result[ 0 ] ) )
-  result = name;
-
-  /* */
-
-  if( _.arrayIs( result ) )
-  {
-    for( var r = 0 ; r < result.length ; r++ )
-    result[ r ] = Number( result[ r ] );
     return result;
   }
 
   /* */
 
-  if( _.strIs( result ) )
-  result = _._colorByName( result,null,o.colorMap || _.ColorMap );
+  if( _.strIs( src ) )
+  result = _.hexToColor( src );
 
   if( result )
-  return result;
+  {
+    if( result.length !== 4 )
+    {
+      debugger;
+      _.arrayGrow( result,0,4 );
+      result[ 3 ] = 1;
+    }
+  }
 
   /* */
 
-  if( _.strIs( name ) && result === null )
-  result = _.hexToColor( name );
-
-  if( result )
-  return result;
-
-  /* */
-
-  return def;
+  _.assert( 0,'unknown color',src );
 }
 
-colorFrom.defaults =
+rgbaFrom.defaults =
 {
   colorMap : null,
 }
+
+//
+
+var rgbFrom = function rgbFrom( src )
+{
+  _.assert( arguments.length === 1 );
+
+  var result = rgbaFrom.call( this,src );
+
+  return _.arraySlice( result,0,3 );
+}
+
+rgbFrom.defaults =
+{
+}
+
+rgbFrom.defaults.__proto__ = rgbaFrom.defaults;
+
+//
+
+var rgbaFromTry = function rgbaFromTry( src,def )
+{
+
+  _.assert( arguments.length === 2 );
+
+  try
+  {
+    return rgbaFrom.call( this,src );
+  }
+  catch( err )
+  {
+    return def;
+  }
+
+}
+
+rgbaFromTry.defaults =
+{
+}
+
+rgbaFromTry.defaults.__proto__ = rgbaFrom.defaults;
+
+//
+
+var rgbFromTry = function rgbFromTry( src,def )
+{
+
+  _.assert( arguments.length === 2 );
+
+  try
+  {
+    return rgbFrom.call( this,src );
+  }
+  catch( err )
+  {
+    return def;
+  }
+
+}
+
+rgbFromTry.defaults =
+{
+}
+
+rgbFromTry.defaults.__proto__ = rgbaFrom.defaults;
 
 //
 
@@ -306,6 +375,64 @@ var colorToRgbaHtml = function( src )
   else result = src;
 
   return result;
+}
+
+//
+
+var mulSaturation = function( rgb,factor )
+{
+  _.assert( arguments.length === 2 );
+  _.assert( factor >= 0 );
+
+  var hsl = rgbToHsl( rgb );
+
+  hsl[ 1 ] *= factor;
+
+  var result = hslToRgb( hsl );
+
+  if( rgb.length === 4 )
+  result[ 3 ] = rgb[ 3 ];
+
+  return result;
+}
+
+//
+
+var brighter = function( rgb,factor )
+{
+  if( factor === undefined )
+  factor = 0.1;
+
+  _.assert( arguments.length === 1 || arguments.length === 2 );
+  _.assert( factor >= 0 );
+
+  return mulSaturation( rgb,1 + factor );
+}
+
+//
+
+/*
+  ( 1+factor ) * c2 = c1
+  ( 1-efactor ) * c1 = c2
+
+  ( 1-efactor ) * ( 1+factor ) = 1
+  1+factor-efactor-efactor*factor = 1
+  factor-efactor-efactor*factor = 0
+  -efactor( 1+factor ) = factor
+  efactor = - factor / ( 1+factor )
+*/
+
+var paler = function( rgb,factor )
+{
+  if( factor === undefined )
+  factor = 0.1;
+
+  _.assert( arguments.length === 1 || arguments.length === 2 );
+  _.assert( 0 <= factor && factor <= 1 );
+
+  var efactor = factor / ( 1+factor );
+
+  return mulSaturation( rgb,1 - efactor );
 }
 
 // --
@@ -498,7 +625,7 @@ var hslToRgb = function( hsl,result )
 
 //
 
-var rgbToHsl = function( rgb,result )
+var rgbToHsl = function rgbToHsl( rgb,result )
 {
   var result = result || [];
   var hue, saturation, lightness;
@@ -547,6 +674,27 @@ var rgbToHsl = function( rgb,result )
 }
 
 // --
+// random
+// --
+
+var randomRgbWithSl = function randomRgbWithSl( s,l )
+{
+
+  _.assert( arguments.length <= 2 );
+
+  if( s === undefined )
+  s = 1.0;
+  if( l === undefined )
+  l = 0.5;
+
+  //this.setHSL( Math.random(), s, l );
+
+  var rgb = hslToRgb([ Math.random(), s, l ]);
+
+  return rgb;
+}
+
+// --
 // var
 // --
 
@@ -568,7 +716,7 @@ var ColorMap =
 // prototype
 // --
 
-var Proto =
+var Self =
 {
 
   //
@@ -579,7 +727,11 @@ var Proto =
   colorByBitmask : colorByBitmask,
   _colorByBitmask : _colorByBitmask,
 
-  colorFrom : colorFrom,
+  rgbaFrom : rgbaFrom,
+  rgbFrom : rgbFrom,
+
+  rgbaFromTry : rgbaFromTry,
+  rgbFromTry : rgbFromTry,
 
   colorToHex : colorToHex,
   hexToColor : hexToColor,
@@ -587,6 +739,9 @@ var Proto =
   colorToRgbHtml : colorToRgbHtml,
   colorToRgbaHtml : colorToRgbaHtml,
 
+  mulSaturation : mulSaturation,
+  brighter : brighter,
+  paler : paler,
 
   // int
 
@@ -601,13 +756,26 @@ var Proto =
   rgbToHsl : rgbToHsl,
 
 
+  // random
+
+  random : randomRgbWithSl,
+  randomRgbWithSl : randomRgbWithSl,
+
+
   // var
 
   ColorMap : ColorMap,
 
 }
 
-_.mapSupplement( wTools,Proto );
-_.mapSupplement( wTools.ColorMap,ColorMap );
+if( !wTools.color )
+{
+  wTools.color = Self;
+}
+else
+{
+  _.mapSupplement( wTools.color,Self );
+  _.mapSupplement( wTools.color.ColorMap,ColorMap );
+}
 
 })();
