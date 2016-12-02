@@ -33,95 +33,102 @@ var Self = {};
 var simplest = function( test )
 {
 
-  test.description = 'colorFrom bitmask';
+  test.description = 'colorNameNearest bitmask';
   var color = 0xff0000;
-  var got = _.colorFrom( color );
-  var expected = [ 1,0,0 ];
+  var got = _.color.rgbaFrom( color );
+  var expected = [ 1,0,0,1 ];
   test.identical( got,expected );
 
-  test.description = 'colorFrom name';
+  test.description = 'colorNameNearest name';
   var color = 'red';
-  var got = _.colorFrom( color );
-  var expected = [ 1,0,0 ];
+  var got = _.color.rgbaFrom( color );
+  var expected = [ 1,0,0,1 ];
   test.identical( got,expected );
 
 }
 
 //
 
-var rgbaNearest = function( test )
+var colorNameNearest = function( test )
 {
   test.description = 'white1';
   var color = [ 1, 1, 1 ];
-  var got = _.rgbaNearest( color );
+  var got = _.color.colorNameNearest( color );
   var expected = 'white';
   test.identical( got,expected );
 
   test.description = 'white2';
   var color = 'ffffff';
-  var got = _.rgbaNearest( color );
+  var got = _.color.colorNameNearest( color );
   var expected = 'white';
   test.identical( got,expected );
 
   test.description = 'rgba a1 ';
   var color =  [ 1, 1, 1, 0.3 ];
-  var got = _.rgbaNearest( color );
+  var got = _.color.colorNameNearest( color );
   var expected = 'transparent';
   test.identical( got,expected );
 
   test.description = 'rgba a2';
   var color =  [ 1, 1, 1, 0.9 ];
-  var got = _.rgbaNearest( color );
+  var got = _.color.colorNameNearest( color );
   var expected = 'white';
   test.identical( got,expected );
 
   test.description = 'rgb a1';
   var color =  [ 0.5, 0, 0.1 ];
-  var got = _.rgbaNearest( color );
+  var got = _.color.colorNameNearest( color );
   var expected = 'maroon';
   test.identical( got,expected );
 
   test.description = 'rgb a2';
   var color =  [ 255, 0, 1 ];
-  var got = _.rgbaNearest( color );
+  var got = _.color.colorNameNearest( color );
   var expected = 'blue';
   test.identical( got,expected );
 
   test.description = 'rgb a3';
   var color =  [ 0.2, 0, 0.3 ];
-  var got = _.rgbaNearest( color );
+  var got = _.color.colorNameNearest( color );
   var expected = 'olive green';
   test.identical( got,expected );
 
   test.description = 'rgb a4';
   var color =  [ 0.3, 0, 0.3 ];
-  var got = _.rgbaNearest( color );
+  var got = _.color.colorNameNearest( color );
   var expected = 'purple';
   test.identical( got,expected );
 
   test.description = 'hex a1';
-  var color =  'aaaaaa';
-  var got = _.rgbaNearest( color );
+  var color = 'aaaaaa';
+  var got = _.color.colorNameNearest( color );
   var expected = 'silver';
   test.identical( got,expected );
 
   test.description = 'empty string';
-  var color =  '';
-  var got = _.rgbaNearest( color );
-  var expected =  false;
+  var color = '';
+  var got = _.color.colorNameNearest( color );
+  var expected = undefined;
   test.identical( got,expected );
 
   test.description = 'empty array';
-  var color =  [];
-  var got = _.rgbaNearest( color );
-  var expected =  false;
+  var color = [];
+  var got = _.color.colorNameNearest( color );
+  var expected = undefined;
   test.identical( got,expected );
 
   test.description = 'no args';
   test.shouldThrowError( function()
   {
-    _.rgbaNearest(  );
-  })
+    _.color.colorNameNearest();
+  });
+
+  test.description = 'no args';
+  test.shouldThrowError( function()
+  {
+    _.color.colorNameNearest();
+  });
+
 }
 
 //
@@ -135,7 +142,7 @@ var Proto =
   {
 
     simplest : simplest,
-    rgbaNearest : rgbaNearest
+    colorNameNearest : colorNameNearest
 
   },
 

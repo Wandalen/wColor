@@ -58,18 +58,18 @@ var _colorByName = function( name,def,map )
 }
 //
 
-var colorByBitmask = function colorByBitmask( src )
+var rgbByBitmask = function rgbByBitmask( src )
 {
 
   _.assert( arguments.length === 1 );
   _.assert( _.numberIs( src ) );
 
-  return _colorByBitmask( src );
+  return _rgbByBitmask( src );
 }
 
 //
 
-var _colorByBitmask = function _colorByBitmask( src )
+var _rgbByBitmask = function _rgbByBitmask( src )
 {
   var result = [];
 
@@ -99,7 +99,10 @@ var _rgbaFromNotName = function _rgbaFromNotName( src )
   }
 
   if( _.numberIs( src ) )
-  return _colorByBitmask( src );
+  {
+    result = _rgbByBitmask( src );
+    return _.arrayGrow( result,0,4,1 );
+  }
 
   var result = [];
 
@@ -109,7 +112,7 @@ var _rgbaFromNotName = function _rgbaFromNotName( src )
   result[ r ] = Number( src[ r ] );
 
   if( result.length < 4 )
-  result[ 4 ] = 1;
+  result[ 3 ] = 1;
 
   /* */
 
@@ -145,7 +148,7 @@ var rgbaFrom = function rgbaFrom( src )
   /* */
 
   if( _.strIs( src ) )
-  result = _.hexToColor( src );
+  result = _.color.hexToColor( src );
 
   if( result )
   {
@@ -236,6 +239,8 @@ rgbFromTry.defaults.__proto__ = rgbaFrom.defaults;
 
 var _colorNameNearest = function _colorNameNearest( color )
 {
+  var self = this;
+
   _.assert( arguments.length === 1 );
 
   if( _.strIs( color ) )
@@ -270,8 +275,10 @@ var _colorNameNearest = function _colorNameNearest( color )
     return  Math.pow( c1[ 0 ] - c2[ 0 ], 2 ) +
             Math.pow( c1[ 1 ] - c2[ 1 ], 2 ) +
             Math.pow( c1[ 2 ] - c2[ 2 ], 2 ) +
-            Math.pow( c1[ 3 ] - c2[ 3 ], 2 ) +
+            Math.pow( c1[ 3 ] - c2[ 3 ], 2 );
   }
+
+  /* */
 
   var names = Object.keys( self.ColorMap );
   var nearest = names[ 0 ];
@@ -297,20 +304,26 @@ var _colorNameNearest = function _colorNameNearest( color )
 
 var colorNameNearest = function colorNameNearest( color )
 {
-  _.assert( arguments.length === 1 );
-
   var self = this;
+
+  _.assert( arguments.length === 1 );
 
   if ( _.strIs( color ) )
   {
-    var color2 = _.hexToColor( color );
+    var color2 = _.color.hexToColor( color );
     if( color2 )
     color = color2;
   }
 
-  var result = _colorNameNearest( color );
+  try
+  {
+    return self._colorNameNearest( color );
+  }
+  catch( err )
+  {
+    return;
+  }
 
-  return nearest;
 }
 
 //
@@ -836,8 +849,8 @@ var Self =
   colorByName : colorByName,
   _colorByName : _colorByName,
 
-  colorByBitmask : colorByBitmask,
-  _colorByBitmask : _colorByBitmask,
+  rgbByBitmask : rgbByBitmask,
+  _rgbByBitmask : _rgbByBitmask,
 
   _rgbaFromNotName : _rgbaFromNotName,
 
@@ -847,7 +860,7 @@ var Self =
   rgbaFromTry : rgbaFromTry,
   rgbFromTry : rgbFromTry,
 
-  colorNameNearest : colorNameNearest,
+  _colorNameNearest : _colorNameNearest,
   colorNameNearest : colorNameNearest,
 
   colorToHex : colorToHex,
