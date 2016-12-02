@@ -165,6 +165,66 @@ colorFrom.defaults =
 
 //
 
+var colorNearest = function( color )
+{
+  _.assert( arguments.length === 1 );
+  _.assert( _.strIs( color ) || _.arrayIs( color ) );
+
+  var self = this;
+
+  if ( _.strIs( color ) )
+  {
+    color = _.hexToColor( color );
+    if( !color )
+    return false;
+  }
+  else if( _.arrayIs( color ) )
+  {
+    if( !color.length )
+    return false;
+
+    for( var r = 0 ; r < 3 ; r++ )
+    {
+      color[ r ] = Number( color[ r ] );
+      if( color[ r ] > 1  || color[ r ] < 0 )
+      color[ r ] = 0;
+    }
+
+    if( !color[ 3 ] || color[ 3 ] > 1  || color[ 3 ] < 0 )
+    color[ 3 ] = 1;
+  }
+
+  var distance = function( c1, c2 )
+  {
+    var a1 = c1[ 3 ] ? c1[ 3 ] : 1;
+    var a2 = c2[ 3 ] ? c2[ 3 ] : 1;
+
+    return Math.max( Math.pow( c1[ 0 ] - c2[ 0 ], 2 ), Math.pow( c1[ 0 ] - c2[ 0 ] - a1 + a2, 2 ) ) +
+           Math.max( Math.pow( c1[ 1 ] - c2[ 1 ], 2 ), Math.pow( c1[ 1 ] - c2[ 1 ] - a1 + a2, 2 ) ) +
+           Math.max( Math.pow( c1[ 2 ] - c2[ 2 ], 2 ), Math.pow( c1[ 2 ] - c2[ 2 ] - a1 + a2, 2 ) )
+  }
+
+  var names = Object.keys( self.ColorMap );
+  var nearest = names[ 0 ];
+  var diff = distance( self.ColorMap[ names[ 0 ] ], color );
+
+  for( var i = 1; i <= names.length - 1; i++ )
+  {
+    var d = distance( self.ColorMap[ names[ i ] ], color );
+    if( d < diff )
+    {
+      diff = d; nearest = names[ i ];
+    }
+
+    if( !d )
+    return names[ i ];
+  }
+
+  return nearest;
+}
+
+//
+
 var colorToHex = function( rgb, def )
 {
 
@@ -555,42 +615,43 @@ var ColorMap =
 
   'invisible'       : [ 0.0,0.0,0.0,0.0 ],
   'transparent'     : [ 1.0,1.0,1.0,0.5 ],
-  'white'           : [ 1.0,1.0,1.0 ],
-  'black'           : [ 0.0,0.0,0.0 ],
-  'gray'            : [ 0.5,0.5,0.5 ],
-  'red'             : [ 1.0,0.0,0.0 ],
-  'green'           : [ 0.0,1.0,0.0 ],
-  'blue'            : [ 0.0,0.0,1.0 ],
-  'yellow'          : [ 1.0,1.0,0.0 ],
   'cyan'            : [ 0.0,1.0,1.0 ],
   'magenta'         : [ 1.0,0.0,1.0 ],
   'maroon'          : [ 0.5,0.0,0.0 ],
   'dark green'      : [ 0.0,0.5,0.0 ],
   'navy'            : [ 0.0,0.0,0.5 ],
   'olive'           : [ 0.5,0.5,0.0 ],
-  'purple'          : [ 0.5,0.0,0.5 ],
   'teal'            : [ 0.0,0.5,0.5 ],
-  'lime1'           : [ 0.5,1.0,0.0 ],
-  'lime2'           : [ 0.0,1.0,0.5 ],
-  'violet'          : [ 0.5,0.0,1.0 ],
+  'bright green'    : [ 0.5,1.0,0.0 ],
+  'spring green'    : [ 0.0,1.0,0.5 ],
   'pink'            : [ 1.0,0.0,0.5 ],
   'dark orange'     : [ 1.0,0.5,0.0 ],
   'azure'           : [ 0.0,0.5,1.0 ],
-   /**/
   'dark blue'       : [ 0.0,0.0,0.63 ],
-  'light blue'      : [ 0.68,0.85,0.9 ],
   'silver'          : [ 0.75,0.75,0.75 ],
-  'orange'          : [ 1.0,0.65,0.0 ],
-  'reddish orange'  : [ 0.95,0.23,0.07 ],
   'brown'           : [ 0.65,0.16,0.16 ],
-  'reddish brown'   : [ 0.5,0.1,0.05 ],
-  'yellowish brown' : [ 0.34,0.2,0.08 ],
+   /**/
+  'white'           : [ 1.0,1.0,1.0 ],
+  'black'           : [ 0.0,0.0,0.0 ],
+  'yellow'          : [ 1.0,1.0,0.0 ],
+  'purple'          : [ 0.5,0.0,0.5 ],
+  'orange'          : [ 1.0,0.65,0.0 ],
+  'light blue'      : [ 0.68,0.85,0.9 ],
+  'red'             : [ 1.0,0.0,0.0 ],
   'buff'            : [ 0.94,0.86,0.51 ],
+  'gray'            : [ 0.5,0.5,0.5 ],
+  'green'           : [ 0.0,1.0,0.0 ],
   'purplish pink'   : [ 0.96,0.46,0.56 ],
+  'blue'            : [ 0.0,0.0,1.0 ],
   'yellowish pink'  : [ 1.0,0.48,0.36 ],
+  'violet'          : [ 0.5,0.0,1.0 ],
+  'orange yellow'   : [ 1.0,0.56,0.0 ],
   'purplish red'    : [ 0.7,0.16,0.32 ],
   'greenish yellow' : [ 0.96,0.78,0.0 ],
+  'reddish brown'   : [ 0.5,0.1,0.05 ],
   'yellow green'    : [ 0.57,0.6,0.0 ],
+  'yellowish brown' : [ 0.34,0.2,0.08 ],
+  'reddish orange'  : [ 0.95,0.23,0.07 ],
   'olive green'     : [ 0.14,0.17,0.09 ],
 }
 
@@ -610,6 +671,8 @@ var Proto =
   _colorByBitmask : _colorByBitmask,
 
   colorFrom : colorFrom,
+  colorNearest : colorNearest,
+
 
   colorToHex : colorToHex,
   hexToColor : hexToColor,
