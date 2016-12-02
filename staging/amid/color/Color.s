@@ -239,6 +239,23 @@ rgbFromTry.defaults.__proto__ = rgbaFrom.defaults;
 
 //
 
+var _colorDistance = function _colorDistance( c1,c2 )
+{
+
+  var a1 = c1[ 3 ] === undefined ? 1 : c1[ 3 ];
+  var a2 = c2[ 3 ] === undefined ? 1 : c2[ 3 ];
+
+  debugger;
+
+  return  Math.pow( c1[ 0 ] - c2[ 0 ], 2 ) +
+          Math.pow( c1[ 1 ] - c2[ 1 ], 2 ) +
+          Math.pow( c1[ 2 ] - c2[ 2 ], 2 ) +
+          Math.pow( a1 - a2, 2 );
+
+}
+
+//
+
 var _colorNameNearest = function _colorNameNearest( color )
 {
   var self = this;
@@ -269,26 +286,13 @@ var _colorNameNearest = function _colorNameNearest( color )
 
   /* */
 
-  var distance = function( c1, c2 )
-  {
-    var a1 = c1[ 3 ] === undefined ? 1 : c1[ 3 ];
-    var a2 = c2[ 3 ] === undefined ? 1 : c2[ 3 ];
-
-    return  Math.pow( c1[ 0 ] - c2[ 0 ], 2 ) +
-            Math.pow( c1[ 1 ] - c2[ 1 ], 2 ) +
-            Math.pow( c1[ 2 ] - c2[ 2 ], 2 ) +
-            Math.pow( c1[ 3 ] - c2[ 3 ], 2 );
-  }
-
-  /* */
-
   var names = Object.keys( self.ColorMap );
   var nearest = names[ 0 ];
-  var max = distance( self.ColorMap[ names[ 0 ] ], color );
+  var max = _colorDistance( self.ColorMap[ names[ 0 ] ], color );
 
   for( var i = 1; i <= names.length - 1; i++ )
   {
-    var d = distance( self.ColorMap[ names[ i ] ], color );
+    var d = _colorDistance( self.ColorMap[ names[ i ] ], color );
     if( d < max )
     {
       max = d;
@@ -886,6 +890,8 @@ var Self =
 
   rgbaFromTry : rgbaFromTry,
   rgbFromTry : rgbFromTry,
+
+  _colorDistance : _colorDistance,
 
   _colorNameNearest : _colorNameNearest,
   colorNameNearest : colorNameNearest,
