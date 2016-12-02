@@ -234,6 +234,87 @@ rgbFromTry.defaults.__proto__ = rgbaFrom.defaults;
 
 //
 
+var _colorNameNearest = function _colorNameNearest( color )
+{
+  _.assert( arguments.length === 1 );
+
+  if( _.strIs( color ) )
+  {
+    _.assert( self.ColorMap[ color ],'unknown color',color );
+    return color;
+  }
+
+  color = _rgbaFromNotName( color );
+
+  _.assert( color.length === 4 );
+
+  for( var r = 0 ; r < 4 ; r++ )
+  {
+    color[ r ] = Number( color[ r ] );
+    if( color[ r ] < 0 )
+    color[ r ] = 0;
+    else if( color[ r ] > 1 )
+    color[ r ] = 1;
+  }
+
+  if( color[ 3 ] === undefined )
+  color[ 3 ] = 1;
+
+  /* */
+
+  var distance = function( c1, c2 )
+  {
+    var a1 = c1[ 3 ] === undefined ? 1 : c1[ 3 ];
+    var a2 = c2[ 3 ] === undefined ? 1 : c2[ 3 ];
+
+    return  Math.pow( c1[ 0 ] - c2[ 0 ], 2 ) +
+            Math.pow( c1[ 1 ] - c2[ 1 ], 2 ) +
+            Math.pow( c1[ 2 ] - c2[ 2 ], 2 ) +
+            Math.pow( c1[ 3 ] - c2[ 3 ], 2 ) +
+  }
+
+  var names = Object.keys( self.ColorMap );
+  var nearest = names[ 0 ];
+  var max = distance( self.ColorMap[ names[ 0 ] ], color );
+
+  for( var i = 1; i <= names.length - 1; i++ )
+  {
+    var d = distance( self.ColorMap[ names[ i ] ], color );
+    if( d < max )
+    {
+      max = d;
+      nearest = names[ i ];
+    }
+
+    if( d === 0 )
+    return names[ i ];
+  }
+
+  return nearest;
+}
+
+//
+
+var colorNameNearest = function colorNameNearest( color )
+{
+  _.assert( arguments.length === 1 );
+
+  var self = this;
+
+  if ( _.strIs( color ) )
+  {
+    var color2 = _.hexToColor( color );
+    if( color2 )
+    color = color2;
+  }
+
+  var result = _colorNameNearest( color );
+
+  return nearest;
+}
+
+//
+
 var colorToHex = function( rgb, def )
 {
 
@@ -279,7 +360,7 @@ var colorToHex = function( rgb, def )
 
 //
 
-var hexToColor = function( hex )
+var hexToColor = function hexToColor( hex )
 {
 
   _.assert( arguments.length === 1 );
@@ -288,7 +369,7 @@ var hexToColor = function( hex )
   var shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
   hex = hex.replace( shorthandRegex, function( m, r, g, b )
   {
-      return r + r + g + g + b + b;
+    return r + r + g + g + b + b;
   });
 
   var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec( hex );
@@ -701,15 +782,46 @@ var randomRgbWithSl = function randomRgbWithSl( s,l )
 var ColorMap =
 {
 
-  'invisible'   : [ 0.0,0.0,0.0,0.0 ],
-  'transparent' : [ 1.0,1.0,1.0,0.5 ],
-  'white'       : [ 1.0,1.0,1.0 ],
-  'black'       : [ 0.0,0.0,0.0 ],
-  'red'         : [ 1.0,0.0,0.0 ],
-  'green'       : [ 0.0,1.0,0.0 ],
-  'blue'        : [ 0.0,0.0,1.0 ],
-  'yellow'      : [ 1.0,1.0,0.0 ],
-
+  'invisible'       : [ 0.0,0.0,0.0,0.0 ],
+  'transparent'     : [ 1.0,1.0,1.0,0.5 ],
+  'cyan'            : [ 0.0,1.0,1.0 ],
+  'magenta'         : [ 1.0,0.0,1.0 ],
+  'maroon'          : [ 0.5,0.0,0.0 ],
+  'dark green'      : [ 0.0,0.5,0.0 ],
+  'navy'            : [ 0.0,0.0,0.5 ],
+  'olive'           : [ 0.5,0.5,0.0 ],
+  'teal'            : [ 0.0,0.5,0.5 ],
+  'bright green'    : [ 0.5,1.0,0.0 ],
+  'spring green'    : [ 0.0,1.0,0.5 ],
+  'pink'            : [ 1.0,0.0,0.5 ],
+  'dark orange'     : [ 1.0,0.5,0.0 ],
+  'azure'           : [ 0.0,0.5,1.0 ],
+  'dark blue'       : [ 0.0,0.0,0.63 ],
+  'silver'          : [ 0.75,0.75,0.75 ],
+  'brown'           : [ 0.65,0.16,0.16 ],
+   /**/
+  'white'           : [ 1.0,1.0,1.0 ],
+  'black'           : [ 0.0,0.0,0.0 ],
+  'yellow'          : [ 1.0,1.0,0.0 ],
+  'purple'          : [ 0.5,0.0,0.5 ],
+  'orange'          : [ 1.0,0.65,0.0 ],
+  'light blue'      : [ 0.68,0.85,0.9 ],
+  'red'             : [ 1.0,0.0,0.0 ],
+  'buff'            : [ 0.94,0.86,0.51 ],
+  'gray'            : [ 0.5,0.5,0.5 ],
+  'green'           : [ 0.0,1.0,0.0 ],
+  'purplish pink'   : [ 0.96,0.46,0.56 ],
+  'blue'            : [ 0.0,0.0,1.0 ],
+  'yellowish pink'  : [ 1.0,0.48,0.36 ],
+  'violet'          : [ 0.5,0.0,1.0 ],
+  'orange yellow'   : [ 1.0,0.56,0.0 ],
+  'purplish red'    : [ 0.7,0.16,0.32 ],
+  'greenish yellow' : [ 0.96,0.78,0.0 ],
+  'reddish brown'   : [ 0.5,0.1,0.05 ],
+  'yellow green'    : [ 0.57,0.6,0.0 ],
+  'yellowish brown' : [ 0.34,0.2,0.08 ],
+  'reddish orange'  : [ 0.95,0.23,0.07 ],
+  'olive green'     : [ 0.14,0.17,0.09 ],
 }
 
 // --
@@ -727,11 +839,16 @@ var Self =
   colorByBitmask : colorByBitmask,
   _colorByBitmask : _colorByBitmask,
 
+  _rgbaFromNotName : _rgbaFromNotName,
+
   rgbaFrom : rgbaFrom,
   rgbFrom : rgbFrom,
 
   rgbaFromTry : rgbaFromTry,
   rgbFromTry : rgbFromTry,
+
+  colorNameNearest : colorNameNearest,
+  colorNameNearest : colorNameNearest,
 
   colorToHex : colorToHex,
   hexToColor : hexToColor,
