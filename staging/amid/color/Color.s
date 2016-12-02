@@ -814,9 +814,19 @@ var ColorMap =
   'dark blue'       : [ 0.0,0.0,0.63 ],
   'silver'          : [ 0.75,0.75,0.75 ],
   'brown'           : [ 0.65,0.16,0.16 ],
+
    /**/
+
   'white'           : [ 1.0,1.0,1.0 ],
   'black'           : [ 0.0,0.0,0.0 ],
+
+}
+
+//
+
+var ColorMapDistinguishable =
+{
+
   'yellow'          : [ 1.0,1.0,0.0 ],
   'purple'          : [ 0.5,0.0,0.5 ],
   'orange'          : [ 1.0,0.65,0.0 ],
@@ -837,6 +847,7 @@ var ColorMap =
   'yellowish brown' : [ 0.34,0.2,0.08 ],
   'reddish orange'  : [ 0.95,0.23,0.07 ],
   'olive green'     : [ 0.14,0.17,0.09 ],
+
 }
 
 //
@@ -889,6 +900,7 @@ var Self =
   brighter : brighter,
   paler : paler,
 
+
   // int
 
   colorWidthForExponential : colorWidthForExponential,
@@ -911,6 +923,7 @@ var Self =
   // var
 
   ColorMap : ColorMap,
+  ColorMapDistinguishable : ColorMapDistinguishable,
   ColorMapShell : ColorMapShell
 
 }
@@ -921,9 +934,15 @@ if( !wTools.color )
 }
 else
 {
+
   _.mapSupplement( wTools.color,Self );
   _.mapSupplement( wTools.color.ColorMap,ColorMap );
+  _.mapSupplement( wTools.color.ColorMapDistinguishable,ColorMapDistinguishable );
   _.mapSupplement( wTools.color.ColorMapShell,ColorMapShell );
+
 }
+
+_.mapSupplement( wTools.color.ColorMap,ColorMapDistinguishable );
+_.mapSupplement( wTools.color.ColorMap,ColorMapShell );
 
 })();
