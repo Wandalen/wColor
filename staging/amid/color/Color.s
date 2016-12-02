@@ -101,6 +101,7 @@ var _rgbaFromNotName = function _rgbaFromNotName( src )
   if( _.numberIs( src ) )
   {
     result = _rgbByBitmask( src );
+    debugger;
     return _.arrayGrow( result,0,4,1 );
   }
 
@@ -138,10 +139,7 @@ var rgbaFrom = function rgbaFrom( src )
   if( result )
   {
     if( result.length !== 4 )
-    {
-      _.arrayGrow( result,0,4 );
-      result[ 3 ] = 1;
-    }
+    result = _.arrayGrow( result,0,4,1 );
     return result;
   }
 
@@ -153,11 +151,7 @@ var rgbaFrom = function rgbaFrom( src )
   if( result )
   {
     if( result.length !== 4 )
-    {
-      debugger;
-      _.arrayGrow( result,0,4 );
-      result[ 3 ] = 1;
-    }
+    result = _.arrayGrow( result,0,4,1 );
 
     return result;
   }
