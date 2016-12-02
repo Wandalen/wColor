@@ -158,6 +158,8 @@ var rgbaFrom = function rgbaFrom( src )
       _.arrayGrow( result,0,4 );
       result[ 3 ] = 1;
     }
+
+    return result;
   }
 
   /* */
