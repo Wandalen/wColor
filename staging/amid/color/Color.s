@@ -245,8 +245,6 @@ var _colorDistance = function _colorDistance( c1,c2 )
   var a1 = c1[ 3 ] === undefined ? 1 : c1[ 3 ];
   var a2 = c2[ 3 ] === undefined ? 1 : c2[ 3 ];
 
-  debugger;
-
   return  Math.pow( c1[ 0 ] - c2[ 0 ], 2 ) +
           Math.pow( c1[ 1 ] - c2[ 1 ], 2 ) +
           Math.pow( c1[ 2 ] - c2[ 2 ], 2 ) +
