@@ -101,6 +101,7 @@ var _rgbaFromNotName = function _rgbaFromNotName( src )
   if( _.numberIs( src ) )
   {
     result = _rgbByBitmask( src );
+    debugger;
     return _.arrayGrow( result,0,4,1 );
   }
 
@@ -138,10 +139,7 @@ var rgbaFrom = function rgbaFrom( src )
   if( result )
   {
     if( result.length !== 4 )
-    {
-      _.arrayGrow( result,0,4 );
-      result[ 3 ] = 1;
-    }
+    result = _.arrayGrow( result,0,4,1 );
     return result;
   }
 
@@ -153,11 +151,7 @@ var rgbaFrom = function rgbaFrom( src )
   if( result )
   {
     if( result.length !== 4 )
-    {
-      debugger;
-      _.arrayGrow( result,0,4 );
-      result[ 3 ] = 1;
-    }
+    result = _.arrayGrow( result,0,4,1 );
 
     return result;
   }
@@ -244,8 +238,6 @@ var _colorDistance = function _colorDistance( c1,c2 )
 
   var a1 = c1[ 3 ] === undefined ? 1 : c1[ 3 ];
   var a2 = c2[ 3 ] === undefined ? 1 : c2[ 3 ];
-
-  debugger;
 
   return  Math.pow( c1[ 0 ] - c2[ 0 ], 2 ) +
           Math.pow( c1[ 1 ] - c2[ 1 ], 2 ) +
