@@ -795,6 +795,7 @@ var ColorMap =
 
   'invisible'       : [ 0.0,0.0,0.0,0.0 ],
   'transparent'     : [ 1.0,1.0,1.0,0.5 ],
+
   'cyan'            : [ 0.0,1.0,1.0 ],
   'magenta'         : [ 1.0,0.0,1.0 ],
   'maroon'          : [ 0.5,0.0,0.0 ],
@@ -808,12 +809,19 @@ var ColorMap =
   'dark orange'     : [ 1.0,0.5,0.0 ],
   'azure'           : [ 0.0,0.5,1.0 ],
   'dark blue'       : [ 0.0,0.0,0.63 ],
-  'silver'          : [ 0.75,0.75,0.75 ],
   'brown'           : [ 0.65,0.16,0.16 ],
 
-   /**/
+}
+
+//
+
+var ColorMapGreyscale =
+{
 
   'white'           : [ 1.0,1.0,1.0 ],
+  'silver'          : [ 0.75,0.75,0.75 ],
+  'gray'            : [ 0.5,0.5,0.5 ],
+  'dim'             : [ 0.35,0.35,0.35 ],
   'black'           : [ 0.0,0.0,0.0 ],
 
 }
@@ -921,6 +929,7 @@ var Self =
   // var
 
   ColorMap : ColorMap,
+  ColorMapGreyscale : ColorMapGreyscale,
   ColorMapDistinguishable : ColorMapDistinguishable,
   ColorMapShell : ColorMapShell
 
@@ -935,11 +944,13 @@ else
 
   _.mapSupplement( wTools.color,Self );
   _.mapSupplement( wTools.color.ColorMap,ColorMap );
+  _.mapSupplement( wTools.color.ColorMapGreyscale,ColorMapGreyscale );
   _.mapSupplement( wTools.color.ColorMapDistinguishable,ColorMapDistinguishable );
   _.mapSupplement( wTools.color.ColorMapShell,ColorMapShell );
 
 }
 
+_.mapSupplement( wTools.color.ColorMap,ColorMapGreyscale );
 _.mapSupplement( wTools.color.ColorMap,ColorMapDistinguishable );
 _.mapSupplement( wTools.color.ColorMap,ColorMapShell );
 
