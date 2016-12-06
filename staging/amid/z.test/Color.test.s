@@ -84,7 +84,7 @@ var colorNameNearest = function( test )
   test.description = 'rgb a2';
   var color =  [ 255, 0, 1 ];
   var got = _.color.colorNameNearest( color );
-  var expected = 'blue';
+  var expected = 'magenta';
   test.identical( got,expected );
 
   test.description = 'rgb a3';
