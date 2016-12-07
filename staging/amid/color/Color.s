@@ -232,17 +232,32 @@ rgbFromTry.defaults.__proto__ = rgbaFrom.defaults;
 
 //
 
-var _colorDistance = function _colorDistance( c1,c2 )
+var _colorDistance = function _colorDistance( c1, c2 )
 {
+  var a = c1.slice();
+  var b = c2.slice();
 
-  var a1 = c1[ 3 ] === undefined ? 1 : c1[ 3 ];
-  var a2 = c2[ 3 ] === undefined ? 1 : c2[ 3 ];
+  var _definedIs = function( src )
+  {
+    return src !== undefined && src !== null && !isNaN( src )
+  }
 
-  return  Math.pow( c1[ 0 ] - c2[ 0 ], 2 ) +
-          Math.pow( c1[ 1 ] - c2[ 1 ], 2 ) +
-          Math.pow( c1[ 2 ] - c2[ 2 ], 2 ) +
-          Math.pow( a1 - a2, 2 );
+  for( var  i = 0 ; i < 3; i++ )
+  {
+    if( !_definedIs( a[ i ] ) )
+    a[ i ] = _definedIs( b[ i ] ) ? b[ i ] : 1;
 
+    if( !_definedIs( b[ i ] ) )
+    b[ i ] = _definedIs( a[ i ] ) ? a[ i ] : 1;
+  }
+
+  a[ 3 ] = _definedIs( a[ 3 ] ) ? a[ i ] : 1;
+  b[ 3 ] = _definedIs( b[ 3 ] ) ? b[ i ] : 1;
+
+  return  Math.pow( a[ 0 ] - b[ 0 ], 2 ) +
+          Math.pow( a[ 1 ] - b[ 1 ], 2 ) +
+          Math.pow( a[ 2 ] - b[ 2 ], 2 ) +
+          Math.pow( a[ 3 ] - b[ 3 ], 2 )
 }
 
 //
@@ -272,8 +287,8 @@ var _colorNameNearest = function _colorNameNearest( color )
     color[ r ] = 1;
   }
 
-  if( color[ 3 ] === undefined )
-  color[ 3 ] = 1;
+  // if( color[ 3 ] === undefined )
+  // color[ 3 ] = 1;
 
   /* */
 
