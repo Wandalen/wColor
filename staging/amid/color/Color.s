@@ -101,7 +101,6 @@ var _rgbaFromNotName = function _rgbaFromNotName( src )
   if( _.numberIs( src ) )
   {
     result = _rgbByBitmask( src );
-    debugger;
     return _.arrayGrow( result,0,4,1 );
   }
 
