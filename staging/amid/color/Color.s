@@ -242,7 +242,7 @@ var _colorDistance = function _colorDistance( c1, c2 )
     return src !== undefined && src !== null && !isNaN( src )
   }
 
-  for( var  i = 0 ; i < 3; i++ )
+  for( var  i = 0 ; i < 4 ; i++ )
   {
     if( !_definedIs( a[ i ] ) )
     a[ i ] = _definedIs( b[ i ] ) ? b[ i ] : 1;
@@ -251,8 +251,8 @@ var _colorDistance = function _colorDistance( c1, c2 )
     b[ i ] = _definedIs( a[ i ] ) ? a[ i ] : 1;
   }
 
-  a[ 3 ] = _definedIs( a[ 3 ] ) ? a[ i ] : 1;
-  b[ 3 ] = _definedIs( b[ 3 ] ) ? b[ i ] : 1;
+  // a[ 3 ] = _definedIs( a[ 3 ] ) ? a[ i ] : 1;
+  // b[ 3 ] = _definedIs( b[ 3 ] ) ? b[ i ] : 1;
 
   return  Math.pow( a[ 0 ] - b[ 0 ], 2 ) +
           Math.pow( a[ 1 ] - b[ 1 ], 2 ) +
