@@ -21,8 +21,8 @@ Colors map is avaible at:
 * Get name of nearest color - [ colorNameNearest ]()
 * Convert rgb to hex - [ colorToHex ]()
 * Convert hex to rgb - [ hexToColor ]()
-* Convert rgb 0...1 notation to browser compatible - [ colorToRgbHtml ]()
-* Convert rgba 0...1 notation to browser compatible - [ colorToRgbaHtml ]()
+* Convert rgb values from 0-1 range to browser compatible notation - [ colorToRgbHtml ]()
+* Convert rgba values from 0-1 range to browser compatible notation - [ colorToRgbaHtml ]()
 * Convert from rgb to hsl - [ rgbToHsl ]()
 * Convert from hsl to rgb - [ hslToRgb ]()
 
