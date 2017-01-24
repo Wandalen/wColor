@@ -299,7 +299,7 @@ var colorToRgbHtml = function( test )
     test.identical( got, element.expected );
   });
 
-  if( Config.Debug )
+  if( Config.debug )
   {
     test.shouldThrowError(function ()
     {
@@ -354,7 +354,7 @@ var colorToRgbaHtml = function ( test )
     test.identical( got, element.expected );
   });
 
-  if( Config.Debug )
+  if( Config.debug )
   {
     test.shouldThrowError(function ()
     {
@@ -365,6 +365,62 @@ var colorToRgbaHtml = function ( test )
     {
       test.description = 'no arguments';
       _.color.colorToRgbaHtml( );
+    });
+  };
+}
+
+//
+
+var rgbByBitmask = function ( test )
+{
+  var cases =
+  [
+    {
+      description : "#1",
+      arg : 0xff00ff,
+      expected : [ 1, 0, 1 ]
+    },
+    {
+      description : "#2",
+      arg : 0x8000ff,
+      expected : [ 0.5, 0, 1 ]
+    },
+    {
+      description : "#3",
+      arg : 0xff,
+      expected : [ 0, 0, 1 ]
+    },
+    {
+      description : "#4",
+      arg : 255,
+      expected : [ 0, 0, 1 ]
+    },
+    {
+      description : "#5",
+      arg : -1,
+      expected : [ 1, 1, 1 ]
+    },
+
+  ]
+
+  cases.forEach( function( element )
+  {
+    test.description = element.description;
+    var got = _.color.rgbByBitmask( element.arg );
+    test.equivalent( got, element.expected, .05 );
+  });
+
+  if( Config.debug )
+  {
+    test.shouldThrowError(function ()
+    {
+      test.description = 'incorrect type';
+      _.color.rgbByBitmask( 'str' );
+    });
+    test.shouldThrowError(function ()
+    {
+      test.description = 'no arguments';
+      _.color.rgbByBitmask( );
     });
   };
 }
@@ -382,7 +438,8 @@ var Proto =
     colorToHex : colorToHex,
     hexToColor : hexToColor,
     colorToRgbHtml : colorToRgbHtml,
-    colorToRgbaHtml : colorToRgbaHtml
+    colorToRgbaHtml : colorToRgbaHtml,
+    rgbByBitmask : rgbByBitmask,
 
   },
 
