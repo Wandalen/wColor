@@ -571,15 +571,15 @@ var Proto =
   tests :
   {
 
-    simplest : simplest,
-    colorNameNearest : colorNameNearest,
+    // simplest : simplest,
+    // colorNameNearest : colorNameNearest,
     colorToHex : colorToHex,
-    hexToColor : hexToColor,
-    colorToRgbHtml : colorToRgbHtml,
-    colorToRgbaHtml : colorToRgbaHtml,
-    rgbByBitmask : rgbByBitmask,
-    rgbaFrom : rgbaFrom,
-    rgbFrom : rgbFrom,
+    // hexToColor : hexToColor,
+    // colorToRgbHtml : colorToRgbHtml,
+    // colorToRgbaHtml : colorToRgbaHtml,
+    // rgbByBitmask : rgbByBitmask,
+    // rgbaFrom : rgbaFrom,
+    // rgbFrom : rgbFrom,
 
   },
 
