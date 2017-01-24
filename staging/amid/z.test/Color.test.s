@@ -266,6 +266,56 @@ var hexToColor = function ( test )
 
 //
 
+var colorToRgbHtml = function( test )
+{
+  var cases =
+  [
+    {
+      description : "color as string #1",
+      arg : '#ff0000',
+      expected : '#ff0000'
+    },
+    {
+      description : "color as obj #1",
+      arg : { r : 0, g : 1, b : 0 },
+      expected : 'rgb( 0, 255, 0 )'
+    },
+    {
+      description : "color as obj #3",
+      arg : { r : 255, g : 0, b : 0 },
+      expected : ''
+    },
+    {
+      description : "color as array #1",
+      arg : [ 0, 1, 0 ],
+      expected : 'rgb( 0, 255, 0 )'
+    }
+  ]
+
+  cases.forEach( function( element )
+  {
+    test.description = element.description;
+    var got = _.color.colorToRgbHtml( element.arg );
+    test.identical( got, element.expected );
+  });
+
+  if( Config.Debug )
+  {
+    test.shouldThrowError(function ()
+    {
+      test.description = 'incorrect type';
+      _.color.colorToRgbHtml( 1 );
+    });
+    test.shouldThrowError(function ()
+    {
+      test.description = 'no arguments';
+      _.color.colorToRgbHtml( );
+    });
+  }
+}
+
+//
+
 var Proto =
 {
 
@@ -278,6 +328,7 @@ var Proto =
     colorNameNearest : colorNameNearest,
     colorToHex : colorToHex,
     hexToColor : hexToColor,
+    colorToRgbHtml : colorToRgbHtml
 
   },
 
