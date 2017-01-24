@@ -195,11 +195,73 @@ var colorToHex = function( test )
 
   ]
 
-  cases.forEach( function ( element ) {
+  cases.forEach( function( element )
+  {
     test.description = element.description;
     var got = _.color.colorToHex( element.arg );
     test.identical( got, element.expected );
-  })
+  });
+}
+
+//
+
+var hexToColor = function ( test )
+{
+  var cases =
+  [
+    {
+      description : "#1",
+      arg : '#ff0000',
+      expected : [ 1, 0, 0 ]
+    },
+    {
+      description : "#2",
+      arg : '#80007f',
+      expected : [ 0.5, 0, 0.49 ]
+    },
+    {
+      description : "#3",
+      arg : '252525',
+      expected : [ 0.14, 0.14, 0.14 ]
+    },
+    {
+      description : "shorthand test#1",
+      arg : 'fff',
+      expected : [ 1, 1, 1 ]
+    },
+    {
+      description : "shorthand test#2",
+      arg : '#f00',
+      expected : [ 1, 0, 0 ]
+    },
+    {
+      description : "shorthand test#3",
+      arg : '555',
+      expected : [ 0.3, 0.3, 0.3 ]
+    },
+    {
+      description : "incorrect shorthand test",
+      arg : '#0fff',
+      expected : null
+    },
+    {
+      description : "incorrect data#1",
+      arg : '#255255255',
+      expected : null
+    },
+    {
+      description : "incorrect data#2",
+      arg : '#-5-5-5',
+      expected : null
+    }
+  ]
+
+  cases.forEach( function( element )
+  {
+    test.description = element.description;
+    var got = _.color.hexToColor( element.arg );
+    test.equivalent( got, element.expected, 0.05 );
+  });
 }
 
 //
@@ -215,6 +277,7 @@ var Proto =
     simplest : simplest,
     colorNameNearest : colorNameNearest,
     colorToHex : colorToHex,
+    hexToColor : hexToColor,
 
   },
 
