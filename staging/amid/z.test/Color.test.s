@@ -425,6 +425,74 @@ var rgbByBitmask = function ( test )
   };
 }
 
+//
+
+var rgbaFrom = function( test )
+{
+  var cases =
+  [
+    {
+      description : "map #1",
+      arg : { r : 0 },
+      expected : [ 0, 1, 1, 1 ]
+    },
+    {
+      description : "map #2",
+      arg : { r : 0, g : 1, b : 1, a : 0 },
+      expected : [ 0, 1, 1, 0 ]
+    },
+    {
+      description : "number #1",
+      arg : -1,
+      expected : [ 1, 1, 1, 1 ]
+    },
+    {
+      description : "number #2",
+      arg : 0xFF0080,
+      expected : [ 1, 0, 0.5, 1 ]
+    },
+    {
+      description : "array #1",
+      arg : [ -1, 0, 1, 1 ],
+      expected : [ 1, 0, 1, 1 ]
+    },
+    {
+      description : "array #2",
+      arg : [ 0, 0, 0 ],
+      expected : [ 0, 0, 0, 1 ]
+    },
+    {
+      description : "str name#1",
+      arg : 'white',
+      expected : [ 1, 1, 1, 1 ]
+    },
+    {
+      description : "str hex #2",
+      arg : '#ffffff',
+      expected : [ 1, 1, 1, 1 ]
+    }
+  ]
+
+  cases.forEach( function( element )
+  {
+    test.description = element.description;
+    var got = _.color.rgbaFrom( element.arg );
+    test.equivalent( got, element.expected, .05 );
+  });
+
+  if( Config.debug )
+  {
+    test.shouldThrowError( function()
+    {
+      _.color.rgbaFrom( 'unknown' )
+    })
+    test.shouldThrowError( function()
+    {
+      _.color.rgbaFrom( function(){} )
+    })
+  };
+}
+
 var Proto =
 {
 
@@ -440,6 +508,7 @@ var Proto =
     colorToRgbHtml : colorToRgbHtml,
     colorToRgbaHtml : colorToRgbaHtml,
     rgbByBitmask : rgbByBitmask,
+    rgbaFrom : rgbaFrom,
 
   },
 
