@@ -47,7 +47,7 @@ colorByName.defaults =
 
 //
 
-var _colorByName = function( name,def,map )
+var _colorByName = function _colorByName( name,def,map )
 {
   var result = map[ name ];
 
