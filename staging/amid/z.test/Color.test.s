@@ -133,6 +133,77 @@ var colorNameNearest = function( test )
 
 //
 
+var colorToHex = function( test )
+{
+  var cases =
+  [
+    {
+      description : "rgb as array#1",
+      arg : [ 0, 0, 0 ],
+      expected : "#000000"
+    },
+    {
+      description : "rgb as array#2",
+      arg : [ 1, 0, 1 ],
+      expected : "#ff00ff"
+    },
+    {
+      description : "rgb as array#3",
+      arg : [ 0.5, 0, 1 ],
+      expected : "#7f00ff"
+    },
+    {
+      description : "rgb as num#1",
+      arg : 0xFF00FF,
+      expected : "#ff00ff"
+    },
+    {
+      description : "rgb as num#2",
+      arg : 255,
+      expected : "#0000ff"
+    },
+    {
+      description : "rgb as num#3",
+      arg : 65535,
+      expected : "#00ffff"
+    },
+    {
+      description : "rgb as obj#1",
+      arg : { r : 0, g : 0, b : 1.0 },
+      expected : "#0000ff"
+    },
+    {
+      description : "rgb as obj#2",
+      arg : { r : 0, g : 0, b : 0.5 },
+      expected : "#00007f"
+    },
+    {
+      description : "rgb as str#1",
+      arg : '',
+      expected : undefined
+    },
+    {
+      description : "rgb as str#2",
+      arg : '#ffffff',
+      expected : '#ffffff'
+    },
+    {
+      description : "rgb as str#3",
+      arg : 'ffffff',
+      expected : '#ffffff'
+    },
+
+  ]
+
+  cases.forEach( function ( element ) {
+    test.description = element.description;
+    var got = _.color.colorToHex( element.arg );
+    test.identical( got, element.expected );
+  })
+}
+
+//
+
 var Proto =
 {
 
@@ -142,7 +213,8 @@ var Proto =
   {
 
     simplest : simplest,
-    colorNameNearest : colorNameNearest
+    colorNameNearest : colorNameNearest,
+    colorToHex : colorToHex,
 
   },
 
