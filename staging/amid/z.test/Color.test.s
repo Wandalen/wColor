@@ -316,6 +316,59 @@ var colorToRgbHtml = function( test )
 
 //
 
+var colorToRgbaHtml = function ( test )
+{
+  var cases =
+  [
+    {
+      description : "color as string #1",
+      arg : '#ff0000',
+      expected : '#ff0000'
+    },
+    {
+      description : "color as obj #1",
+      arg : { r : 0, g : 1, b : 0, a : 1 },
+      expected : 'rgba( 0, 255, 0, 1 )'
+    },
+    {
+      description : "color as obj, incorrect value #3",
+      arg : { r : 255, g : 0, b : 0 },
+      expected : ''
+    },
+    {
+      description : "color as array #1",
+      arg : [ 0, 1, 0, 0.5],
+      expected : 'rgba( 0, 255, 0, 0.5 )'
+    },
+    {
+      description : "color as number #1",
+      arg : 0x00FFFF,
+      expected : 'rgba( 0, 255, 255, 1 )'
+    }
+  ]
+
+  cases.forEach( function( element )
+  {
+    test.description = element.description;
+    var got = _.color.colorToRgbaHtml( element.arg );
+    test.identical( got, element.expected );
+  });
+
+  if( Config.Debug )
+  {
+    test.shouldThrowError(function ()
+    {
+      test.description = 'incorrect type';
+      _.color.colorToRgbaHtml( function () {} );
+    });
+    test.shouldThrowError(function ()
+    {
+      test.description = 'no arguments';
+      _.color.colorToRgbaHtml( );
+    });
+  };
+}
+
 var Proto =
 {
 
@@ -328,7 +381,8 @@ var Proto =
     colorNameNearest : colorNameNearest,
     colorToHex : colorToHex,
     hexToColor : hexToColor,
-    colorToRgbHtml : colorToRgbHtml
+    colorToRgbHtml : colorToRgbHtml,
+    colorToRgbaHtml : colorToRgbaHtml
 
   },
 
