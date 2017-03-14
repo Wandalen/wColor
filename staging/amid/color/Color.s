@@ -21,7 +21,7 @@ var _ = wTools;
 
 //
 
-var colorByName = function colorByName( name,def )
+function colorByName( name,def )
 {
   var o = _.routineOptionsFromThis( colorByName,this,Self );
 
@@ -47,7 +47,7 @@ colorByName.defaults =
 
 //
 
-var _colorByName = function _colorByName( name,def,map )
+function _colorByName( name,def,map )
 {
   var result = map[ name ];
 
@@ -58,7 +58,7 @@ var _colorByName = function _colorByName( name,def,map )
 }
 //
 
-var rgbByBitmask = function rgbByBitmask( src )
+function rgbByBitmask( src )
 {
 
   _.assert( arguments.length === 1 );
@@ -69,7 +69,7 @@ var rgbByBitmask = function rgbByBitmask( src )
 
 //
 
-var _rgbByBitmask = function _rgbByBitmask( src )
+function _rgbByBitmask( src )
 {
   var result = [];
 
@@ -82,7 +82,7 @@ var _rgbByBitmask = function _rgbByBitmask( src )
 
 //
 
-var _rgbaFromNotName = function _rgbaFromNotName( src )
+function _rgbaFromNotName( src )
 {
 
   _.assert( arguments.length === 1 );
@@ -121,7 +121,7 @@ var _rgbaFromNotName = function _rgbaFromNotName( src )
 
 //
 
-var rgbaFrom = function rgbaFrom( src )
+function rgbaFrom( src )
 {
   var result;
 
@@ -157,7 +157,7 @@ var rgbaFrom = function rgbaFrom( src )
 
   /* */
 
-  _.assert( 0,'unknown color',src );
+  _.assertNoDebugger( 0,'unknown color',src );
 }
 
 rgbaFrom.defaults =
@@ -167,7 +167,7 @@ rgbaFrom.defaults =
 
 //
 
-var rgbFrom = function rgbFrom( src )
+function rgbFrom( src )
 {
   _.assert( arguments.length === 1 );
 
@@ -184,7 +184,7 @@ rgbFrom.defaults.__proto__ = rgbaFrom.defaults;
 
 //
 
-var rgbaFromTry = function rgbaFromTry( src,def )
+function rgbaFromTry( src,def )
 {
 
   _.assert( arguments.length === 2 );
@@ -208,7 +208,7 @@ rgbaFromTry.defaults.__proto__ = rgbaFrom.defaults;
 
 //
 
-var rgbFromTry = function rgbFromTry( src,def )
+function rgbFromTry( src,def )
 {
 
   _.assert( arguments.length === 2 );
@@ -232,12 +232,12 @@ rgbFromTry.defaults.__proto__ = rgbaFrom.defaults;
 
 //
 
-var _colorDistance = function _colorDistance( c1, c2 )
+function _colorDistance( c1, c2 )
 {
   var a = c1.slice();
   var b = c2.slice();
 
-  var _definedIs = function( src )
+  function _definedIs( src )
   {
     return src !== undefined && src !== null && !isNaN( src )
   }
@@ -262,7 +262,7 @@ var _colorDistance = function _colorDistance( c1, c2 )
 
 //
 
-var _colorNameNearest = function _colorNameNearest( color )
+function _colorNameNearest( color )
 {
   var self = this;
 
@@ -270,7 +270,7 @@ var _colorNameNearest = function _colorNameNearest( color )
 
   if( _.strIs( color ) )
   {
-    _.assert( self.ColorMap[ color ],'unknown color',color );
+    _.assertNoDebugger( self.ColorMap[ color ],'unknown color',color );
     return color;
   }
 
@@ -314,13 +314,13 @@ var _colorNameNearest = function _colorNameNearest( color )
 
 //
 
-var colorNameNearest = function colorNameNearest( color )
+function colorNameNearest( color )
 {
   var self = this;
 
   _.assert( arguments.length === 1 );
 
-  if ( _.strIs( color ) )
+  if( _.strIs( color ) )
   {
     var color2 = _.color.hexToColor( color );
     if( color2 )
@@ -340,7 +340,7 @@ var colorNameNearest = function colorNameNearest( color )
 
 //
 
-var colorToHex = function( rgb, def )
+function colorToHex( rgb, def )
 {
 
   _.assert( arguments.length === 1 || arguments.length === 2 )
@@ -385,7 +385,7 @@ var colorToHex = function( rgb, def )
 
 //
 
-var hexToColor = function hexToColor( hex )
+function hexToColor( hex )
 {
 
   _.assert( arguments.length === 1 );
@@ -413,7 +413,7 @@ var hexToColor = function hexToColor( hex )
 
 //
 
-var colorToRgbHtml = function( src )
+function colorToRgbHtml( src )
 {
   var result = '';
 
@@ -444,7 +444,7 @@ var colorToRgbHtml = function( src )
 
 //
 
-var colorToRgbaHtml = function( src )
+function colorToRgbaHtml( src )
 {
   var result = '';
 
@@ -485,7 +485,7 @@ var colorToRgbaHtml = function( src )
 
 //
 
-var mulSaturation = function( rgb,factor )
+function mulSaturation( rgb,factor )
 {
   _.assert( arguments.length === 2 );
   _.assert( factor >= 0 );
@@ -504,7 +504,7 @@ var mulSaturation = function( rgb,factor )
 
 //
 
-var brighter = function( rgb,factor )
+function brighter( rgb,factor )
 {
   if( factor === undefined )
   factor = 0.1;
@@ -528,7 +528,7 @@ var brighter = function( rgb,factor )
   efactor = - factor / ( 1+factor )
 */
 
-var paler = function( rgb,factor )
+function paler( rgb,factor )
 {
   if( factor === undefined )
   factor = 0.1;
@@ -545,7 +545,7 @@ var paler = function( rgb,factor )
 // int
 // --
 
-var colorWidthForExponential = function( width )
+function colorWidthForExponential( width )
 {
 
   return 1 + 63 * width;
@@ -554,7 +554,7 @@ var colorWidthForExponential = function( width )
 
 //
 
-var rgbWithInt = function( srcInt )
+function rgbWithInt( srcInt )
 {
   var result = [];
 
@@ -618,7 +618,7 @@ var rgbWithInt = function( srcInt )
 
   /* fill routine */
 
-  var fillWithElements = function( i1,i2,i3 )
+  function fillWithElements( i1,i2,i3 )
   {
     result[ left ] = set[ i1 ];
     result[ ( left+1 )%3 ] = set[ i2 ];
@@ -669,7 +669,7 @@ var rgbWithInt = function( srcInt )
 
 //
 
-var _rgbWithInt = function( srcInt )
+function _rgbWithInt( srcInt )
 {
   var result;
 
@@ -691,7 +691,7 @@ var _rgbWithInt = function( srcInt )
 // hsl
 // --
 
-var hslToRgb = function( hsl,result )
+function hslToRgb( hsl,result )
 {
   var result = result || [];
   var h = hsl[ 0 ];
@@ -706,15 +706,15 @@ var hslToRgb = function( hsl,result )
     return result;
   }
 
-  var get = function( a, b, h )
+  function get( a, b, h )
   {
 
-    if ( h < 0 ) h += 1;
-    if ( h > 1 ) h -= 1;
+    if( h < 0 ) h += 1;
+    if( h > 1 ) h -= 1;
 
-    if ( h < 1 / 6 ) return b + ( a - b ) * 6 * h;
-    if ( h < 1 / 2 ) return a;
-    if ( h < 2 / 3 ) return b + ( a - b ) * 6 * ( 2 / 3 - h );
+    if( h < 1 / 6 ) return b + ( a - b ) * 6 * h;
+    if( h < 1 / 2 ) return a;
+    if( h < 2 / 3 ) return b + ( a - b ) * 6 * ( 2 / 3 - h );
 
     return b;
   }
@@ -731,7 +731,7 @@ var hslToRgb = function( hsl,result )
 
 //
 
-var rgbToHsl = function rgbToHsl( rgb,result )
+function rgbToHsl( rgb,result )
 {
   var result = result || [];
   var hue, saturation, lightness;
@@ -744,7 +744,7 @@ var rgbToHsl = function rgbToHsl( rgb,result )
 
   lightness = ( min + max ) / 2.0;
 
-  if ( min === max )
+  if( min === max )
   {
 
     hue = 0;
@@ -783,7 +783,7 @@ var rgbToHsl = function rgbToHsl( rgb,result )
 // random
 // --
 
-var randomRgbWithSl = function randomRgbWithSl( s,l )
+function randomRgbWithSl( s,l )
 {
 
   _.assert( arguments.length <= 2 );
@@ -833,6 +833,7 @@ var ColorMapGreyscale =
 {
 
   'white'           : [ 1.0,1.0,1.0 ],
+  'smoke'           : [ 0.9,0.9,0.9 ],
   'silver'          : [ 0.75,0.75,0.75 ],
   'gray'            : [ 0.5,0.5,0.5 ],
   'dim'             : [ 0.35,0.35,0.35 ],
