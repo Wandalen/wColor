@@ -262,15 +262,20 @@ function _colorDistance( c1, c2 )
 
 //
 
-function _colorNameNearest( color )
+function _colorNameNearest( color, map )
 {
   var self = this;
 
-  _.assert( arguments.length === 1 );
+  _.assert( arguments.length === 1 || arguments.length === 2 );
+
+  if( arguments.length === 1 )
+  map = _.color.ColorMap;
+
+  _.assert( _.objectIs( map ) );
 
   if( _.strIs( color ) )
   {
-    _.assertNoDebugger( self.ColorMap[ color ],'unknown color',color );
+    _.assertNoDebugger( map[ color ],'unknown color',color );
     return color;
   }
 
@@ -292,13 +297,13 @@ function _colorNameNearest( color )
 
   /* */
 
-  var names = Object.keys( self.ColorMap );
+  var names = Object.keys( map );
   var nearest = names[ 0 ];
-  var max = _colorDistance( self.ColorMap[ names[ 0 ] ], color );
+  var max = _colorDistance( map[ names[ 0 ] ], color );
 
   for( var i = 1; i <= names.length - 1; i++ )
   {
-    var d = _colorDistance( self.ColorMap[ names[ i ] ], color );
+    var d = _colorDistance( map[ names[ i ] ], color );
     if( d < max )
     {
       max = d;
@@ -336,6 +341,43 @@ function colorNameNearest( color )
     return;
   }
 
+}
+
+//
+
+function colorNearestShell( color )
+{
+  var self = this;
+
+  _.assert( arguments.length === 1 );
+
+  if( _.strIs( color ) )
+  {
+    var color2 = _.color.hexToColor( color );
+    if( color2 )
+    color = color2;
+  }
+
+  try
+  {
+    var name = self._colorNameNearest( color, self.ColorMapShell );
+    return self.ColorMapShell[ name ];
+  }
+  catch( err )
+  {
+    return;
+  }
+}
+
+//
+
+function colorNearest( color )
+{
+  var self = this;
+
+  var name = self.colorNameNearest( color );
+  if( name )
+  return self.ColorMap[ name ];
 }
 
 //
@@ -539,6 +581,37 @@ function paler( rgb,factor )
   var efactor = factor / ( 1+factor );
 
   return mulSaturation( rgb,1 - efactor );
+}
+
+//
+
+function getColor( color, isBrowser )
+{
+  var self = this;
+
+  if( !color )
+  return null;
+
+  try
+  {
+    if( !isBrowser )
+    color = self.rgbFrom( color );
+    else
+    color = self.rgbaFrom( color );
+  }
+  catch ( err )
+  {
+    if( isBrowser )
+    color = self.colorNearest( color );
+  }
+
+  if( !isBrowser )
+  color = self.colorNearestShell( color );
+
+  if( !color  )
+  return null;
+
+  return color;
 }
 
 // --
@@ -873,14 +946,23 @@ var ColorMapDistinguishable =
 
 var ColorMapShell =
 {
+  'white'           : [ 1.0,1.0,1.0 ],
   'black'           : [ 0.0,0.0,0.0 ],
-  'red'             : [ 1.0,0.0,0.0 ],
   'green'           : [ 0.0,1.0,0.0 ],
+  'red'             : [ 1.0,0.0,0.0 ],
   'yellow'          : [ 1.0,1.0,0.0 ],
   'blue'            : [ 0.0,0.0,1.0 ],
-  'magenta'         : [ 1.0,0.0,1.0 ],
-  'cyan'            : [ 0.0,1.0,1.0 ],
-  'white'           : [ 1.0,1.0,1.0 ],
+  'aqua'            : [ 0.0,1.0,1.0 ],
+  'purple'          : [ 1.0,0.0,1.0 ],
+
+  'light black'     : [ 0.5,0.5,0.5 ],
+  'light white'     : [ 0.9,0.9,0.9 ],
+  'light yellow'    : [ 0.5,0.5,0.0 ],
+  'light red'       : [ 0.5,0.0,0.0 ],
+  'light purple'    : [ 0.5,0.0,0.5 ],
+  'light blue'      : [ 0.0,0.0,0.5 ],
+  'light aqua'      : [ 0.0,0.5,0.5 ],
+  'light green'     : [ 0.0,0.5,0.0 ],
 }
 
 // --
@@ -911,6 +993,9 @@ var Self =
   _colorNameNearest : _colorNameNearest,
   colorNameNearest : colorNameNearest,
 
+  colorNearestShell : colorNearestShell,
+  colorNearest : colorNearest,
+
   colorToHex : colorToHex,
   hexToColor : hexToColor,
 
@@ -921,6 +1006,7 @@ var Self =
   brighter : brighter,
   paler : paler,
 
+  getColor : getColor,
 
   // int
 
