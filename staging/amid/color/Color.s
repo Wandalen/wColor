@@ -86,7 +86,7 @@ function _rgbaFromNotName( src )
 {
 
   _.assert( arguments.length === 1 );
-  _.assert( _.numberIs( src ) || _.arrayIs( src ) || _.mapIs( src ) );
+  _.assert( _.numberIs( src ) || _.arrayLike( src ) || _.mapIs( src ) );
 
   if( _.mapIs( src ) )
   {
@@ -127,7 +127,7 @@ function rgbaFrom( src )
 
   _.assert( arguments.length === 1 );
 
-  if( _.numberIs( src ) || _.arrayIs( src ) || _.mapIs( src ) )
+  if( _.numberIs( src ) || _.arrayLike( src ) || _.mapIs( src ) )
   return _rgbaFromNotName( src );
 
   /* */
@@ -170,6 +170,9 @@ rgbaFrom.defaults =
 function rgbFrom( src )
 {
   _.assert( arguments.length === 1 );
+
+  if( _.arrayLike( src ) )
+  return _.arraySlice( src,0,3 );
 
   var result = rgbaFrom.call( this,src );
 
@@ -783,6 +786,23 @@ function rgbToHsl( rgb,result )
 // random
 // --
 
+function randomHsl( s,l )
+{
+
+  _.assert( arguments.length <= 2 );
+
+  if( s === undefined )
+  s = 1.0;
+  if( l === undefined )
+  l = 0.5;
+
+  var hsl = [ Math.random(), s, l ];
+
+  return hsl;
+}
+
+//
+
 function randomRgbWithSl( s,l )
 {
 
@@ -793,11 +813,42 @@ function randomRgbWithSl( s,l )
   if( l === undefined )
   l = 0.5;
 
-  //this.setHSL( Math.random(), s, l );
-
   var rgb = hslToRgb([ Math.random(), s, l ]);
 
   return rgb;
+}
+
+// --
+// etc
+// --
+
+function gammaToLinear( dst )
+{
+
+  if( Object.isFrozen( dst ) )
+  debugger;
+
+  _.assert( dst.length === 3 || dst.length === 4 );
+
+  dst[ 0 ] = dst[ 0 ]*dst[ 0 ];
+  dst[ 1 ] = dst[ 1 ]*dst[ 1 ];
+  dst[ 2 ] = dst[ 2 ]*dst[ 2 ];
+
+  return dst;
+}
+
+//
+
+function linearToGamma( dst )
+{
+
+  _.assert( dst.length === 3 || dst.length === 4 );
+
+  dst[ 0 ] = _.sqrt( dst[ 0 ] );
+  dst[ 1 ] = _.sqrt( dst[ 1 ] );
+  dst[ 2 ] = _.sqrt( dst[ 2 ] );
+
+  return dst;
 }
 
 // --
@@ -937,8 +988,15 @@ var Self =
 
   // random
 
+  randomHsl : randomHsl,
   random : randomRgbWithSl,
   randomRgbWithSl : randomRgbWithSl,
+
+
+  // etc
+
+  gammaToLinear : gammaToLinear,
+  linearToGamma : linearToGamma,
 
 
   // var
