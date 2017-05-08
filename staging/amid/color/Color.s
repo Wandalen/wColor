@@ -1013,6 +1013,7 @@ var ColorMapShell =
   'blue'            : [ 0.0,0.0,1.0 ],
   'aqua'            : [ 0.0,1.0,1.0 ],
   'cyan'            : [ 0.0,1.0,1.0 ],
+  'magenta'         : [ 1.0,0.0,1.0 ],
 
   'light black'     : [ 0.5,0.5,0.5 ],
   'light white'     : [ 0.9,0.9,0.9 ],
