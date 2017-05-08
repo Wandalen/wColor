@@ -374,7 +374,7 @@ function colorNearestCustom( o )
   }
 }
 
-colorNearestCustom.arguments =
+colorNearestCustom.defaults =
 {
   color : null,
   colorMap : ColorMap
