@@ -345,28 +345,36 @@ function colorNameNearest( color )
 
 //
 
-function colorNearestShell( color )
+function colorNearestCustom( o )
 {
   var self = this;
 
   _.assert( arguments.length === 1 );
 
-  if( _.strIs( color ) )
+  _.routineOptions( colorNearestCustom, o );
+
+  if( _.strIs( o.color ) )
   {
-    var color2 = _.color.hexToColor( color );
-    if( color2 )
-    color = color2;
+    var _color = _.color.hexToColor( o.color );
+    if( _color )
+    o.color = _color;
   }
 
   try
   {
-    var name = self._colorNameNearest( color, self.ColorMapShell );
-    return self.ColorMapShell[ name ];
+    var name = self._colorNameNearest( o.color, o.colorMap );
+    return o.colorMap[ name ];
   }
   catch( err )
   {
     return;
   }
+}
+
+colorNearestCustom.arguments =
+{
+  color : null,
+  colorMap : ColorMap
 }
 
 //
@@ -602,11 +610,11 @@ function getColor( color, isBrowser )
   catch ( err )
   {
     if( isBrowser )
-    color = self.colorNearest( color );
+    color = self.colorNearestCustom({ color : color, colorMap : self.ColorMap });
   }
 
   if( !isBrowser )
-  color = self.colorNearestShell( color );
+  color = self.colorNearestCustom({ color : color, colorMap : self.ColorMapShell });
 
   if( !color  )
   return null;
@@ -954,6 +962,8 @@ var ColorMapShell =
   'blue'            : [ 0.0,0.0,1.0 ],
   'aqua'            : [ 0.0,1.0,1.0 ],
   'purple'          : [ 1.0,0.0,1.0 ],
+  'cyan'            : [ 0.0,1.0,1.0 ],
+  'magenta'         : [ 1.0,0.0,1.0 ],
 
   'light black'     : [ 0.5,0.5,0.5 ],
   'light white'     : [ 0.9,0.9,0.9 ],
@@ -993,7 +1003,7 @@ var Self =
   _colorNameNearest : _colorNameNearest,
   colorNameNearest : colorNameNearest,
 
-  colorNearestShell : colorNearestShell,
+  colorNearestCustom : colorNearestCustom,
   colorNearest : colorNearest,
 
   colorToHex : colorToHex,
