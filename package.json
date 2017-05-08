@@ -1,7 +1,7 @@
 {
   "name": "wColor",
-  "version": "0.3.13",
-  "engine" : "node >= 5.0.0",
+  "version": "0.3.14",
+  "engine": "node >= 5.0.0",
   "license": "MIT",
   "description": "Module in JavaScript providing convenient means for color conversion",
   "author": "Kostiantyn Wandalen <wtory.net@domainsbyproxy.com>",
