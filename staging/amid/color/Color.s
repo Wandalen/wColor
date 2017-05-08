@@ -377,7 +377,7 @@ function colorNearestCustom( o )
 colorNearestCustom.defaults =
 {
   color : null,
-  colorMap : ColorMap
+  colorMap : null
 }
 
 //
