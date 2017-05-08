@@ -612,12 +612,12 @@ function getColor( color, isBrowser )
   }
   catch ( err )
   {
-    if( isBrowser )
-    color = self.colorNearestCustom({ color : color, colorMap : self.ColorMap });
   }
 
   if( !isBrowser )
   color = self.colorNearestCustom({ color : color, colorMap : self.ColorMapShell });
+  else
+  color = self.colorNearestCustom({ color : color, colorMap : self.ColorMap });
 
   if( !color  )
   return null;
@@ -1012,9 +1012,7 @@ var ColorMapShell =
   'yellow'          : [ 1.0,1.0,0.0 ],
   'blue'            : [ 0.0,0.0,1.0 ],
   'aqua'            : [ 0.0,1.0,1.0 ],
-  'purple'          : [ 1.0,0.0,1.0 ],
   'cyan'            : [ 0.0,1.0,1.0 ],
-  'magenta'         : [ 1.0,0.0,1.0 ],
 
   'light black'     : [ 0.5,0.5,0.5 ],
   'light white'     : [ 0.9,0.9,0.9 ],
