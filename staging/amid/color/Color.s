@@ -952,7 +952,7 @@ var ColorMapDistinguishable =
   'yellow'          : [ 1.0,1.0,0.0 ],
   'purple'          : [ 0.5,0.0,0.5 ],
   'orange'          : [ 1.0,0.65,0.0 ],
-  'light blue'      : [ 0.68,0.85,0.9 ],
+  'bright blue'     : [ 0.68,0.85,0.9 ],
   'red'             : [ 1.0,0.0,0.0 ],
   'buff'            : [ 0.94,0.86,0.51 ],
   'gray'            : [ 0.5,0.5,0.5 ],
@@ -982,18 +982,17 @@ var ColorMapShell =
   'red'             : [ 1.0,0.0,0.0 ],
   'yellow'          : [ 1.0,1.0,0.0 ],
   'blue'            : [ 0.0,0.0,1.0 ],
-  'aqua'            : [ 0.0,1.0,1.0 ],
   'cyan'            : [ 0.0,1.0,1.0 ],
   'magenta'         : [ 1.0,0.0,1.0 ],
 
   'light black'     : [ 0.5,0.5,0.5 ],
-  'light white'     : [ 0.9,0.9,0.9 ],
   'light yellow'    : [ 0.5,0.5,0.0 ],
   'light red'       : [ 0.5,0.0,0.0 ],
-  'light purple'    : [ 0.5,0.0,0.5 ],
+  'light magenta'   : [ 0.5,0.0,0.5 ],
   'light blue'      : [ 0.0,0.0,0.5 ],
-  'light aqua'      : [ 0.0,0.5,0.5 ],
+  'light cyan'      : [ 0.0,0.5,0.5 ],
   'light green'     : [ 0.0,0.5,0.0 ],
+  'light white'     : [ 0.9,0.9,0.9 ],
 }
 
 // --
