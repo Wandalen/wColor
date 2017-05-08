@@ -596,35 +596,6 @@ function paler( rgb,factor )
 
 //
 
-function getColor( color, isBrowser )
-{
-  var self = this;
-
-  if( !color )
-  return null;
-
-  try
-  {
-    if( !isBrowser )
-    color = self.rgbFrom( color );
-    else
-    color = self.rgbaFrom( color );
-  }
-  catch ( err )
-  {
-    if( isBrowser )
-    color = self.colorNearestCustom({ color : color, colorMap : self.ColorMap });
-  }
-
-  if( !isBrowser )
-  color = self.colorNearestCustom({ color : color, colorMap : self.ColorMapShell });
-
-  if( !color  )
-  return null;
-
-  return color;
-}
-
 // --
 // int
 // --
@@ -1012,7 +983,6 @@ var ColorMapShell =
   'yellow'          : [ 1.0,1.0,0.0 ],
   'blue'            : [ 0.0,0.0,1.0 ],
   'aqua'            : [ 0.0,1.0,1.0 ],
-  'purple'          : [ 1.0,0.0,1.0 ],
   'cyan'            : [ 0.0,1.0,1.0 ],
   'magenta'         : [ 1.0,0.0,1.0 ],
 
@@ -1066,8 +1036,6 @@ var Self =
   mulSaturation : mulSaturation,
   brighter : brighter,
   paler : paler,
-
-  getColor : getColor,
 
   // int
 
