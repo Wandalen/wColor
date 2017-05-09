@@ -1,6 +1,6 @@
 {
   "name": "wColor",
-  "version": "0.3.15",
+  "version": "0.3.16",
   "engine": "node >= 5.0.0",
   "license": "MIT",
   "description": "Module in JavaScript providing convenient means for color conversion",
