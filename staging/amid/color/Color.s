@@ -240,18 +240,18 @@ function _colorDistance( c1, c2 )
   var a = c1.slice();
   var b = c2.slice();
 
-  function _definedIs( src )
-  {
-    return src !== undefined && src !== null && !isNaN( src )
-  }
+  // function _definedIs( src )
+  // {
+  //   return src !== undefined && src !== null && !isNaN( src )
+  // }
 
   for( var  i = 0 ; i < 4 ; i++ )
   {
-    if( !_definedIs( a[ i ] ) )
+    if( !_.numberIsFinite( a[ i ] ) )
     // a[ i ] = _definedIs( b[ i ] ) ? b[ i ] : 1;
     a[ i ] = 1;
 
-    if( !_definedIs( b[ i ] ) )
+    if( !_.numberIsFinite( b[ i ] ) )
     // b[ i ] = _definedIs( a[ i ] ) ? a[ i ] : 1;
     b[ i ] = 1;
   }
