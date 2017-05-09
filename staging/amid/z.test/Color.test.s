@@ -114,7 +114,7 @@ var colorNameNearest = function( test )
   test.description = 'empty array';
   var color = [];
   var got = _.color.colorNameNearest( color );
-  var expected = undefined;
+  var expected = 'white';
   test.identical( got,expected );
 
   test.description = 'no args';
@@ -283,7 +283,7 @@ var colorToRgbHtml = function( test )
     {
       description : "color as obj #3",
       arg : { r : 255, g : 0, b : 0 },
-      expected : ''
+      err : true,
     },
     {
       description : "color as array #1",
@@ -295,8 +295,19 @@ var colorToRgbHtml = function( test )
   cases.forEach( function( element )
   {
     test.description = element.description;
-    var got = _.color.colorToRgbHtml( element.arg );
-    test.identical( got, element.expected );
+    if( element.err )
+    {
+      test.shouldThrowErrorSync( function ()
+      {
+        _.color.colorToRgbHtml( element.arg )
+      })
+    }
+    else
+    {
+      var got = _.color.colorToRgbHtml( element.arg );
+      test.identical( got, element.expected );
+    }
+
   });
 
   if( Config.debug )
@@ -333,7 +344,7 @@ var colorToRgbaHtml = function ( test )
     {
       description : "color as obj, incorrect value #3",
       arg : { r : 255, g : 0, b : 0 },
-      expected : ''
+      err : true,
     },
     {
       description : "color as array #1",
@@ -349,19 +360,28 @@ var colorToRgbaHtml = function ( test )
 
   cases.forEach( function( element )
   {
-    test.description = element.description;
-    var got = _.color.colorToRgbaHtml( element.arg );
-    test.identical( got, element.expected );
+    if( element.err )
+    {
+      test.shouldThrowErrorSync( function ()
+      {
+        _.color.colorToRgbaHtml( element.arg )
+      })
+    }
+    else
+    {
+      var got = _.color.colorToRgbaHtml( element.arg );
+      test.identical( got, element.expected );
+    }
   });
 
   if( Config.debug )
   {
-    test.shouldThrowError(function ()
+    test.shouldThrowErrorSync(function ()
     {
       test.description = 'incorrect type';
       _.color.colorToRgbaHtml( function () {} );
     });
-    test.shouldThrowError(function ()
+    test.shouldThrowErrorSync(function ()
     {
       test.description = 'no arguments';
       _.color.colorToRgbaHtml( );
@@ -412,12 +432,12 @@ var rgbByBitmask = function ( test )
 
   if( Config.debug )
   {
-    test.shouldThrowError(function ()
+    test.shouldThrowErrorSync(function ()
     {
       test.description = 'incorrect type';
       _.color.rgbByBitmask( 'str' );
     });
-    test.shouldThrowError(function ()
+    test.shouldThrowErrorSync(function ()
     {
       test.description = 'no arguments';
       _.color.rgbByBitmask( );
@@ -550,11 +570,11 @@ var rgbFrom = function( test )
 
   if( Config.debug )
   {
-    test.shouldThrowError( function()
+    test.shouldThrowErrorSync( function()
     {
       _.color.rgbFrom( 'unknown' )
     })
-    test.shouldThrowError( function()
+    test.shouldThrowErrorSync( function()
     {
       _.color.rgbFrom( function(){} )
     })
@@ -566,24 +586,23 @@ var rgbFrom = function( test )
 var Proto =
 {
 
-  name : 'Logger',
+  name : 'Color',
 
   tests :
   {
 
-    // simplest : simplest,
-    // colorNameNearest : colorNameNearest,
+    simplest : simplest,
+    colorNameNearest : colorNameNearest,
     colorToHex : colorToHex,
-    // hexToColor : hexToColor,
-    // colorToRgbHtml : colorToRgbHtml,
-    // colorToRgbaHtml : colorToRgbaHtml,
-    // rgbByBitmask : rgbByBitmask,
-    // rgbaFrom : rgbaFrom,
-    // rgbFrom : rgbFrom,
+    hexToColor : hexToColor,
+    colorToRgbHtml : colorToRgbHtml,
+    colorToRgbaHtml : colorToRgbaHtml,
+    rgbByBitmask : rgbByBitmask,
+    rgbaFrom : rgbaFrom,
+    rgbFrom : rgbFrom,
 
   },
-
-  verbose : 1,
+  // verbosity : 1,
 
 }
 
@@ -591,7 +610,8 @@ var Proto =
 
 _.mapExtend( Self,Proto );
 
+Self = wTestSuite( Self );
 if( typeof module !== 'undefined' && !module.parent )
-_.Testing.test( Self );
+_.Testing.test( Self.name );
 
 } )( );
