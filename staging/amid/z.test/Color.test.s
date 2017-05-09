@@ -568,11 +568,11 @@ var rgbaFrom = function( test )
 
   if( Config.debug )
   {
-    test.shouldThrowError( function()
+    test.shouldThrowErrorSync( function()
     {
       _.color.rgbaFrom( 'unknown' )
     })
-    test.shouldThrowError( function()
+    test.shouldThrowErrorSync( function()
     {
       _.color.rgbaFrom( function(){} )
     })
@@ -677,6 +677,7 @@ var Proto =
 _.mapExtend( Self,Proto );
 
 Self = wTestSuite( Self );
+
 if( typeof module !== 'undefined' && !module.parent )
 _.Testing.test( Self.name );
 
