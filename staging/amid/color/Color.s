@@ -248,10 +248,12 @@ function _colorDistance( c1, c2 )
   for( var  i = 0 ; i < 4 ; i++ )
   {
     if( !_definedIs( a[ i ] ) )
-    a[ i ] = _definedIs( b[ i ] ) ? b[ i ] : 1;
+    // a[ i ] = _definedIs( b[ i ] ) ? b[ i ] : 1;
+    a[ i ] = 1;
 
     if( !_definedIs( b[ i ] ) )
-    b[ i ] = _definedIs( a[ i ] ) ? a[ i ] : 1;
+    // b[ i ] = _definedIs( a[ i ] ) ? a[ i ] : 1;
+    b[ i ] = 1;
   }
 
   // a[ 3 ] = _definedIs( a[ 3 ] ) ? a[ i ] : 1;
