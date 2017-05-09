@@ -347,14 +347,29 @@ var colorToRgbHtml = function( test )
       expected : 'rgb( 0, 255, 0 )'
     },
     {
-      description : "color as obj #3",
+      description : "color as obj #2",
       arg : { r : 255, g : 0, b : 0 },
+      err : true,
+    },
+    {
+      description : "color as obj #3",
+      arg : { r : -1, g : 0, b : 0 },
       err : true,
     },
     {
       description : "color as array #1",
       arg : [ 0, 1, 0 ],
       expected : 'rgb( 0, 255, 0 )'
+    },
+    {
+      description : "color as array #2",
+      arg : [ 0, -1, 0 ],
+      err : true
+    },
+    {
+      description : "color as array #3",
+      arg : [ 0, 255, 0 ],
+      err : true
     }
   ]
 
@@ -408,8 +423,13 @@ var colorToRgbaHtml = function ( test )
       expected : 'rgba( 0, 255, 0, 1 )'
     },
     {
-      description : "color as obj, incorrect value #3",
+      description : "color as obj, incorrect value #2",
       arg : { r : 255, g : 0, b : 0 },
+      err : true,
+    },
+    {
+      description : "color as obj #3",
+      arg : { r : -1, g : 0, b : 0 },
       err : true,
     },
     {
@@ -421,6 +441,16 @@ var colorToRgbaHtml = function ( test )
       description : "color as number #1",
       arg : 0x00FFFF,
       expected : 'rgba( 0, 255, 255, 1 )'
+    },
+    {
+      description : "color as array #2",
+      arg : [ 0, -1, 0 ],
+      err : true
+    },
+    {
+      description : "color as array #3",
+      arg : [ 0, 255, 0 ],
+      err : true
     }
   ]
 
@@ -540,7 +570,7 @@ var rgbaFrom = function( test )
     {
       description : "array #1",
       arg : [ -1, 0, 1, 1 ],
-      expected : [ 1, 0, 1, 1 ]
+      expected : [ -1, 0, 1, 1 ]
     },
     {
       description : "array #2",
@@ -556,6 +586,26 @@ var rgbaFrom = function( test )
       description : "str hex #2",
       arg : '#ffffff',
       expected : [ 1, 1, 1, 1 ]
+    },
+    {
+      description : "rgb component > 1",
+      arg : [ 10,10,10 ],
+      expected : [ 10, 10, 10, 1 ]
+    },
+    {
+      description : "rgba component > 1",
+      arg : [ 10,10,10,10 ],
+      expected : [ 10, 10, 10, 10 ]
+    },
+    {
+      description : "all negative, no alpha",
+      arg : [ -10, -10, -10 ],
+      expected : [ -10, -10, -10, 1 ]
+    },
+    {
+      description : "all negative",
+      arg : [ -10, -10, -10, -10 ],
+      expected : [ -10, -10, -10, -10 ]
     }
   ]
 
@@ -608,7 +658,7 @@ var rgbFrom = function( test )
     {
       description : "array #1",
       arg : [ -1, 0, 1, 1 ],
-      expected : [ 1, 0, 1 ]
+      expected : [ -1, 0, 1 ]
     },
     {
       description : "array #2",
@@ -624,6 +674,16 @@ var rgbFrom = function( test )
       description : "str hex #2",
       arg : '#ffffff',
       expected : [ 1, 1, 1 ]
+    },
+    {
+      description : "rgb component > 1",
+      arg : [ 10,10,10 ],
+      expected : [ 10, 10, 10 ]
+    },
+    {
+      description : "all negative",
+      arg : [ -10, -10, -10 ],
+      expected : [ -10, -10, -10 ]
     }
   ]
 
