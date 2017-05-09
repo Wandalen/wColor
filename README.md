@@ -1,4 +1,4 @@
-# wColor
+# wColor [![Build Status](https://travis-ci.org/Wandalen/wColor.svg?branch=master)](https://travis-ci.org/Wandalen/wColor)
 Module in JavaScript providing convenient means for color conversion.
 Contains map of predefined colors( ColorMap ) with rgb channels in [ 0,1 ] range and methods to convert colors between different formats and notations.
 
@@ -88,7 +88,3 @@ console.log( rgb, browser );
   [ 1, 0, 0 ] 'rgb( 255, 0, 0 )'
 */
 ```
-
-
-
-
