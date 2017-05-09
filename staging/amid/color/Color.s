@@ -484,6 +484,9 @@ function colorToRgbHtml( src )
 
   if( _.arrayIs( src ) )
   {
+    for( var i = 0; i < 3; i++ )
+    _.assert( src[ i ] >= 0 && src[ i ] <= 1 )
+
     result += 'rgb( ';
     result += String( Math.floor( src[ 0 ]*255 ) ) + ', ';
     result += String( Math.floor( src[ 1 ]*255 ) ) + ', ';
@@ -503,7 +506,7 @@ function colorToRgbaHtml( src )
 {
   var result = '';
 
-  _.assert( _.strIs( src ) || _.objectIs( src ) || _.arrayIs( src ) );
+  _.assert( _.strIs( src ) || _.objectIs( src ) || _.arrayIs( src ) || _.numberIs( src ) );
   _.assert( arguments.length === 1 );
 
   if( _.strIs( src ) )
@@ -514,6 +517,9 @@ function colorToRgbaHtml( src )
 
   if( _.arrayIs( src ) )
   {
+    for( var i = 0; i < 3; i++ )
+    _.assert( src[ i ] >= 0 && src[ i ] <= 1 )
+
     result += 'rgba( ';
     result += String( Math.floor( src[ 0 ]*255 ) ) + ', ';
     result += String( Math.floor( src[ 1 ]*255 ) ) + ', ';
