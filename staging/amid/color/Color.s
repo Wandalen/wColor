@@ -248,10 +248,12 @@ function _colorDistance( c1, c2 )
   for( var  i = 0 ; i < 4 ; i++ )
   {
     if( !_definedIs( a[ i ] ) )
-    a[ i ] = _definedIs( b[ i ] ) ? b[ i ] : 1;
+    // a[ i ] = _definedIs( b[ i ] ) ? b[ i ] : 1;
+    a[ i ] = 1;
 
     if( !_definedIs( b[ i ] ) )
-    b[ i ] = _definedIs( a[ i ] ) ? a[ i ] : 1;
+    // b[ i ] = _definedIs( a[ i ] ) ? a[ i ] : 1;
+    b[ i ] = 1;
   }
 
   // a[ 3 ] = _definedIs( a[ 3 ] ) ? a[ i ] : 1;
@@ -413,8 +415,8 @@ function colorToHex( rgb, def )
   else if( _.numberIs( rgb ) )
   {
     // throw _.err( 'not tested' );
-    return ( Math.floor( rgb ) )
-    .toString( 16 );
+    var hex = Math.floor( rgb ).toString( 16 );
+    return '#' + _.strDup( '0', 6 - hex.length  ) + hex;
   }
   else if( _.objectIs( rgb ) )
   {
@@ -482,6 +484,9 @@ function colorToRgbHtml( src )
 
   if( _.arrayIs( src ) )
   {
+    for( var i = 0; i < 3; i++ )
+    _.assert( src[ i ] >= 0 && src[ i ] <= 1 )
+
     result += 'rgb( ';
     result += String( Math.floor( src[ 0 ]*255 ) ) + ', ';
     result += String( Math.floor( src[ 1 ]*255 ) ) + ', ';
@@ -501,7 +506,7 @@ function colorToRgbaHtml( src )
 {
   var result = '';
 
-  _.assert( _.strIs( src ) || _.objectIs( src ) || _.arrayIs( src ) );
+  _.assert( _.strIs( src ) || _.objectIs( src ) || _.arrayIs( src ) || _.numberIs( src ) );
   _.assert( arguments.length === 1 );
 
   if( _.strIs( src ) )
@@ -512,6 +517,9 @@ function colorToRgbaHtml( src )
 
   if( _.arrayIs( src ) )
   {
+    for( var i = 0; i < 3; i++ )
+    _.assert( src[ i ] >= 0 && src[ i ] <= 1 )
+
     result += 'rgba( ';
     result += String( Math.floor( src[ 0 ]*255 ) ) + ', ';
     result += String( Math.floor( src[ 1 ]*255 ) ) + ', ';
