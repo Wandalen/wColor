@@ -51,6 +51,72 @@ var simplest = function( test )
 
 var colorNameNearest = function( test )
 {
+  test.description = 'black';
+  var color = [ 0, 0, 0, 1 ];
+  var got = _.color.colorNameNearest( color );
+  var expected = 'black';
+  test.identical( got,expected );
+
+  test.description = 'close to invisible';
+  var color = [ 0, 0, 0, 0 ];
+  var got = _.color.colorNameNearest( color );
+  var expected = 'invisible';
+  test.identical( got,expected );
+
+  test.description = 'dim';
+  var color = [ 0.3, 0.3, 0.3 ];
+  var got = _.color.colorNameNearest( color );
+  var expected = 'dim';
+  test.identical( got,expected );
+
+  test.description = 'invisible';
+  var color = [ 0.3, 0.3, 0.3, 0 ];
+  var got = _.color.colorNameNearest( color );
+  var expected = 'invisible';
+  test.identical( got,expected );
+
+  test.description = 'close to transparent';
+  var color = [ 1, 1, 1, 0 ];
+  var got = _.color.colorNameNearest( color );
+  var expected = 'transparent';
+  test.identical( got,expected );
+
+  test.description = 'white with 0.8 transparency is closer to white';
+  var color = [ 1, 1, 1, 0.8 ];
+  var got = _.color.colorNameNearest( color );
+  var expected = 'white';
+  test.identical( got,expected );
+
+  test.description = 'white 0.7 transparency is still closer to transparent';
+  var color = [ 1, 1, 1, 0.7 ];
+  var got = _.color.colorNameNearest( color );
+  var expected = 'transparent';
+  test.identical( got,expected );
+
+  test.description = 'close to brown';
+  var color = [ 0.6, 0.1, 0.1 ];
+  var got = _.color.colorNameNearest( color );
+  var expected = 'brown';
+  test.identical( got,expected );
+
+  test.description = 'close to dark blue';
+  var color = [ 0.1, 0.1, 0.6 ];
+  var got = _.color.colorNameNearest( color );
+  var expected = 'dark blue';
+  test.identical( got,expected );
+
+  test.description = 'close to pink#1';
+  var color = [ 0.9, 0.4, 0.6 ];
+  var got = _.color.colorNameNearest( color );
+  var expected = 'purplish pink';
+  test.identical( got,expected );
+
+  test.description = 'close to pink#2';
+  var color = [ 0.9, 0.4, 0.4 ];
+  var got = _.color.colorNameNearest( color );
+  var expected = 'yellowish pink';
+  test.identical( got,expected );
+
   test.description = 'white1';
   var color = [ 1, 1, 1 ];
   var got = _.color.colorNameNearest( color );
