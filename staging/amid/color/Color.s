@@ -415,8 +415,8 @@ function colorToHex( rgb, def )
   else if( _.numberIs( rgb ) )
   {
     // throw _.err( 'not tested' );
-    return ( Math.floor( rgb ) )
-    .toString( 16 );
+    var hex = Math.floor( rgb ).toString( 16 );
+    return '#' + _.strDup( '0', 6 - hex.length  ) + hex;
   }
   else if( _.objectIs( rgb ) )
   {
