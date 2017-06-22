@@ -157,7 +157,7 @@ function rgbaFrom( src )
 
   /* */
 
-  _.assertNoDebugger( 0,'unknown color',src );
+  _.assertWithoutBreakpoint( 0,'unknown color',src );
 }
 
 rgbaFrom.defaults =
@@ -280,7 +280,7 @@ function _colorNameNearest( color, map )
 
   if( _.strIs( color ) )
   {
-    _.assertNoDebugger( map[ color ],'unknown color',color );
+    _.assertWithoutBreakpoint( map[ color ],'unknown color',color );
     return color;
   }
 

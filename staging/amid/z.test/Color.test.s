@@ -15,18 +15,23 @@ node ./staging/amid/z.test/Color.test.s
 if( typeof module !== 'undefined' )
 {
 
-  require( 'wTools' );
+  try
+  {
+    require( '../../abase/wTools.s' );
+  }
+  catch( err )
+  {
+    require( 'wTools' );
+  }
+
   require( '../color/Color.s' );
 
-  if( require( 'fs' ).existsSync( __dirname + '/../../amid/diagnostic/Testing.debug.s' ) )
-  require( '../../amid/diagnostic/Testing.debug.s' );
-  else
-  require( 'wTesting' );
+  var _ = wTools;
+  _.include( 'wTesting' );
 
 }
 
 var _ = wTools;
-var Self = {};
 
 //
 
@@ -709,10 +714,11 @@ var rgbFrom = function( test )
 
 //
 
-var Proto =
+var Self =
 {
 
   name : 'Color',
+  // verbosity : 1,
 
   tests :
   {
@@ -728,16 +734,12 @@ var Proto =
     rgbFrom : rgbFrom,
 
   },
-  // verbosity : 1,
 
 }
 
 //
 
-_.mapExtend( Self,Proto );
-
 Self = wTestSuite( Self );
-
 if( typeof module !== 'undefined' && !module.parent )
 _.Testing.test( Self.name );
 
