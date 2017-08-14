@@ -1,6 +1,6 @@
 {
   "name": "wColor",
-  "version": "0.3.18",
+  "version": "0.3.19",
   "engine": "node >= 6.0.0",
   "license": "MIT",
   "description": "Module in JavaScript providing convenient means for color conversion",
@@ -39,7 +39,8 @@
     "wTools": ""
   },
   "devDependencies": {
-    "wTesting": ""
+    "wTesting": "",
+    "wColor": ""
   },
   "keywords": [
     "wTools",
