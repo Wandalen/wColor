@@ -21,11 +21,11 @@ var _ = wTools;
 
 //
 
-function colorByName( name,def )
+function rgbFromName( name,def )
 {
-  var o = _.routineOptionsFromThis( colorByName,this,Self );
+  var o = _.routineOptionsFromThis( rgbFromName,this,Self );
 
-  _.routineOptions( colorByName,o );
+  _.routineOptions( rgbFromName,o );
 
   var result;
   if( !o.colorMap )
@@ -37,17 +37,17 @@ function colorByName( name,def )
   name = name.toLowerCase();
   name = name.trim();
 
-  return _colorByName( name,def,o.colorMap );
+  return _rgbFromName( name,def,o.colorMap );
 }
 
-colorByName.defaults =
+rgbFromName.defaults =
 {
   colorMap : null,
 }
 
 //
 
-function _colorByName( name,def,map )
+function _rgbFromName( name,def,map )
 {
   var result = map[ name ];
 
@@ -133,7 +133,7 @@ function rgbaFrom( src )
   /* */
 
   if( _.strIs( src ) )
-  result = colorByName.call( this,src );
+  result = rgbFromName.call( this,src );
 
   if( result )
   {
@@ -1012,8 +1012,8 @@ var Self =
 
   //
 
-  colorByName : colorByName,
-  _colorByName : _colorByName,
+  rgbFromName : rgbFromName,
+  _rgbFromName : _rgbFromName,
 
   rgbByBitmask : rgbByBitmask,
   _rgbByBitmask : _rgbByBitmask,
@@ -1044,6 +1044,7 @@ var Self =
   brighter : brighter,
   paler : paler,
 
+
   // int
 
   colorWidthForExponential : colorWidthForExponential,
@@ -1060,7 +1061,7 @@ var Self =
   // random
 
   randomHsl : randomHsl,
-  random : randomRgbWithSl,
+  randomRgb : randomRgbWithSl,
   randomRgbWithSl : randomRgbWithSl,
 
 
