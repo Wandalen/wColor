@@ -1,7 +1,6 @@
 
 if( typeof module !== 'undefined' )
 require( 'wColor' );
-//require( '../staging/dwtools/amid/color/Color.s' );
 
 var _ = wTools;
 
