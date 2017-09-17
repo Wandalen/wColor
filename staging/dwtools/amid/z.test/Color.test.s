@@ -8,7 +8,7 @@ to run this test
 from the project directory run
 
 npm install
-node ./staging/amid/z.test/Color.test.s
+node ./staging/dwtools/amid/z.test/Color.test.s
 
 */
 
@@ -17,7 +17,7 @@ if( typeof module !== 'undefined' )
 
   try
   {
-    require( '../../abase/wTools.s' );
+    require( '../../Base.s' );
   }
   catch( err )
   {
@@ -276,7 +276,7 @@ var colorToHex = function( test )
 
 //
 
-var hexToColor = function ( test )
+var hexToColor = function( test )
 {
   var cases =
   [
@@ -383,7 +383,7 @@ var colorToRgbHtml = function( test )
     test.description = element.description;
     if( element.err )
     {
-      test.shouldThrowErrorSync( function ()
+      test.shouldThrowErrorSync( function()
       {
         _.color.colorToRgbHtml( element.arg )
       })
@@ -398,12 +398,12 @@ var colorToRgbHtml = function( test )
 
   if( Config.debug )
   {
-    test.shouldThrowError(function ()
+    test.shouldThrowError(function()
     {
       test.description = 'incorrect type';
       _.color.colorToRgbHtml( 1 );
     });
-    test.shouldThrowError(function ()
+    test.shouldThrowError(function()
     {
       test.description = 'no arguments';
       _.color.colorToRgbHtml( );
@@ -413,7 +413,7 @@ var colorToRgbHtml = function( test )
 
 //
 
-var colorToRgbaHtml = function ( test )
+var colorToRgbaHtml = function( test )
 {
   var cases =
   [
@@ -463,7 +463,7 @@ var colorToRgbaHtml = function ( test )
   {
     if( element.err )
     {
-      test.shouldThrowErrorSync( function ()
+      test.shouldThrowErrorSync( function()
       {
         _.color.colorToRgbaHtml( element.arg )
       })
@@ -477,12 +477,12 @@ var colorToRgbaHtml = function ( test )
 
   if( Config.debug )
   {
-    test.shouldThrowErrorSync(function ()
+    test.shouldThrowErrorSync(function()
     {
       test.description = 'incorrect type';
-      _.color.colorToRgbaHtml( function () {} );
+      _.color.colorToRgbaHtml( function() {} );
     });
-    test.shouldThrowErrorSync(function ()
+    test.shouldThrowErrorSync(function()
     {
       test.description = 'no arguments';
       _.color.colorToRgbaHtml( );
@@ -492,7 +492,7 @@ var colorToRgbaHtml = function ( test )
 
 //
 
-var rgbByBitmask = function ( test )
+var rgbByBitmask = function( test )
 {
   var cases =
   [
@@ -533,12 +533,12 @@ var rgbByBitmask = function ( test )
 
   if( Config.debug )
   {
-    test.shouldThrowErrorSync(function ()
+    test.shouldThrowErrorSync(function()
     {
       test.description = 'incorrect type';
       _.color.rgbByBitmask( 'str' );
     });
-    test.shouldThrowErrorSync(function ()
+    test.shouldThrowErrorSync(function()
     {
       test.description = 'no arguments';
       _.color.rgbByBitmask( );
