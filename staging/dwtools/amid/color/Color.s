@@ -1064,9 +1064,9 @@ function strDirectivesFor( style )
       var obj = style[ s ];
       _.assertMapHasOnly( obj,StyleObjectOptions );
       if( obj.fg )
-      result = join( result,_.color.strFormatForeground( obj.fg ) );
+      result = join( result,_.color._strDirectiveForegroundFor( obj.fg ) );
       if( obj.bg )
-      result = join( result,_.color.strFormatBackground( obj.bg ) );
+      result = join( result,_.color._strDirectiveBackgroundFor( obj.bg ) );
 
       continue;
     }
