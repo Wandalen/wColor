@@ -912,6 +912,251 @@ function linearToGamma( dst )
 }
 
 // --
+// str
+// --
+
+// function strFormatBackground( str, color )
+// {
+//   _.assert( arguments.length === 1 || arguments.length === 2 );
+//   if( arguments[ 1 ] === undefined )
+//   return _strDirectiveBackgroundFor( arguments[ 0 ] );
+//   else
+//   return strFormatBackground( arguments[ 0 ],arguments[ 1 ] );
+// }
+
+//
+
+function _strDirectiveBackgroundFor( color )
+{
+  var result = Object.create( null );
+
+  _.assert( arguments.length === 1 );
+  _.assert( _.strIs( color ) );
+
+  result.pre = `#background : ${color}#`;
+  result.post = `#background : default#`;
+
+  return result;
+}
+
+//
+
+function strFormatBackground( str, color )
+{
+
+  if( _.numberIs( color ) )
+  color = _.color.colorNameNearest( color );
+
+  _.assert( arguments.length === 2,'expects 2 arguments' );
+  _.assert( _.strIs( str ) );
+  _.assert( _.strIs( color ) );
+
+  return `#background : ${color}#${str}#background : default#`;
+}
+
+//
+
+// function strFormatForeground( str, color )
+// {
+//   _.assert( arguments.length === 1 || arguments.length === 2 );
+//   if( arguments[ 1 ] === undefined )
+//   return _strDirectiveForegroundFor( arguments[ 0 ] );
+//   else
+//   return strFormatForeground( arguments[ 0 ],arguments[ 1 ] );
+// }
+
+//
+
+function _strDirectiveForegroundFor( color )
+{
+  var result = Object.create( null );
+
+  _.assert( arguments.length === 1 );
+  _.assert( _.strIs( color ) );
+
+  result.pre = `#foreground : ${color}#`;
+  result.post = `#foreground : default#`;
+
+  return result;
+}
+
+//
+
+function strFormatForeground( str, color )
+{
+
+  if( _.numberIs( color ) )
+  color = _.color.colorNameNearest( color );
+
+  debugger;
+
+  _.assert( arguments.length === 2,'expects 2 arguments' );
+  _.assert( _.strIs( str ),'expects string ( src )' );
+  _.assert( _.strIs( color ),'expects string ( color )' );
+
+  return `#foreground : ${color}#${str}#foreground : default#`;
+}
+
+//
+
+// function strColorStyleFormat( str, style )
+// {
+//   _.assert( arguments.length === 1 || arguments.length === 2 );
+//   if( arguments[ 1 ] === undefined )
+//   return strDirectivesFor( arguments[ 0 ] );
+//   else
+//   return strFormat( arguments[ 0 ],arguments[ 1 ] );
+// }
+
+//
+
+function strFormat( str, style )
+{
+  var result = str;
+
+  if( _.arrayIs( result ) )
+  result = _.strConcat.apply( _,result );
+
+  _.assert( arguments.length === 1 || arguments.length === 2 );
+  _.assert( _.strIs( result ),'expects string got',_.strTypeOf( result ) );
+
+  var r = this.strDirectivesFor( style );
+
+  result = r.pre + result + r.post;
+
+  return result;
+}
+
+//
+
+function strDirectivesFor( style )
+{
+  var result = Object.create( null );
+  result.pre = '';
+  result.post = '';
+
+  var StyleObjectOptions =
+  {
+    fg : null,
+    bg : null,
+  }
+
+  var style = _.arrayAs( style );
+
+  _.assert( arguments.length === 1 );
+  _.assert( _.arrayIs( style ) ,'expects string or array of strings ( style )' );
+
+  function join()
+  {
+    for( var a = 1 ; a < arguments.length ; a++ )
+    {
+      arguments[ 0 ].pre = arguments[ a ].pre + arguments[ 0 ].pre;
+      arguments[ 0 ].post = arguments[ 0 ].post + arguments[ a ].post;
+    }
+    return arguments[ 0 ];
+  }
+
+  for( var s = 0 ; s < style.length ; s++ )
+  {
+
+    if( _.objectIs( style[ s ] ) )
+    {
+      var obj = style[ s ];
+      _.assertMapHasOnly( obj,StyleObjectOptions );
+      if( obj.fg )
+      result = join( result,_.color.strFormatForeground( obj.fg ) );
+      if( obj.bg )
+      result = join( result,_.color.strFormatBackground( obj.bg ) );
+
+      continue;
+    }
+
+    _.assert( _.strIs( style[ s ] ) ,'expects string or array of strings { style }' );
+
+    var styleObject = this.strColorStyle( style[ s ] );
+
+    if( !styleObject )
+    throw _.err( 'unknown color',style[ s ] );
+
+    if( styleObject.fg )
+    result = join( result,_.color._strDirectiveForegroundFor( styleObject.fg ) );
+
+    if( styleObject.bg )
+    result = join( result,_.color._strDirectiveBackgroundFor( styleObject.bg ) );
+
+    // switch( style[ s ] )
+    // {
+    //
+    //   case 'positive' :
+    //     result = join( result,_.color.strFormatForeground( 'green' ) );
+    //     break;
+    //
+    //   case 'negative' :
+    //     result = join( result,_.color.strFormatForeground( 'red' ) );
+    //     break;
+    //
+    //   case 'topic' :
+    //     result = join( result,_.color.strFormatForeground( 'dim' ) );
+    //     break;
+    //
+    //   case 'head' :
+    //     result = join( result,_.color.strFormatForeground( 'black' ),_.color.strFormatBackground( 'light white' ) );
+    //     break;
+    //
+    //   case 'tail' :
+    //     result = join( result,_.color.strFormatForeground( 'light white' ),_.color.strFormatBackground( 'dim' ) );
+    //     break;
+    //
+    //   case 'selected' :
+    //     result = join( result,_.color.strFormatForeground( 'yellow' ),_.color.strFormatBackground( 'blue' ) );
+    //     break;
+    //
+    //   case 'neutral' :
+    //     result = join( result,_.color.strFormatForeground( 'smoke' ),_.color.strFormatBackground( 'dim' ) );
+    //     break;
+    //
+    //   case 'piped.neutral' :
+    //     result = join( result,_.color.strFormatForeground( 'blue' ),_.color.strFormatBackground( 'yellow' ) );
+    //     break;
+    //
+    //   case 'piped.negative' :
+    //     result = join( result,_.color.strFormatForeground( 'red' ),_.color.strFormatBackground( 'yellow' ) );
+    //     break;
+    //
+    //   case 'info.neutral' :
+    //     result = join( result,_.color.strFormatForeground( 'light white' ),_.color.strFormatBackground( 'light magenta' ) );
+    //     break;
+    //
+    //   case 'info.negative' :
+    //     result = join( result,_.color.strFormatForeground( 'red' ),_.color.strFormatBackground( 'light magenta' ) );
+    //     break;
+    //
+    //   default :
+    //     throw _.err( 'strDirectivesFor : unknown style : ' + style );
+    //
+    // }
+
+  }
+
+  return result;
+}
+
+//
+
+function strColorStyle( style )
+{
+  _.assert( arguments.length === 1 );
+  _.assert( _.strIs( style ),'expects string got',_.strTypeOf( style ) );
+
+  if( style === 'head' || style === 'tail' )
+  debugger;
+
+  var result = this.Style[ style ];
+
+  return result;
+}
+
+// --
 // var
 // --
 
@@ -1003,6 +1248,28 @@ var ColorMapShell =
   'light white'     : [ 0.9,0.9,0.9 ],
 }
 
+var Style =
+{
+
+  'positive' : { fg : 'green' },
+  'negative' : { fg : 'red' },
+
+  'topic' : { fg : 'dim' },
+
+  'head' : { fg : 'black', bg : 'light white' },
+  'tail' : { fg : 'light white', bg : 'black' },
+
+  'selected' : { fg : 'yellow', bg : 'blue' },
+  'neutral' : { fg : 'smoke', bg : 'dim' },
+
+  'pipe.neutral' : { fg : 'blue', bg : 'yellow' },
+  'pipe.negative' : { fg : 'red', bg : 'yellow' },
+
+  'info.neutral' : { fg : 'light white', bg : 'light magenta' },
+  'info.negative' : { fg : 'red', bg : 'light magenta' },
+
+}
+
 // --
 // prototype
 // --
@@ -1071,12 +1338,26 @@ var Self =
   linearToGamma : linearToGamma,
 
 
+  // str
+
+  _strDirectiveBackgroundFor : _strDirectiveBackgroundFor,
+  strFormatBackground : strFormatBackground,
+
+  _strDirectiveForegroundFor : _strDirectiveForegroundFor,
+  strFormatForeground : strFormatForeground,
+
+  strFormat : strFormat,
+  strDirectivesFor : strDirectivesFor,
+  strColorStyle : strColorStyle,
+
+
   // var
 
   ColorMap : ColorMap,
   ColorMapGreyscale : ColorMapGreyscale,
   ColorMapDistinguishable : ColorMapDistinguishable,
-  ColorMapShell : ColorMapShell
+  ColorMapShell : ColorMapShell,
+  Style : Style,
 
 }
 

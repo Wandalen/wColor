@@ -1,5 +1,5 @@
 # wColor [![Build Status](https://travis-ci.org/Wandalen/wColor.svg?branch=master)](https://travis-ci.org/Wandalen/wColor)
-Module in JavaScript providing convenient means for color conversion.
+The module in JavaScript provides convenient means for color conversion.
 Contains map of predefined colors( ColorMap ) with rgb channels in [ 0,1 ] range and methods to convert colors between different formats and notations.
 
 ## Installation
