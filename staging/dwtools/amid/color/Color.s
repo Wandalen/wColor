@@ -1148,8 +1148,8 @@ function strColorStyle( style )
   _.assert( arguments.length === 1 );
   _.assert( _.strIs( style ),'expects string got',_.strTypeOf( style ) );
 
-  if( style === 'head' || style === 'tail' )
-  debugger;
+  // if( style === 'head' || style === 'tail' )
+  // debugger;
 
   var result = this.Style[ style ];
 
