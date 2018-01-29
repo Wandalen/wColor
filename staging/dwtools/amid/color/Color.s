@@ -5,19 +5,26 @@
 if( typeof module !== 'undefined' )
 {
 
-  if( typeof wBase === 'undefined' )
-  try
+  if( typeof _global_ === 'undefined' || !_global_.wBase )
   {
-    require( '../../Base.s' );
-  }
-  catch( err )
-  {
-    require( 'wTools' );
+    let toolsPath = '../../../dwtools/Base.s';
+    let toolsExternal = 0;
+    try
+    {
+      require.resolve( toolsPath )/*hhh*/;
+    }
+    catch( err )
+    {
+      toolsExternal = 1;
+      require( 'wTools' );
+    }
+    if( !toolsExternal )
+    require( toolsPath )/*hhh*/;
   }
 
 }
 
-var _ = wTools;
+var _ = _global_.wTools;
 
 //
 
@@ -988,8 +995,6 @@ function strFormatForeground( str, color )
   if( _.numberIs( color ) )
   color = _.color.colorNameNearest( color );
 
-  debugger;
-
   _.assert( arguments.length === 2,'expects 2 arguments' );
   _.assert( _.strIs( str ),'expects string ( src )' );
   _.assert( _.strIs( color ),'expects string ( color )' );
@@ -1361,23 +1366,34 @@ var Self =
 
 }
 
-if( !wTools.color )
+if( !_.color )
 {
-  wTools.color = Self;
+  _.color = Self;
 }
 else
 {
 
-  _.mapSupplement( wTools.color,Self );
-  _.mapSupplement( wTools.color.ColorMap,ColorMap );
-  _.mapSupplement( wTools.color.ColorMapGreyscale,ColorMapGreyscale );
-  _.mapSupplement( wTools.color.ColorMapDistinguishable,ColorMapDistinguishable );
-  _.mapSupplement( wTools.color.ColorMapShell,ColorMapShell );
+  _.mapSupplement( _.color,Self );
+  _.mapSupplement( _.color.ColorMap,ColorMap );
+  _.mapSupplement( _.color.ColorMapGreyscale,ColorMapGreyscale );
+  _.mapSupplement( _.color.ColorMapDistinguishable,ColorMapDistinguishable );
+  _.mapSupplement( _.color.ColorMapShell,ColorMapShell );
 
 }
 
-_.mapSupplement( wTools.color.ColorMap,ColorMapGreyscale );
-_.mapSupplement( wTools.color.ColorMap,ColorMapDistinguishable );
-_.mapSupplement( wTools.color.ColorMap,ColorMapShell );
+_.mapSupplement( _.color.ColorMap,ColorMapGreyscale );
+_.mapSupplement( _.color.ColorMap,ColorMapDistinguishable );
+_.mapSupplement( _.color.ColorMap,ColorMapShell );
+
+// --
+// export
+// --
+
+if( typeof module !== 'undefined' )
+if( _global_._UsingWtoolsPrivately_ )
+delete require.cache[ module.id ];
+
+if( typeof module !== 'undefined' && module !== null )
+module[ 'exports' ] = Self;
 
 })();
