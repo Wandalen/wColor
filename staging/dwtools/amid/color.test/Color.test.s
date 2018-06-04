@@ -1,6 +1,6 @@
 ( function _Color_test_s_( ) {
 
-'use strict'; /*ccc*/
+'use strict'; 
 
 if( typeof module !== 'undefined' )
 {
