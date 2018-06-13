@@ -1276,7 +1276,7 @@ var Style =
 }
 
 // --
-// prototype
+// define class
 // --
 
 var Self =
