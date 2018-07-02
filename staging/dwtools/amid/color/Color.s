@@ -197,7 +197,7 @@ rgbFrom.defaults.__proto__ = rgbaFrom.defaults;
 function rgbaFromTry( src,def )
 {
 
-  _.assert( arguments.length === 2, 'expects exactly two argument' );
+  _.assert( arguments.length === 2, 'expects exactly two arguments' );
 
   try
   {
@@ -221,7 +221,7 @@ rgbaFromTry.defaults.__proto__ = rgbaFrom.defaults;
 function rgbFromTry( src,def )
 {
 
-  _.assert( arguments.length === 2, 'expects exactly two argument' );
+  _.assert( arguments.length === 2, 'expects exactly two arguments' );
 
   try
   {
@@ -555,7 +555,7 @@ function colorToRgbaHtml( src )
 
 function mulSaturation( rgb,factor )
 {
-  _.assert( arguments.length === 2, 'expects exactly two argument' );
+  _.assert( arguments.length === 2, 'expects exactly two arguments' );
   _.assert( factor >= 0 );
 
   var hsl = rgbToHsl( rgb );
