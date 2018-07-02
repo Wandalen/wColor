@@ -1,6 +1,6 @@
 ( function _Color_test_s_( ) {
 
-'use strict'; 
+'use strict';
 
 if( typeof module !== 'undefined' )
 {
@@ -329,8 +329,10 @@ var hexToColor = function( test )
   {
     test.description = element.description;
     var got = _.color.hexToColor( element.arg );
-    test.equivalent( got, element.expected, 0.05 );
+    test./*eps*/accuracy = 1e-1;
+    test.equivalent( got, element.expected );
   });
+
 }
 
 //
@@ -526,7 +528,8 @@ var rgbByBitmask = function( test )
   {
     test.description = element.description;
     var got = _.color.rgbByBitmask( element.arg );
-    test.equivalent( got, element.expected, .05 );
+    test./*eps*/accuracy = 1e-2;
+    test.equivalent( got, element.expected );
   });
 
   if( Config.debug )
@@ -616,7 +619,8 @@ var rgbaFrom = function( test )
   {
     test.description = element.description;
     var got = _.color.rgbaFrom( element.arg );
-    test.equivalent( got, element.expected, .05 );
+    test./*eps*/accuracy = 1e-2;
+    test.equivalent( got, element.expected );
   });
 
   if( Config.debug )
@@ -694,7 +698,8 @@ var rgbFrom = function( test )
   {
     test.description = element.description;
     var got = _.color.rgbFrom( element.arg );
-    test.equivalent( got, element.expected, .05 );
+    test./*eps*/accuracy = 1e-2;
+    test.equivalent( got, element.expected );
   });
 
   if( Config.debug )
@@ -715,7 +720,7 @@ var rgbFrom = function( test )
 var Self =
 {
 
-  name : 'Color',
+  name : 'Tools/amid/Color',
   silencing : 1,
   // verbosity : 1,
 
