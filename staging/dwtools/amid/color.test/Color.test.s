@@ -720,7 +720,7 @@ var rgbFrom = function( test )
 var Self =
 {
 
-  name : 'Tools/amid/Color',
+  name : 'Tools/mid/Color',
   silencing : 1,
   // verbosity : 1,
 
