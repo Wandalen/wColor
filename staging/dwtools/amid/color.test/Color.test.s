@@ -476,7 +476,7 @@ function colorToRgbaHtml( test )
 
 //
 
-function ( test )
+function rgbByBitmask( test )
 {
   var cases =
   [
