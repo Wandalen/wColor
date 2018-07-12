@@ -1004,14 +1004,7 @@ function strFormatForeground( str, color )
 
 //
 
-// function strColorStyleFormat( str, style )
-// {
-//   _.assert( arguments.length === 1 || arguments.length === 2 );
-//   if( arguments[ 1 ] === undefined )
-//   return strDirectivesFor( arguments[ 0 ] );
-//   else
-//   return strFormat( arguments[ 0 ],arguments[ 1 ] );
-// }
+var strFormatEach = _.routineVectorize_functor( strFormat );
 
 //
 
@@ -1019,8 +1012,8 @@ function strFormat( str, style )
 {
   var result = str;
 
-  if( _.arrayIs( result ) )
-  result = _.strConcat.apply( _,result );
+  // if( _.arrayIs( result ) )
+  // result = _.strConcat.apply( _,result );
 
   _.assert( arguments.length === 1 || arguments.length === 2 );
   _.assert( _.strIs( result ),'expects string got',_.strTypeOf( result ) );
@@ -1072,7 +1065,6 @@ function strDirectivesFor( style )
       result = join( result,_.color._strDirectiveForegroundFor( obj.fg ) );
       if( obj.bg )
       result = join( result,_.color._strDirectiveBackgroundFor( obj.bg ) );
-
       continue;
     }
 
@@ -1080,66 +1072,13 @@ function strDirectivesFor( style )
 
     var styleObject = this.strColorStyle( style[ s ] );
 
-    if( !styleObject )
-    throw _.err( 'unknown color',style[ s ] );
+    _.assert( styleObject, 'unknown color',style[ s ] );
 
     if( styleObject.fg )
-    result = join( result,_.color._strDirectiveForegroundFor( styleObject.fg ) );
+    result = join( result, _.color._strDirectiveForegroundFor( styleObject.fg ) );
 
     if( styleObject.bg )
-    result = join( result,_.color._strDirectiveBackgroundFor( styleObject.bg ) );
-
-    // switch( style[ s ] )
-    // {
-    //
-    //   case 'positive' :
-    //     result = join( result,_.color.strFormatForeground( 'green' ) );
-    //     break;
-    //
-    //   case 'negative' :
-    //     result = join( result,_.color.strFormatForeground( 'red' ) );
-    //     break;
-    //
-    //   case 'topic' :
-    //     result = join( result,_.color.strFormatForeground( 'dim' ) );
-    //     break;
-    //
-    //   case 'head' :
-    //     result = join( result,_.color.strFormatForeground( 'black' ),_.color.strFormatBackground( 'light white' ) );
-    //     break;
-    //
-    //   case 'tail' :
-    //     result = join( result,_.color.strFormatForeground( 'light white' ),_.color.strFormatBackground( 'dim' ) );
-    //     break;
-    //
-    //   case 'selected' :
-    //     result = join( result,_.color.strFormatForeground( 'yellow' ),_.color.strFormatBackground( 'blue' ) );
-    //     break;
-    //
-    //   case 'neutral' :
-    //     result = join( result,_.color.strFormatForeground( 'smoke' ),_.color.strFormatBackground( 'dim' ) );
-    //     break;
-    //
-    //   case 'piped.neutral' :
-    //     result = join( result,_.color.strFormatForeground( 'blue' ),_.color.strFormatBackground( 'yellow' ) );
-    //     break;
-    //
-    //   case 'piped.negative' :
-    //     result = join( result,_.color.strFormatForeground( 'red' ),_.color.strFormatBackground( 'yellow' ) );
-    //     break;
-    //
-    //   case 'info.neutral' :
-    //     result = join( result,_.color.strFormatForeground( 'light white' ),_.color.strFormatBackground( 'light magenta' ) );
-    //     break;
-    //
-    //   case 'info.negative' :
-    //     result = join( result,_.color.strFormatForeground( 'red' ),_.color.strFormatBackground( 'light magenta' ) );
-    //     break;
-    //
-    //   default :
-    //     throw _.err( 'strDirectivesFor : unknown style : ' + style );
-    //
-    // }
+    result = join( result, _.color._strDirectiveBackgroundFor( styleObject.bg ) );
 
   }
 
@@ -1152,9 +1091,6 @@ function strColorStyle( style )
 {
   _.assert( arguments.length === 1, 'expects single argument' );
   _.assert( _.strIs( style ),'expects string got',_.strTypeOf( style ) );
-
-  // if( style === 'head' || style === 'tail' )
-  // debugger;
 
   var result = this.Style[ style ];
 
@@ -1316,19 +1252,16 @@ var Self =
   brighter : brighter,
   paler : paler,
 
-
   // int
 
   colorWidthForExponential : colorWidthForExponential,
   rgbWithInt : rgbWithInt,
   _rgbWithInt : _rgbWithInt,
 
-
   // hsl
 
   hslToRgb : hslToRgb,
   rgbToHsl : rgbToHsl,
-
 
   // random
 
@@ -1336,12 +1269,10 @@ var Self =
   randomRgb : randomRgbWithSl,
   randomRgbWithSl : randomRgbWithSl,
 
-
   // etc
 
   gammaToLinear : gammaToLinear,
   linearToGamma : linearToGamma,
-
 
   // str
 
@@ -1351,10 +1282,10 @@ var Self =
   _strDirectiveForegroundFor : _strDirectiveForegroundFor,
   strFormatForeground : strFormatForeground,
 
+  strFormatEach : strFormatEach,
   strFormat : strFormat,
   strDirectivesFor : strDirectivesFor,
   strColorStyle : strColorStyle,
-
 
   // var
 

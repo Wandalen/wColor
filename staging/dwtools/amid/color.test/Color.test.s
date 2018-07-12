@@ -33,166 +33,148 @@ var _ = wTools;
 
 //
 
-var simplest = function( test )
+function colorNameNearest( test )
 {
 
-  test.description = 'colorNameNearest bitmask';
-  var color = 0xff0000;
-  var got = _.color.rgbaFrom( color );
-  var expected = [ 1,0,0,1 ];
-  test.identical( got,expected );
-
-  test.description = 'colorNameNearest name';
-  var color = 'red';
-  var got = _.color.rgbaFrom( color );
-  var expected = [ 1,0,0,1 ];
-  test.identical( got,expected );
-
-}
-
-//
-
-var colorNameNearest = function( test )
-{
-  test.description = 'black';
+  test.case = 'black';
   var color = [ 0, 0, 0, 1 ];
   var got = _.color.colorNameNearest( color );
   var expected = 'black';
   test.identical( got,expected );
 
-  test.description = 'close to invisible';
+  test.case = 'close to invisible';
   var color = [ 0, 0, 0, 0 ];
   var got = _.color.colorNameNearest( color );
   var expected = 'invisible';
   test.identical( got,expected );
 
-  test.description = 'dim';
+  test.case = 'dim';
   var color = [ 0.3, 0.3, 0.3 ];
   var got = _.color.colorNameNearest( color );
   var expected = 'dim';
   test.identical( got,expected );
 
-  test.description = 'invisible';
+  test.case = 'invisible';
   var color = [ 0.3, 0.3, 0.3, 0 ];
   var got = _.color.colorNameNearest( color );
   var expected = 'invisible';
   test.identical( got,expected );
 
-  test.description = 'close to transparent';
+  test.case = 'close to transparent';
   var color = [ 1, 1, 1, 0 ];
   var got = _.color.colorNameNearest( color );
   var expected = 'transparent';
   test.identical( got,expected );
 
-  test.description = 'white with 0.8 transparency is closer to white';
+  test.case = 'white with 0.8 transparency is closer to white';
   var color = [ 1, 1, 1, 0.8 ];
   var got = _.color.colorNameNearest( color );
   var expected = 'white';
   test.identical( got,expected );
 
-  test.description = 'white 0.7 transparency is still closer to transparent';
+  test.case = 'white 0.7 transparency is still closer to transparent';
   var color = [ 1, 1, 1, 0.7 ];
   var got = _.color.colorNameNearest( color );
   var expected = 'transparent';
   test.identical( got,expected );
 
-  test.description = 'close to brown';
+  test.case = 'close to brown';
   var color = [ 0.6, 0.1, 0.1 ];
   var got = _.color.colorNameNearest( color );
   var expected = 'brown';
   test.identical( got,expected );
 
-  test.description = 'close to dark blue';
+  test.case = 'close to dark blue';
   var color = [ 0.1, 0.1, 0.6 ];
   var got = _.color.colorNameNearest( color );
   var expected = 'dark blue';
   test.identical( got,expected );
 
-  test.description = 'close to pink#1';
+  test.case = 'close to pink#1';
   var color = [ 0.9, 0.4, 0.6 ];
   var got = _.color.colorNameNearest( color );
   var expected = 'purplish pink';
   test.identical( got,expected );
 
-  test.description = 'close to pink#2';
+  test.case = 'close to pink#2';
   var color = [ 0.9, 0.4, 0.4 ];
   var got = _.color.colorNameNearest( color );
   var expected = 'yellowish pink';
   test.identical( got,expected );
 
-  test.description = 'white1';
+  test.case = 'white1';
   var color = [ 1, 1, 1 ];
   var got = _.color.colorNameNearest( color );
   var expected = 'white';
   test.identical( got,expected );
 
-  test.description = 'white2';
+  test.case = 'white2';
   var color = 'ffffff';
   var got = _.color.colorNameNearest( color );
   var expected = 'white';
   test.identical( got,expected );
 
-  test.description = 'rgba a1 ';
+  test.case = 'rgba a1 ';
   var color =  [ 1, 1, 1, 0.3 ];
   var got = _.color.colorNameNearest( color );
   var expected = 'transparent';
   test.identical( got,expected );
 
-  test.description = 'rgba a2';
+  test.case = 'rgba a2';
   var color =  [ 1, 1, 1, 0.9 ];
   var got = _.color.colorNameNearest( color );
   var expected = 'white';
   test.identical( got,expected );
 
-  test.description = 'rgb a1';
+  test.case = 'rgb a1';
   var color =  [ 0.5, 0, 0.1 ];
   var got = _.color.colorNameNearest( color );
   var expected = 'maroon';
   test.identical( got,expected );
 
-  test.description = 'rgb a2';
+  test.case = 'rgb a2';
   var color =  [ 255, 0, 1 ];
   var got = _.color.colorNameNearest( color );
   var expected = 'magenta';
   test.identical( got,expected );
 
-  test.description = 'rgb a3';
+  test.case = 'rgb a3';
   var color =  [ 0.2, 0, 0.3 ];
   var got = _.color.colorNameNearest( color );
   var expected = 'olive green';
   test.identical( got,expected );
 
-  test.description = 'rgb a4';
+  test.case = 'rgb a4';
   var color =  [ 0.3, 0, 0.3 ];
   var got = _.color.colorNameNearest( color );
   var expected = 'purple';
   test.identical( got,expected );
 
-  test.description = 'hex a1';
+  test.case = 'hex a1';
   var color = 'aaaaaa';
   var got = _.color.colorNameNearest( color );
   var expected = 'silver';
   test.identical( got,expected );
 
-  test.description = 'empty string';
+  test.case = 'empty string';
   var color = '';
   var got = _.color.colorNameNearest( color );
   var expected = undefined;
   test.identical( got,expected );
 
-  test.description = 'empty array';
+  test.case = 'empty array';
   var color = [];
   var got = _.color.colorNameNearest( color );
   var expected = 'white';
   test.identical( got,expected );
 
-  test.description = 'no args';
+  test.case = 'no args';
   test.shouldThrowError( function()
   {
     _.color.colorNameNearest();
   });
 
-  test.description = 'no args';
+  test.case = 'no args';
   test.shouldThrowError( function()
   {
     _.color.colorNameNearest();
@@ -201,63 +183,81 @@ var colorNameNearest = function( test )
 }
 
 //
+//
+// function colorNearestCustom( test )
+// {
+//
+//   // green [ 0, 1, 0, 1 ] -> [ 0, 1, 0 ]
+//   // light green [ 0, 0.5, 0, 1 ] -> [ 0, 0.5, 0 ]
+//
+//   test.case = [ 0, 1, 0, 1 ];
+//
+//   var got = _.color.colorNearestCustom( color );
+//   var expected = 'black';
+//   test.identical( got,expected );
+//
+//   xxx
+//
+// }
+//
+//
 
-var colorToHex = function( test )
+function colorToHex( test )
 {
   var cases =
   [
     {
-      description : "rgb as array#1",
+      case : 'rgb as array#1',
       arg : [ 0, 0, 0 ],
-      expected : "#000000"
+      expected : '#000000'
     },
     {
-      description : "rgb as array#2",
+      case : 'rgb as array#2',
       arg : [ 1, 0, 1 ],
-      expected : "#ff00ff"
+      expected : '#ff00ff'
     },
     {
-      description : "rgb as array#3",
+      case : 'rgb as array#3',
       arg : [ 0.5, 0, 1 ],
-      expected : "#7f00ff"
+      expected : '#7f00ff'
     },
     {
-      description : "rgb as num#1",
+      case : 'rgb as num#1',
       arg : 0xFF00FF,
-      expected : "#ff00ff"
+      expected : '#ff00ff'
     },
     {
-      description : "rgb as num#2",
+      case : 'rgb as num#2',
       arg : 255,
-      expected : "#0000ff"
+      expected : '#0000ff'
     },
     {
-      description : "rgb as num#3",
+      case : 'rgb as num#3',
       arg : 65535,
-      expected : "#00ffff"
+      expected : '#00ffff'
     },
     {
-      description : "rgb as obj#1",
+      case : 'rgb as obj#1',
       arg : { r : 0, g : 0, b : 1.0 },
-      expected : "#0000ff"
+      expected : '#0000ff'
     },
     {
-      description : "rgb as obj#2",
+      case : 'rgb as obj#2',
       arg : { r : 0, g : 0, b : 0.5 },
-      expected : "#00007f"
+      expected : '#00007f'
     },
     {
-      description : "rgb as str#1",
+      case : 'rgb as str#1',
       arg : '',
       expected : undefined
     },
     {
-      description : "rgb as str#2",
+      case : 'rgb as str#2',
       arg : '#ffffff',
       expected : '#ffffff'
     },
     {
-      description : "rgb as str#3",
+      case : 'rgb as str#3',
       arg : 'ffffff',
       expected : '#ffffff'
     },
@@ -266,7 +266,7 @@ var colorToHex = function( test )
 
   cases.forEach( function( element )
   {
-    test.description = element.description;
+    test.case = element.case;
     var got = _.color.colorToHex( element.arg );
     test.identical( got, element.expected );
   });
@@ -274,52 +274,52 @@ var colorToHex = function( test )
 
 //
 
-var hexToColor = function( test )
+function hexToColor( test )
 {
   var cases =
   [
     {
-      description : "#1",
+      case : '#1',
       arg : '#ff0000',
       expected : [ 1, 0, 0 ]
     },
     {
-      description : "#2",
+      case : '#2',
       arg : '#80007f',
       expected : [ 0.5, 0, 0.49 ]
     },
     {
-      description : "#3",
+      case : '#3',
       arg : '252525',
       expected : [ 0.14, 0.14, 0.14 ]
     },
     {
-      description : "shorthand test#1",
+      case : 'shorthand test#1',
       arg : 'fff',
       expected : [ 1, 1, 1 ]
     },
     {
-      description : "shorthand test#2",
+      case : 'shorthand test#2',
       arg : '#f00',
       expected : [ 1, 0, 0 ]
     },
     {
-      description : "shorthand test#3",
+      case : 'shorthand test#3',
       arg : '555',
       expected : [ 0.3, 0.3, 0.3 ]
     },
     {
-      description : "incorrect shorthand test",
+      case : 'incorrect shorthand test',
       arg : '#0fff',
       expected : null
     },
     {
-      description : "incorrect data#1",
+      case : 'incorrect data#1',
       arg : '#255255255',
       expected : null
     },
     {
-      description : "incorrect data#2",
+      case : 'incorrect data#2',
       arg : '#-5-5-5',
       expected : null
     }
@@ -327,7 +327,7 @@ var hexToColor = function( test )
 
   cases.forEach( function( element )
   {
-    test.description = element.description;
+    test.case = element.case;
     var got = _.color.hexToColor( element.arg );
     test./*eps*/accuracy = 1e-1;
     test.equivalent( got, element.expected );
@@ -337,42 +337,42 @@ var hexToColor = function( test )
 
 //
 
-var colorToRgbHtml = function( test )
+function colorToRgbHtml( test )
 {
   var cases =
   [
     {
-      description : "color as string #1",
+      case : 'color as string #1',
       arg : '#ff0000',
       expected : '#ff0000'
     },
     {
-      description : "color as obj #1",
+      case : 'color as obj #1',
       arg : { r : 0, g : 1, b : 0 },
       expected : 'rgb( 0, 255, 0 )'
     },
     {
-      description : "color as obj #2",
+      case : 'color as obj #2',
       arg : { r : 255, g : 0, b : 0 },
       err : true,
     },
     {
-      description : "color as obj #3",
+      case : 'color as obj #3',
       arg : { r : -1, g : 0, b : 0 },
       err : true,
     },
     {
-      description : "color as array #1",
+      case : 'color as array #1',
       arg : [ 0, 1, 0 ],
       expected : 'rgb( 0, 255, 0 )'
     },
     {
-      description : "color as array #2",
+      case : 'color as array #2',
       arg : [ 0, -1, 0 ],
       err : true
     },
     {
-      description : "color as array #3",
+      case : 'color as array #3',
       arg : [ 0, 255, 0 ],
       err : true
     }
@@ -380,7 +380,7 @@ var colorToRgbHtml = function( test )
 
   cases.forEach( function( element )
   {
-    test.description = element.description;
+    test.case = element.case;
     if( element.err )
     {
       test.shouldThrowErrorSync( function()
@@ -396,64 +396,65 @@ var colorToRgbHtml = function( test )
 
   });
 
-  if( Config.debug )
+  if( !Config.debug )
+  return;
+
+  test.shouldThrowError(function()
   {
-    test.shouldThrowError(function()
-    {
-      test.description = 'incorrect type';
-      _.color.colorToRgbHtml( 1 );
-    });
-    test.shouldThrowError(function()
-    {
-      test.description = 'no arguments';
-      _.color.colorToRgbHtml( );
-    });
-  }
+    test.case = 'incorrect type';
+    _.color.colorToRgbHtml( 1 );
+  });
+  test.shouldThrowError(function()
+  {
+    test.case = 'no arguments';
+    _.color.colorToRgbHtml( );
+  });
+
 }
 
 //
 
-var colorToRgbaHtml = function( test )
+function colorToRgbaHtml( test )
 {
   var cases =
   [
     {
-      description : "color as string #1",
+      case : 'color as string #1',
       arg : '#ff0000',
       expected : '#ff0000'
     },
     {
-      description : "color as obj #1",
+      case : 'color as obj #1',
       arg : { r : 0, g : 1, b : 0, a : 1 },
       expected : 'rgba( 0, 255, 0, 1 )'
     },
     {
-      description : "color as obj, incorrect value #2",
+      case : 'color as obj, incorrect value #2',
       arg : { r : 255, g : 0, b : 0 },
       err : true,
     },
     {
-      description : "color as obj #3",
+      case : 'color as obj #3',
       arg : { r : -1, g : 0, b : 0 },
       err : true,
     },
     {
-      description : "color as array #1",
+      case : 'color as array #1',
       arg : [ 0, 1, 0, 0.5],
       expected : 'rgba( 0, 255, 0, 0.5 )'
     },
     {
-      description : "color as number #1",
+      case : 'color as number #1',
       arg : 0x00FFFF,
       expected : 'rgba( 0, 255, 255, 1 )'
     },
     {
-      description : "color as array #2",
+      case : 'color as array #2',
       arg : [ 0, -1, 0 ],
       err : true
     },
     {
-      description : "color as array #3",
+      case : 'color as array #3',
       arg : [ 0, 255, 0 ],
       err : true
     }
@@ -475,49 +476,50 @@ var colorToRgbaHtml = function( test )
     }
   });
 
-  if( Config.debug )
+  if( !Config.debug )
+  return;
+
+  test.shouldThrowErrorSync(function()
   {
-    test.shouldThrowErrorSync(function()
-    {
-      test.description = 'incorrect type';
-      _.color.colorToRgbaHtml( function() {} );
-    });
-    test.shouldThrowErrorSync(function()
-    {
-      test.description = 'no arguments';
-      _.color.colorToRgbaHtml( );
-    });
-  };
+    test.case = 'incorrect type';
+    _.color.colorToRgbaHtml( function() {} );
+  });
+  test.shouldThrowErrorSync(function()
+  {
+    test.case = 'no arguments';
+    _.color.colorToRgbaHtml( );
+  });
+
 }
 
 //
 
-var rgbByBitmask = function( test )
+function ( test )
 {
   var cases =
   [
     {
-      description : "#1",
+      case : '#1',
       arg : 0xff00ff,
       expected : [ 1, 0, 1 ]
     },
     {
-      description : "#2",
+      case : '#2',
       arg : 0x8000ff,
       expected : [ 0.5, 0, 1 ]
     },
     {
-      description : "#3",
+      case : '#3',
       arg : 0xff,
       expected : [ 0, 0, 1 ]
     },
     {
-      description : "#4",
+      case : '#4',
       arg : 255,
       expected : [ 0, 0, 1 ]
     },
     {
-      description : "#5",
+      case : '#5',
       arg : -1,
       expected : [ 1, 1, 1 ]
     },
@@ -526,169 +528,186 @@ var rgbByBitmask = function( test )
 
   cases.forEach( function( element )
   {
-    test.description = element.description;
+    test.case = element.case;
     var got = _.color.rgbByBitmask( element.arg );
     test./*eps*/accuracy = 1e-2;
     test.equivalent( got, element.expected );
   });
 
-  if( Config.debug )
+
+  if( !Config.debug )
+  return;
+
+  test.shouldThrowErrorSync(function()
   {
-    test.shouldThrowErrorSync(function()
-    {
-      test.description = 'incorrect type';
-      _.color.rgbByBitmask( 'str' );
-    });
-    test.shouldThrowErrorSync(function()
-    {
-      test.description = 'no arguments';
-      _.color.rgbByBitmask( );
-    });
-  };
+    test.case = 'incorrect type';
+    _.color.rgbByBitmask( 'str' );
+  });
+  test.shouldThrowErrorSync(function()
+  {
+    test.case = 'no arguments';
+    _.color.rgbByBitmask( );
+  });
+
 }
 
 //
 
-var rgbaFrom = function( test )
+function rgbaFrom( test )
 {
   var cases =
   [
     {
-      description : "map #1",
+      case : 'map #1',
       arg : { r : 0 },
       expected : [ 0, 1, 1, 1 ]
     },
     {
-      description : "map #2",
+      case : 'map #2',
       arg : { r : 0, g : 1, b : 1, a : 0 },
       expected : [ 0, 1, 1, 0 ]
     },
     {
-      description : "number #1",
+      case : 'number #1',
       arg : -1,
       expected : [ 1, 1, 1, 1 ]
     },
     {
-      description : "number #2",
+      case : 'number #2',
       arg : 0xFF0080,
       expected : [ 1, 0, 0.5, 1 ]
     },
     {
-      description : "array #1",
+      case : 'array #1',
       arg : [ -1, 0, 1, 1 ],
       expected : [ -1, 0, 1, 1 ]
     },
     {
-      description : "array #2",
+      case : 'array #2',
       arg : [ 0, 0, 0 ],
       expected : [ 0, 0, 0, 1 ]
     },
     {
-      description : "str name#1",
+      case : 'str name#1',
       arg : 'white',
       expected : [ 1, 1, 1, 1 ]
     },
     {
-      description : "str hex #2",
+      case : 'str hex #2',
       arg : '#ffffff',
       expected : [ 1, 1, 1, 1 ]
     },
     {
-      description : "rgb component > 1",
+      case : 'rgb component > 1',
       arg : [ 10,10,10 ],
       expected : [ 10, 10, 10, 1 ]
     },
     {
-      description : "rgba component > 1",
+      case : 'rgba component > 1',
       arg : [ 10,10,10,10 ],
       expected : [ 10, 10, 10, 10 ]
     },
     {
-      description : "all negative, no alpha",
+      case : 'all negative, no alpha',
       arg : [ -10, -10, -10 ],
       expected : [ -10, -10, -10, 1 ]
     },
     {
-      description : "all negative",
+      case : 'all negative',
       arg : [ -10, -10, -10, -10 ],
       expected : [ -10, -10, -10, -10 ]
     }
   ]
 
+
+  test.case = 'rgbaFrom bitmask';
+  var color = 0xff0000;
+  var got = _.color.rgbaFrom( color );
+  var expected = [ 1,0,0,1 ];
+  test.identical( got,expected );
+
+  test.case = 'rgbaFrom name';
+  var color = 'red';
+  var got = _.color.rgbaFrom( color );
+  var expected = [ 1,0,0,1 ];
+  test.identical( got,expected );
+
   cases.forEach( function( element )
   {
-    test.description = element.description;
+    test.case = element.case;
     var got = _.color.rgbaFrom( element.arg );
     test./*eps*/accuracy = 1e-2;
     test.equivalent( got, element.expected );
   });
 
-  if( Config.debug )
+
+  if( !Config.debug )
+  return;
+
+  test.shouldThrowErrorSync( function()
   {
-    test.shouldThrowErrorSync( function()
-    {
-      _.color.rgbaFrom( 'unknown' )
-    })
-    test.shouldThrowErrorSync( function()
-    {
-      _.color.rgbaFrom( function(){} )
-    })
-  };
+    _.color.rgbaFrom( 'unknown' )
+  })
+  test.shouldThrowErrorSync( function()
+  {
+    _.color.rgbaFrom( function(){} )
+  })
+
 }
 
 //
 
-var rgbFrom = function( test )
+function rgbFrom( test )
 {
   var cases =
   [
     {
-      description : "map #1",
+      case : 'map #1',
       arg : { r : 0 },
       expected : [ 0, 1, 1 ]
     },
     {
-      description : "map #2",
+      case : 'map #2',
       arg : { r : 0, g : 1, b : 1, a : 0 },
       expected : [ 0, 1, 1 ]
     },
     {
-      description : "number #1",
+      case : 'number #1',
       arg : -1,
       expected : [ 1, 1, 1 ]
     },
     {
-      description : "number #2",
+      case : 'number #2',
       arg : 0xFF0080,
       expected : [ 1, 0, 0.5 ]
     },
     {
-      description : "array #1",
+      case : 'array #1',
       arg : [ -1, 0, 1, 1 ],
       expected : [ -1, 0, 1 ]
     },
     {
-      description : "array #2",
+      case : 'array #2',
       arg : [ 0, 0, 0 ],
       expected : [ 0, 0, 0 ]
     },
     {
-      description : "str name#1",
+      case : 'str name#1',
       arg : 'white',
       expected : [ 1, 1, 1 ]
     },
     {
-      description : "str hex #2",
+      case : 'str hex #2',
       arg : '#ffffff',
       expected : [ 1, 1, 1 ]
     },
     {
-      description : "rgb component > 1",
+      case : 'rgb component > 1',
       arg : [ 10,10,10 ],
       expected : [ 10, 10, 10 ]
     },
     {
-      description : "all negative",
+      case : 'all negative',
       arg : [ -10, -10, -10 ],
       expected : [ -10, -10, -10 ]
     }
@@ -696,23 +715,25 @@ var rgbFrom = function( test )
 
   cases.forEach( function( element )
   {
-    test.description = element.description;
+    test.case = element.case;
     var got = _.color.rgbFrom( element.arg );
     test./*eps*/accuracy = 1e-2;
     test.equivalent( got, element.expected );
   });
 
-  if( Config.debug )
+
+  if( !Config.debug )
+  return;
+
+  test.shouldThrowErrorSync( function()
   {
-    test.shouldThrowErrorSync( function()
-    {
-      _.color.rgbFrom( 'unknown' )
-    })
-    test.shouldThrowErrorSync( function()
-    {
-      _.color.rgbFrom( function(){} )
-    })
-  };
+    _.color.rgbFrom( 'unknown' )
+  })
+  test.shouldThrowErrorSync( function()
+  {
+    _.color.rgbFrom( function(){} )
+  })
+
 }
 
 //
@@ -727,8 +748,10 @@ var Self =
   tests :
   {
 
-    simplest : simplest,
+    rgbaFrom : rgbaFrom,
     colorNameNearest : colorNameNearest,
+    // colorNearestCustom : colorNearestCustom,
+
     colorToHex : colorToHex,
     hexToColor : hexToColor,
     colorToRgbHtml : colorToRgbHtml,
