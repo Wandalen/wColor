@@ -183,24 +183,6 @@ function colorNameNearest( test )
 }
 
 //
-//
-// function colorNearestCustom( test )
-// {
-//
-//   // green [ 0, 1, 0, 1 ] -> [ 0, 1, 0 ]
-//   // light green [ 0, 0.5, 0, 1 ] -> [ 0, 0.5, 0 ]
-//
-//   test.case = [ 0, 1, 0, 1 ];
-//
-//   var got = _.color.colorNearestCustom( color );
-//   var expected = 'black';
-//   test.identical( got,expected );
-//
-//   xxx
-//
-// }
-//
-//
 
 function colorToHex( test )
 {
@@ -748,9 +730,7 @@ var Self =
   tests :
   {
 
-    rgbaFrom : rgbaFrom,
     colorNameNearest : colorNameNearest,
-    // colorNearestCustom : colorNearestCustom,
 
     colorToHex : colorToHex,
     hexToColor : hexToColor,

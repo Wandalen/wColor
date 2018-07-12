@@ -1192,10 +1192,10 @@ var ColorMapShell =
 var Style =
 {
 
-  'positive' : { fg : 'green' },
-  'negative' : { fg : 'red' },
+  'positive' : { fg : 'light green' },
+  'negative' : { fg : 'light red' },
 
-  'topic' : { fg : 'dim' },
+  'topic' : { fg : 'light white' },
 
   'head' : { fg : 'black', bg : 'light white' },
   'tail' : { fg : 'light white', bg : 'black' },
