@@ -5,27 +5,34 @@
 if( typeof module !== 'undefined' )
 {
 
-  if( typeof wBase === 'undefined' )
-  try
+  if( typeof _global_ === 'undefined' || !_global_.wBase )
   {
-    require( '../wTools.s' );
-  }
-  catch( err )
-  {
-    require( 'wTools' );
+    let toolsPath = '../../../dwtools/Base.s';
+    let toolsExternal = 0;
+    try
+    {
+      toolsPath = require.resolve( toolsPath );
+    }
+    catch( err )
+    {
+      toolsExternal = 1;
+      require( 'wTools' );
+    }
+    if( !toolsExternal )
+    require( toolsPath );
   }
 
 }
 
-var _ = wTools;
+var _ = _global_.wTools;
 
 //
 
-function colorByName( name,def )
+function rgbFromName( name,def )
 {
-  var o = _.routineOptionsFromThis( colorByName,this,Self );
+  var o = _.routineOptionsFromThis( rgbFromName,this,Self );
 
-  _.routineOptions( colorByName,o );
+  _.routineOptions( rgbFromName,o );
 
   var result;
   if( !o.colorMap )
@@ -37,17 +44,17 @@ function colorByName( name,def )
   name = name.toLowerCase();
   name = name.trim();
 
-  return _colorByName( name,def,o.colorMap );
+  return _rgbFromName( name,def,o.colorMap );
 }
 
-colorByName.defaults =
+rgbFromName.defaults =
 {
   colorMap : null,
 }
 
 //
 
-function _colorByName( name,def,map )
+function _rgbFromName( name,def,map )
 {
   var result = map[ name ];
 
@@ -61,7 +68,7 @@ function _colorByName( name,def,map )
 function rgbByBitmask( src )
 {
 
-  _.assert( arguments.length === 1 );
+  _.assert( arguments.length === 1, 'expects single argument' );
   _.assert( _.numberIs( src ) );
 
   return _rgbByBitmask( src );
@@ -85,7 +92,7 @@ function _rgbByBitmask( src )
 function _rgbaFromNotName( src )
 {
 
-  _.assert( arguments.length === 1 );
+  _.assert( arguments.length === 1, 'expects single argument' );
   _.assert( _.numberIs( src ) || _.arrayLike( src ) || _.mapIs( src ) );
 
   if( _.mapIs( src ) )
@@ -125,7 +132,7 @@ function rgbaFrom( src )
 {
   var result;
 
-  _.assert( arguments.length === 1 );
+  _.assert( arguments.length === 1, 'expects single argument' );
 
   if( _.numberIs( src ) || _.arrayLike( src ) || _.mapIs( src ) )
   return _rgbaFromNotName( src );
@@ -133,7 +140,7 @@ function rgbaFrom( src )
   /* */
 
   if( _.strIs( src ) )
-  result = colorByName.call( this,src );
+  result = rgbFromName.call( this,src );
 
   if( result )
   {
@@ -169,7 +176,7 @@ rgbaFrom.defaults =
 
 function rgbFrom( src )
 {
-  _.assert( arguments.length === 1 );
+  _.assert( arguments.length === 1, 'expects single argument' );
 
   if( _.arrayLike( src ) )
   return _.arraySlice( src,0,3 );
@@ -190,7 +197,7 @@ rgbFrom.defaults.__proto__ = rgbaFrom.defaults;
 function rgbaFromTry( src,def )
 {
 
-  _.assert( arguments.length === 2 );
+  _.assert( arguments.length === 2, 'expects exactly two arguments' );
 
   try
   {
@@ -214,7 +221,7 @@ rgbaFromTry.defaults.__proto__ = rgbaFrom.defaults;
 function rgbFromTry( src,def )
 {
 
-  _.assert( arguments.length === 2 );
+  _.assert( arguments.length === 2, 'expects exactly two arguments' );
 
   try
   {
@@ -328,7 +335,7 @@ function colorNameNearest( color )
 {
   var self = this;
 
-  _.assert( arguments.length === 1 );
+  _.assert( arguments.length === 1, 'expects single argument' );
 
   if( _.strIs( color ) )
   {
@@ -354,7 +361,7 @@ function colorNearestCustom( o )
 {
   var self = this;
 
-  _.assert( arguments.length === 1 );
+  _.assert( arguments.length === 1, 'expects single argument' );
 
   _.routineOptions( colorNearestCustom, o );
 
@@ -443,7 +450,7 @@ function colorToHex( rgb, def )
 function hexToColor( hex )
 {
 
-  _.assert( arguments.length === 1 );
+  _.assert( arguments.length === 1, 'expects single argument' );
   _.assert( _.strIs( hex ) );
 
   var shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
@@ -458,9 +465,9 @@ function hexToColor( hex )
 
   result =
   [
-    parseInt( result[ 1 ], 16) / 255,
-    parseInt( result[ 2 ], 16) / 255,
-    parseInt( result[ 3 ], 16) / 255,
+    parseInt( result[ 1 ], 16 ) / 255,
+    parseInt( result[ 2 ], 16 ) / 255,
+    parseInt( result[ 3 ], 16 ) / 255,
   ]
 
   return result;
@@ -473,7 +480,7 @@ function colorToRgbHtml( src )
   var result = '';
 
   _.assert( _.strIs( src ) || _.objectIs( src ) || _.arrayIs( src ) );
-  _.assert( arguments.length === 1 );
+  _.assert( arguments.length === 1, 'expects single argument' );
 
 
   if( _.strIs( src ) )
@@ -507,7 +514,7 @@ function colorToRgbaHtml( src )
   var result = '';
 
   _.assert( _.strIs( src ) || _.objectIs( src ) || _.arrayIs( src ) || _.numberIs( src ) );
-  _.assert( arguments.length === 1 );
+  _.assert( arguments.length === 1, 'expects single argument' );
 
   if( _.strIs( src ) )
   return src;
@@ -548,7 +555,7 @@ function colorToRgbaHtml( src )
 
 function mulSaturation( rgb,factor )
 {
-  _.assert( arguments.length === 2 );
+  _.assert( arguments.length === 2, 'expects exactly two arguments' );
   _.assert( factor >= 0 );
 
   var hsl = rgbToHsl( rgb );
@@ -621,7 +628,7 @@ function rgbWithInt( srcInt )
 {
   var result = [];
 
-  _.assert( arguments.length === 1 );
+  _.assert( arguments.length === 1, 'expects single argument' );
   _.assert( _.numberIs( srcInt ),'rgbWithInt :','expects srcInt' );
 
   /* eval degree */
@@ -912,6 +919,185 @@ function linearToGamma( dst )
 }
 
 // --
+// str
+// --
+
+// function strFormatBackground( str, color )
+// {
+//   _.assert( arguments.length === 1 || arguments.length === 2 );
+//   if( arguments[ 1 ] === undefined )
+//   return _strDirectiveBackgroundFor( arguments[ 0 ] );
+//   else
+//   return strFormatBackground( arguments[ 0 ],arguments[ 1 ] );
+// }
+
+//
+
+function _strDirectiveBackgroundFor( color )
+{
+  var result = Object.create( null );
+
+  _.assert( arguments.length === 1, 'expects single argument' );
+  _.assert( _.strIs( color ) );
+
+  result.pre = `#background : ${color}#`;
+  result.post = `#background : default#`;
+
+  return result;
+}
+
+//
+
+function strFormatBackground( str, color )
+{
+
+  if( _.numberIs( color ) )
+  color = _.color.colorNameNearest( color );
+
+  _.assert( arguments.length === 2,'expects 2 arguments' );
+  _.assert( _.strIs( str ) );
+  _.assert( _.strIs( color ) );
+
+  return `#background : ${color}#${str}#background : default#`;
+}
+
+//
+
+// function strFormatForeground( str, color )
+// {
+//   _.assert( arguments.length === 1 || arguments.length === 2 );
+//   if( arguments[ 1 ] === undefined )
+//   return _strDirectiveForegroundFor( arguments[ 0 ] );
+//   else
+//   return strFormatForeground( arguments[ 0 ],arguments[ 1 ] );
+// }
+
+//
+
+function _strDirectiveForegroundFor( color )
+{
+  var result = Object.create( null );
+
+  _.assert( arguments.length === 1, 'expects single argument' );
+  _.assert( _.strIs( color ) );
+
+  result.pre = `#foreground : ${color}#`;
+  result.post = `#foreground : default#`;
+
+  return result;
+}
+
+//
+
+function strFormatForeground( str, color )
+{
+
+  if( _.numberIs( color ) )
+  color = _.color.colorNameNearest( color );
+
+  _.assert( arguments.length === 2,'expects 2 arguments' );
+  _.assert( _.strIs( str ),'expects string ( src )' );
+  _.assert( _.strIs( color ),'expects string ( color )' );
+
+  return `#foreground : ${color}#${str}#foreground : default#`;
+}
+
+//
+
+var strFormatEach = _.routineVectorize_functor( strFormat );
+
+//
+
+function strFormat( str, style )
+{
+  var result = str;
+
+  // if( _.arrayIs( result ) )
+  // result = _.strConcat.apply( _,result );
+
+  _.assert( arguments.length === 1 || arguments.length === 2 );
+  _.assert( _.strIs( result ),'expects string got',_.strTypeOf( result ) );
+
+  var r = this.strDirectivesFor( style );
+
+  result = r.pre + result + r.post;
+
+  return result;
+}
+
+//
+
+function strDirectivesFor( style )
+{
+  var result = Object.create( null );
+  result.pre = '';
+  result.post = '';
+
+  var StyleObjectOptions =
+  {
+    fg : null,
+    bg : null,
+  }
+
+  var style = _.arrayAs( style );
+
+  _.assert( arguments.length === 1, 'expects single argument' );
+  _.assert( _.arrayIs( style ) ,'expects string or array of strings ( style )' );
+
+  function join()
+  {
+    for( var a = 1 ; a < arguments.length ; a++ )
+    {
+      arguments[ 0 ].pre = arguments[ a ].pre + arguments[ 0 ].pre;
+      arguments[ 0 ].post = arguments[ 0 ].post + arguments[ a ].post;
+    }
+    return arguments[ 0 ];
+  }
+
+  for( var s = 0 ; s < style.length ; s++ )
+  {
+
+    if( _.objectIs( style[ s ] ) )
+    {
+      var obj = style[ s ];
+      _.assertMapHasOnly( obj,StyleObjectOptions );
+      if( obj.fg )
+      result = join( result,_.color._strDirectiveForegroundFor( obj.fg ) );
+      if( obj.bg )
+      result = join( result,_.color._strDirectiveBackgroundFor( obj.bg ) );
+      continue;
+    }
+
+    _.assert( _.strIs( style[ s ] ) ,'expects string or array of strings { style }' );
+
+    var styleObject = this.strColorStyle( style[ s ] );
+
+    _.assert( styleObject, 'unknown color',style[ s ] );
+
+    if( styleObject.fg )
+    result = join( result, _.color._strDirectiveForegroundFor( styleObject.fg ) );
+
+    if( styleObject.bg )
+    result = join( result, _.color._strDirectiveBackgroundFor( styleObject.bg ) );
+
+  }
+
+  return result;
+}
+
+//
+
+function strColorStyle( style )
+{
+  _.assert( arguments.length === 1, 'expects single argument' );
+  _.assert( _.strIs( style ),'expects string got',_.strTypeOf( style ) );
+
+  var result = this.Style[ style ];
+
+  return result;
+}
+
+// --
 // var
 // --
 
@@ -1003,8 +1189,30 @@ var ColorMapShell =
   'light white'     : [ 0.9,0.9,0.9 ],
 }
 
+var Style =
+{
+
+  'positive' : { fg : 'light green' },
+  'negative' : { fg : 'light red' },
+
+  'topic' : { fg : 'light white' },
+
+  'head' : { fg : 'black', bg : 'light white' },
+  'tail' : { fg : 'light white', bg : 'black' },
+
+  'selected' : { fg : 'yellow', bg : 'blue' },
+  'neutral' : { fg : 'smoke', bg : 'dim' },
+
+  'pipe.neutral' : { fg : 'blue', bg : 'yellow' },
+  'pipe.negative' : { fg : 'red', bg : 'yellow' },
+
+  'info.neutral' : { fg : 'light white', bg : 'light magenta' },
+  'info.negative' : { fg : 'red', bg : 'light magenta' },
+
+}
+
 // --
-// prototype
+// define class
 // --
 
 var Self =
@@ -1012,8 +1220,8 @@ var Self =
 
   //
 
-  colorByName : colorByName,
-  _colorByName : _colorByName,
+  rgbFromName : rgbFromName,
+  _rgbFromName : _rgbFromName,
 
   rgbByBitmask : rgbByBitmask,
   _rgbByBitmask : _rgbByBitmask,
@@ -1050,52 +1258,73 @@ var Self =
   rgbWithInt : rgbWithInt,
   _rgbWithInt : _rgbWithInt,
 
-
   // hsl
 
   hslToRgb : hslToRgb,
   rgbToHsl : rgbToHsl,
 
-
   // random
 
   randomHsl : randomHsl,
-  random : randomRgbWithSl,
+  randomRgb : randomRgbWithSl,
   randomRgbWithSl : randomRgbWithSl,
-
 
   // etc
 
   gammaToLinear : gammaToLinear,
   linearToGamma : linearToGamma,
 
+  // str
+
+  _strDirectiveBackgroundFor : _strDirectiveBackgroundFor,
+  strFormatBackground : strFormatBackground,
+
+  _strDirectiveForegroundFor : _strDirectiveForegroundFor,
+  strFormatForeground : strFormatForeground,
+
+  strFormatEach : strFormatEach,
+  strFormat : strFormat,
+  strDirectivesFor : strDirectivesFor,
+  strColorStyle : strColorStyle,
 
   // var
 
   ColorMap : ColorMap,
   ColorMapGreyscale : ColorMapGreyscale,
   ColorMapDistinguishable : ColorMapDistinguishable,
-  ColorMapShell : ColorMapShell
+  ColorMapShell : ColorMapShell,
+  Style : Style,
 
 }
 
-if( !wTools.color )
+if( !_.color )
 {
-  wTools.color = Self;
+  _.color = Self;
 }
 else
 {
 
-  _.mapSupplement( wTools.color,Self );
-  _.mapSupplement( wTools.color.ColorMap,ColorMap );
-  _.mapSupplement( wTools.color.ColorMapGreyscale,ColorMapGreyscale );
-  _.mapSupplement( wTools.color.ColorMapDistinguishable,ColorMapDistinguishable );
-  _.mapSupplement( wTools.color.ColorMapShell,ColorMapShell );
+  _.mapSupplement( _.color,Self );
+  _.mapSupplement( _.color.ColorMap,ColorMap );
+  _.mapSupplement( _.color.ColorMapGreyscale,ColorMapGreyscale );
+  _.mapSupplement( _.color.ColorMapDistinguishable,ColorMapDistinguishable );
+  _.mapSupplement( _.color.ColorMapShell,ColorMapShell );
 
 }
 
-_.mapSupplement( wTools.color.ColorMap,ColorMapGreyscale );
-_.mapSupplement( wTools.color.ColorMap,ColorMapDistinguishable );
-_.mapSupplement( wTools.color.ColorMap,ColorMapShell );
+_.mapSupplement( _.color.ColorMap,ColorMapGreyscale );
+_.mapSupplement( _.color.ColorMap,ColorMapDistinguishable );
+_.mapSupplement( _.color.ColorMap,ColorMapShell );
+
+// --
+// export
+// --
+
+if( typeof module !== 'undefined' )
+if( _global_.WTOOLS_PRIVATE )
+delete require.cache[ module.id ];
+
+if( typeof module !== 'undefined' && module !== null )
+module[ 'exports' ] = Self;
 
 })();

@@ -1,9 +1,9 @@
 {
   "name": "wColor",
-  "version": "0.3.19",
+  "version": "0.3.39",
   "engine": "node >= 6.0.0",
   "license": "MIT",
-  "description": "Module in JavaScript providing convenient means for color conversion",
+  "description": "The module in JavaScript provides convenient means for color conversion",
   "author": "Kostiantyn Wandalen <wtory.net@domainsbyproxy.com>",
   "contributors": [
     {
@@ -15,14 +15,14 @@
       "email": "volodymyr.migdal@gmail.com"
     }
   ],
-  "main": "staging/amid/color/Color.s",
+  "main": "staging/dwtools/amid/color/Color.s",
   "files": [
-    "staging/amid/color",
+    "staging/dwtools/amid/color",
     "production"
   ],
   "directories": {
     "doc": "doc",
-    "main": "staging/amid/color/Color.s"
+    "main": "staging/dwtools/amid/color/Color.s"
   },
   "scripts": {
     "test": "wtest staging",
@@ -40,7 +40,7 @@
   },
   "devDependencies": {
     "wTesting": "",
-    "wColor": ""
+    "wColor": "."
   },
   "keywords": [
     "wTools",
