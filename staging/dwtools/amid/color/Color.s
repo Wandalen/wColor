@@ -1168,7 +1168,7 @@ var ColorMapDistinguishable =
 
 //
 
-var ColorMapShell =
+/* var ColorMapShell =
 {
   'white'           : [ 1.0,1.0,1.0 ],
   'black'           : [ 0.0,0.0,0.0 ],
@@ -1187,7 +1187,7 @@ var ColorMapShell =
   'light cyan'      : [ 0.0,0.5,0.5 ],
   'light green'     : [ 0.0,0.5,0.0 ],
   'light white'     : [ 0.9,0.9,0.9 ],
-}
+} */
 
 var Style =
 {
@@ -1292,7 +1292,7 @@ var Self =
   ColorMap : ColorMap,
   ColorMapGreyscale : ColorMapGreyscale,
   ColorMapDistinguishable : ColorMapDistinguishable,
-  ColorMapShell : ColorMapShell,
+  // ColorMapShell : ColorMapShell,
   Style : Style,
 
 }
@@ -1308,13 +1308,13 @@ else
   _.mapSupplement( _.color.ColorMap,ColorMap );
   _.mapSupplement( _.color.ColorMapGreyscale,ColorMapGreyscale );
   _.mapSupplement( _.color.ColorMapDistinguishable,ColorMapDistinguishable );
-  _.mapSupplement( _.color.ColorMapShell,ColorMapShell );
+  // _.mapSupplement( _.color.ColorMapShell,ColorMapShell );
 
 }
 
 _.mapSupplement( _.color.ColorMap,ColorMapGreyscale );
 _.mapSupplement( _.color.ColorMap,ColorMapDistinguishable );
-_.mapSupplement( _.color.ColorMap,ColorMapShell );
+// _.mapSupplement( _.color.ColorMap,ColorMapShell );
 
 // --
 // export
