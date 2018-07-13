@@ -1012,9 +1012,6 @@ function strFormat( str, style )
 {
   var result = str;
 
-  // if( _.arrayIs( result ) )
-  // result = _.strConcat.apply( _,result );
-
   _.assert( arguments.length === 1 || arguments.length === 2 );
   _.assert( _.strIs( result ),'expects string got',_.strTypeOf( result ) );
 
