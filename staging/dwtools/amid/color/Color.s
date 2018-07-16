@@ -1059,9 +1059,9 @@ function strDirectivesFor( style )
       var obj = style[ s ];
       _.assertMapHasOnly( obj,StyleObjectOptions );
       if( obj.fg )
-      result = join( result,_.color._strDirectiveForegroundFor( obj.fg ) );
+      result = join( result, _.color._strDirectiveForegroundFor( obj.fg ) );
       if( obj.bg )
-      result = join( result,_.color._strDirectiveBackgroundFor( obj.bg ) );
+      result = join( result, _.color._strDirectiveBackgroundFor( obj.bg ) );
       continue;
     }
 
@@ -1192,7 +1192,8 @@ var Style =
   'positive' : { fg : 'light green' },
   'negative' : { fg : 'light red' },
 
-  'topic' : { fg : 'light white' },
+  'topic.up' : { fg : 'light white' },
+  'topic.down' : { fg : 'black', bg : 'white' },
 
   'head' : { fg : 'black', bg : 'light white' },
   'tail' : { fg : 'light white', bg : 'black' },
