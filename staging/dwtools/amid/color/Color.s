@@ -1,6 +1,6 @@
 (function _Color_s_() {
 
-'use strict'; /**/
+'use strict';
 
 if( typeof module !== 'undefined' )
 {
@@ -1012,8 +1012,11 @@ function strFormat( str, style )
 {
   var result = str;
 
+  if( _.numberIs( result ) )
+  result = result + '';
+
   _.assert( arguments.length === 1 || arguments.length === 2 );
-  _.assert( _.strIs( result ),'expects string got',_.strTypeOf( result ) );
+  _.assert( _.strIs( result ), 'expects string got',_.strTypeOf( result ) );
 
   var r = this.strDirectivesFor( style );
 
