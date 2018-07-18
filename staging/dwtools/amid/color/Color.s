@@ -1168,10 +1168,10 @@ var ColorMapDistinguishable =
 
 //
 
-/* var ColorMapShell =
+var ColorMapShell =
 {
   'white'           : [ 1.0,1.0,1.0 ],
-  'black'           : [ 0.0,0.0,0.0 ],
+  'black'           : [ 0.5,0.5,0.5 ],
   'green'           : [ 0.0,1.0,0.0 ],
   'red'             : [ 1.0,0.0,0.0 ],
   'yellow'          : [ 1.0,1.0,0.0 ],
@@ -1179,36 +1179,36 @@ var ColorMapDistinguishable =
   'cyan'            : [ 0.0,1.0,1.0 ],
   'magenta'         : [ 1.0,0.0,1.0 ],
 
-  'light black'     : [ 0.5,0.5,0.5 ],
-  'light yellow'    : [ 0.5,0.5,0.0 ],
-  'light red'       : [ 0.5,0.0,0.0 ],
-  'light magenta'   : [ 0.5,0.0,0.5 ],
-  'light blue'      : [ 0.0,0.0,0.5 ],
-  'light cyan'      : [ 0.0,0.5,0.5 ],
-  'light green'     : [ 0.0,0.5,0.0 ],
-  'light white'     : [ 0.9,0.9,0.9 ],
-} */
+  'dark black'     : [ 0.0,0.0,0.0 ],
+  'dark yellow'    : [ 0.5,0.5,0.0 ],
+  'dark red'       : [ 0.5,0.0,0.0 ],
+  'dark magenta'   : [ 0.5,0.0,0.5 ],
+  'dark blue'      : [ 0.0,0.0,0.5 ],
+  'dark cyan'      : [ 0.0,0.5,0.5 ],
+  'dark green'     : [ 0.0,0.5,0.0 ],
+  'dark white'     : [ 0.9,0.9,0.9 ],
+}
 
 var Style =
 {
 
-  'positive' : { fg : 'light green' },
-  'negative' : { fg : 'light red' },
+  'positive' : { fg : 'green' },
+  'negative' : { fg : 'red' },
 
-  'topic.up' : { fg : 'light white' },
-  'topic.down' : { fg : 'black', bg : 'white' },
+  'topic.up' : { fg : 'white' },
+  'topic.down' : { fg : 'dark black', bg : 'dark white' },
 
-  'head' : { fg : 'black', bg : 'light white' },
-  'tail' : { fg : 'light white', bg : 'black' },
+  'head' : { fg : 'dark black', bg : 'white' },
+  'tail' : { fg : 'white', bg : 'dark black' },
 
-  'selected' : { fg : 'yellow', bg : 'blue' },
+  'selected' : { fg : 'dark yellow', bg : 'dark blue' },
   'neutral' : { fg : 'smoke', bg : 'dim' },
 
-  'pipe.neutral' : { fg : 'blue', bg : 'yellow' },
-  'pipe.negative' : { fg : 'red', bg : 'yellow' },
+  'pipe.neutral' : { fg : 'dark blue', bg : 'dark yellow' },
+  'pipe.negative' : { fg : 'dark red', bg : 'dark yellow' },
 
-  'info.neutral' : { fg : 'light white', bg : 'light magenta' },
-  'info.negative' : { fg : 'red', bg : 'light magenta' },
+  'info.neutral' : { fg : 'white', bg : 'magenta' },
+  'info.negative' : { fg : 'dark red', bg : 'magenta' },
 
 }
 
@@ -1293,7 +1293,7 @@ var Self =
   ColorMap : ColorMap,
   ColorMapGreyscale : ColorMapGreyscale,
   ColorMapDistinguishable : ColorMapDistinguishable,
-  // ColorMapShell : ColorMapShell,
+  ColorMapShell : ColorMapShell,
   Style : Style,
 
 }
@@ -1309,13 +1309,13 @@ else
   _.mapSupplement( _.color.ColorMap,ColorMap );
   _.mapSupplement( _.color.ColorMapGreyscale,ColorMapGreyscale );
   _.mapSupplement( _.color.ColorMapDistinguishable,ColorMapDistinguishable );
-  // _.mapSupplement( _.color.ColorMapShell,ColorMapShell );
+  _.mapSupplement( _.color.ColorMapShell,ColorMapShell );
 
 }
 
 _.mapSupplement( _.color.ColorMap,ColorMapGreyscale );
 _.mapSupplement( _.color.ColorMap,ColorMapDistinguishable );
-// _.mapSupplement( _.color.ColorMap,ColorMapShell );
+_.mapSupplement( _.color.ColorMap,ColorMapShell );
 
 // --
 // export
