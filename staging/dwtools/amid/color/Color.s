@@ -1205,10 +1205,10 @@ var Style =
   'neutral' : { fg : 'smoke', bg : 'dim' },
 
   'pipe.neutral' : { fg : 'dark black', bg : 'dark yellow' },
-  'pipe.negative' : { fg : 'red', bg : 'dark yellow' },
+  'pipe.negative' : { fg : 'dark red', bg : 'dark yellow' },
 
   'bar.neutral' : { fg : 'dark black', bg : 'dark yellow' },
-  'bar.negative' : { fg : 'red', bg : 'dark yellow' },
+  'bar.negative' : { fg : 'dark red', bg : 'dark yellow' },
 
   'info.neutral' : { fg : 'white', bg : 'magenta' },
   'info.negative' : { fg : 'dark red', bg : 'magenta' },
