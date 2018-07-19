@@ -58,11 +58,18 @@ function _rgbFromName( name,def,map )
 {
   var result = map[ name ];
 
+  if( _.objectLike( result ) )
+  {
+    _.assert( _.strIs( result.name ) )
+    result = _rgbFromName( result.name, def, map );
+  }
+
   if( !result )
   result = def;
 
   return result;
 }
+
 //
 
 function rgbByBitmask( src )
@@ -93,7 +100,7 @@ function _rgbaFromNotName( src )
 {
 
   _.assert( arguments.length === 1, 'expects single argument' );
-  _.assert( _.numberIs( src ) || _.arrayLike( src ) || _.mapIs( src ) );
+  _.assert( _.numberIs( src ) || _.longIs( src ) || _.mapIs( src ) );
 
   if( _.mapIs( src ) )
   {
@@ -134,7 +141,7 @@ function rgbaFrom( src )
 
   _.assert( arguments.length === 1, 'expects single argument' );
 
-  if( _.numberIs( src ) || _.arrayLike( src ) || _.mapIs( src ) )
+  if( _.numberIs( src ) || _.longIs( src ) || _.mapIs( src ) )
   return _rgbaFromNotName( src );
 
   /* */
@@ -178,7 +185,7 @@ function rgbFrom( src )
 {
   _.assert( arguments.length === 1, 'expects single argument' );
 
-  if( _.arrayLike( src ) )
+  if( _.longIs( src ) )
   return _.arraySlice( src,0,3 );
 
   var result = rgbaFrom.call( this,src );
@@ -244,6 +251,9 @@ rgbFromTry.defaults.__proto__ = rgbaFrom.defaults;
 
 function _colorDistance( c1, c2 )
 {
+  _.assert( _.longIs( c1 ) );
+  _.assert( _.longIs( c2 ) );
+
   var a = c1.slice();
   var b = c2.slice();
 
@@ -288,6 +298,13 @@ function _colorNameNearest( color, map )
   if( _.strIs( color ) )
   {
     _.assertWithoutBreakpoint( map[ color ],'unknown color',color );
+
+    if( _.objectLike( map[ color ] ) )
+    {
+      _.assert( map[ color ].name );
+      return self._colorNameNearest( map[ color ].name, map );
+    }
+
     return color;
   }
 
@@ -310,6 +327,11 @@ function _colorNameNearest( color, map )
   /* */
 
   var names = Object.keys( map );
+  names = names.filter( ( name ) =>
+  {
+    return _.longIs( map[ name ] );
+  });
+
   var nearest = names[ 0 ];
   var max = _colorDistance( map[ names[ 0 ] ], color );
 
@@ -1171,7 +1193,7 @@ var ColorMapDistinguishable =
 var ColorMapShell =
 {
   'white'           : [ 1.0,1.0,1.0 ],
-  'black'           : [ 0.5,0.5,0.5 ],
+  'black'           : [ 0.0,0.0,0.0 ],
   'green'           : [ 0.0,1.0,0.0 ],
   'red'             : [ 1.0,0.0,0.0 ],
   'yellow'          : [ 1.0,1.0,0.0 ],
@@ -1179,7 +1201,16 @@ var ColorMapShell =
   'cyan'            : [ 0.0,1.0,1.0 ],
   'magenta'         : [ 1.0,0.0,1.0 ],
 
-  'dark black'     : [ 0.0,0.0,0.0 ],
+  'bright black'    : [ 0.5,0.5,0.5 ],
+  'bright white'    : { name : 'white' },
+  'bright green'    : { name : 'green' },
+  'bright red'      : { name : 'red' },
+  'bright yellow'   : { name : 'yellow' },
+  'bright blue'     : { name : 'blue' },
+  'bright cyan'     : { name : 'cyan' },
+  'bright magenta'  : { name : 'magenta' },
+
+  'dark black'     : { name : 'black' },
   'dark yellow'    : [ 0.5,0.5,0.0 ],
   'dark red'       : [ 0.5,0.0,0.0 ],
   'dark magenta'   : [ 0.5,0.0,0.5 ],
@@ -1187,6 +1218,8 @@ var ColorMapShell =
   'dark cyan'      : [ 0.0,0.5,0.5 ],
   'dark green'     : [ 0.0,0.5,0.0 ],
   'dark white'     : [ 0.9,0.9,0.9 ],
+
+  'silver' : { name : 'dark white' }
 }
 
 var Style =
