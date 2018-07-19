@@ -93,7 +93,7 @@ function _rgbaFromNotName( src )
 {
 
   _.assert( arguments.length === 1, 'expects single argument' );
-  _.assert( _.numberIs( src ) || _.arrayLike( src ) || _.mapIs( src ) );
+  _.assert( _.numberIs( src ) || _.longIs( src ) || _.mapIs( src ) );
 
   if( _.mapIs( src ) )
   {
@@ -134,7 +134,7 @@ function rgbaFrom( src )
 
   _.assert( arguments.length === 1, 'expects single argument' );
 
-  if( _.numberIs( src ) || _.arrayLike( src ) || _.mapIs( src ) )
+  if( _.numberIs( src ) || _.longIs( src ) || _.mapIs( src ) )
   return _rgbaFromNotName( src );
 
   /* */
@@ -178,12 +178,12 @@ function rgbFrom( src )
 {
   _.assert( arguments.length === 1, 'expects single argument' );
 
-  if( _.arrayLike( src ) )
-  return _.arraySlice( src,0,3 );
+  if( _.longIs( src ) )
+  return _.longSlice( src,0,3 );
 
   var result = rgbaFrom.call( this,src );
 
-  return _.arraySlice( result,0,3 );
+  return _.longSlice( result,0,3 );
 }
 
 rgbFrom.defaults =
