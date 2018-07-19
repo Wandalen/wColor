@@ -63,6 +63,7 @@ function _rgbFromName( name,def,map )
 
   return result;
 }
+
 //
 
 function rgbByBitmask( src )
@@ -244,6 +245,9 @@ rgbFromTry.defaults.__proto__ = rgbaFrom.defaults;
 
 function _colorDistance( c1, c2 )
 {
+  _.assert( _.longIs( c1 ) );
+  _.assert( _.longIs( c2 ) );
+
   var a = c1.slice();
   var b = c2.slice();
 
@@ -288,6 +292,13 @@ function _colorNameNearest( color, map )
   if( _.strIs( color ) )
   {
     _.assertWithoutBreakpoint( map[ color ],'unknown color',color );
+
+    if( _.objectLike( map[ color ] ) )
+    {
+      _.assert( map[ color ].name );
+      return self._colorNameNearest( map[ color ].name, map );
+    }
+
     return color;
   }
 
@@ -312,6 +323,9 @@ function _colorNameNearest( color, map )
   var names = Object.keys( map );
   var nearest = names[ 0 ];
   var max = _colorDistance( map[ names[ 0 ] ], color );
+
+  if( max === 0 )
+  return nearest;
 
   for( var i = 1; i <= names.length - 1; i++ )
   {
@@ -1171,7 +1185,7 @@ var ColorMapDistinguishable =
 var ColorMapShell =
 {
   'white'           : [ 1.0,1.0,1.0 ],
-  'black'           : [ 0.5,0.5,0.5 ],
+  'black'           : [ 0.0,0.0,0.0 ],
   'green'           : [ 0.0,1.0,0.0 ],
   'red'             : [ 1.0,0.0,0.0 ],
   'yellow'          : [ 1.0,1.0,0.0 ],
@@ -1179,14 +1193,27 @@ var ColorMapShell =
   'cyan'            : [ 0.0,1.0,1.0 ],
   'magenta'         : [ 1.0,0.0,1.0 ],
 
-  'dark black'     : [ 0.0,0.0,0.0 ],
-  'dark yellow'    : [ 0.5,0.5,0.0 ],
-  'dark red'       : [ 0.5,0.0,0.0 ],
-  'dark magenta'   : [ 0.5,0.0,0.5 ],
-  'dark blue'      : [ 0.0,0.0,0.5 ],
-  'dark cyan'      : [ 0.0,0.5,0.5 ],
-  'dark green'     : [ 0.0,0.5,0.0 ],
-  'dark white'     : [ 0.9,0.9,0.9 ],
+  'bright black'    : [ 0.5,0.5,0.5 ],
+
+  'dark yellow'     : [ 0.5,0.5,0.0 ],
+  'dark red'        : [ 0.5,0.0,0.0 ],
+  'dark magenta'    : [ 0.5,0.0,0.5 ],
+  'dark blue'       : [ 0.0,0.0,0.5 ],
+  'dark cyan'       : [ 0.0,0.5,0.5 ],
+  'dark green'      : [ 0.0,0.5,0.0 ],
+  'dark white'      : [ 0.9,0.9,0.9 ],
+
+  'bright white'    : [ 1.0,1.0,1.0 ], /* white */
+  'bright green'    : [ 0.0,1.0,0.0 ], /* green */
+  'bright red'      : [ 1.0,0.0,0.0 ], /* red */
+  'bright yellow'   : [ 1.0,1.0,0.0 ], /* yellow */
+  'bright blue'     : [ 0.0,0.0,1.0 ], /* blue */
+  'bright cyan'     : [ 0.0,1.0,1.0 ], /* cyan */
+  'bright magenta'  : [ 1.0,0.0,1.0 ], /* magenta */
+
+  'dark black'      : [ 0.0,0.0,0.0 ], /* black */
+
+  'silver'          : [ 0.9,0.9,0.9 ] /* dark white */
 }
 
 var Style =
