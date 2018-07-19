@@ -165,7 +165,7 @@ function rgbaFrom( src )
 
   /* */
 
-  _.assertWithoutBreakpoint( 0,'unknown color',src );
+  _.assertWithoutBreakpoint( 0, 'Unknown color', _.strQuote( src ) );
 }
 
 rgbaFrom.defaults =
@@ -291,7 +291,7 @@ function _colorNameNearest( color, map )
 
   if( _.strIs( color ) )
   {
-    _.assertWithoutBreakpoint( map[ color ],'unknown color',color );
+    _.assertWithoutBreakpoint( map[ color ], 'Unknown color', _.strQuote( color ) );
 
     if( _.objectLike( map[ color ] ) )
     {
@@ -1086,7 +1086,7 @@ function strDirectivesFor( style )
 
     var styleObject = this.strColorStyle( style[ s ] );
 
-    _.assert( styleObject, 'unknown color',style[ s ] );
+    _.assert( styleObject, 'Unknown style', _.strQuote( style[ s ] ) );
 
     if( styleObject.fg )
     result = join( result, _.color._strDirectiveForegroundFor( styleObject.fg ) );
@@ -1309,9 +1309,11 @@ var Self =
 
   _strDirectiveBackgroundFor : _strDirectiveBackgroundFor,
   strFormatBackground : strFormatBackground,
+  strBg : strFormatBackground,
 
   _strDirectiveForegroundFor : _strDirectiveForegroundFor,
   strFormatForeground : strFormatForeground,
+  strFg : strFormatForeground,
 
   strFormatEach : strFormatEach,
   strFormat : strFormat,
