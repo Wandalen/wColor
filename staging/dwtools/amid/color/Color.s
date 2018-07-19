@@ -186,11 +186,11 @@ function rgbFrom( src )
   _.assert( arguments.length === 1, 'expects single argument' );
 
   if( _.longIs( src ) )
-  return _.arraySlice( src,0,3 );
+  return _.longSlice( src,0,3 );
 
   var result = rgbaFrom.call( this,src );
 
-  return _.arraySlice( result,0,3 );
+  return _.longSlice( result,0,3 );
 }
 
 rgbFrom.defaults =
@@ -1240,8 +1240,12 @@ var Style =
   'pipe.neutral' : { fg : 'dark blue', bg : 'dark yellow' },
   'pipe.negative' : { fg : 'dark red', bg : 'dark yellow' },
 
+  'bar.neutral' : { fg : 'dark blue', bg : 'dark yellow' },
+  'bar.negative' : { fg : 'dark red', bg : 'dark yellow' },
+
   'info.neutral' : { fg : 'white', bg : 'magenta' },
   'info.negative' : { fg : 'dark red', bg : 'magenta' },
+
 
 }
 
