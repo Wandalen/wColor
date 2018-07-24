@@ -962,17 +962,17 @@ function _strDirectiveBackgroundFor( color )
 
 //
 
-function strFormatBackground( str, color )
+function strFormatBackground( srcStr, color )
 {
 
   if( _.numberIs( color ) )
   color = _.color.colorNameNearest( color );
 
   _.assert( arguments.length === 2,'expects 2 arguments' );
-  _.assert( _.strIs( str ) );
+  _.assert( _.strIs( srcStr ) );
   _.assert( _.strIs( color ) );
 
-  return `#background : ${color}#${str}#background : default#`;
+  return `#background : ${color}#${srcStr}#background : default#`;
 }
 
 //
@@ -1003,17 +1003,17 @@ function _strDirectiveForegroundFor( color )
 
 //
 
-function strFormatForeground( str, color )
+function strFormatForeground( srcStr, color )
 {
 
   if( _.numberIs( color ) )
   color = _.color.colorNameNearest( color );
 
   _.assert( arguments.length === 2,'expects 2 arguments' );
-  _.assert( _.strIs( str ),'expects string ( src )' );
+  _.assert( _.strIs( srcStr ),'expects string ( src )' );
   _.assert( _.strIs( color ),'expects string ( color )' );
 
-  return `#foreground : ${color}#${str}#foreground : default#`;
+  return `#foreground : ${color}#${srcStr}#foreground : default#`;
 }
 
 //
@@ -1022,13 +1022,12 @@ var strFormatEach = _.routineVectorize_functor( strFormat );
 
 //
 
-function strFormat( str, style )
+function strFormat( srcStr, style )
 {
-  var result = str;
+  var result = srcStr;
 
   if( _.numberIs( result ) )
   result = result + '';
-
   _.assert( arguments.length === 1 || arguments.length === 2 );
   _.assert( _.strIs( result ), 'expects string got',_.strTypeOf( result ) );
 
@@ -1037,6 +1036,18 @@ function strFormat( str, style )
   result = r.pre + result + r.post;
 
   return result;
+}
+
+//
+
+function strEscape( srcStr )
+{
+  var result = srcStr;
+  if( _.numberIs( result ) )
+  result = result + '';
+  _.assert( arguments.length === 1 || arguments.length === 2 );
+  _.assert( _.strIs( result ), 'expects string got',_.strTypeOf( result ) );
+  return '#inputRaw:1#' + srcStr + '#inputRaw:0#'
 }
 
 //
@@ -1315,8 +1326,10 @@ var Self =
   strFormatForeground : strFormatForeground,
   strFg : strFormatForeground,
 
-  strFormatEach : strFormatEach,
   strFormat : strFormat,
+  strFormatEach : strFormatEach,
+
+  strEscape : strEscape,
   strDirectivesFor : strDirectivesFor,
   strColorStyle : strColorStyle,
 
