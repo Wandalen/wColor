@@ -1010,8 +1010,8 @@ function strFormatForeground( srcStr, color )
   color = _.color.colorNameNearest( color );
 
   _.assert( arguments.length === 2,'expects 2 arguments' );
-  _.assert( _.strIs( srcStr ),'expects string ( src )' );
-  _.assert( _.strIs( color ),'expects string ( color )' );
+  _.assert( _.strIs( srcStr ),'expects string {-src-}' );
+  _.assert( _.strIs( color ),'expects string {-color-}' );
 
   return `#foreground : ${color}#${srcStr}#foreground : default#`;
 }
