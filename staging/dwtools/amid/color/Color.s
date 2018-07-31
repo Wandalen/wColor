@@ -1242,8 +1242,11 @@ var Style =
   'selected' : { fg : 'dark yellow', bg : 'dark blue' },
   'neutral' : { fg : 'smoke', bg : 'dim' },
 
-  'pipe.neutral' : { fg : 'dark black', bg : 'dark yellow' },
-  'pipe.negative' : { fg : 'dark red', bg : 'dark yellow' },
+  // 'pipe.neutral' : { fg : 'dark black', bg : 'dark yellow' },
+  // 'pipe.negative' : { fg : 'dark red', bg : 'dark yellow' },
+
+  'pipe.neutral' : { fg : 'dark magenta' },
+  'pipe.negative' : { fg : 'dark red' },
 
   'exclusiveOutput.neutral' : { fg : 'dark black', bg : 'dark yellow' },
   'exclusiveOutput.negative' : { fg : 'dark red', bg : 'dark yellow' },
