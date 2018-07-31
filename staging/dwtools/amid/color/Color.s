@@ -1233,8 +1233,10 @@ var Style =
   'positive' : { fg : 'green' },
   'negative' : { fg : 'red' },
 
-  'topic.up' : { fg : 'white' },
-  'topic.down' : { fg : 'dark black', bg : 'dark white' },
+  'path' : { fg : 'dark cyan' },
+
+  'topic.up' : { fg : 'white', bg : 'dark blue' },
+  'topic.down' : { fg : 'dark black', bg : 'dark blue' },
 
   'head' : { fg : 'dark black', bg : 'white' },
   'tail' : { fg : 'white', bg : 'dark black' },
