@@ -1097,7 +1097,7 @@ function strDirectivesFor( style )
 
     var styleObject = this.strColorStyle( style[ s ] );
 
-    _.assert( styleObject, 'Unknown style', _.strQuote( style[ s ] ) );
+    _.assert( !!styleObject, 'Unknown style', _.strQuote( style[ s ] ) );
 
     if( styleObject.fg )
     result = join( result, _.color._strDirectiveForegroundFor( styleObject.fg ) );
