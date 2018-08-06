@@ -2,6 +2,14 @@
 
 'use strict';
 
+/**
+  @module Tools/mid/Color - Collection of routines to operate colors conveniently. Color provides functions to convert color from one color space to another color space, from name to color and from color to the closest name of a color. The module does not introduce any specific storage format of color what is a benefit. Color has a short list of the most common colors. Use the module for formatted colorful output or other sophisticated operations with colors.
+*/
+
+/**
+ * @file Color.s.
+ */
+
 if( typeof module !== 'undefined' )
 {
 

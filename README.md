@@ -1,4 +1,7 @@
 # wColor [![Build Status](https://travis-ci.org/Wandalen/wColor.svg?branch=master)](https://travis-ci.org/Wandalen/wColor)
+
+Collection of routines to operate colors conveniently. Color provides functions to convert color from one color space to another color space, from name to color and from color to the closest name of a color. The module does not introduce any specific storage format of color what is a benefit. Color has a short list of the most common colors. Use the module for formatted colorful output or other sophisticated operations with colors.
+
 The module in JavaScript provides convenient means for color conversion.
 Contains map of predefined colors( ColorMap ) with rgb channels in [ 0,1 ] range and methods to convert colors between different formats and notations.
 
@@ -6,6 +9,13 @@ Contains map of predefined colors( ColorMap ) with rgb channels in [ 0,1 ] range
 ```terminal
 npm install wColor
 ```
+
+### Try out
+```
+npm install
+node sample/Sample.s
+```
+
 ## Usage
 After installation module becomes a part of [ wTools ]( https://github.com/Wandalen/wTools ) package and can be used as its 'color' property:
 > wTools.color
@@ -29,8 +39,8 @@ Colors map is avaible at:
 ##### Example #1
 ```javascript
 /*Get color by name*/
-var _ = wTools;
-var rgb = _.color.colorByName( 'red' );
+let _ = wTools;
+let rgb = _.color.colorByName( 'red' );
 console.log( rgb );
 /*
 [ 1, 0, 0 ]
@@ -39,8 +49,8 @@ console.log( rgb );
 ##### Example #2
 ```javascript
 /*Get color by name directly*/
-var _ = wTools;
-var rgb = _.color.ColorMap['red'];
+let _ = wTools;
+let rgb = _.color.ColorMap['red'];
 console.log( rgb );
 /*
 [ 1, 0, 0 ]
@@ -49,8 +59,8 @@ console.log( rgb );
 ##### Example #3
 ```javascript
 /*Get color by hex value*/
-var _ = wTools;
-var rgb = _.color.rgbFrom( 'ffffff' )
+let _ = wTools;
+let rgb = _.color.rgbFrom( 'ffffff' )
 console.log( rgb );
 /*
 [ 1, 1, 1 ]
@@ -59,8 +69,8 @@ console.log( rgb );
 ##### Example #4
 ```javascript
 /*Get color by bitmask*/
-var _ = wTools;
-var rgb = _.color.rgbByBitmask( 0x00ff00 )
+let _ = wTools;
+let rgb = _.color.rgbByBitmask( 0x00ff00 )
 console.log( rgb );
 /*
 [ 0, 1, 0 ]
@@ -69,9 +79,9 @@ console.log( rgb );
 ##### Example #5
 ```javascript
 /*Find nearest color*/
-var _ = wTools;
-var name = _.color.colorNameNearest( 'ff0032' );
-var rgb = _.color.ColorMap[ name ];
+let _ = wTools;
+let name = _.color.colorNameNearest( 'ff0032' );
+let rgb = _.color.ColorMap[ name ];
 console.log( name, rgb );
 /*
   red [ 1, 0, 0 ]
@@ -80,63 +90,11 @@ console.log( name, rgb );
 ##### Example #6
 ```javascript
 /*Convert color to browser compatible rgb notation*/
-var _ = wTools;
-var rgb = _.color.ColorMap[ 'red' ];
-var browser = _.color.colorToRgbHtml( rgb );
+let _ = wTools;
+let rgb = _.color.ColorMap[ 'red' ];
+let browser = _.color.colorToRgbHtml( rgb );
 console.log( rgb, browser );
 /*
   [ 1, 0, 0 ] 'rgb( 255, 0, 0 )'
 */
 ```
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
