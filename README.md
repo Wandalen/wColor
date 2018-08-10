@@ -10,7 +10,7 @@ Contains map of predefined colors( ColorMap ) with rgb channels in [ 0,1 ] range
 npm install wColor
 ```
 
-### Try out
+## Try out
 ```
 npm install
 node sample/Sample.s
@@ -98,4 +98,3 @@ console.log( rgb, browser );
   [ 1, 0, 0 ] 'rgb( 255, 0, 0 )'
 */
 ```
-

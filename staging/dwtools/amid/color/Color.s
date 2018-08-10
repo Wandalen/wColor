@@ -1267,7 +1267,7 @@ var Style =
 }
 
 // --
-// define class
+// declare
 // --
 
 var Self =
