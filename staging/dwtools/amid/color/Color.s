@@ -1242,7 +1242,7 @@ var Style =
   'negative' : { fg : 'red' },
 
   'path' : { fg : 'dark cyan' },
-  'code' : { fg : 'dark green' }, 
+  'code' : { fg : 'dark green' },
 
   'topic.up' : { fg : 'white', bg : 'dark blue' },
   'topic.down' : { fg : 'dark black', bg : 'dark blue' },
