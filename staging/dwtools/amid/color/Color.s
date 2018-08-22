@@ -1063,6 +1063,20 @@ var strEscape = _.routineVectorize_functor( _strEscape );
 
 //
 
+function _strUnescape( srcStr )
+{
+  var result = srcStr;
+  if( _.numberIs( result ) )
+  result = result + '';
+  _.assert( arguments.length === 1 || arguments.length === 2 );
+  _.assert( _.strIs( result ), 'expects string got',_.strTypeOf( result ) );
+  return '#inputRaw:0#' + srcStr + '#inputRaw:1#'
+}
+
+var strUnescape = _.routineVectorize_functor( _strUnescape );
+
+//
+
 function strDirectivesFor( style )
 {
   var result = Object.create( null );
@@ -1347,6 +1361,7 @@ var Self =
   strFormatEach : strFormatEach,
 
   strEscape : strEscape,
+  strUnescape : strUnescape,
   strDirectivesFor : strDirectivesFor,
   strColorStyle : strColorStyle,
 
