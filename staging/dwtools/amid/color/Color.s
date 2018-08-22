@@ -1026,11 +1026,7 @@ function strFormatForeground( srcStr, color )
 
 //
 
-var strFormatEach = _.routineVectorize_functor( strFormat );
-
-//
-
-function strFormat( srcStr, style )
+function _strFormat( srcStr, style )
 {
   var result = srcStr;
 
@@ -1048,7 +1044,12 @@ function strFormat( srcStr, style )
 
 //
 
-function strEscape( srcStr )
+var strFormatEach = _.routineVectorize_functor( _strFormat );
+var strFormat = strFormatEach;
+
+//
+
+function _strEscape( srcStr )
 {
   var result = srcStr;
   if( _.numberIs( result ) )
@@ -1057,6 +1058,8 @@ function strEscape( srcStr )
   _.assert( _.strIs( result ), 'expects string got',_.strTypeOf( result ) );
   return '#inputRaw:1#' + srcStr + '#inputRaw:0#'
 }
+
+var strEscape = _.routineVectorize_functor( _strEscape );
 
 //
 
