@@ -77,7 +77,7 @@ function _rgbFromName( name,def,map )
 function rgbByBitmask( src )
 {
 
-  _.assert( arguments.length === 1, 'expects single argument' );
+  _.assert( arguments.length === 1, 'Expects single argument' );
   _.assert( _.numberIs( src ) );
 
   return _rgbByBitmask( src );
@@ -101,7 +101,7 @@ function _rgbByBitmask( src )
 function _rgbaFromNotName( src )
 {
 
-  _.assert( arguments.length === 1, 'expects single argument' );
+  _.assert( arguments.length === 1, 'Expects single argument' );
   _.assert( _.numberIs( src ) || _.longIs( src ) || _.mapIs( src ) );
 
   if( _.mapIs( src ) )
@@ -141,7 +141,7 @@ function rgbaFrom( src )
 {
   var result;
 
-  _.assert( arguments.length === 1, 'expects single argument' );
+  _.assert( arguments.length === 1, 'Expects single argument' );
 
   if( _.numberIs( src ) || _.longIs( src ) || _.mapIs( src ) )
   return _rgbaFromNotName( src );
@@ -185,7 +185,7 @@ rgbaFrom.defaults =
 
 function rgbFrom( src )
 {
-  _.assert( arguments.length === 1, 'expects single argument' );
+  _.assert( arguments.length === 1, 'Expects single argument' );
 
   if( _.longIs( src ) )
   return _.longSlice( src,0,3 );
@@ -357,7 +357,7 @@ function colorNameNearest( color )
 {
   var self = this;
 
-  _.assert( arguments.length === 1, 'expects single argument' );
+  _.assert( arguments.length === 1, 'Expects single argument' );
 
   if( _.strIs( color ) )
   {
@@ -383,7 +383,7 @@ function colorNearestCustom( o )
 {
   var self = this;
 
-  _.assert( arguments.length === 1, 'expects single argument' );
+  _.assert( arguments.length === 1, 'Expects single argument' );
 
   _.routineOptions( colorNearestCustom, o );
 
@@ -472,7 +472,7 @@ function colorToHex( rgb, def )
 function hexToColor( hex )
 {
 
-  _.assert( arguments.length === 1, 'expects single argument' );
+  _.assert( arguments.length === 1, 'Expects single argument' );
   _.assert( _.strIs( hex ) );
 
   var shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
@@ -502,7 +502,7 @@ function colorToRgbHtml( src )
   var result = '';
 
   _.assert( _.strIs( src ) || _.objectIs( src ) || _.arrayIs( src ) );
-  _.assert( arguments.length === 1, 'expects single argument' );
+  _.assert( arguments.length === 1, 'Expects single argument' );
 
 
   if( _.strIs( src ) )
@@ -536,7 +536,7 @@ function colorToRgbaHtml( src )
   var result = '';
 
   _.assert( _.strIs( src ) || _.objectIs( src ) || _.arrayIs( src ) || _.numberIs( src ) );
-  _.assert( arguments.length === 1, 'expects single argument' );
+  _.assert( arguments.length === 1, 'Expects single argument' );
 
   if( _.strIs( src ) )
   return src;
@@ -650,8 +650,8 @@ function rgbWithInt( srcInt )
 {
   var result = [];
 
-  _.assert( arguments.length === 1, 'expects single argument' );
-  _.assert( _.numberIs( srcInt ),'rgbWithInt :','expects srcInt' );
+  _.assert( arguments.length === 1, 'Expects single argument' );
+  _.assert( _.numberIs( srcInt ),'rgbWithInt :','Expects srcInt' );
 
   /* eval degree */
 
@@ -765,7 +765,7 @@ function _rgbWithInt( srcInt )
 {
   var result;
 
-  _.assert( _.numberIs( srcInt ),'rgbWithInt :','expects srcInt' );
+  _.assert( _.numberIs( srcInt ),'rgbWithInt :','Expects srcInt' );
 
   var c = 9;
 
@@ -959,7 +959,7 @@ function _strDirectiveBackgroundFor( color )
 {
   var result = Object.create( null );
 
-  _.assert( arguments.length === 1, 'expects single argument' );
+  _.assert( arguments.length === 1, 'Expects single argument' );
   _.assert( _.strIs( color ) );
 
   result.pre = `#background : ${color}#`;
@@ -976,7 +976,7 @@ function strFormatBackground( srcStr, color )
   if( _.numberIs( color ) )
   color = _.color.colorNameNearest( color );
 
-  _.assert( arguments.length === 2,'expects 2 arguments' );
+  _.assert( arguments.length === 2,'Expects 2 arguments' );
   _.assert( _.strIs( srcStr ) );
   _.assert( _.strIs( color ) );
 
@@ -1000,7 +1000,7 @@ function _strDirectiveForegroundFor( color )
 {
   var result = Object.create( null );
 
-  _.assert( arguments.length === 1, 'expects single argument' );
+  _.assert( arguments.length === 1, 'Expects single argument' );
   _.assert( _.strIs( color ) );
 
   result.pre = `#foreground : ${color}#`;
@@ -1017,9 +1017,9 @@ function strFormatForeground( srcStr, color )
   if( _.numberIs( color ) )
   color = _.color.colorNameNearest( color );
 
-  _.assert( arguments.length === 2,'expects 2 arguments' );
-  _.assert( _.strIs( srcStr ),'expects string {-src-}' );
-  _.assert( _.strIs( color ),'expects string {-color-}' );
+  _.assert( arguments.length === 2,'Expects 2 arguments' );
+  _.assert( _.strIs( srcStr ),'Expects string {-src-}' );
+  _.assert( _.strIs( color ),'Expects string {-color-}' );
 
   return `#foreground : ${color}#${srcStr}#foreground : default#`;
 }
@@ -1033,7 +1033,7 @@ function _strFormat( srcStr, style )
   if( _.numberIs( result ) )
   result = result + '';
   _.assert( arguments.length === 1 || arguments.length === 2 );
-  _.assert( _.strIs( result ), 'expects string got',_.strTypeOf( result ) );
+  _.assert( _.strIs( result ), 'Expects string got',_.strTypeOf( result ) );
 
   var r = this.strDirectivesFor( style );
 
@@ -1055,7 +1055,7 @@ function _strEscape( srcStr )
   if( _.numberIs( result ) )
   result = result + '';
   _.assert( arguments.length === 1 || arguments.length === 2 );
-  _.assert( _.strIs( result ), 'expects string got',_.strTypeOf( result ) );
+  _.assert( _.strIs( result ), 'Expects string got',_.strTypeOf( result ) );
   return '#inputRaw:1#' + srcStr + '#inputRaw:0#'
 }
 
@@ -1069,7 +1069,7 @@ function _strUnescape( srcStr )
   if( _.numberIs( result ) )
   result = result + '';
   _.assert( arguments.length === 1 || arguments.length === 2 );
-  _.assert( _.strIs( result ), 'expects string got',_.strTypeOf( result ) );
+  _.assert( _.strIs( result ), 'Expects string got',_.strTypeOf( result ) );
   return '#inputRaw:0#' + srcStr + '#inputRaw:1#'
 }
 
@@ -1091,8 +1091,8 @@ function strDirectivesFor( style )
 
   var style = _.arrayAs( style );
 
-  _.assert( arguments.length === 1, 'expects single argument' );
-  _.assert( _.arrayIs( style ) ,'expects string or array of strings ( style )' );
+  _.assert( arguments.length === 1, 'Expects single argument' );
+  _.assert( _.arrayIs( style ) ,'Expects string or array of strings ( style )' );
 
   function join()
   {
@@ -1118,7 +1118,7 @@ function strDirectivesFor( style )
       continue;
     }
 
-    _.assert( _.strIs( style[ s ] ) ,'expects string or array of strings { style }' );
+    _.assert( _.strIs( style[ s ] ) ,'Expects string or array of strings { style }' );
 
     var styleObject = this.strColorStyle( style[ s ] );
 
@@ -1139,8 +1139,8 @@ function strDirectivesFor( style )
 
 function strColorStyle( style )
 {
-  _.assert( arguments.length === 1, 'expects single argument' );
-  _.assert( _.strIs( style ),'expects string got',_.strTypeOf( style ) );
+  _.assert( arguments.length === 1, 'Expects single argument' );
+  _.assert( _.strIs( style ),'Expects string got',_.strTypeOf( style ) );
 
   var result = this.Style[ style ];
 
