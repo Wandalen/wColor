@@ -18,7 +18,7 @@
   "main": "proto/dwtools/amid/color/Color.s",
   "files": [
     "proto/dwtools/amid/color",
-    "production"
+    "proto/dwtools/Tools.s", "production"
   ],
   "directories": {
     "doc": "doc",
