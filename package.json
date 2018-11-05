@@ -15,18 +15,18 @@
       "email": "volodymyr.migdal@gmail.com"
     }
   ],
-  "main": "staging/dwtools/amid/color/Color.s",
+  "main": "proto/dwtools/amid/color/Color.s",
   "files": [
-    "staging/dwtools/amid/color",
+    "proto/dwtools/amid/color",
     "production"
   ],
   "directories": {
     "doc": "doc",
-    "main": "staging/dwtools/amid/color/Color.s"
+    "main": "proto/dwtools/amid/color/Color.s"
   },
   "scripts": {
     "test": "wtest staging",
-    "make_doc": "./doc.sh"
+    "docgen": "wdocgen proto"
   },
   "repository": {
     "type": "git",
