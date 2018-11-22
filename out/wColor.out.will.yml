@@ -8,7 +8,7 @@ about:
     not introduce any specific storage format of color what is a benefit. Color
     has a short list of the most common colors. Use the module for formatted
     colorful output or other sophisticated operations with colors.
-  version: 0.3.82
+  version: 0.3.83
   enabled: 1
   interpreters:
     - nodejs >= 6.0.0
@@ -84,7 +84,7 @@ path:
 submodule: {}
 reflector:
   reflect.proto.0:
-    reflectMap:
+    filePath:
       ./proto: ./out.release
     srcFilter:
       maskAll:
@@ -108,7 +108,7 @@ reflector:
     inherit:
       - predefined.*
   reflect.proto.1:
-    reflectMap:
+    filePath:
       ./proto: ./out.debug
     srcFilter:
       maskAll:
@@ -154,15 +154,14 @@ reflector:
     inherit:
       - predefined.*
   exported.0:
-    reflectMap:
-      ./proto: true
+    filePath: ./proto
     srcFilter:
       prefixPath: .
     dstFilter:
       prefixPath: .
   exportedFiles.0:
     recursive: 0
-    reflectMap:
+    filePath:
       ./dwtools/Tools.s: true
       ./dwtools/amid/color/Color.s: true
       ./dwtools/amid/color.test/Color.test.s: true
@@ -273,7 +272,7 @@ build:
       - 'step::export.proto'
 exported:
   proto.export:
-    version: 0.3.82
+    version: 0.3.83
     criterion:
       default: 1
       debug: 1
