@@ -167,7 +167,7 @@ reflector:
       ./dwtools/amid/color.test/Color.test.s: true
     srcFilter:
       basePath: ./proto
-      prefixPath: proto
+      prefixPath: .
     dstFilter:
       basePath: .
       prefixPath: .

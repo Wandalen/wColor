@@ -1033,7 +1033,7 @@ function _strFormat( srcStr, style )
   if( _.numberIs( result ) )
   result = result + '';
   _.assert( arguments.length === 1 || arguments.length === 2 );
-  _.assert( _.strIs( result ), 'Expects string got',_.strTypeOf( result ) );
+  _.assert( _.strIs( result ), 'Expects string got',_.strType( result ) );
 
   var r = this.strDirectivesFor( style );
 
@@ -1055,7 +1055,7 @@ function _strEscape( srcStr )
   if( _.numberIs( result ) )
   result = result + '';
   _.assert( arguments.length === 1 || arguments.length === 2 );
-  _.assert( _.strIs( result ), 'Expects string got',_.strTypeOf( result ) );
+  _.assert( _.strIs( result ), 'Expects string got',_.strType( result ) );
   return '#inputRaw:1#' + srcStr + '#inputRaw:0#'
 }
 
@@ -1069,7 +1069,7 @@ function _strUnescape( srcStr )
   if( _.numberIs( result ) )
   result = result + '';
   _.assert( arguments.length === 1 || arguments.length === 2 );
-  _.assert( _.strIs( result ), 'Expects string got',_.strTypeOf( result ) );
+  _.assert( _.strIs( result ), 'Expects string got',_.strType( result ) );
   return '#inputRaw:0#' + srcStr + '#inputRaw:1#'
 }
 
@@ -1140,7 +1140,7 @@ function strDirectivesFor( style )
 function strColorStyle( style )
 {
   _.assert( arguments.length === 1, 'Expects single argument' );
-  _.assert( _.strIs( style ),'Expects string got',_.strTypeOf( style ) );
+  _.assert( _.strIs( style ),'Expects string got',_.strType( style ) );
 
   var result = this.Style[ style ];
 
