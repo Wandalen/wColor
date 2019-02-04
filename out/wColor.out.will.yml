@@ -8,7 +8,7 @@ about:
     not introduce any specific storage format of color what is a benefit. Color
     has a short list of the most common colors. Use the module for formatted
     colorful output or other sophisticated operations with colors.
-  version: 0.3.93
+  version: 0.3.94
   enabled: 1
   interpreters:
     - nodejs >= 6.0.0
@@ -284,7 +284,7 @@ build:
       - 'step::export.proto'
 exported:
   proto.export:
-    version: 0.3.93
+    version: 0.3.94
     criterion:
       default: 1
       debug: 1
