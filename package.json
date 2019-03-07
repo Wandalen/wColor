@@ -26,7 +26,7 @@
     "main": "proto/dwtools/amid/color/Color.s"
   },
   "scripts": {
-    "test": "wtest staging",
+    "test": "wtest proto",
     "docgen": "wdocgen proto"
   },
   "repository": {
