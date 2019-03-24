@@ -1260,6 +1260,7 @@ var Style =
 
   'path' : { fg : 'dark cyan' },
   'code' : { fg : 'dark green' },
+  'entity' : { fg : 'blue' },
 
   'topic.up' : { fg : 'white', bg : 'dark blue' },
   'topic.down' : { fg : 'dark black', bg : 'dark blue' },
@@ -1267,6 +1268,7 @@ var Style =
   'head' : { fg : 'dark black', bg : 'white' },
   'tail' : { fg : 'white', bg : 'dark black' },
 
+  'highlighted' : { fg : 'white', bg : 'dark black' },
   'selected' : { fg : 'dark yellow', bg : 'dark blue' },
   'neutral' : { fg : 'smoke', bg : 'dim' },
 
