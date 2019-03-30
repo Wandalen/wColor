@@ -1033,7 +1033,7 @@ function _strFormat( srcStr, style )
   if( _.numberIs( result ) )
   result = result + '';
   _.assert( arguments.length === 1 || arguments.length === 2 );
-  _.assert( _.strIs( result ), 'Expects string got',_.strType( result ) );
+  _.assert( _.strIs( result ), 'Expects string got', _.strType( result ) );
 
   var r = this.strDirectivesFor( style );
 

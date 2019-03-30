@@ -19,7 +19,8 @@
   "files": [
     "proto/dwtools/amid/color",
     "proto/dwtools/Tools.s",
-    "production"
+    "production",
+    "out"
   ],
   "directories": {
     "doc": "doc",
