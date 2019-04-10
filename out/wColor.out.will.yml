@@ -56,11 +56,13 @@ path:
       - proto
       - proto/dwtools
       - proto/dwtools/Tools.s
+      - proto/dwtools/abase
       - proto/dwtools/amid
       - proto/dwtools/amid/color
       - proto/dwtools/amid/color/Color.s
       - proto/dwtools/amid/color.test
       - proto/dwtools/amid/color.test/Color.test.s
+      - proto/dwtools/atop
     criterion:
       default: 1
       debug: 1
