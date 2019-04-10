@@ -56,13 +56,11 @@ path:
       - proto
       - proto/dwtools
       - proto/dwtools/Tools.s
-      - proto/dwtools/abase
       - proto/dwtools/amid
       - proto/dwtools/amid/color
       - proto/dwtools/amid/color/Color.s
       - proto/dwtools/amid/color.test
       - proto/dwtools/amid/color.test/Color.test.s
-      - proto/dwtools/atop
     criterion:
       default: 1
       debug: 1
@@ -71,6 +69,10 @@ path:
       export: 1
       tar: 1
       public: 1
+  original.will.files:
+    path:
+      - .im.will.yml
+      - .ex.will.yml
 submodule: {}
 reflector:
   reflect.proto.:
@@ -79,6 +81,7 @@ reflector:
         'path::proto': 'path::out.*=1'
     criterion:
       debug: 0
+    mandatory: 1
     inherit:
       - predefined.*
   reflect.proto.debug:
@@ -87,6 +90,7 @@ reflector:
         'path::proto': 'path::out.*=1'
     criterion:
       debug: 1
+    mandatory: 1
     inherit:
       - predefined.*
   reflect.submodules:
@@ -95,6 +99,7 @@ reflector:
         'submodule::*/exported::*=1/path::exportedDir*=1': 'path::out.*=1'
     criterion:
       debug: 1
+    mandatory: 1
     inherit:
       - predefined.*
   exported.proto.export:
@@ -110,8 +115,8 @@ reflector:
       export: 1
       tar: 1
       public: 1
+    mandatory: 1
   exportedFiles.proto.export:
-    recursive: 0
     src:
       filePath: 'path::exportedFiles.proto.export'
       basePath: .
@@ -124,6 +129,8 @@ reflector:
       export: 1
       tar: 1
       public: 1
+    recursive: 0
+    mandatory: 1
 step:
   clean.out.:
     criterion:
@@ -264,3 +271,4 @@ exported:
     exportedFilesReflector: 'reflector::exportedFiles.proto.export'
     exportedDirPath: 'path::exportedDir.proto.export'
     exportedFilesPath: 'path::exportedFiles.proto.export'
+    originalWillFilesPath: 'path::original.will.files'
