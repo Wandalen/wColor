@@ -1034,7 +1034,7 @@ function _strFormat( srcStr, style )
   if( _.numberIs( result ) )
   result = result + '';
   _.assert( arguments.length === 1 || arguments.length === 2 );
-  _.assert( _.strIs( result ), 'Expects string got',_.strType( result ) );
+  _.assert( _.strIs( result ), 'Expects string got', _.strType( result ) );
 
   var r = this.strDirectivesFor( style );
 
@@ -1261,6 +1261,7 @@ var Style =
 
   'path' : { fg : 'dark cyan' },
   'code' : { fg : 'dark green' },
+  'entity' : { fg : 'blue' },
 
   'topic.up' : { fg : 'white', bg : 'dark blue' },
   'topic.down' : { fg : 'dark black', bg : 'dark blue' },
@@ -1268,6 +1269,7 @@ var Style =
   'head' : { fg : 'dark black', bg : 'white' },
   'tail' : { fg : 'white', bg : 'dark black' },
 
+  'highlighted' : { fg : 'white', bg : 'dark black' },
   'selected' : { fg : 'dark yellow', bg : 'dark blue' },
   'neutral' : { fg : 'smoke', bg : 'dim' },
 

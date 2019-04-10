@@ -8,7 +8,7 @@ about:
     not introduce any specific storage format of color what is a benefit. Color
     has a short list of the most common colors. Use the module for formatted
     colorful output or other sophisticated operations with colors.
-  version: 0.3.86
+  version: 0.3.97
   enabled: 1
   interpreters:
     - nodejs >= 6.0.0
@@ -18,28 +18,30 @@ about:
     - wTools
 execution:
   scripts:
-    test: wtest staging
+    test: wtest proto
     docgen: wdocgen staging
 path:
-  proto:
-    path: ./proto
   in:
-    path: .
+    path: ..
+  temp:
+    path: out
   out:
     path: out
   out.debug:
-    path: ./out.debug
+    path: ./out/debug
     criterion:
       debug: 1
   out.release:
-    path: ./out.release
+    path: ./out/release
     criterion:
       debug: 0
+  proto:
+    path: ./proto
   repository:
     path: 'git+https://github.com/Wandalen/wColor.git'
   bugs:
     path: 'https://github.com/Wandalen/wColor/issues'
-  exportedDir.0:
+  exportedDir.proto.export:
     path: ./proto
     criterion:
       default: 1
@@ -49,18 +51,16 @@ path:
       export: 1
       tar: 1
       public: 1
-  baseDir:
-    path: ..
-  exportedFiles.0:
+  exportedFiles.proto.export:
     path:
-      - .
-      - ./dwtools
-      - ./dwtools/Tools.s
-      - ./dwtools/amid
-      - ./dwtools/amid/color
-      - ./dwtools/amid/color/Color.s
-      - ./dwtools/amid/color.test
-      - ./dwtools/amid/color.test/Color.test.s
+      - proto
+      - proto/dwtools
+      - proto/dwtools/Tools.s
+      - proto/dwtools/amid
+      - proto/dwtools/amid/color
+      - proto/dwtools/amid/color/Color.s
+      - proto/dwtools/amid/color.test
+      - proto/dwtools/amid/color.test/Color.test.s
     criterion:
       default: 1
       debug: 1
@@ -69,113 +69,84 @@ path:
       export: 1
       tar: 1
       public: 1
-  exportedTerminals.0:
+  original.will.files:
     path:
-      - ./dwtools/Tools.s
-      - ./dwtools/amid/color/Color.s
-      - ./dwtools/amid/color.test/Color.test.s
-    criterion:
-      default: 1
-      debug: 1
-      raw: 1
-      proto: 1
-      export: 1
-      tar: 1
-      public: 1
+      - .im.will.yml
+      - .ex.will.yml
 submodule: {}
 reflector:
-  reflect.proto.0:
-    filePath:
-      ./proto: ./out.release
-    srcFilter:
+  reflect.proto.:
+    src:
       filePath:
-        ./proto: ./out.release
-      maskAll:
-        excludeAny:
-          - !<tag:yaml.org,2002:js/regexp> /(\W|^)node_modules(\W|$)/
-          - !<tag:yaml.org,2002:js/regexp> /\.unique$/
-          - !<tag:yaml.org,2002:js/regexp> /\.git$/
-          - !<tag:yaml.org,2002:js/regexp> /\.svn$/
-          - !<tag:yaml.org,2002:js/regexp> /\.hg$/
-          - !<tag:yaml.org,2002:js/regexp> /\.DS_Store$/
-          - !<tag:yaml.org,2002:js/regexp> /(^|\/)-/
-          - !<tag:yaml.org,2002:js/regexp> /\.debug($|\.|\/)/i
-          - !<tag:yaml.org,2002:js/regexp> /\.test($|\.|\/)/i
-          - !<tag:yaml.org,2002:js/regexp> /\.experiment($|\.|\/)/i
-      prefixPath: .
-    dstFilter:
-      prefixPath: .
+        'path::proto': 'path::out.*=1'
     criterion:
       debug: 0
+    mandatory: 1
     inherit:
       - predefined.*
-  reflect.proto.1:
-    filePath:
-      ./proto: ./out.debug
-    srcFilter:
+  reflect.proto.debug:
+    src:
       filePath:
-        ./proto: ./out.debug
-      maskAll:
-        excludeAny:
-          - !<tag:yaml.org,2002:js/regexp> /(\W|^)node_modules(\W|$)/
-          - !<tag:yaml.org,2002:js/regexp> /\.unique$/
-          - !<tag:yaml.org,2002:js/regexp> /\.git$/
-          - !<tag:yaml.org,2002:js/regexp> /\.svn$/
-          - !<tag:yaml.org,2002:js/regexp> /\.hg$/
-          - !<tag:yaml.org,2002:js/regexp> /\.DS_Store$/
-          - !<tag:yaml.org,2002:js/regexp> /(^|\/)-/
-          - !<tag:yaml.org,2002:js/regexp> /\.release($|\.|\/)/i
-      prefixPath: .
-    dstFilter:
-      prefixPath: .
+        'path::proto': 'path::out.*=1'
     criterion:
       debug: 1
+    mandatory: 1
     inherit:
       - predefined.*
   reflect.submodules:
-    srcFilter:
-      maskAll:
-        excludeAny:
-          - !<tag:yaml.org,2002:js/regexp> /(\W|^)node_modules(\W|$)/
-          - !<tag:yaml.org,2002:js/regexp> /\.unique$/
-          - !<tag:yaml.org,2002:js/regexp> /\.git$/
-          - !<tag:yaml.org,2002:js/regexp> /\.svn$/
-          - !<tag:yaml.org,2002:js/regexp> /\.hg$/
-          - !<tag:yaml.org,2002:js/regexp> /\.DS_Store$/
-          - !<tag:yaml.org,2002:js/regexp> /(^|\/)-/
-          - !<tag:yaml.org,2002:js/regexp> /\.release($|\.|\/)/i
-      prefixPath: .
-    dstFilter:
-      prefixPath: .
+    src:
+      filePath:
+        'submodule::*/exported::*=1/path::exportedDir*=1': 'path::out.*=1'
     criterion:
       debug: 1
+    mandatory: 1
     inherit:
       - predefined.*
-  exported.0:
-    filePath: ./proto
-    srcFilter:
-      filePath: ./proto
-      prefixPath: .
-    dstFilter:
-      prefixPath: .
-  exportedFiles.0:
-    recursive: 0
-    filePath:
-      ./dwtools/Tools.s: true
-      ./dwtools/amid/color/Color.s: true
-      ./dwtools/amid/color.test/Color.test.s: true
-    srcFilter:
+  exported.proto.export:
+    src:
       filePath:
-        ./dwtools/Tools.s: true
-        ./dwtools/amid/color/Color.s: true
-        ./dwtools/amid/color.test/Color.test.s: true
-      basePath: .
+        .: null
       prefixPath: proto
-    dstFilter:
+    criterion:
+      default: 1
+      debug: 1
+      raw: 1
+      proto: 1
+      export: 1
+      tar: 1
+      public: 1
+    mandatory: 1
+  exportedFiles.proto.export:
+    src:
+      filePath: 'path::exportedFiles.proto.export'
       basePath: .
-      prefixPath: .
+      prefixPath: 'path::exportedDir.proto.export'
+    criterion:
+      default: 1
+      debug: 1
+      raw: 1
+      proto: 1
+      export: 1
+      tar: 1
+      public: 1
+    recursive: 0
+    mandatory: 1
 step:
-  reflect.proto.0:
+  clean.out.:
+    criterion:
+      debug: 0
+    opts:
+      filePath: 'path::out.debug'
+    inherit:
+      - predefined.delete
+  clean.out.debug:
+    criterion:
+      debug: 1
+    opts:
+      filePath: 'path::out.debug'
+    inherit:
+      - predefined.delete
+  reflect.proto.:
     criterion:
       debug: 0
       raw: 0
@@ -183,7 +154,7 @@ step:
       reflector: 'reflector::reflect.proto.*=1'
     inherit:
       - predefined.reflect
-  reflect.proto.1:
+  reflect.proto.debug:
     criterion:
       debug: 1
       raw: 0
@@ -191,7 +162,7 @@ step:
       reflector: 'reflector::reflect.proto.*=1'
     inherit:
       - predefined.reflect
-  reflect.proto.2:
+  reflect.proto.raw:
     criterion:
       debug: 0
       raw: 1
@@ -199,7 +170,7 @@ step:
       reflector: 'reflector::reflect.proto.*=1'
     inherit:
       - predefined.reflect
-  reflect.proto.3:
+  reflect.proto.debug.raw:
     criterion:
       debug: 1
       raw: 1
@@ -207,7 +178,7 @@ step:
       reflector: 'reflector::reflect.proto.*=1'
     inherit:
       - predefined.reflect
-  reflect.submodules.0:
+  reflect.submodules.:
     criterion:
       debug: 1
       raw: 0
@@ -215,12 +186,19 @@ step:
       reflector: 'reflector::reflect.submodules*=1'
     inherit:
       - predefined.reflect
-  reflect.submodules.1:
+  reflect.submodules.raw:
     criterion:
       debug: 1
       raw: 1
     opts:
       reflector: 'reflector::reflect.submodules*=1'
+    inherit:
+      - predefined.reflect
+  reflect.submodules:
+    criterion:
+      debug: 1
+    opts:
+      reflector: 'reflector::reflect.submodules*'
     inherit:
       - predefined.reflect
   export.proto:
@@ -231,7 +209,7 @@ step:
       export: 'path::proto'
       tar: 0
     inherit:
-      - export
+      - predefined.export
 build:
   debug.raw:
     criterion:
@@ -239,24 +217,28 @@ build:
       debug: 1
       raw: 1
     steps:
+      - 'step::clean.out*=1'
       - 'step::reflect.proto.*=1'
   debug.compiled:
     criterion:
       debug: 1
       raw: 0
     steps:
+      - 'step::clean.out*=1'
       - 'step::reflect.proto.*=1'
   release.raw:
     criterion:
       debug: 0
       raw: 1
     steps:
+      - 'step::clean.out*=1'
       - 'step::reflect.proto.*=1'
   release.compiled:
     criterion:
       debug: 0
       raw: 0
     steps:
+      - 'step::clean.out*=1'
       - 'step::reflect.proto.*=1'
   all:
     steps:
@@ -276,7 +258,7 @@ build:
       - 'step::export.proto'
 exported:
   proto.export:
-    version: 0.3.86
+    version: 0.3.97
     criterion:
       default: 1
       debug: 1
@@ -285,20 +267,8 @@ exported:
       export: 1
       tar: 1
       public: 1
-    exportedReflector: 'reflector::exported.0'
-    exportedFilesReflector: 'reflector::exportedFiles.0'
-    exportedDirPath: 'path::exportedDir.0'
-    exportedFilesPath: 'path::exportedFiles.0'
-    exportedTerminalsPath:
-      path:
-        - ./dwtools/Tools.s
-        - ./dwtools/amid/color/Color.s
-        - ./dwtools/amid/color.test/Color.test.s
-      criterion:
-        default: 1
-        debug: 1
-        raw: 1
-        proto: 1
-        export: 1
-        tar: 1
-        public: 1
+    exportedReflector: 'reflector::exported.proto.export'
+    exportedFilesReflector: 'reflector::exportedFiles.proto.export'
+    exportedDirPath: 'path::exportedDir.proto.export'
+    exportedFilesPath: 'path::exportedFiles.proto.export'
+    originalWillFilesPath: 'path::original.will.files'
