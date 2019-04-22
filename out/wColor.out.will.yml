@@ -8,14 +8,17 @@ about:
     not introduce any specific storage format of color what is a benefit. Color
     has a short list of the most common colors. Use the module for formatted
     colorful output or other sophisticated operations with colors.
-  version: 0.3.97
   enabled: 1
-  interpreters:
-    - nodejs >= 6.0.0
-    - chrome >= 60.0.0
-    - firefox >= 60.0.0
-  keywords:
-    - wTools
+  version: 0.3.97
+  values:
+    enabled: 1
+    name: wColor
+    interpreters:
+      - nodejs >= 6.0.0
+      - chrome >= 60.0.0
+      - firefox >= 60.0.0
+    keywords:
+      - wTools
 execution:
   scripts:
     test: wtest proto

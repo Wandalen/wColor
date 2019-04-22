@@ -11,6 +11,12 @@
  * @file Color.s.
  */
 
+/**
+ * @summary Collection of routines to operate colors conveniently.
+ * @namespace "wTools.color"
+ * @memberof module:Tools/mid/Color
+*/
+
 if( typeof module !== 'undefined' )
 {
 
@@ -36,6 +42,19 @@ if( typeof module !== 'undefined' )
 var _ = _global_.wTools;
 
 //
+
+/**
+ * @summary Returns rgb value for color with provided `name`.
+ * @param {String} name Target color name.
+ * @param {} def Default value. Is used if nothing was found.
+ * @example
+ * _.color.rgbFromName( 'black' );
+ * @example
+ * _.color.rgbFromName( 'black', [ 0,0,0 ] );
+ * @throws {Error} If no arguments provided.
+ * @function rgbFromName
+ * @memberof module:Tools/mid/Color.wTools.color
+ */
 
 function rgbFromName( name,def )
 {
@@ -74,6 +93,17 @@ function _rgbFromName( name,def,map )
 }
 
 //
+
+/**
+ * @summary Gets rgb values from bitmask `src`.
+ * @param {Number} src Source bitmask.
+ * @example
+ * _.color.rgbByBitmask( 0xff00ff );
+ * //[1, 0, 1]
+ * @throws {Error} If no arguments provided.
+ * @function rgbFromName
+ * @memberof module:Tools/mid/Color.wTools.color
+ */
 
 function rgbByBitmask( src )
 {
@@ -138,6 +168,34 @@ function _rgbaFromNotName( src )
 
 //
 
+/**
+ * @summary Returns rgba color values for provided entity `src`.
+ * @param {Number|Array|String|Object} src Source entity.
+ * @example
+ * _.color.rgbaFrom( 0xFF0080 );
+ * //[ 1, 0, 0.5, 1 ]
+ *
+ * @example
+ * _.color.rgbaFrom( { r : 0 } );
+ * //[ 0, 1, 1, 1 ]
+ *
+ * @example
+ * _.color.rgbaFrom( 'white' );
+ * //[ 1, 1, 1, 1 ]
+ *
+ * @example
+ * _.color.rgbaFrom( '#ffffff );
+ * //[ 1, 1, 1, 1 ]
+ *
+ * @example
+ * _.color.rgbaFrom( [ 1,1,1 ] );
+ * //[ 1, 1, 1, 1 ]
+ *
+ * @throws {Error} If no arguments provided.
+ * @function rgbaFrom
+ * @memberof module:Tools/mid/Color.wTools.color
+ */
+
 function rgbaFrom( src )
 {
   var result;
@@ -184,6 +242,35 @@ rgbaFrom.defaults =
 
 //
 
+/**
+ * @summary Short-cut for {@link module:Tools/mid/Color.wTools.color.rgbaFrom}.
+ * @description Returns rgb color values for provided entity `src`.
+ * @param {Number|Array|String|Object} src Source entity.
+ * @example
+ * _.color.rgbFrom( 0xFF0080 );
+ * //[ 1, 0, 0.5 ]
+ *
+ * @example
+ * _.color.rgbFrom( { r : 0 } );
+ * //[ 0, 1, 1 ]
+ *
+ * @example
+ * _.color.rgbFrom( 'white' );
+ * //[ 1, 1, 1 ]
+ *
+ * @example
+ * _.color.rgbFrom( '#ffffff );
+ * //[ 1, 1, 1 ]
+ *
+ * @example
+ * _.color.rgbFrom( [ 1,1,1 ] );
+ * //[ 1, 1, 1 ]
+ *
+ * @throws {Error} If no arguments provided.
+ * @function rgbFrom
+ * @memberof module:Tools/mid/Color.wTools.color
+ */
+
 function rgbFrom( src )
 {
   _.assert( arguments.length === 1, 'Expects single argument' );
@@ -203,6 +290,21 @@ rgbFrom.defaults =
 rgbFrom.defaults.__proto__ = rgbaFrom.defaults;
 
 //
+
+/**
+ * @summary Short-cut for {@link module:Tools/mid/Color.wTools.color.rgbaFrom}.
+ * @description Returns rgba color values for provided entity `src` or default value if nothing was found.
+ * @param {Number|Array|String|Object} src Source entity.
+ * @param {Array} def Default value.
+ *
+ * @example
+ * _.color.rgbaFrom( 'some_color', [ 1, 0, 0.5, 1 ] );
+ * //[ 1, 0, 0.5, 1 ]
+ *
+ * @throws {Error} If no arguments provided.
+ * @function rgbaFromTry
+ * @memberof module:Tools/mid/Color.wTools.color
+ */
 
 function rgbaFromTry( src,def )
 {
@@ -227,6 +329,21 @@ rgbaFromTry.defaults =
 rgbaFromTry.defaults.__proto__ = rgbaFrom.defaults;
 
 //
+
+/**
+ * @summary Short-cut for {@link module:Tools/mid/Color.wTools.color.rgbaFrom}.
+ * @description Returns rgb color values for provided entity `src` or default value if nothing was found.
+ * @param {Number|Array|String|Object} src Source entity.
+ * @param {Array} def Default value.
+ *
+ * @example
+ * _.color.rgbFrom( 'some_color', [ 1, 0, 0.5 ] );
+ * //[ 1, 0, 0.5 ]
+ *
+ * @throws {Error} If no arguments provided.
+ * @function rgbFromTry
+ * @memberof module:Tools/mid/Color.wTools.color
+ */
 
 function rgbFromTry( src,def )
 {
@@ -354,6 +471,23 @@ function _colorNameNearest( color, map )
 
 //
 
+/**
+ * @summary Returns name of color that is nearest to provided `color`.
+ * @param {Number|Array|String|Object} color Source color.
+ *
+ * @example
+ * _.color.colorNameNearest( [ 1, 1, 1, 0.8 ] );
+ * //'white'
+ *
+ * @example
+ * _.color.colorNameNearest( [ 1, 1, 1, 0.3 ] );
+ * //'transparent'
+ *
+ * @throws {Error} If no arguments provided.
+ * @function colorNameNearest
+ * @memberof module:Tools/mid/Color.wTools.color
+ */
+
 function colorNameNearest( color )
 {
   var self = this;
@@ -414,6 +548,19 @@ colorNearestCustom.defaults =
 
 //
 
+/**
+ * @summary Returns value of color that is nearest to provided `color`.
+ * @param {Number|Array|String|Object} color Source color.
+ *
+ * @example
+ * _.color.colorNearest( [ 1, 1, 1, 0.8 ] );
+ * //[ 1,1,1,1 ]
+ *
+ * @throws {Error} If no arguments provided.
+ * @function colorNameNearest
+ * @memberof module:Tools/mid/Color.wTools.color
+ */
+
 function colorNearest( color )
 {
   var self = this;
@@ -424,6 +571,20 @@ function colorNearest( color )
 }
 
 //
+
+/**
+ * @summary Returns hex value for provided color `rgb`.
+ * @param {Number|Array|String|Object} color Source color.
+ * @param {Array} def Default value.
+ *
+ * @example
+ * _.color.colorToHex( [ 1, 0, 1 ] );
+ * //'#ff00ff'
+ *
+ * @throws {Error} If no arguments provided.
+ * @function colorToHex
+ * @memberof module:Tools/mid/Color.wTools.color
+ */
 
 function colorToHex( rgb, def )
 {
@@ -469,6 +630,19 @@ function colorToHex( rgb, def )
 }
 
 //
+
+/**
+ * @summary Returns rgb value for provided `hex` value.
+ * @param {String} hex Source color.
+ *
+ * @example
+ * _.color.colorToHex( '#ff00ff' );
+ * //[ 1, 0, 1 ]
+ *
+ * @throws {Error} If no arguments provided.
+ * @function hexToColor
+ * @memberof module:Tools/mid/Color.wTools.color
+ */
 
 function hexToColor( hex )
 {
