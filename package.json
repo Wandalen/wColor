@@ -1,5 +1,6 @@
 {
   "name": "wColor",
+
   "version": "0.3.109",
   "engine": "node >= 6.0.0",
   "license": "MIT",
