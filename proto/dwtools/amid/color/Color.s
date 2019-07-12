@@ -1322,6 +1322,45 @@ function strColorStyle( style )
   return result;
 }
 
+//
+
+/*
+qqq : cover routine strStrip
+*/
+
+function strStrip( srcStr )
+{
+  let result = '';
+
+  _.assert( _.strIs( srcStr ) );
+
+  let splitted = _.strExtractInlined
+  ({
+    src : srcStr,
+    // onInlined : onInlined,
+    preservingEmpty : 0,
+    stripping : 0,
+  });
+
+  for( let i = 0 ; i < splitted.length ; i++ )
+  {
+    if( _.strIs( splitted[ i ] ) )
+    result += splitted[ i ];
+  }
+
+  // function onInlined( split )
+  // {
+  //   let parts = split.split( ':' );
+  //   if( parts.length === 2 )
+  //   {
+  //     parts[ 0 ] = parts[ 0 ].trim();
+  //     return parts;
+  //   }
+  // }
+
+  return result;
+}
+
 // --
 // var
 // --
@@ -1541,6 +1580,8 @@ var Self =
   strUnescape : strUnescape,
   strDirectivesFor : strDirectivesFor,
   strColorStyle : strColorStyle,
+
+  strStrip : strStrip,
 
   // var
 
