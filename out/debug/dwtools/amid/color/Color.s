@@ -50,17 +50,17 @@ var _ = _global_.wTools;
  * @example
  * _.color.rgbFromName( 'black' );
  * @example
- * _.color.rgbFromName( 'black', [ 0,0,0 ] );
+ * _.color.rgbFromName( 'black', [ 0, 0, 0 ] );
  * @throws {Error} If no arguments provided.
  * @function rgbFromName
  * @memberof module:Tools/mid/Color.wTools.color
  */
 
-function rgbFromName( name,def )
+function rgbFromName( name, def )
 {
-  var o = _.routineOptionsFromThis( rgbFromName,this,Self );
+  var o = _.routineOptionsFromThis( rgbFromName, this, Self );
 
-  _.routineOptions( rgbFromName,o );
+  _.routineOptions( rgbFromName, o );
 
   var result;
   if( !o.colorMap )
@@ -72,7 +72,7 @@ function rgbFromName( name,def )
   name = name.toLowerCase();
   name = name.trim();
 
-  return _rgbFromName( name,def,o.colorMap );
+  return _rgbFromName( name, def, o.colorMap );
 }
 
 rgbFromName.defaults =
@@ -82,7 +82,7 @@ rgbFromName.defaults =
 
 //
 
-function _rgbFromName( name,def,map )
+function _rgbFromName( name, def, map )
 {
   var result = map[ name ];
 
@@ -148,7 +148,7 @@ function _rgbaFromNotName( src )
   if( _.numberIs( src ) )
   {
     result = _rgbByBitmask( src );
-    return _.arrayGrow( result,0,4,1 );
+    return _.longGrowInplace( result, [ 0, 4 ], 1 );
   }
 
   var result = [];
@@ -188,7 +188,7 @@ function _rgbaFromNotName( src )
  * //[ 1, 1, 1, 1 ]
  *
  * @example
- * _.color.rgbaFrom( [ 1,1,1 ] );
+ * _.color.rgbaFrom( [ 1, 1, 1 ] );
  * //[ 1, 1, 1, 1 ]
  *
  * @throws {Error} If no arguments provided.
@@ -208,12 +208,12 @@ function rgbaFrom( src )
   /* */
 
   if( _.strIs( src ) )
-  result = rgbFromName.call( this,src );
+  result = rgbFromName.call( this, src );
 
   if( result )
   {
     if( result.length !== 4 )
-    result = _.arrayGrow( result,0,4,1 );
+    result = _.longGrowInplace( result, [ 0, 4 ], 1 );
     return result;
   }
 
@@ -225,7 +225,7 @@ function rgbaFrom( src )
   if( result )
   {
     if( result.length !== 4 )
-    result = _.arrayGrow( result,0,4,1 );
+    result = _.longGrowInplace( result, [ 0, 4 ], 1 );
 
     return result;
   }
@@ -263,7 +263,7 @@ rgbaFrom.defaults =
  * //[ 1, 1, 1 ]
  *
  * @example
- * _.color.rgbFrom( [ 1,1,1 ] );
+ * _.color.rgbFrom( [ 1, 1, 1 ] );
  * //[ 1, 1, 1 ]
  *
  * @throws {Error} If no arguments provided.
@@ -276,11 +276,11 @@ function rgbFrom( src )
   _.assert( arguments.length === 1, 'Expects single argument' );
 
   if( _.longIs( src ) )
-  return _.longSlice( src,0,3 );
+  return _.longSlice( src, 0, 3 );
 
-  var result = rgbaFrom.call( this,src );
+  var result = rgbaFrom.call( this, src );
 
-  return _.longSlice( result,0,3 );
+  return _.longSlice( result, 0, 3 );
 }
 
 rgbFrom.defaults =
@@ -306,14 +306,14 @@ rgbFrom.defaults.__proto__ = rgbaFrom.defaults;
  * @memberof module:Tools/mid/Color.wTools.color
  */
 
-function rgbaFromTry( src,def )
+function rgbaFromTry( src, def )
 {
 
   _.assert( arguments.length === 2, 'Expects exactly two arguments' );
 
   try
   {
-    return rgbaFrom.call( this,src );
+    return rgbaFrom.call( this, src );
   }
   catch( err )
   {
@@ -345,14 +345,14 @@ rgbaFromTry.defaults.__proto__ = rgbaFrom.defaults;
  * @memberof module:Tools/mid/Color.wTools.color
  */
 
-function rgbFromTry( src,def )
+function rgbFromTry( src, def )
 {
 
   _.assert( arguments.length === 2, 'Expects exactly two arguments' );
 
   try
   {
-    return rgbFrom.call( this,src );
+    return rgbFrom.call( this, src );
   }
   catch( err )
   {
@@ -554,7 +554,7 @@ colorNearestCustom.defaults =
  *
  * @example
  * _.color.colorNearest( [ 1, 1, 1, 0.8 ] );
- * //[ 1,1,1,1 ]
+ * //[ 1, 1, 1, 1 ]
  *
  * @throws {Error} If no arguments provided.
  * @function colorNameNearest
@@ -684,7 +684,7 @@ function colorToRgbHtml( src )
   return src;
 
   if( _.objectIs( src ) )
-  src = [ src.r,src.g,src.b,src.a ];
+  src = [ src.r, src.g, src.b, src.a ];
 
   if( _.arrayIs( src ) )
   {
@@ -699,7 +699,7 @@ function colorToRgbHtml( src )
   }
   else result = src;
 
-  //console.log( 'colorHtmlToRgbHtml',result );
+  //console.log( 'colorHtmlToRgbHtml', result );
 
   return result;
 }
@@ -717,7 +717,7 @@ function colorToRgbaHtml( src )
   return src;
 
   if( _.objectIs( src ) )
-  src = [ src.r,src.g,src.b,src.a ];
+  src = [ src.r, src.g, src.b, src.a ];
 
   if( _.arrayIs( src ) )
   {
@@ -750,7 +750,7 @@ function colorToRgbaHtml( src )
 
 //
 
-function mulSaturation( rgb,factor )
+function mulSaturation( rgb, factor )
 {
   _.assert( arguments.length === 2, 'Expects exactly two arguments' );
   _.assert( factor >= 0 );
@@ -769,7 +769,7 @@ function mulSaturation( rgb,factor )
 
 //
 
-function brighter( rgb,factor )
+function brighter( rgb, factor )
 {
   if( factor === undefined )
   factor = 0.1;
@@ -777,7 +777,7 @@ function brighter( rgb,factor )
   _.assert( arguments.length === 1 || arguments.length === 2 );
   _.assert( factor >= 0 );
 
-  return mulSaturation( rgb,1 + factor );
+  return mulSaturation( rgb, 1 + factor );
 }
 
 //
@@ -793,7 +793,7 @@ function brighter( rgb,factor )
   efactor = - factor / ( 1+factor )
 */
 
-function paler( rgb,factor )
+function paler( rgb, factor )
 {
   if( factor === undefined )
   factor = 0.1;
@@ -803,7 +803,7 @@ function paler( rgb,factor )
 
   var efactor = factor / ( 1+factor );
 
-  return mulSaturation( rgb,1 - efactor );
+  return mulSaturation( rgb, 1 - efactor );
 }
 
 //
@@ -826,7 +826,7 @@ function rgbWithInt( srcInt )
   var result = [];
 
   _.assert( arguments.length === 1, 'Expects single argument' );
-  _.assert( _.numberIs( srcInt ),'rgbWithInt :','Expects srcInt' );
+  _.assert( _.numberIs( srcInt ), 'rgbWithInt :', 'Expects srcInt' );
 
   /* eval degree */
 
@@ -885,7 +885,7 @@ function rgbWithInt( srcInt )
 
   /* fill routine */
 
-  function fillWithElements( i1,i2,i3 )
+  function fillWithElements( i1, i2, i3 )
   {
     result[ left ] = set[ i1 ];
     result[ ( left+1 )%3 ] = set[ i2 ];
@@ -900,11 +900,11 @@ function rgbWithInt( srcInt )
   {
 
     if( left < 3 )
-    return fillWithElements( last,0,0 );
+    return fillWithElements( last, 0, 0 );
     left -= 3;
 
     if( left < 3 )
-    return fillWithElements( 0,last,last );
+    return fillWithElements( 0, last, last );
     left -= 3;
 
   }
@@ -918,11 +918,11 @@ function rgbWithInt( srcInt )
     {
 
       if( left < 3 )
-      return fillWithElements( last,c1,c2 );
+      return fillWithElements( last, c1, c2 );
       left -= 3;
 
       if( left < 3 )
-      return fillWithElements( last,c2,c1 );
+      return fillWithElements( last, c2, c1 );
       left -= 3;
 
     }
@@ -931,7 +931,7 @@ function rgbWithInt( srcInt )
 
   /* */
 
-  throw _.err( 'rgbWithInt :','No color for',srcInt );
+  throw _.err( 'rgbWithInt :', 'No color for', srcInt );
 }
 
 //
@@ -940,7 +940,7 @@ function _rgbWithInt( srcInt )
 {
   var result;
 
-  _.assert( _.numberIs( srcInt ),'rgbWithInt :','Expects srcInt' );
+  _.assert( _.numberIs( srcInt ), 'rgbWithInt :', 'Expects srcInt' );
 
   var c = 9;
 
@@ -958,7 +958,7 @@ function _rgbWithInt( srcInt )
 // hsl
 // --
 
-function hslToRgb( hsl,result )
+function hslToRgb( hsl, result )
 {
   var result = result || [];
   var h = hsl[ 0 ];
@@ -998,7 +998,7 @@ function hslToRgb( hsl,result )
 
 //
 
-function rgbToHsl( rgb,result )
+function rgbToHsl( rgb, result )
 {
   var result = result || [];
   var hue, saturation, lightness;
@@ -1050,7 +1050,7 @@ function rgbToHsl( rgb,result )
 // random
 // --
 
-function randomHsl( s,l )
+function randomHsl( s, l )
 {
 
   _.assert( arguments.length <= 2 );
@@ -1067,7 +1067,7 @@ function randomHsl( s,l )
 
 //
 
-function randomRgbWithSl( s,l )
+function randomRgbWithSl( s, l )
 {
 
   _.assert( arguments.length <= 2 );
@@ -1125,7 +1125,7 @@ function linearToGamma( dst )
 //   if( arguments[ 1 ] === undefined )
 //   return _strDirectiveBackgroundFor( arguments[ 0 ] );
 //   else
-//   return strFormatBackground( arguments[ 0 ],arguments[ 1 ] );
+//   return strFormatBackground( arguments[ 0 ], arguments[ 1 ] );
 // }
 
 //
@@ -1151,7 +1151,7 @@ function strFormatBackground( srcStr, color )
   if( _.numberIs( color ) )
   color = _.color.colorNameNearest( color );
 
-  _.assert( arguments.length === 2,'Expects 2 arguments' );
+  _.assert( arguments.length === 2, 'Expects 2 arguments' );
   _.assert( _.strIs( srcStr ) );
   _.assert( _.strIs( color ) );
 
@@ -1166,7 +1166,7 @@ function strFormatBackground( srcStr, color )
 //   if( arguments[ 1 ] === undefined )
 //   return _strDirectiveForegroundFor( arguments[ 0 ] );
 //   else
-//   return strFormatForeground( arguments[ 0 ],arguments[ 1 ] );
+//   return strFormatForeground( arguments[ 0 ], arguments[ 1 ] );
 // }
 
 //
@@ -1192,9 +1192,9 @@ function strFormatForeground( srcStr, color )
   if( _.numberIs( color ) )
   color = _.color.colorNameNearest( color );
 
-  _.assert( arguments.length === 2,'Expects 2 arguments' );
-  _.assert( _.strIs( srcStr ),'Expects string {-src-}' );
-  _.assert( _.strIs( color ),'Expects string {-color-}' );
+  _.assert( arguments.length === 2, 'Expects 2 arguments' );
+  _.assert( _.strIs( srcStr ), 'Expects string {-src-}' );
+  _.assert( _.strIs( color ), 'Expects string {-color-}' );
 
   return `#foreground : ${color}#${srcStr}#foreground : default#`;
 }
@@ -1230,7 +1230,7 @@ function _strEscape( srcStr )
   if( _.numberIs( result ) )
   result = result + '';
   _.assert( arguments.length === 1 || arguments.length === 2 );
-  _.assert( _.strIs( result ), 'Expects string got',_.strType( result ) );
+  _.assert( _.strIs( result ), 'Expects string got', _.strType( result ) );
   return '#inputRaw:1#' + srcStr + '#inputRaw:0#'
 }
 
@@ -1244,7 +1244,7 @@ function _strUnescape( srcStr )
   if( _.numberIs( result ) )
   result = result + '';
   _.assert( arguments.length === 1 || arguments.length === 2 );
-  _.assert( _.strIs( result ), 'Expects string got',_.strType( result ) );
+  _.assert( _.strIs( result ), 'Expects string got', _.strType( result ) );
   return '#inputRaw:0#' + srcStr + '#inputRaw:1#'
 }
 
@@ -1267,7 +1267,7 @@ function strDirectivesFor( style )
   var style = _.arrayAs( style );
 
   _.assert( arguments.length === 1, 'Expects single argument' );
-  _.assert( _.arrayIs( style ) ,'Expects string or array of strings ( style )' );
+  _.assert( _.arrayIs( style ) , 'Expects string or array of strings ( style )' );
 
   function join()
   {
@@ -1285,7 +1285,7 @@ function strDirectivesFor( style )
     if( _.objectIs( style[ s ] ) )
     {
       var obj = style[ s ];
-      _.assertMapHasOnly( obj,StyleObjectOptions );
+      _.assertMapHasOnly( obj, StyleObjectOptions );
       if( obj.fg )
       result = join( result, _.color._strDirectiveForegroundFor( obj.fg ) );
       if( obj.bg )
@@ -1293,7 +1293,7 @@ function strDirectivesFor( style )
       continue;
     }
 
-    _.assert( _.strIs( style[ s ] ) ,'Expects string or array of strings { style }' );
+    _.assert( _.strIs( style[ s ] ) , 'Expects string or array of strings { style }' );
 
     var styleObject = this.strColorStyle( style[ s ] );
 
@@ -1315,7 +1315,7 @@ function strDirectivesFor( style )
 function strColorStyle( style )
 {
   _.assert( arguments.length === 1, 'Expects single argument' );
-  _.assert( _.strIs( style ),'Expects string got',_.strType( style ) );
+  _.assert( _.strIs( style ), 'Expects string got', _.strType( style ) );
 
   var result = this.Style[ style ];
 
@@ -1368,23 +1368,23 @@ function strStrip( srcStr )
 var ColorMap =
 {
 
-  'invisible'       : [ 0.0,0.0,0.0,0.0 ],
-  'transparent'     : [ 1.0,1.0,1.0,0.5 ],
+  'invisible'       : [ 0.0, 0.0, 0.0, 0.0 ],
+  'transparent'     : [ 1.0, 1.0, 1.0, 0.5 ],
 
-  'cyan'            : [ 0.0,1.0,1.0 ],
-  'magenta'         : [ 1.0,0.0,1.0 ],
-  'maroon'          : [ 0.5,0.0,0.0 ],
-  'dark green'      : [ 0.0,0.5,0.0 ],
-  'navy'            : [ 0.0,0.0,0.5 ],
-  'olive'           : [ 0.5,0.5,0.0 ],
-  'teal'            : [ 0.0,0.5,0.5 ],
-  'bright green'    : [ 0.5,1.0,0.0 ],
-  'spring green'    : [ 0.0,1.0,0.5 ],
-  'pink'            : [ 1.0,0.0,0.5 ],
-  'dark orange'     : [ 1.0,0.5,0.0 ],
-  'azure'           : [ 0.0,0.5,1.0 ],
-  'dark blue'       : [ 0.0,0.0,0.63 ],
-  'brown'           : [ 0.65,0.16,0.16 ],
+  'cyan'            : [ 0.0, 1.0, 1.0 ],
+  'magenta'         : [ 1.0, 0.0, 1.0 ],
+  'maroon'          : [ 0.5, 0.0, 0.0 ],
+  'dark green'      : [ 0.0, 0.5, 0.0 ],
+  'navy'            : [ 0.0, 0.0, 0.5 ],
+  'olive'           : [ 0.5, 0.5, 0.0 ],
+  'teal'            : [ 0.0, 0.5, 0.5 ],
+  'bright green'    : [ 0.5, 1.0, 0.0 ],
+  'spring green'    : [ 0.0, 1.0, 0.5 ],
+  'pink'            : [ 1.0, 0.0, 0.5 ],
+  'dark orange'     : [ 1.0, 0.5, 0.0 ],
+  'azure'           : [ 0.0, 0.5, 1.0 ],
+  'dark blue'       : [ 0.0, 0.0, 0.63 ],
+  'brown'           : [ 0.65, 0.16, 0.16 ],
 
 }
 
@@ -1393,12 +1393,12 @@ var ColorMap =
 var ColorMapGreyscale =
 {
 
-  'white'           : [ 1.0,1.0,1.0 ],
-  'smoke'           : [ 0.9,0.9,0.9 ],
-  'silver'          : [ 0.75,0.75,0.75 ],
-  'gray'            : [ 0.5,0.5,0.5 ],
-  'dim'             : [ 0.35,0.35,0.35 ],
-  'black'           : [ 0.0,0.0,0.0 ],
+  'white'           : [ 1.0, 1.0, 1.0 ],
+  'smoke'           : [ 0.9, 0.9, 0.9 ],
+  'silver'          : [ 0.75, 0.75, 0.75 ],
+  'gray'            : [ 0.5, 0.5, 0.5 ],
+  'dim'             : [ 0.35, 0.35, 0.35 ],
+  'black'           : [ 0.0, 0.0, 0.0 ],
 
 }
 
@@ -1407,26 +1407,26 @@ var ColorMapGreyscale =
 var ColorMapDistinguishable =
 {
 
-  'yellow'          : [ 1.0,1.0,0.0 ],
-  'purple'          : [ 0.5,0.0,0.5 ],
-  'orange'          : [ 1.0,0.65,0.0 ],
-  'bright blue'     : [ 0.68,0.85,0.9 ],
-  'red'             : [ 1.0,0.0,0.0 ],
-  'buff'            : [ 0.94,0.86,0.51 ],
-  'gray'            : [ 0.5,0.5,0.5 ],
-  'green'           : [ 0.0,1.0,0.0 ],
-  'purplish pink'   : [ 0.96,0.46,0.56 ],
-  'blue'            : [ 0.0,0.0,1.0 ],
-  'yellowish pink'  : [ 1.0,0.48,0.36 ],
-  'violet'          : [ 0.5,0.0,1.0 ],
-  'orange yellow'   : [ 1.0,0.56,0.0 ],
-  'purplish red'    : [ 0.7,0.16,0.32 ],
-  'greenish yellow' : [ 0.96,0.78,0.0 ],
-  'reddish brown'   : [ 0.5,0.1,0.05 ],
-  'yellow green'    : [ 0.57,0.6,0.0 ],
-  'yellowish brown' : [ 0.34,0.2,0.08 ],
-  'reddish orange'  : [ 0.95,0.23,0.07 ],
-  'olive green'     : [ 0.14,0.17,0.09 ],
+  'yellow'          : [ 1.0, 1.0, 0.0 ],
+  'purple'          : [ 0.5, 0.0, 0.5 ],
+  'orange'          : [ 1.0, 0.65, 0.0 ],
+  'bright blue'     : [ 0.68, 0.85, 0.9 ],
+  'red'             : [ 1.0, 0.0, 0.0 ],
+  'buff'            : [ 0.94, 0.86, 0.51 ],
+  'gray'            : [ 0.5, 0.5, 0.5 ],
+  'green'           : [ 0.0, 1.0, 0.0 ],
+  'purplish pink'   : [ 0.96, 0.46, 0.56 ],
+  'blue'            : [ 0.0, 0.0, 1.0 ],
+  'yellowish pink'  : [ 1.0, 0.48, 0.36 ],
+  'violet'          : [ 0.5, 0.0, 1.0 ],
+  'orange yellow'   : [ 1.0, 0.56, 0.0 ],
+  'purplish red'    : [ 0.7, 0.16, 0.32 ],
+  'greenish yellow' : [ 0.96, 0.78, 0.0 ],
+  'reddish brown'   : [ 0.5, 0.1, 0.05 ],
+  'yellow green'    : [ 0.57, 0.6, 0.0 ],
+  'yellowish brown' : [ 0.34, 0.2, 0.08 ],
+  'reddish orange'  : [ 0.95, 0.23, 0.07 ],
+  'olive green'     : [ 0.14, 0.17, 0.09 ],
 
 }
 
@@ -1434,36 +1434,36 @@ var ColorMapDistinguishable =
 
 var ColorMapShell =
 {
-  'white'           : [ 1.0,1.0,1.0 ],
-  'black'           : [ 0.0,0.0,0.0 ],
-  'green'           : [ 0.0,1.0,0.0 ],
-  'red'             : [ 1.0,0.0,0.0 ],
-  'yellow'          : [ 1.0,1.0,0.0 ],
-  'blue'            : [ 0.0,0.0,1.0 ],
-  'cyan'            : [ 0.0,1.0,1.0 ],
-  'magenta'         : [ 1.0,0.0,1.0 ],
+  'white'           : [ 1.0, 1.0, 1.0 ],
+  'black'           : [ 0.0, 0.0, 0.0 ],
+  'green'           : [ 0.0, 1.0, 0.0 ],
+  'red'             : [ 1.0, 0.0, 0.0 ],
+  'yellow'          : [ 1.0, 1.0, 0.0 ],
+  'blue'            : [ 0.0, 0.0, 1.0 ],
+  'cyan'            : [ 0.0, 1.0, 1.0 ],
+  'magenta'         : [ 1.0, 0.0, 1.0 ],
 
-  'bright black'    : [ 0.5,0.5,0.5 ],
+  'bright black'    : [ 0.5, 0.5, 0.5 ],
 
-  'dark yellow'     : [ 0.5,0.5,0.0 ],
-  'dark red'        : [ 0.5,0.0,0.0 ],
-  'dark magenta'    : [ 0.5,0.0,0.5 ],
-  'dark blue'       : [ 0.0,0.0,0.5 ],
-  'dark cyan'       : [ 0.0,0.5,0.5 ],
-  'dark green'      : [ 0.0,0.5,0.0 ],
-  'dark white'      : [ 0.9,0.9,0.9 ],
+  'dark yellow'     : [ 0.5, 0.5, 0.0 ],
+  'dark red'        : [ 0.5, 0.0, 0.0 ],
+  'dark magenta'    : [ 0.5, 0.0, 0.5 ],
+  'dark blue'       : [ 0.0, 0.0, 0.5 ],
+  'dark cyan'       : [ 0.0, 0.5, 0.5 ],
+  'dark green'      : [ 0.0, 0.5, 0.0 ],
+  'dark white'      : [ 0.9, 0.9, 0.9 ],
 
-  'bright white'    : [ 1.0,1.0,1.0 ], /* white */
-  'bright green'    : [ 0.0,1.0,0.0 ], /* green */
-  'bright red'      : [ 1.0,0.0,0.0 ], /* red */
-  'bright yellow'   : [ 1.0,1.0,0.0 ], /* yellow */
-  'bright blue'     : [ 0.0,0.0,1.0 ], /* blue */
-  'bright cyan'     : [ 0.0,1.0,1.0 ], /* cyan */
-  'bright magenta'  : [ 1.0,0.0,1.0 ], /* magenta */
+  'bright white'    : [ 1.0, 1.0, 1.0 ], /* white */
+  'bright green'    : [ 0.0, 1.0, 0.0 ], /* green */
+  'bright red'      : [ 1.0, 0.0, 0.0 ], /* red */
+  'bright yellow'   : [ 1.0, 1.0, 0.0 ], /* yellow */
+  'bright blue'     : [ 0.0, 0.0, 1.0 ], /* blue */
+  'bright cyan'     : [ 0.0, 1.0, 1.0 ], /* cyan */
+  'bright magenta'  : [ 1.0, 0.0, 1.0 ], /* magenta */
 
-  'dark black'      : [ 0.0,0.0,0.0 ], /* black */
+  'dark black'      : [ 0.0, 0.0, 0.0 ], /* black */
 
-  'silver'          : [ 0.9,0.9,0.9 ] /* dark white */
+  'silver'          : [ 0.9, 0.9, 0.9 ] /* dark white */
 }
 
 var Style =
@@ -1600,17 +1600,17 @@ if( !_.color )
 else
 {
 
-  _.mapSupplement( _.color,Self );
-  _.mapSupplement( _.color.ColorMap,ColorMap );
-  _.mapSupplement( _.color.ColorMapGreyscale,ColorMapGreyscale );
-  _.mapSupplement( _.color.ColorMapDistinguishable,ColorMapDistinguishable );
-  _.mapSupplement( _.color.ColorMapShell,ColorMapShell );
+  _.mapSupplement( _.color, Self );
+  _.mapSupplement( _.color.ColorMap, ColorMap );
+  _.mapSupplement( _.color.ColorMapGreyscale, ColorMapGreyscale );
+  _.mapSupplement( _.color.ColorMapDistinguishable, ColorMapDistinguishable );
+  _.mapSupplement( _.color.ColorMapShell, ColorMapShell );
 
 }
 
-_.mapSupplement( _.color.ColorMap,ColorMapGreyscale );
-_.mapSupplement( _.color.ColorMap,ColorMapDistinguishable );
-_.mapSupplement( _.color.ColorMap,ColorMapShell );
+_.mapSupplement( _.color.ColorMap, ColorMapGreyscale );
+_.mapSupplement( _.color.ColorMap, ColorMapDistinguishable );
+_.mapSupplement( _.color.ColorMap, ColorMapShell );
 
 // --
 // export
