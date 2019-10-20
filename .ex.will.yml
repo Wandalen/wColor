@@ -35,6 +35,9 @@ about :
 path :
 
   repository : git+https:///github.com/Wandalen/wColor.git
+  remotes :
+   - git+https:///github.com/Wandalen/wColor.git
+   - npm:///wColor
   bugtracker : https:///github.com/Wandalen/wColor/issues
 
 step :
