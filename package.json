@@ -19,8 +19,8 @@
   {
     "url" : "https://github.com/Wandalen/wColor/issues"
   }, 
-  "dependencies" : { "wTools" : "" }, 
-  "devDependencies" : { "wTesting" : "" }, 
+  "dependencies" : { "wTools" : "beta" }, 
+  "devDependencies" : { "wTesting" : "beta" }, 
   "keywords" : 
   [
     "wTools", 
