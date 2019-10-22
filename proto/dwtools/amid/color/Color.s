@@ -1474,7 +1474,7 @@ var Style =
 
   'path' : { fg : 'dark cyan' },
   'code' : { fg : 'dark green' },
-  'entity' : { fg : 'blue' },
+  'entity' : { fg : 'bright blue' }, /* qqq : why cant i specify [ 0,0,0 ] ? */
 
   'topic.up' : { fg : 'white', bg : 'dark blue' },
   'topic.down' : { fg : 'dark black', bg : 'dark blue' },
@@ -1615,10 +1615,6 @@ _.mapSupplement( _.color.ColorMap, ColorMapShell );
 // --
 // export
 // --
-
-if( typeof module !== 'undefined' )
-if( _global_.WTOOLS_PRIVATE )
-{ /* delete require.cache[ module.id ]; */ }
 
 if( typeof module !== 'undefined' && module !== null )
 module[ 'exports' ] = Self;
