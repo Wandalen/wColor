@@ -2,19 +2,17 @@ format: outwillfile-2.0
 root:
   - wColor.out
 consistency:
-  wColor.out.will.yml: &ref_0
-    hash: 2e363b98e9ffeaa54f1b4fdad06b7a53
-    size: 39022
-  ../.ex.will.yml: &ref_1
+  ../.ex.will.yml: &ref_0
     hash: eacc9ed39c1eb5d6c2571a748bd7d508
     size: 2296
-  ../.im.will.yml: &ref_2
-    hash: 495d9a6c7437567a465c2c60bba80a26
-    size: 4857
+  ../.im.will.yml: &ref_1
+    hash: 270ada83e5794046e2b8d73211e430f1
+    size: 4931
 module:
   wColor.out:
     about:
       name: wColor
+      org: noorg
       description: >-
         Collection of routines to operate colors conveniently. Color provides
         functions to convert color from one color space to another color space,
@@ -25,11 +23,11 @@ module:
         with colors.
       enabled: 1
       version: 0.4.0
-      interpreters:
+      interpreters: &ref_2
         - njs >= 8.0.0
         - chrome >= 60.0.0
         - firefox >= 60.0.0
-      keywords:
+      keywords: &ref_3
         - wTools
         - color
         - colors
@@ -41,14 +39,14 @@ module:
         - hsl
       license: MIT
       author: Kostiantyn Wandalen <wanalen@willbe.so>
-      contributors:
+      contributors: &ref_4
         - Kostiantyn Wandalen <wanalen@willbe.so>
         - Volodymyr M. <volodymyr.migdal@gmail.com>
       npm.name: wColor
-      npm.scripts:
+      npm.scripts: &ref_5
         test: wtest .run proto/**
         docgen: wdocgen .build proto
-      npm.directories:
+      npm.directories: &ref_6
         doc: doc
         main: proto/dwtools/amid/color/Color.s
     path:
@@ -79,9 +77,6 @@ module:
       download:
         criterion:
           predefined: 1
-      remote:
-        criterion:
-          predefined: 1
       repository:
         path: 'git+https:///github.com/Wandalen/wColor.git'
       origins:
@@ -91,15 +86,15 @@ module:
       bugtracker:
         path: 'https:///github.com/Wandalen/wColor/issues'
       in:
-        criterion:
-          predefined: 0
         path: .
       out:
-        criterion:
-          predefined: 0
         path: .
       temp:
-        path: 'path::out'
+        path:
+          - 'path::out'
+          - ../package-lock.json
+          - ../package.json
+          - ../node_modules
       proto:
         path: ../proto
       export:
@@ -164,11 +159,13 @@ module:
         path: '{path::out.*=}/source/Index.s'
       exported.dir.proto.export:
         criterion:
+          generated: 1
           content: proto
           export: 1
         path: ../proto
       exported.files.proto.export:
         criterion:
+          generated: 1
           content: proto
           export: 1
         path:
@@ -347,6 +344,7 @@ module:
           prefixPath: ../proto
         mandatory: 1
         criterion:
+          generated: 1
           content: proto
           export: 1
       exported.files.proto.export:
@@ -359,6 +357,7 @@ module:
         recursive: 0
         mandatory: 1
         criterion:
+          generated: 1
           content: proto
           export: 1
     step:
@@ -712,22 +711,6 @@ module:
           content: prime
         inherit:
           - files.transpile
-      exported.proto.export:
-        opts:
-          reflector: 'reflector::exported.proto.export*'
-        criterion:
-          content: proto
-          export: 1
-        inherit:
-          - files.reflect
-      exported.files.proto.export:
-        opts:
-          reflector: 'reflector::exported.files.proto.export*'
-        criterion:
-          content: proto
-          export: 1
-        inherit:
-          - files.reflect
     build:
       proto.export:
         steps:
@@ -816,12 +799,12 @@ module:
           content: proto
           export: 1
     consistency:
-      wColor.out.will.yml: *ref_0
-      ../.ex.will.yml: *ref_1
-      ../.im.will.yml: *ref_2
+      ../.ex.will.yml: *ref_0
+      ../.im.will.yml: *ref_1
   ../:
     about:
       name: wColor
+      org: noorg
       description: >-
         Collection of routines to operate colors conveniently. Color provides
         functions to convert color from one color space to another color space,
@@ -832,32 +815,14 @@ module:
         with colors.
       enabled: 1
       version: 0.4.0
-      interpreters:
-        - njs >= 8.0.0
-        - chrome >= 60.0.0
-        - firefox >= 60.0.0
-      keywords:
-        - wTools
-        - color
-        - colors
-        - colorful
-        - color conversion
-        - convert color
-        - rgb
-        - rgba
-        - hsl
+      interpreters: *ref_2
+      keywords: *ref_3
       license: MIT
       author: Kostiantyn Wandalen <wanalen@willbe.so>
-      contributors:
-        - Kostiantyn Wandalen <wanalen@willbe.so>
-        - Volodymyr M. <volodymyr.migdal@gmail.com>
+      contributors: *ref_4
       npm.name: wColor
-      npm.scripts:
-        test: wtest .run proto/**
-        docgen: wdocgen .build proto
-      npm.directories:
-        doc: doc
-        main: proto/dwtools/amid/color/Color.s
+      npm.scripts: *ref_5
+      npm.directories: *ref_6
     path:
       module.willfiles:
         criterion:
@@ -886,9 +851,6 @@ module:
       download:
         criterion:
           predefined: 1
-      remote:
-        criterion:
-          predefined: 1
       repository:
         path: 'git+https:///github.com/Wandalen/wColor.git'
       origins:
@@ -898,21 +860,21 @@ module:
       bugtracker:
         path: 'https:///github.com/Wandalen/wColor/issues'
       in:
-        criterion:
-          predefined: 0
         path: .
       out:
-        criterion:
-          predefined: 0
         path: out
       temp:
-        path: 'path::out'
+        path:
+          - 'path::out'
+          - package-lock.json
+          - package.json
+          - node_modules
       proto:
-        path: ./proto
+        path: proto
       export:
         path: '{path::proto}/**'
       doc:
-        path: ./doc
+        path: doc
       out.raw.debug:
         criterion:
           debug: debug
@@ -1530,6 +1492,5 @@ module:
         hash: eacc9ed39c1eb5d6c2571a748bd7d508
         size: 2296
       ../.im.will.yml:
-        hash: 495d9a6c7437567a465c2c60bba80a26
-        size: 4857
-      wColor.out.will.yml: *ref_0
+        hash: 270ada83e5794046e2b8d73211e430f1
+        size: 4931
