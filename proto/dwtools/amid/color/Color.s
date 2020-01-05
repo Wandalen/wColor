@@ -39,7 +39,7 @@ if( typeof module !== 'undefined' )
 
 }
 
-var _ = _global_.wTools;
+let _ = _global_.wTools;
 
 //
 
@@ -58,11 +58,11 @@ var _ = _global_.wTools;
 
 function rgbFromName( name, def )
 {
-  var o = _.routineOptionsFromThis( rgbFromName, this, Self );
+  let o = _.routineOptionsFromThis( rgbFromName, this, Self );
 
   _.routineOptions( rgbFromName, o );
 
-  var result;
+  let result;
   if( !o.colorMap )
   o.colorMap = Self.ColorMap;
 
@@ -84,7 +84,7 @@ rgbFromName.defaults =
 
 function _rgbFromName( name, def, map )
 {
-  var result = map[ name ];
+  let result = map[ name ];
 
   if( !result )
   result = def;
@@ -118,7 +118,7 @@ function rgbByBitmask( src )
 
 function _rgbByBitmask( src )
 {
-  var result = [];
+  let result = [];
 
   result[ 0 ] = ( ( src >> 16 ) & 0xff ) / 255;
   result[ 1 ] = ( ( src >> 8 ) & 0xff ) / 255;
@@ -137,7 +137,7 @@ function _rgbaFromNotName( src )
 
   if( _.mapIs( src ) )
   {
-    var result = [];
+    let result = [];
     result[ 0 ] = src.r === undefined ? 1 : src.r;
     result[ 1 ] = src.g === undefined ? 1 : src.g;
     result[ 2 ] = src.b === undefined ? 1 : src.b;
@@ -151,11 +151,11 @@ function _rgbaFromNotName( src )
     return _.longGrowInplace( result, [ 0, 4 ], 1 );
   }
 
-  var result = [];
+  let result = [];
 
   /* */
 
-  for( var r = 0 ; r < src.length ; r++ )
+  for( let r = 0 ; r < src.length ; r++ )
   result[ r ] = Number( src[ r ] );
 
   if( result.length < 4 )
@@ -198,7 +198,7 @@ function _rgbaFromNotName( src )
 
 function rgbaFrom( src )
 {
-  var result;
+  let result;
 
   _.assert( arguments.length === 1, 'Expects single argument' );
 
@@ -278,7 +278,7 @@ function rgbFrom( src )
   if( _.longIs( src ) )
   return _.longSlice( src, 0, 3 );
 
-  var result = rgbaFrom.call( this, src );
+  let result = rgbaFrom.call( this, src );
 
   return _.longSlice( result, 0, 3 );
 }
@@ -374,15 +374,15 @@ function _colorDistance( c1, c2 )
   _.assert( _.longIs( c1 ) );
   _.assert( _.longIs( c2 ) );
 
-  var a = c1.slice();
-  var b = c2.slice();
+  let a = c1.slice();
+  let b = c2.slice();
 
   // function _definedIs( src )
   // {
   //   return src !== undefined && src !== null && !isNaN( src )
   // }
 
-  for( var  i = 0 ; i < 4 ; i++ )
+  for( let  i = 0 ; i < 4 ; i++ )
   {
     if( !_.numberIsFinite( a[ i ] ) )
     // a[ i ] = _definedIs( b[ i ] ) ? b[ i ] : 1;
@@ -406,7 +406,7 @@ function _colorDistance( c1, c2 )
 
 function _colorNameNearest( color, map )
 {
-  var self = this;
+  let self = this;
 
   _.assert( arguments.length === 1 || arguments.length === 2 );
 
@@ -432,7 +432,7 @@ function _colorNameNearest( color, map )
 
   _.assert( color.length === 4 );
 
-  for( var r = 0 ; r < 4 ; r++ )
+  for( let r = 0 ; r < 4 ; r++ )
   {
     color[ r ] = Number( color[ r ] );
     if( color[ r ] < 0 )
@@ -446,16 +446,16 @@ function _colorNameNearest( color, map )
 
   /* */
 
-  var names = Object.keys( map );
-  var nearest = names[ 0 ];
-  var max = _colorDistance( map[ names[ 0 ] ], color );
+  let names = Object.keys( map );
+  let nearest = names[ 0 ];
+  let max = _colorDistance( map[ names[ 0 ] ], color );
 
   if( max === 0 )
   return nearest;
 
-  for( var i = 1; i <= names.length - 1; i++ )
+  for( let i = 1; i <= names.length - 1; i++ )
   {
-    var d = _colorDistance( map[ names[ i ] ], color );
+    let d = _colorDistance( map[ names[ i ] ], color );
     if( d < max )
     {
       max = d;
@@ -490,13 +490,13 @@ function _colorNameNearest( color, map )
 
 function colorNameNearest( color )
 {
-  var self = this;
+  let self = this;
 
   _.assert( arguments.length === 1, 'Expects single argument' );
 
   if( _.strIs( color ) )
   {
-    var color2 = _.color.hexToColor( color );
+    let color2 = _.color.hexToColor( color );
     if( color2 )
     color = color2;
   }
@@ -516,7 +516,7 @@ function colorNameNearest( color )
 
 function colorNearestCustom( o )
 {
-  var self = this;
+  let self = this;
 
   _.assert( arguments.length === 1, 'Expects single argument' );
 
@@ -524,14 +524,14 @@ function colorNearestCustom( o )
 
   if( _.strIs( o.color ) )
   {
-    var _color = _.color.hexToColor( o.color );
+    let _color = _.color.hexToColor( o.color );
     if( _color )
     o.color = _color;
   }
 
   try
   {
-    var name = self._colorNameNearest( o.color, o.colorMap );
+    let name = self._colorNameNearest( o.color, o.colorMap );
     return o.colorMap[ name ];
   }
   catch( err )
@@ -563,9 +563,9 @@ colorNearestCustom.defaults =
 
 function colorNearest( color )
 {
-  var self = this;
+  let self = this;
 
-  var name = self.colorNameNearest( color );
+  let name = self.colorNameNearest( color );
   if( name )
   return self.ColorMap[ name ];
 }
@@ -606,7 +606,7 @@ function colorToHex( rgb, def )
   else if( _.numberIs( rgb ) )
   {
     // throw _.err( 'not tested' );
-    var hex = Math.floor( rgb ).toString( 16 );
+    let hex = Math.floor( rgb ).toString( 16 );
     return '#' + _.strDup( '0', 6 - hex.length  ) + hex;
   }
   else if( _.objectIs( rgb ) )
@@ -650,13 +650,13 @@ function hexToColor( hex )
   _.assert( arguments.length === 1, 'Expects single argument' );
   _.assert( _.strIs( hex ) );
 
-  var shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
+  let shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
   hex = hex.replace( shorthandRegex, function( m, r, g, b )
   {
     return r + r + g + g + b + b;
   });
 
-  var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec( hex );
+  let result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec( hex );
   if( !result )
   return null;
 
@@ -674,7 +674,7 @@ function hexToColor( hex )
 
 function colorToRgbHtml( src )
 {
-  var result = '';
+  let result = '';
 
   _.assert( _.strIs( src ) || _.objectIs( src ) || _.arrayIs( src ) );
   _.assert( arguments.length === 1, 'Expects single argument' );
@@ -688,7 +688,7 @@ function colorToRgbHtml( src )
 
   if( _.arrayIs( src ) )
   {
-    for( var i = 0; i < 3; i++ )
+    for( let i = 0; i < 3; i++ )
     _.assert( src[ i ] >= 0 && src[ i ] <= 1 )
 
     result += 'rgb( ';
@@ -708,7 +708,7 @@ function colorToRgbHtml( src )
 
 function colorToRgbaHtml( src )
 {
-  var result = '';
+  let result = '';
 
   _.assert( _.strIs( src ) || _.objectIs( src ) || _.arrayIs( src ) || _.numberIs( src ) );
   _.assert( arguments.length === 1, 'Expects single argument' );
@@ -721,7 +721,7 @@ function colorToRgbaHtml( src )
 
   if( _.arrayIs( src ) )
   {
-    for( var i = 0; i < 3; i++ )
+    for( let i = 0; i < 3; i++ )
     _.assert( src[ i ] >= 0 && src[ i ] <= 1 )
 
     result += 'rgba( ';
@@ -755,11 +755,11 @@ function mulSaturation( rgb, factor )
   _.assert( arguments.length === 2, 'Expects exactly two arguments' );
   _.assert( factor >= 0 );
 
-  var hsl = rgbToHsl( rgb );
+  let hsl = rgbToHsl( rgb );
 
   hsl[ 1 ] *= factor;
 
-  var result = hslToRgb( hsl );
+  let result = hslToRgb( hsl );
 
   if( rgb.length === 4 )
   result[ 3 ] = rgb[ 3 ];
@@ -801,7 +801,7 @@ function paler( rgb, factor )
   _.assert( arguments.length === 1 || arguments.length === 2 );
   _.assert( 0 <= factor && factor <= 1 );
 
-  var efactor = factor / ( 1+factor );
+  let efactor = factor / ( 1+factor );
 
   return mulSaturation( rgb, 1 - efactor );
 }
@@ -823,23 +823,23 @@ function colorWidthForExponential( width )
 
 function rgbWithInt( srcInt )
 {
-  var result = [];
+  let result = [];
 
   _.assert( arguments.length === 1, 'Expects single argument' );
   _.assert( _.numberIs( srcInt ), 'rgbWithInt :', 'Expects srcInt' );
 
   /* eval degree */
 
-  var degree = 1;
-  var left = srcInt;
+  let degree = 1;
+  let left = srcInt;
 
   if( left >= 6 )
   {
 
     left -= 6;
     degree = 2;
-    var n = 6;
-    var d = 0;
+    let n = 6;
+    let d = 0;
 
     while( left >= n )
     {
@@ -854,8 +854,8 @@ function rgbWithInt( srcInt )
 
   /* compose set of elements */
 
-  var set = [ 0.1 ];
-  var e = 0.95;
+  let set = [ 0.1 ];
+  let e = 0.95;
   if( degree >= 2 ) e = 0.8;
   do
   {
@@ -881,7 +881,7 @@ function rgbWithInt( srcInt )
 
   }
   while( set.length <= degree );
-  var last = set.length - 1;
+  let last = set.length - 1;
 
   /* fill routine */
 
@@ -911,10 +911,10 @@ function rgbWithInt( srcInt )
 
   /* */
 
-  for( var c1 = set.length - 2 ; c1 >= 0 ; c1-- )
+  for( let c1 = set.length - 2 ; c1 >= 0 ; c1-- )
   {
 
-    for( var c2 = c1 - 1 ; c2 >= 0 ; c2-- )
+    for( let c2 = c1 - 1 ; c2 >= 0 ; c2-- )
     {
 
       if( left < 3 )
@@ -938,11 +938,11 @@ function rgbWithInt( srcInt )
 
 function _rgbWithInt( srcInt )
 {
-  var result;
+  let result;
 
   _.assert( _.numberIs( srcInt ), 'rgbWithInt :', 'Expects srcInt' );
 
-  var c = 9;
+  let c = 9;
 
   srcInt = srcInt % c;
   srcInt -= 0.3;
@@ -960,10 +960,10 @@ function _rgbWithInt( srcInt )
 
 function hslToRgb( hsl, result )
 {
-  var result = result || [];
-  var h = hsl[ 0 ];
-  var s = hsl[ 1 ];
-  var l = hsl[ 2 ];
+  result = result || [];
+  let h = hsl[ 0 ];
+  let s = hsl[ 1 ];
+  let l = hsl[ 2 ];
 
   if( s === 0 )
   {
@@ -986,8 +986,8 @@ function hslToRgb( hsl, result )
     return b;
   }
 
-  var a = l <= 0.5 ? l * ( 1 + s ) : l + s - ( l * s );
-  var b = ( 2 * l ) - a;
+  let a = l <= 0.5 ? l * ( 1 + s ) : l + s - ( l * s );
+  let b = ( 2 * l ) - a;
 
   result[ 0 ] = get( a, b, h + 1 / 3 );
   result[ 1 ] = get( a, b, h );
@@ -1000,14 +1000,14 @@ function hslToRgb( hsl, result )
 
 function rgbToHsl( rgb, result )
 {
-  var result = result || [];
-  var hue, saturation, lightness;
-  var r = rgb[ 0 ];
-  var g = rgb[ 1 ];
-  var b = rgb[ 2 ];
+  result = result || [];
+  let hue, saturation, lightness;
+  let r = rgb[ 0 ];
+  let g = rgb[ 1 ];
+  let b = rgb[ 2 ];
 
-  var max = Math.max( r, g, b );
-  var min = Math.min( r, g, b );
+  let max = Math.max( r, g, b );
+  let min = Math.min( r, g, b );
 
   lightness = ( min + max ) / 2.0;
 
@@ -1021,7 +1021,7 @@ function rgbToHsl( rgb, result )
   else
   {
 
-    var diff = max - min;
+    let diff = max - min;
 
     if( lightness <= 0.5 )
     saturation = diff / ( max + min );
@@ -1060,7 +1060,7 @@ function randomHsl( s, l )
   if( l === undefined )
   l = 0.5;
 
-  var hsl = [ Math.random(), s, l ];
+  let hsl = [ Math.random(), s, l ];
 
   return hsl;
 }
@@ -1077,7 +1077,7 @@ function randomRgbWithSl( s, l )
   if( l === undefined )
   l = 0.5;
 
-  var rgb = hslToRgb([ Math.random(), s, l ]);
+  let rgb = hslToRgb([ Math.random(), s, l ]);
 
   return rgb;
 }
@@ -1119,20 +1119,9 @@ function linearToGamma( dst )
 // str
 // --
 
-// function strFormatBackground( str, color )
-// {
-//   _.assert( arguments.length === 1 || arguments.length === 2 );
-//   if( arguments[ 1 ] === undefined )
-//   return _strDirectiveBackgroundFor( arguments[ 0 ] );
-//   else
-//   return strFormatBackground( arguments[ 0 ], arguments[ 1 ] );
-// }
-
-//
-
 function _strDirectiveBackgroundFor( color )
 {
-  var result = Object.create( null );
+  let result = Object.create( null );
 
   _.assert( arguments.length === 1, 'Expects single argument' );
   _.assert( _.strIs( color ) );
@@ -1160,20 +1149,9 @@ function strFormatBackground( srcStr, color )
 
 //
 
-// function strFormatForeground( str, color )
-// {
-//   _.assert( arguments.length === 1 || arguments.length === 2 );
-//   if( arguments[ 1 ] === undefined )
-//   return _strDirectiveForegroundFor( arguments[ 0 ] );
-//   else
-//   return strFormatForeground( arguments[ 0 ], arguments[ 1 ] );
-// }
-
-//
-
 function _strDirectiveForegroundFor( color )
 {
-  var result = Object.create( null );
+  let result = Object.create( null );
 
   _.assert( arguments.length === 1, 'Expects single argument' );
   _.assert( _.strIs( color ) );
@@ -1203,14 +1181,14 @@ function strFormatForeground( srcStr, color )
 
 function _strFormat( srcStr, style )
 {
-  var result = srcStr;
+  let result = srcStr;
 
   if( _.numberIs( result ) )
   result = result + '';
   _.assert( arguments.length === 1 || arguments.length === 2 );
   _.assert( _.strIs( result ), 'Expects string got', _.strType( result ) );
 
-  var r = this.strDirectivesFor( style );
+  let r = this.strDirectivesFor( style );
 
   result = r.pre + result + r.post;
 
@@ -1219,153 +1197,143 @@ function _strFormat( srcStr, style )
 
 //
 
-var strFormatEach = _.routineVectorize_functor( _strFormat );
-var strFormat = strFormatEach;
+let strFormatEach = _.routineVectorize_functor( _strFormat );
+let strFormat = strFormatEach;
 
+// //
 //
-
-function _strEscape( srcStr )
-{
-  var result = srcStr;
-  if( _.numberIs( result ) )
-  result = result + '';
-  _.assert( arguments.length === 1 || arguments.length === 2 );
-  _.assert( _.strIs( result ), 'Expects string got', _.strType( result ) );
-  return '#inputRaw:1#' + srcStr + '#inputRaw:0#'
-}
-
-var strEscape = _.routineVectorize_functor( _strEscape );
-
+// function _strEscape( srcStr )
+// {
+//   let result = srcStr;
+//   if( _.numberIs( result ) )
+//   result = result + '';
+//   _.assert( arguments.length === 1 || arguments.length === 2 );
+//   _.assert( _.strIs( result ), 'Expects string got', _.strType( result ) );
+//   return '#inputRaw:1#' + srcStr + '#inputRaw:0#'
+// }
 //
-
-function _strUnescape( srcStr )
-{
-  var result = srcStr;
-  if( _.numberIs( result ) )
-  result = result + '';
-  _.assert( arguments.length === 1 || arguments.length === 2 );
-  _.assert( _.strIs( result ), 'Expects string got', _.strType( result ) );
-  return '#inputRaw:0#' + srcStr + '#inputRaw:1#'
-}
-
-var strUnescape = _.routineVectorize_functor( _strUnescape );
-
+// let strEscape = _.routineVectorize_functor( _strEscape );
 //
+// //
+//
+// function _strUnescape( srcStr )
+// {
+//   let result = srcStr;
+//   if( _.numberIs( result ) )
+//   result = result + '';
+//   _.assert( arguments.length === 1 || arguments.length === 2 );
+//   _.assert( _.strIs( result ), 'Expects string got', _.strType( result ) );
+//   return '#inputRaw:0#' + srcStr + '#inputRaw:1#'
+// }
+//
+// let strUnescape = _.routineVectorize_functor( _strUnescape );
 
-function strDirectivesFor( style )
-{
-  var result = Object.create( null );
-  result.pre = '';
-  result.post = '';
-
-  var StyleObjectOptions =
-  {
-    fg : null,
-    bg : null,
-  }
-
-  var style = _.arrayAs( style );
-
-  _.assert( arguments.length === 1, 'Expects single argument' );
-  _.assert( _.arrayIs( style ) , 'Expects string or array of strings ( style )' );
-
-  function join()
-  {
-    for( var a = 1 ; a < arguments.length ; a++ )
-    {
-      arguments[ 0 ].pre = arguments[ a ].pre + arguments[ 0 ].pre;
-      arguments[ 0 ].post = arguments[ 0 ].post + arguments[ a ].post;
-    }
-    return arguments[ 0 ];
-  }
-
-  for( var s = 0 ; s < style.length ; s++ )
-  {
-
-    if( _.objectIs( style[ s ] ) )
-    {
-      var obj = style[ s ];
-      _.assertMapHasOnly( obj, StyleObjectOptions );
-      if( obj.fg )
-      result = join( result, _.color._strDirectiveForegroundFor( obj.fg ) );
-      if( obj.bg )
-      result = join( result, _.color._strDirectiveBackgroundFor( obj.bg ) );
-      continue;
-    }
-
-    _.assert( _.strIs( style[ s ] ) , 'Expects string or array of strings { style }' );
-
-    var styleObject = this.strColorStyle( style[ s ] );
-
-    _.assert( !!styleObject, 'Unknown style', _.strQuote( style[ s ] ) );
-
-    if( styleObject.fg )
-    result = join( result, _.color._strDirectiveForegroundFor( styleObject.fg ) );
-
-    if( styleObject.bg )
-    result = join( result, _.color._strDirectiveBackgroundFor( styleObject.bg ) );
-
-  }
-
-  return result;
-}
+// //
+//
+// function strDirectivesFor( style )
+// {
+//   let result = Object.create( null );
+//   result.pre = '';
+//   result.post = '';
+//
+//   let StyleObjectOptions =
+//   {
+//     fg : null,
+//     bg : null,
+//   }
+//
+//   let style = _.arrayAs( style );
+//
+//   _.assert( arguments.length === 1, 'Expects single argument' );
+//   _.assert( _.arrayIs( style ) , 'Expects string or array of strings ( style )' );
+//
+//   for( let s = 0 ; s < style.length ; s++ )
+//   {
+//
+//     if( _.objectIs( style[ s ] ) )
+//     {
+//       let obj = style[ s ];
+//       _.assertMapHasOnly( obj, StyleObjectOptions );
+//       if( obj.fg )
+//       result = join( result, _.color._strDirectiveForegroundFor( obj.fg ) );
+//       if( obj.bg )
+//       result = join( result, _.color._strDirectiveBackgroundFor( obj.bg ) );
+//       continue;
+//     }
+//
+//     _.assert( _.strIs( style[ s ] ) , 'Expects string or array of strings { style }' );
+//
+//     let styleObject = this.strColorStyle( style[ s ] );
+//
+//     _.assert( !!styleObject, 'Unknown style', _.strQuote( style[ s ] ) );
+//
+//     if( styleObject.fg )
+//     result = join( result, _.color._strDirectiveForegroundFor( styleObject.fg ) );
+//
+//     if( styleObject.bg )
+//     result = join( result, _.color._strDirectiveBackgroundFor( styleObject.bg ) );
+//
+//   }
+//
+//   return result;
+//
+//   /* */
+//
+//   function join()
+//   {
+//     for( let a = 1 ; a < arguments.length ; a++ )
+//     {
+//       arguments[ 0 ].pre = arguments[ a ].pre + arguments[ 0 ].pre;
+//       arguments[ 0 ].post = arguments[ 0 ].post + arguments[ a ].post;
+//     }
+//     return arguments[ 0 ];
+//   }
+//
+// }
 
 //
 
 function strColorStyle( style )
 {
-  _.assert( arguments.length === 1, 'Expects single argument' );
-  _.assert( _.strIs( style ), 'Expects string got', _.strType( style ) );
-
-  var result = this.Style[ style ];
-
-  return result;
+  return _.ct.styleObjectFor( style );
+  // _.assert( arguments.length === 1, 'Expects single argument' );
+  // _.assert( _.strIs( style ), 'Expects string got', _.strType( style ) );
+  //
+  // let result = this.Style[ style ];
+  //
+  // return result;
 }
 
 //
 
-/*
-qqq : cover routine strStrip
-*/
-
 function strStrip( srcStr )
 {
-  let result = '';
-
-  _.assert( _.strIs( srcStr ) );
-
-  let splitted = _.strExtractInlined
-  ({
-    src : srcStr,
-    // onInlined : onInlined,
-    preservingEmpty : 0,
-    stripping : 0,
-  });
-
-  for( let i = 0 ; i < splitted.length ; i++ )
-  {
-    if( _.strIs( splitted[ i ] ) )
-    result += splitted[ i ];
-  }
-
-  // function onInlined( split )
+  return _.ct.strip( srcStr );
+  // let result = '';
+  //
+  // _.assert( _.strIs( srcStr ) );
+  //
+  // let splitted = _.strSplitInlined
+  // ({
+  //   src : srcStr,
+  //   preservingEmpty : 0,
+  //   stripping : 0,
+  // });
+  //
+  // for( let i = 0 ; i < splitted.length ; i++ )
   // {
-  //   let parts = split.split( ':' );
-  //   if( parts.length === 2 )
-  //   {
-  //     parts[ 0 ] = parts[ 0 ].trim();
-  //     return parts;
-  //   }
+  //   if( _.strIs( splitted[ i ] ) )
+  //   result += splitted[ i ];
   // }
-
-  return result;
+  //
+  // return result;
 }
 
 // --
-// var
+// let
 // --
 
-var ColorMap =
+let ColorMap =
 {
 
   'invisible'       : [ 0.0, 0.0, 0.0, 0.0 ],
@@ -1390,7 +1358,7 @@ var ColorMap =
 
 //
 
-var ColorMapGreyscale =
+let ColorMapGreyscale =
 {
 
   'white'           : [ 1.0, 1.0, 1.0 ],
@@ -1404,7 +1372,7 @@ var ColorMapGreyscale =
 
 //
 
-var ColorMapDistinguishable =
+let ColorMapDistinguishable =
 {
 
   'yellow'          : [ 1.0, 1.0, 0.0 ],
@@ -1432,7 +1400,7 @@ var ColorMapDistinguishable =
 
 //
 
-var ColorMapShell =
+let ColorMapShell =
 {
   'white'           : [ 1.0, 1.0, 1.0 ],
   'black'           : [ 0.0, 0.0, 0.0 ],
@@ -1465,131 +1433,136 @@ var ColorMapShell =
 
   'silver'          : [ 0.9, 0.9, 0.9 ] /* dark white */
 }
-
-var Style =
-{
-
-  'positive' : { fg : 'green' },
-  'negative' : { fg : 'red' },
-
-  'path' : { fg : 'dark cyan' },
-  'code' : { fg : 'dark green' },
-  'entity' : { fg : 'bright blue' }, /* qqq : why cant i specify [ 0,0,0 ] ? */
-
-  'topic.up' : { fg : 'white', bg : 'dark blue' },
-  'topic.down' : { fg : 'dark black', bg : 'dark blue' },
-
-  'head' : { fg : 'dark black', bg : 'white' },
-  'tail' : { fg : 'white', bg : 'dark black' },
-
-  'highlighted' : { fg : 'white', bg : 'dark black' },
-  'selected' : { fg : 'dark yellow', bg : 'dark blue' },
-  'neutral' : { fg : 'smoke', bg : 'dim' },
-
-  // 'pipe.neutral' : { fg : 'dark black', bg : 'dark yellow' },
-  // 'pipe.negative' : { fg : 'dark red', bg : 'dark yellow' },
-
-  'pipe.neutral' : { fg : 'dark magenta' },
-  'pipe.negative' : { fg : 'dark red' },
-
-  'exclusiveOutput.neutral' : { fg : 'dark black', bg : 'dark yellow' },
-  'exclusiveOutput.negative' : { fg : 'dark red', bg : 'dark yellow' },
-
-  'info.neutral' : { fg : 'white', bg : 'magenta' },
-  'info.negative' : { fg : 'dark red', bg : 'magenta' },
-
-}
+//
+// let Style =
+// {
+//
+//   'positive' : { fg : 'green' },
+//   'negative' : { fg : 'red' },
+//
+//   'path' : { fg : 'dark cyan' },
+//   'code' : { fg : 'dark green' },
+//   'entity' : { fg : 'bright blue' }, /* qqq : why cant i specify [ 0,0,0 ] ? */
+//
+//   'topic.up' : { fg : 'white', bg : 'dark blue' },
+//   'topic.down' : { fg : 'dark black', bg : 'dark blue' },
+//
+//   'head' : { fg : 'dark black', bg : 'white' },
+//   'tail' : { fg : 'white', bg : 'dark black' },
+//
+//   'highlighted' : { fg : 'white', bg : 'dark black' },
+//   'selected' : { fg : 'dark yellow', bg : 'dark blue' },
+//   'neutral' : { fg : 'smoke', bg : 'dim' },
+//
+//   // 'pipe.neutral' : { fg : 'dark black', bg : 'dark yellow' },
+//   // 'pipe.negative' : { fg : 'dark red', bg : 'dark yellow' },
+//
+//   'pipe.neutral' : { fg : 'dark magenta' },
+//   'pipe.negative' : { fg : 'dark red' },
+//
+//   'exclusiveOutput.neutral' : { fg : 'dark black', bg : 'dark yellow' },
+//   'exclusiveOutput.negative' : { fg : 'dark red', bg : 'dark yellow' },
+//
+//   'info.neutral' : { fg : 'white', bg : 'magenta' },
+//   'info.negative' : { fg : 'dark red', bg : 'magenta' },
+//
+// }
 
 // --
 // declare
 // --
 
-var Self =
+let Self =
 {
 
   //
 
-  rgbFromName : rgbFromName,
-  _rgbFromName : _rgbFromName,
+  rgbFromName,
+  _rgbFromName,
 
-  rgbByBitmask : rgbByBitmask,
-  _rgbByBitmask : _rgbByBitmask,
+  rgbByBitmask,
+  _rgbByBitmask,
 
-  _rgbaFromNotName : _rgbaFromNotName,
+  _rgbaFromNotName,
 
-  rgbaFrom : rgbaFrom,
-  rgbFrom : rgbFrom,
+  rgbaFrom,
+  rgbFrom,
 
-  rgbaFromTry : rgbaFromTry,
-  rgbFromTry : rgbFromTry,
+  rgbaFromTry,
+  rgbFromTry,
 
-  _colorDistance : _colorDistance,
+  _colorDistance,
 
-  _colorNameNearest : _colorNameNearest,
-  colorNameNearest : colorNameNearest,
+  _colorNameNearest,
+  colorNameNearest,
 
-  colorNearestCustom : colorNearestCustom,
-  colorNearest : colorNearest,
+  colorNearestCustom,
+  colorNearest,
 
-  colorToHex : colorToHex,
-  hexToColor : hexToColor,
+  colorToHex,
+  hexToColor,
 
-  colorToRgbHtml : colorToRgbHtml,
-  colorToRgbaHtml : colorToRgbaHtml,
+  colorToRgbHtml,
+  colorToRgbaHtml,
 
-  mulSaturation : mulSaturation,
-  brighter : brighter,
-  paler : paler,
+  mulSaturation,
+  brighter,
+  paler,
 
   // int
 
-  colorWidthForExponential : colorWidthForExponential,
-  rgbWithInt : rgbWithInt,
-  _rgbWithInt : _rgbWithInt,
+  colorWidthForExponential,
+  rgbWithInt,
+  _rgbWithInt,
 
   // hsl
 
-  hslToRgb : hslToRgb,
-  rgbToHsl : rgbToHsl,
+  hslToRgb,
+  rgbToHsl,
 
   // random
 
-  randomHsl : randomHsl,
+  randomHsl,
   randomRgb : randomRgbWithSl,
-  randomRgbWithSl : randomRgbWithSl,
+  randomRgbWithSl,
 
   // etc
 
-  gammaToLinear : gammaToLinear,
-  linearToGamma : linearToGamma,
+  gammaToLinear,
+  linearToGamma,
 
   // str
 
-  _strDirectiveBackgroundFor : _strDirectiveBackgroundFor,
-  strFormatBackground : strFormatBackground,
-  strBg : strFormatBackground,
+  // _strDirectiveBackgroundFor,
+  // strFormatBackground,
+  // strBg : strFormatBackground,
+  strBg : _.ct.bg,
 
-  _strDirectiveForegroundFor : _strDirectiveForegroundFor,
-  strFormatForeground : strFormatForeground,
-  strFg : strFormatForeground,
+  // _strDirectiveForegroundFor,
+  // strFormatForeground,
+  // strFg : strFormatForeground,
+  strFg : _.ct.fg,
 
-  strFormat : strFormat,
-  strFormatEach : strFormatEach,
+  strFormat : _.ct.format,
+  strFormatEach : _.ct.format,
 
-  strEscape : strEscape,
-  strUnescape : strUnescape,
-  strDirectivesFor : strDirectivesFor,
-  strColorStyle : strColorStyle,
+  // strFormat,
+  // strFormatEach,
 
-  strStrip : strStrip,
+  strEscape : _.ct.escape,
+  strUnescape : _.ct.unescape,
+  // strDirectivesFor,
+  strColorStyle,
 
-  // var
+  strStrip,
 
-  ColorMap : ColorMap,
-  ColorMapGreyscale : ColorMapGreyscale,
-  ColorMapDistinguishable : ColorMapDistinguishable,
-  ColorMapShell : ColorMapShell,
-  Style : Style,
+  // let
+
+  ColorMap,
+  ColorMapGreyscale,
+  ColorMapDistinguishable,
+  ColorMapShell,
+  // Style,
 
 }
 
@@ -1605,6 +1578,7 @@ else
   _.mapSupplement( _.color.ColorMapGreyscale, ColorMapGreyscale );
   _.mapSupplement( _.color.ColorMapDistinguishable, ColorMapDistinguishable );
   _.mapSupplement( _.color.ColorMapShell, ColorMapShell );
+  // _.mapExtend( _.color.Style, Style );
 
 }
 
