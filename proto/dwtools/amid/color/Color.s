@@ -1119,63 +1119,63 @@ function linearToGamma( dst )
 // str
 // --
 
-function _strDirectiveBackgroundFor( color )
-{
-  let result = Object.create( null );
-
-  _.assert( arguments.length === 1, 'Expects single argument' );
-  _.assert( _.strIs( color ) );
-
-  result.pre = `#background : ${color}#`;
-  result.post = `#background : default#`;
-
-  return result;
-}
-
+// function _strDirectiveBackgroundFor( color )
+// {
+//   let result = Object.create( null );
 //
-
-function strFormatBackground( srcStr, color )
-{
-
-  if( _.numberIs( color ) )
-  color = _.color.colorNameNearest( color );
-
-  _.assert( arguments.length === 2, 'Expects 2 arguments' );
-  _.assert( _.strIs( srcStr ) );
-  _.assert( _.strIs( color ) );
-
-  return `#background : ${color}#${srcStr}#background : default#`;
-}
-
+//   _.assert( arguments.length === 1, 'Expects single argument' );
+//   _.assert( _.strIs( color ) );
 //
-
-function _strDirectiveForegroundFor( color )
-{
-  let result = Object.create( null );
-
-  _.assert( arguments.length === 1, 'Expects single argument' );
-  _.assert( _.strIs( color ) );
-
-  result.pre = `#foreground : ${color}#`;
-  result.post = `#foreground : default#`;
-
-  return result;
-}
-
+//   result.pre = `#background : ${color}#`;
+//   result.post = `#background : default#`;
 //
-
-function strFormatForeground( srcStr, color )
-{
-
-  if( _.numberIs( color ) )
-  color = _.color.colorNameNearest( color );
-
-  _.assert( arguments.length === 2, 'Expects 2 arguments' );
-  _.assert( _.strIs( srcStr ), 'Expects string {-src-}' );
-  _.assert( _.strIs( color ), 'Expects string {-color-}' );
-
-  return `#foreground : ${color}#${srcStr}#foreground : default#`;
-}
+//   return result;
+// }
+//
+// //
+//
+// function strFormatBackground( srcStr, color )
+// {
+//
+//   if( _.numberIs( color ) )
+//   color = _.color.colorNameNearest( color );
+//
+//   _.assert( arguments.length === 2, 'Expects 2 arguments' );
+//   _.assert( _.strIs( srcStr ) );
+//   _.assert( _.strIs( color ) );
+//
+//   return `#background : ${color}#${srcStr}#background : default#`;
+// }
+//
+// //
+//
+// function _strDirectiveForegroundFor( color )
+// {
+//   let result = Object.create( null );
+//
+//   _.assert( arguments.length === 1, 'Expects single argument' );
+//   _.assert( _.strIs( color ) );
+//
+//   result.pre = `#foreground : ${color}#`;
+//   result.post = `#foreground : default#`;
+//
+//   return result;
+// }
+//
+// //
+//
+// function strFormatForeground( srcStr, color )
+// {
+//
+//   if( _.numberIs( color ) )
+//   color = _.color.colorNameNearest( color );
+//
+//   _.assert( arguments.length === 2, 'Expects 2 arguments' );
+//   _.assert( _.strIs( srcStr ), 'Expects string {-src-}' );
+//   _.assert( _.strIs( color ), 'Expects string {-color-}' );
+//
+//   return `#foreground : ${color}#${srcStr}#foreground : default#`;
+// }
 
 //
 
