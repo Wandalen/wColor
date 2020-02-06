@@ -147,7 +147,7 @@ function _rgbaFromNotName( src )
 
   if( _.numberIs( src ) )
   {
-    result = _rgbByBitmask( src );
+    let result = _rgbByBitmask( src );
     return _.longGrowInplace( result, [ 0, 4 ], 1 );
   }
 
