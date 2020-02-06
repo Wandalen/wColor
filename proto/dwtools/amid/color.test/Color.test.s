@@ -24,12 +24,12 @@ if( typeof module !== 'undefined' )
 
   require( '../color/Color.s' );
 
-  var _ = wTools;
+  var _ = _global_.wTools;
   _.include( 'wTesting' );
 
 }
 
-var _ = wTools;
+var _ = _global_.wTools;
 
 //
 
@@ -169,13 +169,13 @@ function colorNameNearest( test )
   test.identical( got,expected );
 
   test.case = 'no args';
-  test.shouldThrowError( function()
+  test.shouldThrowErrorSync( function()
   {
     _.color.colorNameNearest();
   });
 
   test.case = 'no args';
-  test.shouldThrowError( function()
+  test.shouldThrowErrorSync( function()
   {
     _.color.colorNameNearest();
   });
@@ -381,12 +381,12 @@ function colorToRgbHtml( test )
   if( !Config.debug )
   return;
 
-  test.shouldThrowError(function()
+  test.shouldThrowErrorSync(function()
   {
     test.case = 'incorrect type';
     _.color.colorToRgbHtml( 1 );
   });
-  test.shouldThrowError(function()
+  test.shouldThrowErrorSync(function()
   {
     test.case = 'no arguments';
     _.color.colorToRgbHtml( );
