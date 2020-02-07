@@ -20,22 +20,23 @@
 if( typeof module !== 'undefined' )
 {
 
-  if( typeof _global_ === 'undefined' || !_global_.wBase )
-  {
-    let toolsPath = '../../../dwtools/Base.s';
-    let toolsExternal = 0;
-    try
-    {
-      toolsPath = require.resolve( toolsPath );
-    }
-    catch( err )
-    {
-      toolsExternal = 1;
-      require( 'wTools' );
-    }
-    if( !toolsExternal )
-    require( toolsPath );
-  }
+  require( '../../Tools.s' );
+  // if( typeof _global_ === 'undefined' || !_global_.wBase )
+  // {
+  //   let toolsPath = '../../../dwtools/Base.s';
+  //   let toolsExternal = 0;
+  //   try
+  //   {
+  //     toolsPath = require.resolve( toolsPath );
+  //   }
+  //   catch( err )
+  //   {
+  //     toolsExternal = 1;
+  //     require( 'wTools' );
+  //   }
+  //   if( !toolsExternal )
+  //   require( toolsPath );
+  // }
 
 }
 
