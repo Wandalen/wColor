@@ -1109,9 +1109,9 @@ function linearToGamma( dst )
 
   _.assert( dst.length === 3 || dst.length === 4 );
 
-  dst[ 0 ] = _.sqrt( dst[ 0 ] );
-  dst[ 1 ] = _.sqrt( dst[ 1 ] );
-  dst[ 2 ] = _.sqrt( dst[ 2 ] );
+  dst[ 0 ] = _.math.sqrt( dst[ 0 ] );
+  dst[ 1 ] = _.math.sqrt( dst[ 1 ] );
+  dst[ 2 ] = _.math.sqrt( dst[ 2 ] );
 
   return dst;
 }
