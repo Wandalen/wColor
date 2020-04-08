@@ -14,7 +14,7 @@
 /**
  * @summary Collection of routines to operate colors conveniently.
  * @namespace "wTools.color"
- * @memberof module:Tools/mid/Color
+ * @module Tools/mid/Color
 */
 
 if( typeof module !== 'undefined' )
@@ -38,7 +38,8 @@ let _ = _global_.wTools;
  * _.color.rgbFromName( 'black', [ 0, 0, 0 ] );
  * @throws {Error} If no arguments provided.
  * @function rgbFromName
- * @memberof module:Tools/mid/Color.wTools.color
+ * @namespace wTools.color
+ * @module Tools/mid/Color
  */
 
 function rgbFromName( name, def )
@@ -87,7 +88,8 @@ function _rgbFromName( name, def, map )
  * //[1, 0, 1]
  * @throws {Error} If no arguments provided.
  * @function rgbFromName
- * @memberof module:Tools/mid/Color.wTools.color
+ * @namespace wTools.color
+ * @module Tools/mid/Color
  */
 
 function rgbByBitmask( src )
@@ -178,7 +180,8 @@ function _rgbaFromNotName( src )
  *
  * @throws {Error} If no arguments provided.
  * @function rgbaFrom
- * @memberof module:Tools/mid/Color.wTools.color
+ * @namespace wTools.color
+ * @module Tools/mid/Color
  */
 
 function rgbaFrom( src )
@@ -253,7 +256,8 @@ rgbaFrom.defaults =
  *
  * @throws {Error} If no arguments provided.
  * @function rgbFrom
- * @memberof module:Tools/mid/Color.wTools.color
+ * @namespace wTools.color
+ * @module Tools/mid/Color
  */
 
 function rgbFrom( src )
@@ -288,7 +292,8 @@ rgbFrom.defaults.__proto__ = rgbaFrom.defaults;
  *
  * @throws {Error} If no arguments provided.
  * @function rgbaFromTry
- * @memberof module:Tools/mid/Color.wTools.color
+ * @namespace wTools.color
+ * @module Tools/mid/Color
  */
 
 function rgbaFromTry( src, def )
@@ -327,7 +332,8 @@ rgbaFromTry.defaults.__proto__ = rgbaFrom.defaults;
  *
  * @throws {Error} If no arguments provided.
  * @function rgbFromTry
- * @memberof module:Tools/mid/Color.wTools.color
+ * @namespace wTools.color
+ * @module Tools/mid/Color
  */
 
 function rgbFromTry( src, def )
@@ -470,7 +476,8 @@ function _colorNameNearest( color, map )
  *
  * @throws {Error} If no arguments provided.
  * @function colorNameNearest
- * @memberof module:Tools/mid/Color.wTools.color
+ * @namespace wTools.color
+ * @module Tools/mid/Color
  */
 
 function colorNameNearest( color )
@@ -543,7 +550,8 @@ colorNearestCustom.defaults =
  *
  * @throws {Error} If no arguments provided.
  * @function colorNameNearest
- * @memberof module:Tools/mid/Color.wTools.color
+ * @namespace wTools.color
+ * @module Tools/mid/Color
  */
 
 function colorNearest( color )
@@ -568,7 +576,8 @@ function colorNearest( color )
  *
  * @throws {Error} If no arguments provided.
  * @function colorToHex
- * @memberof module:Tools/mid/Color.wTools.color
+ * @namespace wTools.color
+ * @module Tools/mid/Color
  */
 
 function colorToHex( rgb, def )
@@ -626,7 +635,8 @@ function colorToHex( rgb, def )
  *
  * @throws {Error} If no arguments provided.
  * @function hexToColor
- * @memberof module:Tools/mid/Color.wTools.color
+ * @namespace wTools.color
+ * @module Tools/mid/Color
  */
 
 function hexToColor( hex )
