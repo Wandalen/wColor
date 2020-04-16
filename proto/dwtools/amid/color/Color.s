@@ -13,7 +13,7 @@
 
 /**
  * @summary Collection of routines to operate colors conveniently.
- * @namespace "wTools.color"
+ * @namespace wTools.color
  * @module Tools/mid/Color
 */
 
@@ -31,7 +31,7 @@ let _ = _global_.wTools;
 /**
  * @summary Returns rgb value for color with provided `name`.
  * @param {String} name Target color name.
- * @param {} def Default value. Is used if nothing was found.
+ * @param {*} def Default value. Is used if nothing was found.
  * @example
  * _.color.rgbFromName( 'black' );
  * @example
