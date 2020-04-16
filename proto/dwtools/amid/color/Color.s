@@ -8,10 +8,6 @@
 */
 
 /**
- * @file Color.s.
- */
-
-/**
  * @summary Collection of routines to operate colors conveniently.
  * @namespace "wTools.color"
  * @module Tools/mid/Color
