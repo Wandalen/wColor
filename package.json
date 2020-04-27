@@ -1,36 +1,36 @@
 {
-  "name" : "wColor", 
-  "version" : "0.3.219", 
-  "engine" : "node >= 8.0.0", 
-  "license" : "MIT", 
-  "description" : "Collection of routines to operate colors conveniently. Color provides functions to convert color from one color space to another color space, from name to color and from color to the closest name of a color. The module does not introduce any specific storage format of color what is a benefit. Color has a short list of the most common colors. Use the module for formatted colorful output or other sophisticated operations with colors.", 
-  "author" : "Kostiantyn Wandalen <wanalen@willbe.so>", 
-  "contributors" : 
+  "name" : "wColor",
+  "version" : "0.3.220",
+  "engine" : "node >= 8.0.0",
+  "license" : "MIT",
+  "description" : "Collection of routines to operate colors conveniently. Color provides functions to convert color from one color space to another color space, from name to color and from color to the closest name of a color. The module does not introduce any specific storage format of color what is a benefit. Color has a short list of the most common colors. Use the module for formatted colorful output or other sophisticated operations with colors.",
+  "author" : "Kostiantyn Wandalen <wanalen@willbe.so>",
+  "contributors" :
   [
-    { "name" : "Kostiantyn Wandalen", "email" : "wanalen@willbe.so" }, 
+    { "name" : "Kostiantyn Wandalen", "email" : "wanalen@willbe.so" },
     { "name" : "Volodymyr M.", "email" : "volodymyr.migdal@gmail.com" }
-  ], 
-  "main" : "proto/dwtools/amid/color/Color.s", 
-  "files" : [ "proto/dwtools/amid/color", "proto/dwtools/Tools.s", "out", "out" ], 
-  "directories" : { "doc" : "doc", "main" : "proto/dwtools/amid/color/Color.s" }, 
-  "scripts" : { "test" : "wtest .run proto/**", "docgen" : "wdocgen proto" }, 
-  "repository" : { "type" : "git", "url" : "https://github.com/Wandalen/wColor.git" }, 
-  "bugs" : 
+  ],
+  "main" : "proto/dwtools/amid/color/Color.s",
+  "files" : [ "proto/dwtools/amid/color", "proto/dwtools/Tools.s", "out", "out" ],
+  "directories" : { "doc" : "doc", "main" : "proto/dwtools/amid/color/Color.s" },
+  "scripts" : { "test" : "wtest .run proto/**", "docgen" : "wdocgen proto" },
+  "repository" : { "type" : "git", "url" : "https://github.com/Wandalen/wColor.git" },
+  "bugs" :
   {
     "url" : "https://github.com/Wandalen/wColor/issues"
-  }, 
-  "dependencies" : { "wTools" : "alpha" }, 
-  "devDependencies" : { "wTesting" : "alpha" }, 
-  "keywords" : 
+  },
+  "dependencies" : { "wTools" : "gamma" },
+  "devDependencies" : { "wTesting" : "gamma" },
+  "keywords" :
   [
-    "wTools", 
-    "color", 
-    "colors", 
-    "colorful", 
-    "color conversion", 
-    "convert color", 
-    "rgb", 
-    "rgba", 
+    "wTools",
+    "color",
+    "colors",
+    "colorful",
+    "color conversion",
+    "convert color",
+    "rgb",
+    "rgba",
     "hsl"
   ]
 }
