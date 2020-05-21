@@ -1581,7 +1581,7 @@ _.mapSupplement( _.color.ColorMap, ColorMapShell );
 // export
 // --
 
-if( typeof module !== 'undefined' && module !== null )
+if( typeof module !== 'undefined' )
 module[ 'exports' ] = Self;
 
 })();
