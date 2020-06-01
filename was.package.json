@@ -13,7 +13,7 @@
   "main" : "proto/dwtools/amid/color/Color.s",
   "files" : [ "proto/dwtools/amid/color", "proto/dwtools/Tools.s", "out", "out" ],
   "directories" : { "doc" : "doc", "main" : "proto/dwtools/amid/color/Color.s" },
-  "scripts" : { "test" : "wtest .run proto/**", "docgen" : "wdocgen proto" },
+  "scripts" : { "test" : "wtest .run 'proto/**'", "docgen" : "wdocgen proto" },
   "repository" : { "type" : "git", "url" : "https://github.com/Wandalen/wColor.git" },
   "bugs" :
   {
