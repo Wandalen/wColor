@@ -51,7 +51,7 @@ module:
         docgen: wdocgen .build proto
       npm.directories:
         doc: doc
-        main: proto/dwtools/amid/color/Color.s
+        main: proto/wtools/amid/color/Color.s
     path:
       module.willfiles:
         criterion:
@@ -131,7 +131,7 @@ module:
       entry.proto.no.tests:
         criterion:
           tests: no.tests
-        path: ../proto/dwtools/amid/color/Color.s
+        path: ../proto/wtools/amid/color/Color.s
       entry.proto.only.tests:
         criterion:
           tests: only.tests
@@ -141,13 +141,13 @@ module:
           debug: debug
           raw: raw
           content: prime
-        path: '{path::out.*=1}/source/dwtools/amid/color/Color.s'
+        path: '{path::out.*=1}/source/wtools/amid/color/Color.s'
       entry.out.raw.debug.release:
         criterion:
           debug: release
           raw: raw
           content: prime
-        path: '{path::out.*=1}/source/dwtools/amid/color/Color.s'
+        path: '{path::out.*=1}/source/wtools/amid/color/Color.s'
       entry.out.compiled.debug.debug:
         criterion:
           debug: debug
@@ -174,15 +174,15 @@ module:
         path:
           - ../proto
           - ../proto/Integration.test.s
-          - ../proto/dwtools
-          - ../proto/dwtools/Tools.s
-          - ../proto/dwtools/abase
-          - ../proto/dwtools/amid
-          - ../proto/dwtools/amid/color
-          - ../proto/dwtools/amid/color/Color.s
-          - ../proto/dwtools/amid/color.test
-          - ../proto/dwtools/amid/color.test/Color.test.s
-          - ../proto/dwtools/atop
+          - ../proto/wtools
+          - ../proto/wtools/Tools.s
+          - ../proto/wtools/abase
+          - ../proto/wtools/amid
+          - ../proto/wtools/amid/color
+          - ../proto/wtools/amid/color/Color.s
+          - ../proto/wtools/amid/color.test
+          - ../proto/wtools/amid/color.test/Color.test.s
+          - ../proto/wtools/atop
     submodule:
       wTools:
         path: 'npm:///wTools'
@@ -855,7 +855,7 @@ module:
         docgen: wdocgen .build proto
       npm.directories:
         doc: doc
-        main: proto/dwtools/amid/color/Color.s
+        main: proto/wtools/amid/color/Color.s
     path:
       module.willfiles:
         criterion:
@@ -935,7 +935,7 @@ module:
       entry.proto.no.tests:
         criterion:
           tests: no.tests
-        path: proto/dwtools/amid/color/Color.s
+        path: proto/wtools/amid/color/Color.s
       entry.proto.only.tests:
         criterion:
           tests: only.tests
@@ -945,13 +945,13 @@ module:
           debug: debug
           raw: raw
           content: prime
-        path: '{path::out.*=1}/source/dwtools/amid/color/Color.s'
+        path: '{path::out.*=1}/source/wtools/amid/color/Color.s'
       entry.out.raw.debug.release:
         criterion:
           debug: release
           raw: raw
           content: prime
-        path: '{path::out.*=1}/source/dwtools/amid/color/Color.s'
+        path: '{path::out.*=1}/source/wtools/amid/color/Color.s'
       entry.out.compiled.debug.debug:
         criterion:
           debug: debug

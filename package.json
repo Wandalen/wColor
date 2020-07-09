@@ -10,9 +10,9 @@
     { "name" : "Kostiantyn Wandalen", "email" : "wanalen@01.school" },
     { "name" : "Volodymyr M.", "email" : "volodymyr.migdal@gmail.com" }
   ],
-  "main" : "proto/dwtools/amid/color/Color.s",
-  "files" : [ "proto/dwtools/amid/color", "proto/dwtools/Tools.s", "out", "out" ],
-  "directories" : { "doc" : "doc", "main" : "proto/dwtools/amid/color/Color.s" },
+  "main" : "proto/wtools/amid/color/Color.s",
+  "files" : [ "proto/wtools/amid/color", "proto/wtools/Tools.s", "out", "out" ],
+  "directories" : { "doc" : "doc", "main" : "proto/wtools/amid/color/Color.s" },
   "scripts" : { "test" : "wtest .run 'proto/**' rapidity:-3", "docgen" : "wdocgen proto" },
   "repository" : { "type" : "git", "url" : "https://github.com/Wandalen/wColor.git" },
   "bugs" :
