@@ -2,7 +2,7 @@
 if( typeof module !== 'undefined' )
 require( 'wColor' );
 
-var _ = wTools;
+let _ = wTools;
 
 var c1 = 0xff0000;
 var c2 = 'red';

@@ -8,12 +8,12 @@ if( typeof module !== 'undefined' )
   require( '../../../wtools/Tools.s' );
   require( '../color/Color.s' );
 
-  var _ = _global_.wTools;
+  let _ = _global_.wTools;
   _.include( 'wTesting' );
 
 }
 
-var _ = _global_.wTools;
+let _ = _global_.wTools;
 
 //
 
@@ -704,7 +704,7 @@ function rgbFrom( test )
 
 //
 
-var Self =
+let Self =
 {
 
   name : 'Tools/mid/Color',
