@@ -4,13 +4,9 @@
 
 if( typeof module !== 'undefined' )
 {
-
-  require( '../../../wtools/Tools.s' );
+  let _ = require( '../../../wtools/Tools.s' );
   require( '../color/Color.s' );
-
-  let _ = _global_.wTools;
   _.include( 'wTesting' );
-
 }
 
 let _ = _global_.wTools;
@@ -326,37 +322,37 @@ function colorToRgbHtml( test )
   var cases = /* qqq : normalize test routine */
   [
     {
-      case : 'color as string #1',
+      case : 'color as string',
       arg : '#ff0000',
       expected : '#ff0000'
     },
     {
-      case : 'color as obj #1',
+      case : 'color as obj',
       arg : { r : 0, g : 1, b : 0 },
       expected : 'rgb( 0, 255, 0 )'
     },
     {
-      case : 'color as obj #2',
+      case : 'color as obj',
       arg : { r : 255, g : 0, b : 0 },
       err : true,
     },
     {
-      case : 'color as obj #3',
+      case : 'color as obj',
       arg : { r : -1, g : 0, b : 0 },
       err : true,
     },
     {
-      case : 'color as array #1',
+      case : 'color as array',
       arg : [ 0, 1, 0 ],
       expected : 'rgb( 0, 255, 0 )'
     },
     {
-      case : 'color as array #2',
+      case : 'color as array',
       arg : [ 0, -1, 0 ],
       err : true
     },
     {
-      case : 'color as array #3',
+      case : 'color as array',
       arg : [ 0, 255, 0 ],
       err : true
     }
@@ -403,42 +399,42 @@ function colorToRgbaHtml( test )
   var cases = /* qqq : normalize test routine */
   [
     {
-      case : 'color as string #1',
+      case : 'color as string',
       arg : '#ff0000',
       expected : '#ff0000'
     },
     {
-      case : 'color as obj #1',
+      case : 'color as obj',
       arg : { r : 0, g : 1, b : 0, a : 1 },
       expected : 'rgba( 0, 255, 0, 1 )'
     },
     {
-      case : 'color as obj, incorrect value #2',
+      case : 'color as obj, incorrect value',
       arg : { r : 255, g : 0, b : 0 },
       err : true,
     },
     {
-      case : 'color as obj #3',
+      case : 'color as obj',
       arg : { r : -1, g : 0, b : 0 },
       err : true,
     },
     {
-      case : 'color as array #1',
+      case : 'color as array',
       arg : [ 0, 1, 0, 0.5],
       expected : 'rgba( 0, 255, 0, 0.5 )'
     },
     {
-      case : 'color as number #1',
+      case : 'color as number',
       arg : 0x00FFFF,
       expected : 'rgba( 0, 255, 255, 1 )'
     },
     {
-      case : 'color as array #2',
+      case : 'color as array',
       arg : [ 0, -1, 0 ],
       err : true
     },
     {
-      case : 'color as array #3',
+      case : 'color as array',
       arg : [ 0, 255, 0 ],
       err : true
     }
@@ -544,32 +540,32 @@ function rgbaFrom( test )
   var cases = /* qqq : normalize test routine */
   [
     {
-      case : 'map #1',
-      arg : { r : 0 },
+      case : 'map',
+      arg : Object.create({ r : 0 }),
       expected : [ 0, 1, 1, 1 ]
     },
     {
-      case : 'map #2',
-      arg : { r : 0, g : 1, b : 1, a : 0 },
+      case : 'map',
+      arg : Object.create({ r : 0, g : 1, b : 1, a : 0 }),
       expected : [ 0, 1, 1, 0 ]
     },
     {
-      case : 'number #1',
+      case : 'number',
       arg : -1,
       expected : [ 1, 1, 1, 1 ]
     },
     {
-      case : 'number #2',
+      case : 'number',
       arg : 0xFF0080,
       expected : [ 1, 0, 0.5, 1 ]
     },
     {
-      case : 'array #1',
+      case : 'array',
       arg : [ -1, 0, 1, 1 ],
       expected : [ -1, 0, 1, 1 ]
     },
     {
-      case : 'array #2',
+      case : 'array',
       arg : [ 0, 0, 0 ],
       expected : [ 0, 0, 0, 1 ]
     },
@@ -579,7 +575,7 @@ function rgbaFrom( test )
       expected : [ 1, 1, 1, 1 ]
     },
     {
-      case : 'str hex #2',
+      case : 'str hex',
       arg : '#ffffff',
       expected : [ 1, 1, 1, 1 ]
     },
@@ -659,32 +655,32 @@ function rgbFrom( test )
   var cases = /* qqq : normalize test routine */
   [
     {
-      case : 'map #1',
-      arg : { r : 0 },
+      case : 'map',
+      arg : Object.create({ r : 0 }),
       expected : [ 0, 1, 1 ]
     },
     {
-      case : 'map #2',
-      arg : { r : 0, g : 1, b : 1, a : 0 },
+      case : 'object',
+      arg : Object.create({ r : 0, g : 1, b : 1, a : 0 }),
       expected : [ 0, 1, 1 ]
     },
     {
-      case : 'number #1',
+      case : 'number',
       arg : -1,
       expected : [ 1, 1, 1 ]
     },
     {
-      case : 'number #2',
+      case : 'number',
       arg : 0xFF0080,
       expected : [ 1, 0, 0.5 ]
     },
     {
-      case : 'array #1',
+      case : 'array',
       arg : [ -1, 0, 1, 1 ],
       expected : [ -1, 0, 1 ]
     },
     {
-      case : 'array #2',
+      case : 'array',
       arg : [ 0, 0, 0 ],
       expected : [ 0, 0, 0 ]
     },
@@ -694,7 +690,7 @@ function rgbFrom( test )
       expected : [ 1, 1, 1 ]
     },
     {
-      case : 'str hex #2',
+      case : 'str hex',
       arg : '#ffffff',
       expected : [ 1, 1, 1 ]
     },
@@ -753,7 +749,6 @@ let Self =
 
   name : 'Tools/mid/Color',
   silencing : 1,
-  // verbosity : 1,
 
   tests :
   {

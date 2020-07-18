@@ -20,7 +20,7 @@
     "url" : "https://github.com/Wandalen/wColor/issues"
   },
   "dependencies" : { "wTools" : "" },
-  "devDependencies" : { "wTesting" : "" },
+  "devDependencies" : { "wTesting" : "", "eslint" : "=7.1.0", "wColor" : "file:." },
   "keywords" :
   [
     "wTools",

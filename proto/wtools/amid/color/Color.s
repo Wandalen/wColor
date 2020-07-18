@@ -21,17 +21,18 @@ if( typeof module !== 'undefined' )
 }
 
 let _ = _global_.wTools;
+let Self = _.color = _.color || Object.create( null );
 
 // --
 // implement
 // --
 
-// function _rgbFromName( name, def, map )
-function _rgbFromName( o )
+// function _fromTable( name, def, map )
+function _fromTable( o )
 {
-  let result = o.colorMap[ o.name ];
+  let result = o.colorMap[ o.src ];
 
-  _.assertRoutineOptions( rgbFromName, o );
+  _.assertRoutineOptions( fromTable, o );
 
   if( !result )
   result = o.def;
@@ -42,9 +43,9 @@ function _rgbFromName( o )
   return result;
 }
 
-_rgbFromName.defaults =
+_fromTable.defaults =
 {
-  name : null,
+  src : null,
   def : null,
   colorMap : null,
 }
@@ -56,24 +57,24 @@ _rgbFromName.defaults =
  * @param {String} name Target color name.
  * @param {*} def Default value. Is used if nothing was found.
  * @example
- * _.color.rgbFromName( 'black' );
+ * _.color.fromTable( 'black' );
  * @example
- * _.color.rgbFromName( 'black', [ 0, 0, 0 ] );
+ * _.color.fromTable( 'black', [ 0, 0, 0 ] );
  * @throws {Error} If no arguments provided.
- * @function rgbFromName
+ * @function fromTable
  * @namespace wTools.color
  * @module Tools/mid/Color
  */
 
-// function rgbFromName( name, def, colorMap )
-function rgbFromName( o )
+// function fromTable( name, def, colorMap )
+function fromTable( o )
 {
-  // let o = _.routineOptionsFromThis( rgbFromName, this, Self );
+  // let o = _.routineOptionsFromThis( fromTable, this, Self );
 
   if( !_.mapIs( o ) )
   o =
   {
-    name : arguments[ 0 ],
+    src : arguments[ 0 ],
     def : arguments[ 1 ],
     colorMap : arguments[ 2 ],
   }
@@ -82,60 +83,21 @@ function rgbFromName( o )
   if( !o.colorMap )
   o.colorMap = Self.ColorMap;
 
-  _.routineOptions( rgbFromName, o );
+  _.routineOptions( fromTable, o );
   _.assert( arguments.length <= 3 );
-  _.assert( _.strIs( o.name ) );
+  _.assert( _.strIs( o.src ) );
 
-  o.name = o.name.toLowerCase();
-  o.name = o.name.trim();
+  o.src = o.src.toLowerCase();
+  o.src = o.src.trim();
 
-  return this._rgbFromName( o );
-  // return this._rgbFromName( o.name, o.def, o.colorMap );
+  return this._fromTable( o );
+  // return this._fromTable( o.src, o.def, o.colorMap );
 }
 
-rgbFromName.defaults =
+fromTable.defaults =
 {
-  ... _rgbFromName.defaults,
+  ... _fromTable.defaults,
 }
-
-// //
-//
-// function rgbaFromName( o )
-// {
-//   // let o = _.routineOptionsFromThis( rgbFromName, this, Self );
-//
-//   if( !_.mapIs( o ) )
-//   o =
-//   {
-//     name : arguments[ 0 ],
-//     def : arguments[ 1 ],
-//     colorMap : arguments[ 2 ],
-//   }
-//
-//   let result;
-//   if( !o.colorMap )
-//   o.colorMap = Self.ColorMap;
-//
-//   _.routineOptions( rgbaFromName, o );
-//   _.assert( arguments.length <= 3 );
-//   _.assert( _.strIs( o.name ) );
-//
-//   o.name = o.name.toLowerCase();
-//   o.name = o.name.trim();
-//
-//   let result = this._rgbFromName( o );
-//
-//   if( result && result.length === 3 )
-//   result = [ ... result, 1 ];
-//
-//   return result;
-//   // return this._rgbFromName( o.name, o.def, o.colorMap );
-// }
-//
-// rgbaFromName.defaults =
-// {
-//   ... rgbFromName.defaults,
-// }
 
 //
 
@@ -179,10 +141,11 @@ function _rgbaFromNotName( src )
 {
 
   _.assert( arguments.length === 1, 'Expects single argument' );
-  _.assert( _.numberIs( src ) || _.longIs( src ) || _.mapIs( src ) );
+  _.assert( _.numberIs( src ) || _.longIs( src ) || _.objectIs( src ) );
 
-  if( _.mapIs( src ) )
+  if( _.objectIs( src ) )
   {
+    _.assertMapHasOnly( src, { r : null, g : null, b : null, a : null } );
     let result = [];
     result[ 0 ] = src.r === undefined ? 1 : src.r;
     result[ 1 ] = src.g === undefined ? 1 : src.g;
@@ -243,46 +206,67 @@ function _rgbaFromNotName( src )
  * @module Tools/mid/Color
  */
 
-function rgbaFrom( src )
+function rgbaFrom( o )
 {
-  let result;
 
+  if( !_.mapIs( o ) )
+  o = { src : arguments[ 0 ], colorMap : arguments[ 1 ] };
   _.assert( arguments.length === 1, 'Expects single argument' );
+  _.routineOptions( rgbaFrom, o );
 
-  if( _.numberIs( src ) || _.longIs( src ) || _.mapIs( src ) )
-  return _rgbaFromNotName( src );
+  let result = this.rgbaFromTry( o );
 
-  /* */
+  if( !result )
+  debugger;
+  if( !result )
+  throw _.err( `Not color : "${_.strShort( o.src )}"` );
 
-  if( _.strIs( src ) )
-  result = this.rgbFromName.call( this, src );
+  return result;
 
-  if( result )
-  return end();
+  // let result;
+  //
+  // if( !_.mapIs( o ) )
+  // o = { src : arguments[ 0 ], colorMap : arguments[ 1 ] };
+  //
+  // _.assert( arguments.length === 1, 'Expects single argument' );
+  // _.routineOptions( rgnaFrom, arguments );
+  //
+  // if( _.numberIs( o.src ) || _.longIs( o.src ) || ( !_.mapIs( o.src ) && _.objectIs( o.src ) ) )
+  // return this._rgbaFromNotName( o.src );
+  //
+  // /* */
+  //
+  // if( _.strIs( o.src ) )
+  // result = this.fromTable( o );
+  //
+  // if( result )
+  // return end();
+  //
+  // /* */
+  //
+  // if( _.strIs( o.src ) )
+  // result = _.color.hexToColor( o.src );
+  //
+  // if( result )
+  // return end();
+  //
+  // /* */
+  //
+  // _.assertWithoutBreakpoint( 0, 'Unknown color', _.strQuote( o.src ) );
+  //
+  // function end()
+  // {
+  //   _.assert( _.longIs( result ) );
+  //   if( result.length !== 4 )
+  //   result = _.longGrowInplace( result, [ 0, 4 ], 1 ); /* xxx : replace */
+  //   return result;
+  // }
 
-  /* */
-
-  if( _.strIs( src ) )
-  result = _.color.hexToColor( src );
-
-  if( result )
-  return end();
-
-  /* */
-
-  _.assertWithoutBreakpoint( 0, 'Unknown color', _.strQuote( src ) );
-
-  function end()
-  {
-    _.assert( _.longIs( result ) );
-    if( result.length !== 4 )
-    result = _.longGrowInplace( result, [ 0, 4 ], 1 );
-    return result;
-  }
 }
 
 rgbaFrom.defaults =
 {
+  src : null,
   colorMap : null,
 }
 
@@ -332,20 +316,21 @@ function rgbFrom( src )
 
 rgbFrom.defaults =
 {
+  ... rgbaFrom.defaults,
 }
 
-rgbFrom.defaults.__proto__ = rgbaFrom.defaults;
+// rgbFrom.defaults.__proto__ = rgbaFrom.defaults;
 
 //
 
 /**
- * @summary Short-cut for {@link module:Tools/mid/Color.wTools.color.rgbaFrom}.
+ * @summary Short-cut for {@link module:Tools/mid/Color.wTools.color.rgbaFromTry}.
  * @description Returns rgba color values for provided entity `src` or default value if nothing was found.
  * @param {Number|Array|String|Object} src Source entity.
  * @param {Array} def Default value.
  *
  * @example
- * _.color.rgbaFrom( 'some_color', [ 1, 0, 0.5, 1 ] );
+ * _.color.rgbaFromTry( 'some_color', [ 1, 0, 0.5, 1 ] );
  * //[ 1, 0, 0.5, 1 ]
  *
  * @throws {Error} If no arguments provided.
@@ -354,27 +339,76 @@ rgbFrom.defaults.__proto__ = rgbaFrom.defaults;
  * @module Tools/mid/Color
  */
 
-function rgbaFromTry( src, def )
+// function rgbaFromTry( src, def )
+function rgbaFromTry( o )
 {
+  let result;
 
-  _.assert( arguments.length === 2, 'Expects exactly two arguments' );
+  if( !_.mapIs( o ) )
+  o = { src : arguments[ 0 ] };
 
-  try
+  _.assert( arguments.length === 1 );
+  _.routineOptions( rgbaFromTry, o );
+
+  if( _.numberIs( o.src ) || _.longIs( o.src ) || ( !_.mapIs( o.src ) && _.objectIs( o.src ) ) )
+  return this._rgbaFromNotName( o.src );
+
+  /* */
+
+  if( _.strIs( o.src ) )
+  result = this.fromTable( o );
+
+  if( result )
+  return end();
+
+  /* */
+
+  if( _.strIs( o.src ) )
+  result = _.color.hexToColor( o.src );
+
+  if( result )
+  return end();
+
+  /* */
+
+  return o.def;
+
+  function end()
   {
-    return rgbaFrom.call( this, src );
-  }
-  catch( err )
-  {
-    return def;
+    _.assert( _.longIs( result ) );
+    if( result.length !== 4 )
+    result = _.longGrowInplace( result, [ 0, 4 ], 1 ); /* xxx : replace */
+    return result;
   }
 
 }
 
 rgbaFromTry.defaults =
 {
+  ... rgbaFrom.defaults,
+  def : null,
 }
 
-rgbaFromTry.defaults.__proto__ = rgbaFrom.defaults;
+// {
+//
+//   _.assert( arguments.length === 2, 'Expects exactly two arguments' );
+//
+//   try
+//   {
+//     return rgbaFrom.call( this, src );
+//   }
+//   catch( err )
+//   {
+//     return def;
+//   }
+//
+// }
+//
+// rgbaFromTry.defaults =
+// {
+// }
+//
+// rgbaFromTry.defaults.__proto__ = rgbaFrom.defaults;
 
 //
 
@@ -397,24 +431,43 @@ rgbaFromTry.defaults.__proto__ = rgbaFrom.defaults;
 function rgbFromTry( src, def )
 {
 
-  _.assert( arguments.length === 2, 'Expects exactly two arguments' );
+  _.assert( arguments.length === 2, 'Expects single argument' );
 
-  try
-  {
-    return rgbFrom.call( this, src );
-  }
-  catch( err )
-  {
-    return def;
-  }
+  if( _.longIs( src ) )
+  return _.longSlice( src, 0, 3 );
+
+  let result = rgbaFrom.call( this, src );
+
+  if( !result )
+  result = def;
+
+  if( result !== null )
+  result = _.longSlice( result, 0, 3 );
+
+  return result;
+
+  // try
+  // {
+  //   return rgbFrom.call( this, src );
+  // }
+  // catch( err )
+  // {
+  //   return def;
+  // }
 
 }
 
 rgbFromTry.defaults =
 {
+  ... rgbaFrom.defaults,
+  def : null,
 }
 
-rgbFromTry.defaults.__proto__ = rgbaFrom.defaults;
+// rgbFromTry.defaults =
+// {
+// }
+//
+// rgbFromTry.defaults.__proto__ = rgbaFrom.defaults;
 
 //
 
@@ -477,7 +530,7 @@ function _colorNameNearest( color, map )
     return color;
   }
 
-  color = _rgbaFromNotName( color );
+  color = this._rgbaFromNotName( color );
 
   _.assert( color.length === 4 );
 
@@ -562,39 +615,38 @@ function colorNameNearest( color )
 
 }
 
+// //
 //
-
-function colorNearestCustom( o )
-{
-  let self = this;
-
-  _.assert( arguments.length === 1, 'Expects single argument' );
-
-  _.routineOptions( colorNearestCustom, o );
-
-  if( _.strIs( o.color ) )
-  {
-    let _color = _.color.hexToColor( o.color );
-    if( _color )
-    o.color = _color;
-  }
-
-  try
-  {
-    let name = self._colorNameNearest( o.color, o.colorMap );
-    return o.colorMap[ name ];
-  }
-  catch( err )
-  {
-    return;
-  }
-}
-
-colorNearestCustom.defaults =
-{
-  color : null,
-  colorMap : null
-}
+// function _colorNearest( o )
+// {
+//   let self = this;
+//
+//   _.routineOptions( _colorNearest, o );
+//   _.assert( arguments.length === 1, 'Expects single argument' );
+//
+//   if( _.strIs( o.color ) )
+//   {
+//     let _color = _.color.hexToColor( o.color );
+//     if( _color )
+//     o.color = _color;
+//   }
+//
+//   try
+//   {
+//     let name = self._colorNameNearest( o.color, o.colorMap );
+//     return o.colorMap[ name ];
+//   }
+//   catch( err )
+//   {
+//     return;
+//   }
+// }
+//
+// _colorNearest.defaults =
+// {
+//   color : null,
+//   colorMap : null
+// }
 
 //
 
@@ -1206,189 +1258,9 @@ function linearToGamma( dst )
 // str
 // --
 
-// function _strDirectiveBackgroundFor( color )
-// {
-//   let result = Object.create( null );
-//
-//   _.assert( arguments.length === 1, 'Expects single argument' );
-//   _.assert( _.strIs( color ) );
-//
-//   result.pre = `#background : ${color}#`;
-//   result.post = `#background : default#`;
-//
-//   return result;
-// }
-//
-// //
-//
-// function strFormatBackground( srcStr, color )
-// {
-//
-//   if( _.numberIs( color ) )
-//   color = _.color.colorNameNearest( color );
-//
-//   _.assert( arguments.length === 2, 'Expects 2 arguments' );
-//   _.assert( _.strIs( srcStr ) );
-//   _.assert( _.strIs( color ) );
-//
-//   return `#background : ${color}#${srcStr}#background : default#`;
-// }
-//
-// //
-//
-// function _strDirectiveForegroundFor( color )
-// {
-//   let result = Object.create( null );
-//
-//   _.assert( arguments.length === 1, 'Expects single argument' );
-//   _.assert( _.strIs( color ) );
-//
-//   result.pre = `#foreground : ${color}#`;
-//   result.post = `#foreground : default#`;
-//
-//   return result;
-// }
-//
-// //
-//
-// function strFormatForeground( srcStr, color )
-// {
-//
-//   if( _.numberIs( color ) )
-//   color = _.color.colorNameNearest( color );
-//
-//   _.assert( arguments.length === 2, 'Expects 2 arguments' );
-//   _.assert( _.strIs( srcStr ), 'Expects string {-src-}' );
-//   _.assert( _.strIs( color ), 'Expects string {-color-}' );
-//
-//   return `#foreground : ${color}#${srcStr}#foreground : default#`;
-// }
-
-//
-
-function _strFormat( srcStr, style )
-{
-  let result = srcStr;
-
-  if( _.numberIs( result ) )
-  result = result + '';
-  _.assert( arguments.length === 1 || arguments.length === 2 );
-  _.assert( _.strIs( result ), 'Expects string got', _.strType( result ) );
-
-  let r = this.strDirectivesFor( style );
-
-  result = r.pre + result + r.post;
-
-  return result;
-}
-
-//
-
-let strFormatEach = _.routineVectorize_functor( _strFormat );
-let strFormat = strFormatEach;
-
-// //
-//
-// function _strEscape( srcStr )
-// {
-//   let result = srcStr;
-//   if( _.numberIs( result ) )
-//   result = result + '';
-//   _.assert( arguments.length === 1 || arguments.length === 2 );
-//   _.assert( _.strIs( result ), 'Expects string got', _.strType( result ) );
-//   return '#inputRaw:1#' + srcStr + '#inputRaw:0#'
-// }
-//
-// let strEscape = _.routineVectorize_functor( _strEscape );
-//
-// //
-//
-// function _strUnescape( srcStr )
-// {
-//   let result = srcStr;
-//   if( _.numberIs( result ) )
-//   result = result + '';
-//   _.assert( arguments.length === 1 || arguments.length === 2 );
-//   _.assert( _.strIs( result ), 'Expects string got', _.strType( result ) );
-//   return '#inputRaw:0#' + srcStr + '#inputRaw:1#'
-// }
-//
-// let strUnescape = _.routineVectorize_functor( _strUnescape );
-
-// //
-//
-// function strDirectivesFor( style )
-// {
-//   let result = Object.create( null );
-//   result.pre = '';
-//   result.post = '';
-//
-//   let StyleObjectOptions =
-//   {
-//     fg : null,
-//     bg : null,
-//   }
-//
-//   let style = _.arrayAs( style );
-//
-//   _.assert( arguments.length === 1, 'Expects single argument' );
-//   _.assert( _.arrayIs( style ) , 'Expects string or array of strings ( style )' );
-//
-//   for( let s = 0 ; s < style.length ; s++ )
-//   {
-//
-//     if( _.objectIs( style[ s ] ) )
-//     {
-//       let obj = style[ s ];
-//       _.assertMapHasOnly( obj, StyleObjectOptions );
-//       if( obj.fg )
-//       result = join( result, _.color._strDirectiveForegroundFor( obj.fg ) );
-//       if( obj.bg )
-//       result = join( result, _.color._strDirectiveBackgroundFor( obj.bg ) );
-//       continue;
-//     }
-//
-//     _.assert( _.strIs( style[ s ] ) , 'Expects string or array of strings { style }' );
-//
-//     let styleObject = this.strColorStyle( style[ s ] );
-//
-//     _.assert( !!styleObject, 'Unknown style', _.strQuote( style[ s ] ) );
-//
-//     if( styleObject.fg )
-//     result = join( result, _.color._strDirectiveForegroundFor( styleObject.fg ) );
-//
-//     if( styleObject.bg )
-//     result = join( result, _.color._strDirectiveBackgroundFor( styleObject.bg ) );
-//
-//   }
-//
-//   return result;
-//
-//   /* */
-//
-//   function join()
-//   {
-//     for( let a = 1 ; a < arguments.length ; a++ )
-//     {
-//       arguments[ 0 ].pre = arguments[ a ].pre + arguments[ 0 ].pre;
-//       arguments[ 0 ].post = arguments[ 0 ].post + arguments[ a ].post;
-//     }
-//     return arguments[ 0 ];
-//   }
-//
-// }
-
-//
-
 function strColorStyle( style )
 {
   return _.ct.styleObjectFor( style );
-  // _.assert( arguments.length === 1, 'Expects single argument' );
-  // _.assert( _.strIs( style ), 'Expects string got', _.strType( style ) );
-  //
-  // let result = this.Style[ style ];
-  //
-  // return result;
 }
 
 //
@@ -1396,24 +1268,6 @@ function strColorStyle( style )
 function strStrip( srcStr )
 {
   return _.ct.strip( srcStr );
-  // let result = '';
-  //
-  // _.assert( _.strIs( srcStr ) );
-  //
-  // let splitted = _.strSplitInlined
-  // ({
-  //   src : srcStr,
-  //   preservingEmpty : 0,
-  //   stripping : 0,
-  // });
-  //
-  // for( let i = 0 ; i < splitted.length ; i++ )
-  // {
-  //   if( _.strIs( splitted[ i ] ) )
-  //   result += splitted[ i ];
-  // }
-  //
-  // return result;
 }
 
 // --
@@ -1485,88 +1339,17 @@ let ColorMapDistinguishable =
 
 }
 
-//
-
-let ColorMapShell =
-{
-  'white'           : [ 1.0, 1.0, 1.0 ],
-  'black'           : [ 0.0, 0.0, 0.0 ],
-  'green'           : [ 0.0, 1.0, 0.0 ],
-  'red'             : [ 1.0, 0.0, 0.0 ],
-  'yellow'          : [ 1.0, 1.0, 0.0 ],
-  'blue'            : [ 0.0, 0.0, 1.0 ],
-  'cyan'            : [ 0.0, 1.0, 1.0 ],
-  'magenta'         : [ 1.0, 0.0, 1.0 ],
-
-  'bright black'    : [ 0.5, 0.5, 0.5 ],
-
-  'dark yellow'     : [ 0.5, 0.5, 0.0 ],
-  'dark red'        : [ 0.5, 0.0, 0.0 ],
-  'dark magenta'    : [ 0.5, 0.0, 0.5 ],
-  'dark blue'       : [ 0.0, 0.0, 0.5 ],
-  'dark cyan'       : [ 0.0, 0.5, 0.5 ],
-  'dark green'      : [ 0.0, 0.5, 0.0 ],
-  'dark white'      : [ 0.9, 0.9, 0.9 ],
-
-  'bright white'    : [ 1.0, 1.0, 1.0 ], /* white */
-  'bright green'    : [ 0.0, 1.0, 0.0 ], /* green */
-  'bright red'      : [ 1.0, 0.0, 0.0 ], /* red */
-  'bright yellow'   : [ 1.0, 1.0, 0.0 ], /* yellow */
-  'bright blue'     : [ 0.0, 0.0, 1.0 ], /* blue */
-  'bright cyan'     : [ 0.0, 1.0, 1.0 ], /* cyan */
-  'bright magenta'  : [ 1.0, 0.0, 1.0 ], /* magenta */
-
-  'dark black'      : [ 0.0, 0.0, 0.0 ], /* black */
-
-  'silver'          : [ 0.9, 0.9, 0.9 ] /* dark white */
-}
-//
-// let Style =
-// {
-//
-//   'positive' : { fg : 'green' },
-//   'negative' : { fg : 'red' },
-//
-//   'path' : { fg : 'dark cyan' },
-//   'code' : { fg : 'dark green' },
-//   'entity' : { fg : 'bright blue' }, /* qqq : why cant i specify [ 0,0,0 ] ? */
-//
-//   'topic.up' : { fg : 'white', bg : 'dark blue' },
-//   'topic.down' : { fg : 'dark black', bg : 'dark blue' },
-//
-//   'head' : { fg : 'dark black', bg : 'white' },
-//   'tail' : { fg : 'white', bg : 'dark black' },
-//
-//   'highlighted' : { fg : 'white', bg : 'dark black' },
-//   'selected' : { fg : 'dark yellow', bg : 'dark blue' },
-//   'neutral' : { fg : 'smoke', bg : 'dim' },
-//
-//   // 'pipe.neutral' : { fg : 'dark black', bg : 'dark yellow' },
-//   // 'pipe.negative' : { fg : 'dark red', bg : 'dark yellow' },
-//
-//   'pipe.neutral' : { fg : 'dark magenta' },
-//   'pipe.negative' : { fg : 'dark red' },
-//
-//   'exclusiveOutput.neutral' : { fg : 'dark black', bg : 'dark yellow' },
-//   'exclusiveOutput.negative' : { fg : 'dark red', bg : 'dark yellow' },
-//
-//   'info.neutral' : { fg : 'white', bg : 'magenta' },
-//   'info.negative' : { fg : 'dark red', bg : 'magenta' },
-//
-// }
-
 // --
 // declare
 // --
 
-let Self =
+let Extension =
 {
 
   //
 
-  _rgbFromName,
-  rgbFromName,
-  // rgbaFromName,
+  _fromTable,
+  fromTable,
 
   rgbByBitmask,
   _rgbByBitmask,
@@ -1584,7 +1367,7 @@ let Self =
   _colorNameNearest,
   colorNameNearest,
 
-  colorNearestCustom,
+  // _colorNearest,
   colorNearest,
 
   colorToHex,
@@ -1621,25 +1404,13 @@ let Self =
 
   // str
 
-  // _strDirectiveBackgroundFor,
-  // strFormatBackground,
-  // strBg : strFormatBackground,
   strBg : _.ct.bg,
-
-  // _strDirectiveForegroundFor,
-  // strFormatForeground,
-  // strFg : strFormatForeground,
   strFg : _.ct.fg,
-
   strFormat : _.ct.format,
   strFormatEach : _.ct.format,
 
-  // strFormat,
-  // strFormatEach,
-
   strEscape : _.ct.escape,
   strUnescape : _.ct.unescape,
-  // strDirectivesFor,
   strColorStyle,
 
   strStrip,
@@ -1649,36 +1420,23 @@ let Self =
   ColorMap,
   ColorMapGreyscale,
   ColorMapDistinguishable,
-  ColorMapShell,
-  // Style,
+  // ColorMapShell,
 
 }
 
-if( !_.color )
-{
-  _.color = Self;
-}
-else
-{
-
-  _.mapSupplement( _.color, Self );
-  _.mapSupplement( _.color.ColorMap, ColorMap );
-  _.mapSupplement( _.color.ColorMapGreyscale, ColorMapGreyscale );
-  _.mapSupplement( _.color.ColorMapDistinguishable, ColorMapDistinguishable );
-  _.mapSupplement( _.color.ColorMapShell, ColorMapShell );
-  // _.mapExtend( _.color.Style, Style );
-
-}
+_.mapSupplement( _.color, Extension );
+_.mapSupplement( _.color.ColorMap, ColorMap );
+_.mapSupplement( _.color.ColorMapGreyscale, ColorMapGreyscale );
+_.mapSupplement( _.color.ColorMapDistinguishable, ColorMapDistinguishable );
 
 _.mapSupplement( _.color.ColorMap, ColorMapGreyscale );
 _.mapSupplement( _.color.ColorMap, ColorMapDistinguishable );
-_.mapSupplement( _.color.ColorMap, ColorMapShell );
 
 // --
 // export
 // --
 
 if( typeof module !== 'undefined' )
-module[ 'exports' ] = Self;
+module[ 'exports' ] = _;
 
 })();
