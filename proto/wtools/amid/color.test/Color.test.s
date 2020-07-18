@@ -15,7 +15,9 @@ if( typeof module !== 'undefined' )
 
 let _ = _global_.wTools;
 
-//
+// --
+// tests
+// --
 
 function colorNameNearest( test )
 {
@@ -170,7 +172,7 @@ function colorNameNearest( test )
 
 function colorToHex( test )
 {
-  var cases =
+  var cases = /* qqq : normalize test routine */
   [
     {
       case : 'rgb as array#1',
@@ -242,7 +244,7 @@ function colorToHex( test )
 
 function hexToColor( test )
 {
-  var cases =
+  var cases = /* qqq : normalize test routine */
   [
     {
       case : '#1',
@@ -271,13 +273,28 @@ function hexToColor( test )
     },
     {
       case : 'shorthand test#3',
-      arg : '555',
-      expected : [ 0.3, 0.3, 0.3 ]
+      arg : '01f',
+      expected : [ 0.000, 0.066, 1.000 ]
     },
     {
-      case : 'incorrect shorthand test',
+      case : 'shorthand rgb',
+      arg : 'a1f',
+      expected : [ 0.666, 0.066, 1 ]
+    },
+    {
+      case : 'shorthand rgba',
+      arg : '1af0',
+      expected : [ 0.066, 0.666, 1, 0 ],
+    },
+    {
+      case : 'rgba',
+      arg : 'abcd',
+      expected : [ 0.666, 0.733, 0.8, 0.866 ],
+    },
+    {
+      case : '#0fff',
       arg : '#0fff',
-      expected : null
+      expected : [ 0, 1, 1, 1 ],
     },
     {
       case : 'incorrect data#1',
@@ -288,24 +305,25 @@ function hexToColor( test )
       case : 'incorrect data#2',
       arg : '#-5-5-5',
       expected : null
-    }
+    },
   ]
 
   cases.forEach( function( element )
   {
     test.case = element.case;
     var got = _.color.hexToColor( element.arg );
-    test./*eps*/accuracy = 1e-1;
     test.equivalent( got, element.expected );
   });
 
 }
 
+hexToColor.accuracy = 1e-2;
+
 //
 
 function colorToRgbHtml( test )
 {
-  var cases =
+  var cases = /* qqq : normalize test routine */
   [
     {
       case : 'color as string #1',
@@ -382,7 +400,7 @@ function colorToRgbHtml( test )
 
 function colorToRgbaHtml( test )
 {
-  var cases =
+  var cases = /* qqq : normalize test routine */
   [
     {
       case : 'color as string #1',
@@ -462,7 +480,7 @@ function colorToRgbaHtml( test )
 
 function rgbByBitmask( test )
 {
-  var cases =
+  var cases = /* qqq : normalize test routine */
   [
     {
       case : '#1',
@@ -496,7 +514,7 @@ function rgbByBitmask( test )
   {
     test.case = element.case;
     var got = _.color.rgbByBitmask( element.arg );
-    test./*eps*/accuracy = 1e-2;
+    // test.accuracy = 1e-2;
     test.equivalent( got, element.expected );
   });
 
@@ -517,11 +535,13 @@ function rgbByBitmask( test )
 
 }
 
+rgbByBitmask.accuracy = 1e-2;
+
 //
 
 function rgbaFrom( test )
 {
-  var cases =
+  var cases = /* qqq : normalize test routine */
   [
     {
       case : 'map #1',
@@ -598,14 +618,22 @@ function rgbaFrom( test )
   var expected = [ 1,0,0,1 ];
   test.identical( got,expected );
 
+  test.case = 'string rgb';
+  var exp = [ 0.666, 0.733, 0.8, 1 ];
+  var got = _.color.rgbaFrom( 'aabbcc' );
+  test.equivalent( got, exp );
+
+  test.case = 'string rgb';
+  var exp = [ 0.666, 0.733, 0.8, 0.866 ];
+  var got = _.color.rgbaFrom( 'aabbccdd' );
+  test.equivalent( got, exp );
+
   cases.forEach( function( element )
   {
     test.case = element.case;
     var got = _.color.rgbaFrom( element.arg );
-    test./*eps*/accuracy = 1e-2;
     test.equivalent( got, element.expected );
   });
-
 
   if( !Config.debug )
   return;
@@ -621,11 +649,14 @@ function rgbaFrom( test )
 
 }
 
+rgbaFrom.accuracy = 1e-2;
+
 //
 
 function rgbFrom( test )
 {
-  var cases =
+
+  var cases = /* qqq : normalize test routine */
   [
     {
       case : 'map #1',
@@ -676,17 +707,25 @@ function rgbFrom( test )
       case : 'all negative',
       arg : [ -10, -10, -10 ],
       expected : [ -10, -10, -10 ]
-    }
+    },
   ]
+
+  test.case = 'string rgb';
+  var exp = [ 0.666, 0.733, 0.8 ];
+  var got = _.color.rgbFrom( 'aabbcc' );
+  test.equivalent( got, exp );
+
+  test.case = 'string rgba';
+  var exp = [ 0.666, 0.733, 0.8 ];
+  var got = _.color.rgbFrom( 'aabbccdd' );
+  test.equivalent( got, exp );
 
   cases.forEach( function( element )
   {
     test.case = element.case;
     var got = _.color.rgbFrom( element.arg );
-    test./*eps*/accuracy = 1e-2;
     test.equivalent( got, element.expected );
   });
-
 
   if( !Config.debug )
   return;
@@ -694,15 +733,20 @@ function rgbFrom( test )
   test.shouldThrowErrorSync( function()
   {
     _.color.rgbFrom( 'unknown' )
-  })
+  });
+
   test.shouldThrowErrorSync( function()
   {
     _.color.rgbFrom( function(){} )
-  })
+  });
 
 }
 
-//
+rgbFrom.accuracy = 1e-2;
+
+// --
+// declare
+// --
 
 let Self =
 {
@@ -714,15 +758,15 @@ let Self =
   tests :
   {
 
-    colorNameNearest : colorNameNearest,
+    colorNameNearest,
 
-    colorToHex : colorToHex,
-    hexToColor : hexToColor,
-    colorToRgbHtml : colorToRgbHtml,
-    colorToRgbaHtml : colorToRgbaHtml,
-    rgbByBitmask : rgbByBitmask,
-    rgbaFrom : rgbaFrom,
-    rgbFrom : rgbFrom,
+    colorToHex,
+    hexToColor,
+    colorToRgbHtml,
+    colorToRgbaHtml,
+    rgbByBitmask,
+    rgbaFrom,
+    rgbFrom,
 
   },
 

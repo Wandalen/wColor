@@ -10,11 +10,19 @@ Contains map of predefined colors( ColorMap ) with rgb channels in [ 0,1 ] range
 npm install wColor
 ```
 
-## Try out
+## Try out from the repository
 ```
+git clone https://github.com/Wandalen/wColor
+cd wColor
 npm install
 node sample/Sample.s
 ```
+
+## To add to your project
+```
+npm add 'wColor@alpha'
+```
+
 
 ## Usage
 After installation module becomes a part of [ wTools ]( https://github.com/Wandalen/wTools ) package and can be used as its 'color' property:

@@ -22,6 +22,33 @@ if( typeof module !== 'undefined' )
 
 let _ = _global_.wTools;
 
+// --
+// implement
+// --
+
+// function _rgbFromName( name, def, map )
+function _rgbFromName( o )
+{
+  let result = o.colorMap[ o.name ];
+
+  _.assertRoutineOptions( rgbFromName, o );
+
+  if( !result )
+  result = o.def;
+
+  if( result )
+  result = result.slice();
+
+  return result;
+}
+
+_rgbFromName.defaults =
+{
+  name : null,
+  def : null,
+  colorMap : null,
+}
+
 //
 
 /**
@@ -38,41 +65,77 @@ let _ = _global_.wTools;
  * @module Tools/mid/Color
  */
 
-function rgbFromName( name, def )
+// function rgbFromName( name, def, colorMap )
+function rgbFromName( o )
 {
-  let o = _.routineOptionsFromThis( rgbFromName, this, Self );
+  // let o = _.routineOptionsFromThis( rgbFromName, this, Self );
 
-  _.routineOptions( rgbFromName, o );
+  if( !_.mapIs( o ) )
+  o =
+  {
+    name : arguments[ 0 ],
+    def : arguments[ 1 ],
+    colorMap : arguments[ 2 ],
+  }
 
   let result;
   if( !o.colorMap )
   o.colorMap = Self.ColorMap;
 
-  _.assert( arguments.length <= 2 );
-  _.assert( _.strIs( name ) );
+  _.routineOptions( rgbFromName, o );
+  _.assert( arguments.length <= 3 );
+  _.assert( _.strIs( o.name ) );
 
-  name = name.toLowerCase();
-  name = name.trim();
+  o.name = o.name.toLowerCase();
+  o.name = o.name.trim();
 
-  return _rgbFromName( name, def, o.colorMap );
+  return this._rgbFromName( o );
+  // return this._rgbFromName( o.name, o.def, o.colorMap );
 }
 
 rgbFromName.defaults =
 {
-  colorMap : null,
+  ... _rgbFromName.defaults,
 }
 
+// //
 //
-
-function _rgbFromName( name, def, map )
-{
-  let result = map[ name ];
-
-  if( !result )
-  result = def;
-
-  return result;
-}
+// function rgbaFromName( o )
+// {
+//   // let o = _.routineOptionsFromThis( rgbFromName, this, Self );
+//
+//   if( !_.mapIs( o ) )
+//   o =
+//   {
+//     name : arguments[ 0 ],
+//     def : arguments[ 1 ],
+//     colorMap : arguments[ 2 ],
+//   }
+//
+//   let result;
+//   if( !o.colorMap )
+//   o.colorMap = Self.ColorMap;
+//
+//   _.routineOptions( rgbaFromName, o );
+//   _.assert( arguments.length <= 3 );
+//   _.assert( _.strIs( o.name ) );
+//
+//   o.name = o.name.toLowerCase();
+//   o.name = o.name.trim();
+//
+//   let result = this._rgbFromName( o );
+//
+//   if( result && result.length === 3 )
+//   result = [ ... result, 1 ];
+//
+//   return result;
+//   // return this._rgbFromName( o.name, o.def, o.colorMap );
+// }
+//
+// rgbaFromName.defaults =
+// {
+//   ... rgbFromName.defaults,
+// }
 
 //
 
@@ -83,7 +146,7 @@ function _rgbFromName( name, def, map )
  * _.color.rgbByBitmask( 0xff00ff );
  * //[1, 0, 1]
  * @throws {Error} If no arguments provided.
- * @function rgbFromName
+ * @function rgbByBitmask
  * @namespace wTools.color
  * @module Tools/mid/Color
  */
@@ -192,14 +255,10 @@ function rgbaFrom( src )
   /* */
 
   if( _.strIs( src ) )
-  result = rgbFromName.call( this, src );
+  result = this.rgbFromName.call( this, src );
 
   if( result )
-  {
-    if( result.length !== 4 )
-    result = _.longGrowInplace( result, [ 0, 4 ], 1 );
-    return result;
-  }
+  return end();
 
   /* */
 
@@ -207,16 +266,19 @@ function rgbaFrom( src )
   result = _.color.hexToColor( src );
 
   if( result )
-  {
-    if( result.length !== 4 )
-    result = _.longGrowInplace( result, [ 0, 4 ], 1 );
-
-    return result;
-  }
+  return end();
 
   /* */
 
   _.assertWithoutBreakpoint( 0, 'Unknown color', _.strQuote( src ) );
+
+  function end()
+  {
+    _.assert( _.longIs( result ) );
+    if( result.length !== 4 )
+    result = _.longGrowInplace( result, [ 0, 4 ], 1 );
+    return result;
+  }
 }
 
 rgbaFrom.defaults =
@@ -637,28 +699,62 @@ function colorToHex( rgb, def )
 
 function hexToColor( hex )
 {
+  let result;
 
   _.assert( arguments.length === 1, 'Expects single argument' );
   _.assert( _.strIs( hex ) );
 
-  let shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
-  hex = hex.replace( shorthandRegex, function( m, r, g, b )
+  result = /^#?([a-f\d])([a-f\d])([a-f\d])$/i.exec( hex );
+  if( result )
   {
-    return r + r + g + g + b + b;
-  });
+    result =
+    [
+      parseInt( result[ 1 ], 16 ) / 15,
+      parseInt( result[ 2 ], 16 ) / 15,
+      parseInt( result[ 3 ], 16 ) / 15,
+    ]
+    return result;
+  }
 
-  let result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec( hex );
-  if( !result )
+  result = /^#?([a-f\d])([a-f\d])([a-f\d])([a-f\d])$/i.exec( hex );
+  if( result )
+  {
+    result =
+    [
+      parseInt( result[ 1 ], 16 ) / 15,
+      parseInt( result[ 2 ], 16 ) / 15,
+      parseInt( result[ 3 ], 16 ) / 15,
+      parseInt( result[ 4 ], 16 ) / 15,
+    ]
+    return result;
+  }
+
+  result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec( hex );
+  if( result )
+  {
+    result =
+    [
+      parseInt( result[ 1 ], 16 ) / 255,
+      parseInt( result[ 2 ], 16 ) / 255,
+      parseInt( result[ 3 ], 16 ) / 255,
+    ]
+    return result;
+  }
+
+  result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec( hex );
+  if( result )
+  {
+    result =
+    [
+      parseInt( result[ 1 ], 16 ) / 255,
+      parseInt( result[ 2 ], 16 ) / 255,
+      parseInt( result[ 3 ], 16 ) / 255,
+      parseInt( result[ 4 ], 16 ) / 255,
+    ]
+    return result;
+  }
+
   return null;
-
-  result =
-  [
-    parseInt( result[ 1 ], 16 ) / 255,
-    parseInt( result[ 2 ], 16 ) / 255,
-    parseInt( result[ 3 ], 16 ) / 255,
-  ]
-
-  return result;
 }
 
 //
@@ -1468,8 +1564,9 @@ let Self =
 
   //
 
-  rgbFromName,
   _rgbFromName,
+  rgbFromName,
+  // rgbaFromName,
 
   rgbByBitmask,
   _rgbByBitmask,
