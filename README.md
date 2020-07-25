@@ -1,4 +1,4 @@
-# module::Color [![Status](https://github.com/Wandalen/wColor/workflows/publish/badge.svg)](https://github.com/Wandalen/wColor/actions?query=workflow%3Apublish) [![stable](https://img.shields.io/badge/stability-stable-green.svg)](https://github.com/emersion/stability-badges#stable)
+# module::Color [![status](https://github.com/Wandalen/wColor/workflows/publish/badge.svg)](https://github.com/Wandalen/wColor/actions?query=workflow%3Apublish) [![stable](https://img.shields.io/badge/stability-stable-green.svg)](https://github.com/emersion/stability-badges#stable)
 
 Collection of routines to operate colors conveniently. Color provides functions to convert color from one color space to another color space, from name to color and from color to the closest name of a color. The module does not introduce any specific storage format of color what is a benefit. Color has a short list of the most common colors. Use the module for formatted colorful output or other sophisticated operations with colors.
 
