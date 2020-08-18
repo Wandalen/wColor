@@ -27,7 +27,6 @@ let Self = _.color = _.color || Object.create( null );
 // implement
 // --
 
-// function _fromTable( name, def, map )
 function _fromTable( o )
 {
   let result = o.colorMap[ o.src ];
@@ -695,33 +694,23 @@ function colorToHex( rgb, def )
 
   _.assert( arguments.length === 1 || arguments.length === 2 )
 
-  // if( arguments.length === 3 )
-  // {
-  //   return "#" + ( ( 1 << 24 ) + ( Math.floor(rgb*255) << 16) + ( Math.floor( g*255 ) << 8 ) + Math.floor( b*255 ) ).toString( 16 ).slice( 1 );
-  // }
-  // else
-
   if( _.arrayIs( rgb ) )
   {
-    // throw _.err( 'not tested' );
     return "#" + ( ( 1 << 24 ) + ( Math.floor( rgb[ 0 ]*255 ) << 16 ) + ( Math.floor( rgb[ 1 ]*255 ) << 8 ) + Math.floor( rgb[ 2 ]*255 ) )
     .toString( 16 ).slice( 1 );
   }
   else if( _.numberIs( rgb ) )
   {
-    // throw _.err( 'not tested' );
     let hex = Math.floor( rgb ).toString( 16 );
     return '#' + _.strDup( '0', 6 - hex.length  ) + hex;
   }
   else if( _.objectIs( rgb ) )
   {
-    // throw _.err( 'not tested' );
     return "#" + ( ( 1 << 24 ) + ( Math.floor( rgb.r*255 ) << 16 ) + ( Math.floor( rgb.g*255 ) << 8 ) + Math.floor( rgb.b*255 ) )
     .toString( 16 ).slice( 1 );
   }
   else if( _.strIs( rgb ) )
   {
-    // throw _.err( 'not tested' );
     if( !rgb.length )
     return def;
     else if( rgb[ 0 ] == '#' )
