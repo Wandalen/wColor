@@ -1,0 +1,12 @@
+
+./_
+-*
+*.log
+*.db
+*.tmp
+*.special
+*.out
+build
+builder
+node_modules
+package-lock.json
