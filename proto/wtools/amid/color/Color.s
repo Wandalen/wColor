@@ -218,7 +218,7 @@ function rgbaFrom( o )
   if( !result )
   debugger;
   if( !result )
-  throw _.err( `Not color : "${_.strShort( o.src )}"` );
+  throw _.err( `Not color : "${_.strEntityShort( o.src )}"` );
 
   return result;
 
