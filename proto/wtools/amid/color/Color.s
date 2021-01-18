@@ -468,6 +468,207 @@ rgbFromTry.defaults =
 //
 // rgbFromTry.defaults.__proto__ = rgbaFrom.defaults;
 
+
+function rgbaHtmlFrom( o )
+{
+
+  if( !_.mapIs( o ) )
+  o = { src : arguments[ 0 ], colorMap : arguments[ 1 ] };
+  _.assert( arguments.length === 1, 'Expects single argument' );
+  _.routineOptions( rgbaHtmlFrom, o );
+
+  let result = this.rgbaHtmlFromTry( o );
+
+  if( !result )
+  debugger;
+  if( !result )
+  throw _.err( `Not color : "${_.strEntityShort( o.src )}"` );
+
+  return result;
+
+  // let result;
+  //
+  // if( !_.mapIs( o ) )
+  // o = { src : arguments[ 0 ], colorMap : arguments[ 1 ] };
+  //
+  // _.assert( arguments.length === 1, 'Expects single argument' );
+  // _.routineOptions( rgnaFrom, arguments );
+  //
+  // if( _.numberIs( o.src ) || _.longIs( o.src ) || ( !_.mapIs( o.src ) && _.objectIs( o.src ) ) )
+  // return this._rgbaFromNotName( o.src );
+  //
+  // /* */
+  //
+  // if( _.strIs( o.src ) )
+  // result = this.fromTable( o );
+  //
+  // if( result )
+  // return end();
+  //
+  // /* */
+  //
+  // if( _.strIs( o.src ) )
+  // result = _.color.hexToColor( o.src );
+  //
+  // if( result )
+  // return end();
+  //
+  // /* */
+  //
+  // _.assertWithoutBreakpoint( 0, 'Unknown color', _.strQuote( o.src ) );
+  //
+  // function end()
+  // {
+  //   _.assert( _.longIs( result ) );
+  //   if( result.length !== 4 )
+  //   result = _.longGrowInplace( result, [ 0, 4 ], 1 ); /* xxx : replace */
+  //   return result;
+  // }
+
+}
+
+rgbaHtmlFrom.defaults =
+{
+  src : null,
+  colorMap : null,
+}
+
+//
+
+function rgbHtmlFrom( src )
+{
+  _.assert( arguments.length === 1, 'Expects single argument' );
+
+  if( _.longIs( src ) )
+  return _.longSlice( src, 0, 3 );
+
+  let result = rgbaHtmlFrom.call( this, src );
+
+  return _.longSlice( result, 0, 3 );
+}
+
+rgbHtmlFrom.defaults =
+{
+  ... rgbaHtmlFrom.defaults,
+}
+
+//
+
+function rgbaHtmlFromTry( o )
+{
+  let result;
+
+  if( !_.mapIs( o ) )
+  o = { src : arguments[ 0 ] };
+
+  _.assert( arguments.length === 1 );
+  _.routineOptions( rgbaHtmlFromTry, o );
+
+  if( _.numberIs( o.src ) || _.longIs( o.src ) || ( !_.mapIs( o.src ) && _.objectIs( o.src ) ) )
+  return this._rgbaFromNotName( o.src );
+
+  /* */
+
+  if( _.strIs( o.src ) )
+  result = this.fromTable( o );
+
+  if( result )
+  return end();
+
+  /* */
+
+  if( _.strIs( o.src ) )
+  result = _.color.hexToColor( o.src );
+
+  if( result )
+  return end();
+
+  if( _.strIs( o.src ) )
+  {
+    let splitted = _.strSplitFast
+    ({
+      src : o.src,
+      delimeter : [ '(', ')', ',' ],
+      preservingDelimeters : 0,
+      preservingEmpty : 0
+    })
+
+    if( _.strBegins( splitted[ 0 ], 'rgb' ) )
+    {
+      result =
+      [
+        parseInt( splitted[ 1 ] ) / 255,
+        parseInt( splitted[ 2 ] ) / 255,
+        parseInt( splitted[ 3 ] ) / 255,
+        1
+      ]
+
+      if( splitted[ 0 ] === 'rgba' )
+      result[ 3 ] = Number( splitted[ 4 ] )
+    }
+  }
+
+  if( result )
+  return end();
+
+  /* */
+
+  return o.def;
+
+  function end()
+  {
+    _.assert( _.longIs( result ) );
+    if( result.length !== 4 )
+    result = _.longGrowInplace( result, [ 0, 4 ], 1 ); /* xxx : replace */
+    return result;
+  }
+
+}
+
+rgbaHtmlFromTry.defaults =
+{
+  ... rgbaHtmlFrom.defaults,
+  def : null,
+}
+
+//
+
+function rgbHtmlFromTry( src, def )
+{
+
+  _.assert( arguments.length === 2, 'Expects single argument' );
+
+  if( _.longIs( src ) )
+  return _.longSlice( src, 0, 3 );
+
+  let result = rgbaHtmlFrom.call( this, src );
+
+  if( !result )
+  result = def;
+
+  if( result !== null )
+  result = _.longSlice( result, 0, 3 );
+
+  return result;
+
+  // try
+  // {
+  //   return rgbFrom.call( this, src );
+  // }
+  // catch( err )
+  // {
+  //   return def;
+  // }
+
+}
+
+rgbHtmlFromTry.defaults =
+{
+  ... rgbaHtmlFrom.defaults,
+  def : null,
+}
+
+
 //
 
 function _colorDistance( c1, c2 )
@@ -1174,6 +1375,34 @@ function rgbToHsl( rgb, result )
   return result;
 }
 
+//
+
+function hslHtmlToRgb( hsl )
+{
+
+}
+
+//
+
+function rgbToHslHtml( rgb )
+{
+
+}
+
+//
+
+function hslaHtmlToRgba( hsla )
+{
+
+}
+
+//
+
+function rgbaToHslaHtml( rgba )
+{
+
+}
+
 // --
 // random
 // --
@@ -1345,11 +1574,17 @@ let Extension =
 
   _rgbaFromNotName,
 
-  rgbaFrom,
-  rgbFrom,
+  rgbaFrom,//xxx: merge with rgbaHtml* or rename
+  rgbFrom,//xxx: merge with rgbaHtml* or rename
 
-  rgbaFromTry,
-  rgbFromTry,
+  rgbaFromTry,//xxx: merge with rgbaHtml* or rename
+  rgbFromTry,//xxx: merge with rgbaHtml* or rename
+
+  rgbaHtmlFrom,//qqq: cover
+  rgbHtmlFrom,//qqq: cover
+
+  rgbaHtmlFromTry,//qqq: cover
+  rgbHtmlFromTry,//qqq: cover
 
   _colorDistance,
 
@@ -1379,6 +1614,12 @@ let Extension =
 
   hslToRgb,
   rgbToHsl,
+
+  hslHtmlToRgb,//qqq:implement,cover
+  rgbToHslHtml,//qqq:implement,cover
+
+  hslaHtmlToRgba,//qqq:implement,cover
+  rgbaToHslaHtml,//qqq:implement,cover
 
   // random
 

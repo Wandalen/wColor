@@ -740,6 +740,30 @@ function rgbFrom( test )
 
 rgbFrom.accuracy = 1e-2;
 
+//
+
+function rgbaHtmlFrom( test )
+{
+  test.case = 'string rgb';
+  var color = [ 1, 0, 0, 1 ];
+  var colorHtml = _.color.colorToRgbHtml( color );
+  var got = _.color.rgbaHtmlFrom( colorHtml );
+  test.identical( got, color );
+
+  test.case = 'string rgb';
+  var color = [ 1, 0, 0, 0.5 ];
+  var exp = [ 1, 0, 0, 1 ]
+  var colorHtml = _.color.colorToRgbHtml( color );
+  var got = _.color.rgbaHtmlFrom( colorHtml );
+  test.identical( got, exp );
+
+  test.case = 'string rgba';
+  var color = [ 1, 0, 0, 0.5 ];
+  var colorHtml = _.color.colorToRgbaHtml( color );
+  var got = _.color.rgbaHtmlFrom( colorHtml );
+  test.identical( got, color );
+}
+
 // --
 // declare
 // --
@@ -762,6 +786,7 @@ let Self =
     rgbByBitmask,
     rgbaFrom,
     rgbFrom,
+    rgbaHtmlFrom
 
   },
 
