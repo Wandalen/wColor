@@ -611,6 +611,12 @@ function rgbaHtmlFromTry( o )
   if( result )
   return end();
 
+  if( _.strIs( o.src ) )
+  result = _.color.hslaToRgba( o.src );
+
+  if( result )
+  return end();
+
   /* */
 
   return o.def;
@@ -1327,6 +1333,13 @@ function hslToRgb( hsl, result )
 
 //
 
+function hslaToRgba( hsla, result )
+{
+
+}
+
+//
+
 function rgbToHsl( rgb, result )
 {
   result = result || [];
@@ -1377,7 +1390,7 @@ function rgbToHsl( rgb, result )
 
 //
 
-function hslHtmlToRgb( hsl )
+function rgbaToHsla( rgba, result )
 {
 
 }
@@ -1385,13 +1398,6 @@ function hslHtmlToRgb( hsl )
 //
 
 function rgbToHslHtml( rgb )
-{
-
-}
-
-//
-
-function hslaHtmlToRgba( hsla )
 {
 
 }
@@ -1612,13 +1618,12 @@ let Extension =
 
   // hsl
 
-  hslToRgb,
+  hslToRgb,//qqq:extend with support of hsl( h, s, l ), cover
+  hslaToRgba,//qqq:implement,extend with support of hsla( h, s, l, a ), cover
   rgbToHsl,
+  rgbaToHsla,//qqq:implement,cover
 
-  hslHtmlToRgb,//qqq:implement,cover
   rgbToHslHtml,//qqq:implement,cover
-
-  hslaHtmlToRgba,//qqq:implement,cover
   rgbaToHslaHtml,//qqq:implement,cover
 
   // random
