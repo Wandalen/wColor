@@ -1397,14 +1397,14 @@ function rgbaToHsla( rgba, result )
 
 //
 
-function rgbToHslHtml( rgb )
+function colorToHslHtml( rgb )
 {
 
 }
 
 //
 
-function rgbaToHslaHtml( rgba )
+function colorToHslaHtml( rgba )
 {
 
 }
@@ -1623,8 +1623,8 @@ let Extension =
   rgbToHsl,
   rgbaToHsla,//qqq:implement,cover
 
-  rgbToHslHtml,//qqq:implement,cover
-  rgbaToHslaHtml,//qqq:implement,cover
+  colorToHslHtml,//qqq:implement,cover
+  colorToHslaHtml,//qqq:implement,cover
 
   // random
 
