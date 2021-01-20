@@ -1,4 +1,5 @@
-(function _Color_s_() {
+(function _Color_s_()
+{
 
 'use strict';
 
@@ -704,10 +705,10 @@ function _colorDistance( c1, c2 )
   // a[ 3 ] = _definedIs( a[ 3 ] ) ? a[ i ] : 1;
   // b[ 3 ] = _definedIs( b[ 3 ] ) ? b[ i ] : 1;
 
-  return  Math.pow( a[ 0 ] - b[ 0 ], 2 ) +
-          Math.pow( a[ 1 ] - b[ 1 ], 2 ) +
-          Math.pow( a[ 2 ] - b[ 2 ], 2 ) +
-          Math.pow( a[ 3 ] - b[ 3 ], 2 )
+  return  Math.pow( a[ 0 ] - b[ 0 ], 2 )
+          + Math.pow( a[ 1 ] - b[ 1 ], 2 )
+          + Math.pow( a[ 2 ] - b[ 2 ], 2 )
+          + Math.pow( a[ 3 ] - b[ 3 ], 2 )
 }
 
 //
@@ -903,7 +904,7 @@ function colorToHex( rgb, def )
 
   if( _.arrayIs( rgb ) )
   {
-    return "#" + ( ( 1 << 24 ) + ( Math.floor( rgb[ 0 ]*255 ) << 16 ) + ( Math.floor( rgb[ 1 ]*255 ) << 8 ) + Math.floor( rgb[ 2 ]*255 ) )
+    return '#' + ( ( 1 << 24 ) + ( Math.floor( rgb[ 0 ]*255 ) << 16 ) + ( Math.floor( rgb[ 1 ]*255 ) << 8 ) + Math.floor( rgb[ 2 ]*255 ) )
     .toString( 16 ).slice( 1 );
   }
   else if( _.numberIs( rgb ) )
@@ -913,14 +914,14 @@ function colorToHex( rgb, def )
   }
   else if( _.objectIs( rgb ) )
   {
-    return "#" + ( ( 1 << 24 ) + ( Math.floor( rgb.r*255 ) << 16 ) + ( Math.floor( rgb.g*255 ) << 8 ) + Math.floor( rgb.b*255 ) )
+    return '#' + ( ( 1 << 24 ) + ( Math.floor( rgb.r*255 ) << 16 ) + ( Math.floor( rgb.g*255 ) << 8 ) + Math.floor( rgb.b*255 ) )
     .toString( 16 ).slice( 1 );
   }
   else if( _.strIs( rgb ) )
   {
     if( !rgb.length )
     return def;
-    else if( rgb[ 0 ] == '#' )
+    else if( rgb[ 0 ] === '#' )
     return rgb;
     else
     return '#' + rgb;
@@ -1314,9 +1315,9 @@ function hslToRgb( hsl, result )
     if( h < 0 ) h += 1;
     if( h > 1 ) h -= 1;
 
-    if( h < 1 / 6 ) return b + ( a - b ) * 6 * h;
-    if( h < 1 / 2 ) return a;
-    if( h < 2 / 3 ) return b + ( a - b ) * 6 * ( 2 / 3 - h );
+    if( h < 1 / 6 )return b + ( a - b ) * 6 * h;
+    if( h < 1 / 2 )return a;
+    if( h < 2 / 3 )return b + ( a - b ) * 6 * ( 2 / 3 - h );
 
     return b;
   }
@@ -1372,9 +1373,10 @@ function rgbToHsl( rgb, result )
 
     switch( max )
     {
-      case r : hue = ( g - b ) / diff + ( g < b ? 6 : 0 ); break;
-      case g : hue = ( b - r ) / diff + 2; break;
-      case b : hue = ( r - g ) / diff + 4; break;
+    case r : hue = ( g - b ) / diff + ( g < b ? 6 : 0 ); break;
+    case g : hue = ( b - r ) / diff + 2; break;
+    case b : hue = ( r - g ) / diff + 4; break;
+    default : break
     }
 
     hue /= 6;
@@ -1397,17 +1399,17 @@ function rgbaToHsla( rgba, result )
 
 //
 
-function colorToHslHtml( rgb )
-{
+// function colorToHslHtml( rgb )
+// {
 
-}
+// }
 
-//
+// //
 
-function colorToHslaHtml( rgba )
-{
+// function colorToHslaHtml( rgba )
+// {
 
-}
+// }
 
 // --
 // random
@@ -1580,17 +1582,17 @@ let Extension =
 
   _rgbaFromNotName,
 
-  rgbaFrom,//xxx: merge with rgbaHtml* or rename
-  rgbFrom,//xxx: merge with rgbaHtml* or rename
+  rgbaFrom, //xxx: merge with rgbaHtml* or rename
+  rgbFrom, //xxx: merge with rgbaHtml* or rename
 
-  rgbaFromTry,//xxx: merge with rgbaHtml* or rename
-  rgbFromTry,//xxx: merge with rgbaHtml* or rename
+  rgbaFromTry, //xxx: merge with rgbaHtml* or rename
+  rgbFromTry, //xxx: merge with rgbaHtml* or rename
 
-  rgbaHtmlFrom,//qqq: cover
-  rgbHtmlFrom,//qqq: cover
+  rgbaHtmlFrom, //qqq: cover
+  rgbHtmlFrom, //qqq: cover
 
-  rgbaHtmlFromTry,//qqq: cover
-  rgbHtmlFromTry,//qqq: cover
+  rgbaHtmlFromTry, //qqq: cover
+  rgbHtmlFromTry, //qqq: cover
 
   _colorDistance,
 
@@ -1618,13 +1620,13 @@ let Extension =
 
   // hsl
 
-  hslToRgb,//qqq:extend with support of hsl( h, s, l ), cover
-  hslaToRgba,//qqq:implement,extend with support of hsla( h, s, l, a ), cover
+  hslToRgb, //qqq:extend with support of hsl( h, s, l ), cover
+  hslaToRgba, //qqq:implement,extend with support of hsla( h, s, l, a ), cover
   rgbToHsl,
-  rgbaToHsla,//qqq:implement,cover
+  rgbaToHsla, //qqq:implement,cover
 
-  colorToHslHtml,//qqq:implement,cover
-  colorToHslaHtml,//qqq:implement,cover
+  // colorToHslHtml, //qqq:implement,cover
+  // colorToHslaHtml, //qqq:implement,cover
 
   // random
 
