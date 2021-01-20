@@ -1198,11 +1198,14 @@ function complexToRgba( src )
 
 //
 
-function cmykToRgb( string )
+function cmykToRgba( src )
 {
   /* cmyk(C, M, Y, K), no alpha info */
 
-  let colorArr = string.slice( 5 ).split( ',' );
+  _.assert( arguments.length === 1, 'Expects single argument' );
+  _.assert( _.strIs( src ) );
+
+  let colorArr = src.slice( 5 ).split( ',' );
 
   let C = parseInt( colorArr[ 0 ] );
   let M = parseInt( colorArr[ 1 ] );
@@ -1215,7 +1218,7 @@ function cmykToRgb( string )
   let r = Math.round( 255 * ( 1 - C / 100 ) * ( 1 - K / 100 ) );
   let g = Math.round( 255 * ( 1 - M / 100 ) * ( 1 - K / 100 ) );
   let b = Math.round( 255 * ( 1 - Y / 100 ) * ( 1 - K / 100 ) );
-  let a = 0;
+  let a = 1;
 
   return [ r, g, b, a ];
 
@@ -1227,11 +1230,26 @@ function cmykToRgb( string )
 
 //
 
-function hwbToRgb( string )
+function cmykToRgb( src )
+{
+  _.assert( arguments.length === 1, 'Expects single argument' );
+  _.assert( _.strIs( src ) );
+
+  let result = cmykToRgba.call( this, src );
+
+  return _.longSlice( result, 0, 3 );
+}
+
+//
+
+function hwbToRgba( src )
 {
   /* hwb(H, W, B), no alpha info */
 
-  let colorArr = string.slice( 4 ).split( ',' );
+  _.assert( arguments.length === 1, 'Expects single argument' );
+  _.assert( _.strIs( src ) );
+
+  let colorArr = src.slice( 4 ).split( ',' );
 
   let H = parseInt( colorArr[ 0 ] );
   let W = parseInt( colorArr[ 1 ] );
@@ -1252,9 +1270,24 @@ function hwbToRgb( string )
 
 //
 
-function hexToRgba( string )
+function hwbToRgb( src )
+{
+  _.assert( arguments.length === 1, 'Expects single argument' );
+  _.assert( _.strIs( src ) );
+
+  let result = hwbToRgba.call( this, src );
+
+  return _.longSlice( result, 0, 3 );
+}
+
+//
+
+function hexToRgba( src )
 {
   /* hwb(H, W, B), no alpha info */
+
+  _.assert( arguments.length === 1, 'Expects single argument' );
+  _.assert( _.strIs( src ) );
 
   // let colorArr = string.slice( 4 ).split( ',' );
 
@@ -1273,6 +1306,18 @@ function hexToRgba( string )
   //          && ( W >= 0 && W <= 100 )
   //          && ( B >= 0 && B <= 100 )
   // }
+}
+
+//
+
+function hexToRgb( src )
+{
+  _.assert( arguments.length === 1, 'Expects single argument' );
+  _.assert( _.strIs( string ) );
+
+  let result = hexToRgba.call( this, src );
+
+  return _.longSlice( result, 0, 3 );
 }
 
 // --
@@ -1753,7 +1798,10 @@ let Extension =
   complexToRgba,
 
   cmykToRgb,
+  cmykToRgba,
   hwbToRgb,
+  hwbToRgba,
+  hexToRgb,
   hexToRgba,
 
   // int
