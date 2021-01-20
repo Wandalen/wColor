@@ -769,53 +769,83 @@ function rgbaHtmlFrom( test )
 
 function cmykToRgba( test )
 {
-  test.case = 'Black';
-  var src = 'CMYK(0,0,0,1)';
-  var expected = 'rgba(0,0,0,0)';
+
+  test.open( 'basic colors' );
+
+  // test.case = 'Black';
+  // var src = 'CMYK(0,0,0,1)';
+  // var expected = [ 0, 0, 0, 0 ];
+  // var got = _.color.cmykToRgba( src );
+  // test.identical( got, expected );
+
+  // test.case = 'White';
+  // var src = 'CMYK(0,0,0,0)';
+  // var expected = [ 255, 255, 255, 0 ];
+  // var got = _.color.cmykToRgba( src );
+  // test.identical( got, expected );
+
+  // test.case = 'Red';
+  // var src = 'CMYK(0,1,1,0)';
+  // var expected = [ 255, 0, 0, 0 ];
+  // var got = _.color.cmykToRgba( src );
+  // test.identical( got, expected );
+
+  // test.case = 'Green';
+  // var src = 'CMYK(1,0,1,0)';
+  // var expected = [ 0, 255, 0, 0 ];
+  // var got = _.color.cmykToRgba( src );
+  // test.identical( got, expected );
+
+  // test.case = 'Blue';
+  // var src = 'CMYK(1,1,0,0)';
+  // var expected = [ 0, 0, 255, 0 ];
+  // var got = _.color.cmykToRgba( src );
+  // test.identical( got, expected );
+
+  // test.case = 'Yellow';
+  // var src = 'CMYK(0,0,1,0)';
+  // var expected = [ 255, 255, 0, 0 ];
+  // var got = _.color.cmykToRgba( src );
+  // test.identical( got, expected );
+
+  // test.case = 'Cyan';
+  // var src = 'CMYK(1,0,0,0)';
+  // var expected = [ 0, 255, 255, 0 ];
+  // var got = _.color.cmykToRgba( src );
+  // test.identical( got, expected );
+
+  // test.case = 'Magenta';
+  // var src = 'CMYK(0,1,0,0)';
+  // var expected = [ 255, 0, 255, 0 ];
+  // var got = _.color.cmykToRgba( src );
+  // test.identical( got, expected );
+
+  test.close( 'basic colors' );
+
+  /* */
+
+  test.open( 'non basic colors' );
+
+  test.case = 'CMYK(0.12,0.34,0.99,0.27)';
+  var src = 'CMYK(0.12,0.34,0.99,0.27)';
+  var expected = [ 164, 123, 2, 0 ];
   var got = _.color.cmykToRgba( src );
   test.identical( got, expected );
 
-  test.case = 'White';
-  var src = 'CMYK(0,0,0,0)';
-  var expected = 'rgba(255,255,255,0)';
+  test.case = 'CMYK(0.87,0.1,0.33,0.05)';
+  var src = 'CMYK(0.87,0.1,0.33,0.05)';
+  var expected = [ 31, 240, 162, 0 ];
   var got = _.color.cmykToRgba( src );
   test.identical( got, expected );
 
-  test.case = 'Red';
-  var src = 'CMYK(0,1,1,0)';
-  var expected = 'rgba(255,0,0,0)';
+  test.case = 'CMYK(0.11,0.16,0.75,0.04)';
+  var src = 'CMYK(0.11,0.16,0.75,0.04)';
+  var expected = [ 218, 206, 61, 0 ];
   var got = _.color.cmykToRgba( src );
   test.identical( got, expected );
 
-  test.case = 'Green';
-  var src = 'CMYK(1,0,1,0)';
-  var expected = 'rgba(0,255,0,0)';
-  var got = _.color.cmykToRgba( src );
-  test.identical( got, expected );
 
-  test.case = 'Blue';
-  var src = 'CMYK(1,1,0,0)';
-  var expected = 'rgba(0,0,255,0)';
-  var got = _.color.cmykToRgba( src );
-  test.identical( got, expected );
-
-  test.case = 'Yellow';
-  var src = 'CMYK(0,0,1,0)';
-  var expected = 'rgba(255,255,0,0)';
-  var got = _.color.cmykToRgba( src );
-  test.identical( got, expected );
-
-  test.case = 'Cyan';
-  var src = 'CMYK(1,0,0,0)';
-  var expected = 'rgba(0,255,255,0)';
-  var got = _.color.cmykToRgba( src );
-  test.identical( got, expected );
-
-  test.case = 'Magenta';
-  var src = 'CMYK(0,1,0,0)';
-  var expected = 'rgba(255,0,255,0)';
-  var got = _.color.cmykToRgba( src );
-  test.identical( got, expected );
+  test.close( 'non basic colors' );
 
 }
 

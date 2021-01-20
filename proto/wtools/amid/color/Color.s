@@ -1181,14 +1181,22 @@ function complexToRgba( data )
 
 function cmykToRgba( string )
 {
-  // cmyk(C, M, Y, K)
-  let colorArr = string
-  let C, M, Y, K;
+  /* cmyk(C, M, Y, K) */
 
-  let r = 255 * ( 1 - C ) * ( 1 - K );
-  let g = 255 * ( 1 - M ) * ( 1 - K );
-  let b = 255 * ( 1 - Y ) * ( 1 - K );
+  let colorArr = string.slice( 5 ).split( ',' );
+  let C = parseFloat( colorArr[ 0 ] );
+  let M = parseFloat( colorArr[ 1 ] );
+  let Y = parseFloat( colorArr[ 2 ] );
+  let K = parseFloat( colorArr[ 3 ] );
+
+  console.log( [ C, M, Y, K ] )
+
+  let r = Math.round( 255 * ( 1 - C ) * ( 1 - K ) );
+  let g = Math.round( 255 * ( 1 - M ) * ( 1 - K ) );
+  let b = Math.round( 255 * ( 1 - Y ) * ( 1 - K ) );
   let a = 0;
+
+  return [ r, g, b, a ];
 }
 
 
