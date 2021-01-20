@@ -1184,16 +1184,14 @@ function cmykToRgba( string )
   /* cmyk(C, M, Y, K) */
 
   let colorArr = string.slice( 5 ).split( ',' );
-  let C = parseFloat( colorArr[ 0 ] );
-  let M = parseFloat( colorArr[ 1 ] );
-  let Y = parseFloat( colorArr[ 2 ] );
-  let K = parseFloat( colorArr[ 3 ] );
+  let C = parseInt( colorArr[ 0 ] );
+  let M = parseInt( colorArr[ 1 ] );
+  let Y = parseInt( colorArr[ 2 ] );
+  let K = parseInt( colorArr[ 3 ] );
 
-  console.log( [ C, M, Y, K ] )
-
-  let r = Math.round( 255 * ( 1 - C ) * ( 1 - K ) );
-  let g = Math.round( 255 * ( 1 - M ) * ( 1 - K ) );
-  let b = Math.round( 255 * ( 1 - Y ) * ( 1 - K ) );
+  let r = Math.round( 255 * ( 1 - C / 100 ) * ( 1 - K / 100 ) );
+  let g = Math.round( 255 * ( 1 - M / 100 ) * ( 1 - K / 100 ) );
+  let b = Math.round( 255 * ( 1 - Y / 100 ) * ( 1 - K / 100 ) );
   let a = 0;
 
   return [ r, g, b, a ];
