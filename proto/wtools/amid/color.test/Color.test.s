@@ -764,6 +764,60 @@ function rgbaHtmlFrom( test )
   test.identical( got, color );
 }
 
+//
+
+function cmykToRgba( test )
+{
+  test.case = 'Black';
+  var src = 'CMYK(0,0,0,1)';
+  var expected = 'rgba(0,0,0,0)';
+  var got = _.color.cmykToRgba( src );
+  test.identical( got, expected );
+
+  test.case = 'White';
+  var src = 'CMYK(0,0,0,0)';
+  var expected = 'rgba(255,255,255,0)';
+  var got = _.color.cmykToRgba( src );
+  test.identical( got, expected );
+
+  test.case = 'Red';
+  var src = 'CMYK(0,1,1,0)';
+  var expected = 'rgba(255,0,0,0)';
+  var got = _.color.cmykToRgba( src );
+  test.identical( got, expected );
+
+  test.case = 'Green';
+  var src = 'CMYK(1,0,1,0)';
+  var expected = 'rgba(0,255,0,0)';
+  var got = _.color.cmykToRgba( src );
+  test.identical( got, expected );
+
+  test.case = 'Blue';
+  var src = 'CMYK(1,1,0,0)';
+  var expected = 'rgba(0,0,255,0)';
+  var got = _.color.cmykToRgba( src );
+  test.identical( got, expected );
+
+  test.case = 'Yellow';
+  var src = 'CMYK(0,0,1,0)';
+  var expected = 'rgba(255,255,0,0)';
+  var got = _.color.cmykToRgba( src );
+  test.identical( got, expected );
+
+  test.case = 'Cyan';
+  var src = 'CMYK(1,0,0,0)';
+  var expected = 'rgba(0,255,255,0)';
+  var got = _.color.cmykToRgba( src );
+  test.identical( got, expected );
+
+  test.case = 'Magenta';
+  var src = 'CMYK(0,1,0,0)';
+  var expected = 'rgba(255,0,255,0)';
+  var got = _.color.cmykToRgba( src );
+  test.identical( got, expected );
+
+}
+
 // --
 // declare
 // --
@@ -786,7 +840,9 @@ let Self =
     rgbByBitmask,
     rgbaFrom,
     rgbFrom,
-    rgbaHtmlFrom
+    rgbaHtmlFrom,
+
+    cmykToRgba,
 
   },
 

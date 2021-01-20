@@ -1155,6 +1155,43 @@ function paler( rgb, factor )
 //
 
 // --
+// to rgb/a
+// --
+
+function stringToRgb( string )
+{
+
+}
+
+function stringToRgba( string )
+{
+
+}
+
+function complexToRgb( data )
+{
+
+}
+
+function complexToRgba( data )
+{
+
+}
+
+function cmykToRgba( string )
+{
+  // cmyk(C, M, Y, K)
+  let colorArr = string
+  let C, M, Y, K;
+
+  let r = 255 * ( 1 - C ) * ( 1 - K );
+  let g = 255 * ( 1 - M ) * ( 1 - K );
+  let b = 255 * ( 1 - Y ) * ( 1 - K );
+  let a = 0;
+}
+
+
+// --
 // int
 // --
 
@@ -1622,6 +1659,15 @@ let Extension =
   mulSaturation,
   brighter,
   paler,
+
+  // to rgb/a
+
+  stringToRgb,
+  stringToRgba,
+  complexToRgb,
+  complexToRgba,
+
+  cmykToRgba,
 
   // int
 
