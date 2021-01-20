@@ -1161,33 +1161,46 @@ function paler( rgb, factor )
 
 function stringToRgb( string )
 {
+  _.assert( _.strIs( string ) );
 
 }
+
+//
 
 function stringToRgba( string )
 {
-
+  _.assert( _.strIs( string ) );
 }
+
+//
 
 function complexToRgb( data )
 {
-
+  _.assert( _.strIs( string ) );
 }
+
+//
 
 function complexToRgba( data )
 {
-
+  _.assert( _.strIs( string ) );
 }
+
+//
 
 function cmykToRgba( string )
 {
   /* cmyk(C, M, Y, K) */
 
   let colorArr = string.slice( 5 ).split( ',' );
+
   let C = parseInt( colorArr[ 0 ] );
   let M = parseInt( colorArr[ 1 ] );
   let Y = parseInt( colorArr[ 2 ] );
   let K = parseInt( colorArr[ 3 ] );
+
+  if( !verify( C ) || !verify( M ) || !verify( Y ) || !verify( K ) )
+  return null;
 
   let r = Math.round( 255 * ( 1 - C / 100 ) * ( 1 - K / 100 ) );
   let g = Math.round( 255 * ( 1 - M / 100 ) * ( 1 - K / 100 ) );
@@ -1195,8 +1208,14 @@ function cmykToRgba( string )
   let a = 0;
 
   return [ r, g, b, a ];
+
+  function verify( arg )
+  {
+    return arg <= 100 && arg >= 0;
+  }
 }
 
+//
 
 // --
 // int

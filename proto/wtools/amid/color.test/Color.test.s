@@ -844,8 +844,13 @@ function cmykToRgba( test )
   var got = _.color.cmykToRgba( src );
   test.identical( got, expected );
 
-
   test.close( 'non basic colors' );
+
+  test.case = '1 arg > 100%';
+  var src = 'CMYK(111%,16%,75%,4%)';
+  var expected = null;
+  var got = _.color.cmykToRgba( src );
+  test.identical( got, expected );
 
 }
 
