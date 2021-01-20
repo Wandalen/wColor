@@ -1159,38 +1159,48 @@ function paler( rgb, factor )
 // to rgb/a
 // --
 
-function stringToRgb( string )
+function stringToRgb( src )
 {
-  _.assert( _.strIs( string ) );
+  _.assert( arguments.length === 1, 'Expects single argument' );
+  _.assert( _.strIs( src ) );
+
+  let result = stringToRgba.call( this, src );
+
+  return _.longSlice( result, 0, 3 );
 
 }
 
 //
 
-function stringToRgba( string )
+function stringToRgba( src )
+{
+  _.assert( _.strIs( src ) );
+}
+
+//
+
+function complexToRgb( src )
+{
+  _.assert( arguments.length === 1, 'Expects single argument' );
+  _.assert( _.strIs( string ) );
+
+  let result = complexToRgba.call( this, src );
+
+  return _.longSlice( result, 0, 3 );
+}
+
+//
+
+function complexToRgba( src )
 {
   _.assert( _.strIs( string ) );
 }
 
 //
 
-function complexToRgb( data )
+function cmykToRgb( string )
 {
-  _.assert( _.strIs( string ) );
-}
-
-//
-
-function complexToRgba( data )
-{
-  _.assert( _.strIs( string ) );
-}
-
-//
-
-function cmykToRgba( string )
-{
-  /* cmyk(C, M, Y, K) */
+  /* cmyk(C, M, Y, K), no alpha info */
 
   let colorArr = string.slice( 5 ).split( ',' );
 
@@ -1217,9 +1227,9 @@ function cmykToRgba( string )
 
 //
 
-function hwbToRgba( string )
+function hwbToRgb( string )
 {
-  /* hwb(H, W, B) */
+  /* hwb(H, W, B), no alpha info */
 
   let colorArr = string.slice( 4 ).split( ',' );
 
@@ -1238,6 +1248,31 @@ function hwbToRgba( string )
            && ( W >= 0 && W <= 100 )
            && ( B >= 0 && B <= 100 )
   }
+}
+
+//
+
+function hexToRgba( string )
+{
+  /* hwb(H, W, B), no alpha info */
+
+  // let colorArr = string.slice( 4 ).split( ',' );
+
+  // let H = parseInt( colorArr[ 0 ] );
+  // let W = parseInt( colorArr[ 1 ] );
+  // let B = parseInt( colorArr[ 2 ] );
+
+  // if( !verify() )
+  // return null;
+
+  // /* Implement */
+
+  // function verify()
+  // {
+  //   return ( H >= 0 && H <= 360 )
+  //          && ( W >= 0 && W <= 100 )
+  //          && ( B >= 0 && B <= 100 )
+  // }
 }
 
 // --
@@ -1717,8 +1752,9 @@ let Extension =
   complexToRgb,
   complexToRgba,
 
-  cmykToRgba,
-  hwbToRgba,
+  cmykToRgb,
+  hwbToRgb,
+  hexToRgba,
 
   // int
 
