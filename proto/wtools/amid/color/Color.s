@@ -1217,6 +1217,29 @@ function cmykToRgba( string )
 
 //
 
+function hwbToRgba( string )
+{
+  /* hwb(H, W, B) */
+
+  let colorArr = string.slice( 4 ).split( ',' );
+
+  let H = parseInt( colorArr[ 0 ] );
+  let W = parseInt( colorArr[ 1 ] );
+  let B = parseInt( colorArr[ 2 ] );
+
+  if( !verify() )
+  return null;
+
+  /* Implement */
+
+  function verify()
+  {
+    return ( H >= 0 && H <= 360 )
+           && ( W >= 0 && W <= 100 )
+           && ( B >= 0 && B <= 100 )
+  }
+}
+
 // --
 // int
 // --
@@ -1695,6 +1718,7 @@ let Extension =
   complexToRgba,
 
   cmykToRgba,
+  hwbToRgba,
 
   // int
 
