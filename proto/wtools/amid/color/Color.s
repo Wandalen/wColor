@@ -81,7 +81,7 @@ function fromTable( o )
 
   let result;
   if( !o.colorMap )
-  o.colorMap = Self.ColorMap;
+  o.colorMap = this.ColorMap;
 
   _.routineOptions( fromTable, o );
   _.assert( arguments.length <= 3 );
@@ -156,7 +156,7 @@ function _rgbaFromNotName( src )
 
   if( _.numberIs( src ) )
   {
-    let result = _rgbByBitmask( src );
+    let result = this._rgbByBitmask( src );
     return _.longGrowInplace( result, [ 0, 4 ], 1 );
   }
 
@@ -585,29 +585,7 @@ function rgbaHtmlFromTry( o )
   return end();
 
   if( _.strIs( o.src ) )
-  {
-    let splitted = _.strSplitFast
-    ({
-      src : o.src,
-      delimeter : [ '(', ')', ',' ],
-      preservingDelimeters : 0,
-      preservingEmpty : 0
-    })
-
-    if( _.strBegins( splitted[ 0 ], 'rgb' ) )
-    {
-      result =
-      [
-        parseInt( splitted[ 1 ] ) / 255,
-        parseInt( splitted[ 2 ] ) / 255,
-        parseInt( splitted[ 3 ] ) / 255,
-        1
-      ]
-
-      if( splitted[ 0 ] === 'rgba' )
-      result[ 3 ] = Number( splitted[ 4 ] )
-    }
-  }
+  result = _.color.rgbaHtmlToRgba( o.src );
 
   if( result )
   return end();
@@ -673,6 +651,39 @@ rgbHtmlFromTry.defaults =
 {
   ... rgbaHtmlFrom.defaults,
   def : null,
+}
+
+//
+
+function rgbaHtmlToRgba( src )
+{
+  _.assert( _.strDefined( src ) );
+
+  let splitted = _.strSplitFast
+  ({
+    src,
+    delimeter : [ '(', ')', ',' ],
+    preservingDelimeters : 0,
+    preservingEmpty : 0
+  })
+
+  if( _.strBegins( splitted[ 0 ], 'rgb' ) )
+  {
+    let result =
+    [
+      parseInt( splitted[ 1 ] ) / 255,
+      parseInt( splitted[ 2 ] ) / 255,
+      parseInt( splitted[ 3 ] ) / 255,
+      1
+    ]
+
+    if( splitted[ 0 ] === 'rgba' )
+    result[ 3 ] = Number( splitted[ 4 ] )
+
+    return result;
+  }
+
+  return null;
 }
 
 
@@ -757,14 +768,14 @@ function _colorNameNearest( color, map )
 
   let names = Object.keys( map );
   let nearest = names[ 0 ];
-  let max = _colorDistance( map[ names[ 0 ] ], color );
+  let max = this._colorDistance( map[ names[ 0 ] ], color );
 
   if( max === 0 )
   return nearest;
 
   for( let i = 1; i <= names.length - 1; i++ )
   {
-    let d = _colorDistance( map[ names[ i ] ], color );
+    let d = this._colorDistance( map[ names[ i ] ], color );
     if( d < max )
     {
       max = d;
@@ -1593,6 +1604,8 @@ let Extension =
 
   rgbaHtmlFromTry, //qqq: cover
   rgbHtmlFromTry, //qqq: cover
+
+  rgbaHtmlToRgba,
 
   _colorDistance,
 
