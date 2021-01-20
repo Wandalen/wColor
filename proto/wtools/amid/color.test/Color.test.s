@@ -1,4 +1,5 @@
-( function _Color_test_s_( ) {
+( function _Color_test_s_( )
+{
 
 'use strict';
 
@@ -22,133 +23,133 @@ function colorNameNearest( test )
   var color = [ 0, 0, 0, 1 ];
   var got = _.color.colorNameNearest( color );
   var expected = 'black';
-  test.identical( got,expected );
+  test.identical( got, expected );
 
   test.case = 'close to invisible';
   var color = [ 0, 0, 0, 0 ];
   var got = _.color.colorNameNearest( color );
   var expected = 'invisible';
-  test.identical( got,expected );
+  test.identical( got, expected );
 
   test.case = 'dim';
   var color = [ 0.3, 0.3, 0.3 ];
   var got = _.color.colorNameNearest( color );
   var expected = 'dim';
-  test.identical( got,expected );
+  test.identical( got, expected );
 
   test.case = 'invisible';
   var color = [ 0.3, 0.3, 0.3, 0 ];
   var got = _.color.colorNameNearest( color );
   var expected = 'invisible';
-  test.identical( got,expected );
+  test.identical( got, expected );
 
   test.case = 'close to transparent';
   var color = [ 1, 1, 1, 0 ];
   var got = _.color.colorNameNearest( color );
   var expected = 'transparent';
-  test.identical( got,expected );
+  test.identical( got, expected );
 
   test.case = 'white with 0.8 transparency is closer to white';
   var color = [ 1, 1, 1, 0.8 ];
   var got = _.color.colorNameNearest( color );
   var expected = 'white';
-  test.identical( got,expected );
+  test.identical( got, expected );
 
   test.case = 'white 0.7 transparency is still closer to transparent';
   var color = [ 1, 1, 1, 0.7 ];
   var got = _.color.colorNameNearest( color );
   var expected = 'transparent';
-  test.identical( got,expected );
+  test.identical( got, expected );
 
   test.case = 'close to brown';
   var color = [ 0.6, 0.1, 0.1 ];
   var got = _.color.colorNameNearest( color );
   var expected = 'brown';
-  test.identical( got,expected );
+  test.identical( got, expected );
 
   test.case = 'close to dark blue';
   var color = [ 0.1, 0.1, 0.6 ];
   var got = _.color.colorNameNearest( color );
   var expected = 'dark blue';
-  test.identical( got,expected );
+  test.identical( got, expected );
 
   test.case = 'close to pink#1';
   var color = [ 0.9, 0.4, 0.6 ];
   var got = _.color.colorNameNearest( color );
   var expected = 'purplish pink';
-  test.identical( got,expected );
+  test.identical( got, expected );
 
   test.case = 'close to pink#2';
   var color = [ 0.9, 0.4, 0.4 ];
   var got = _.color.colorNameNearest( color );
   var expected = 'yellowish pink';
-  test.identical( got,expected );
+  test.identical( got, expected );
 
   test.case = 'white1';
   var color = [ 1, 1, 1 ];
   var got = _.color.colorNameNearest( color );
   var expected = 'white';
-  test.identical( got,expected );
+  test.identical( got, expected );
 
   test.case = 'white2';
   var color = 'ffffff';
   var got = _.color.colorNameNearest( color );
   var expected = 'white';
-  test.identical( got,expected );
+  test.identical( got, expected );
 
   test.case = 'rgba a1 ';
   var color =  [ 1, 1, 1, 0.3 ];
   var got = _.color.colorNameNearest( color );
   var expected = 'transparent';
-  test.identical( got,expected );
+  test.identical( got, expected );
 
   test.case = 'rgba a2';
   var color =  [ 1, 1, 1, 0.9 ];
   var got = _.color.colorNameNearest( color );
   var expected = 'white';
-  test.identical( got,expected );
+  test.identical( got, expected );
 
   test.case = 'rgb a1';
   var color =  [ 0.5, 0, 0.1 ];
   var got = _.color.colorNameNearest( color );
   var expected = 'maroon';
-  test.identical( got,expected );
+  test.identical( got, expected );
 
   test.case = 'rgb a2';
   var color =  [ 255, 0, 1 ];
   var got = _.color.colorNameNearest( color );
   var expected = 'magenta';
-  test.identical( got,expected );
+  test.identical( got, expected );
 
   test.case = 'rgb a3';
   var color =  [ 0.2, 0, 0.3 ];
   var got = _.color.colorNameNearest( color );
   var expected = 'olive green';
-  test.identical( got,expected );
+  test.identical( got, expected );
 
   test.case = 'rgb a4';
   var color =  [ 0.3, 0, 0.3 ];
   var got = _.color.colorNameNearest( color );
   var expected = 'purple';
-  test.identical( got,expected );
+  test.identical( got, expected );
 
   test.case = 'hex a1';
   var color = 'aaaaaa';
   var got = _.color.colorNameNearest( color );
   var expected = 'silver';
-  test.identical( got,expected );
+  test.identical( got, expected );
 
   test.case = 'empty string';
   var color = '';
   var got = _.color.colorNameNearest( color );
   var expected = undefined;
-  test.identical( got,expected );
+  test.identical( got, expected );
 
   test.case = 'empty array';
   var color = [];
   var got = _.color.colorNameNearest( color );
   var expected = 'white';
-  test.identical( got,expected );
+  test.identical( got, expected );
 
   test.case = 'no args';
   test.shouldThrowErrorSync( function()
@@ -420,7 +421,7 @@ function colorToRgbaHtml( test )
     },
     {
       case : 'color as array',
-      arg : [ 0, 1, 0, 0.5],
+      arg : [ 0, 1, 0, 0.5 ],
       expected : 'rgba( 0, 255, 0, 0.5 )'
     },
     {
@@ -581,12 +582,12 @@ function rgbaFrom( test )
     },
     {
       case : 'rgb component > 1',
-      arg : [ 10,10,10 ],
+      arg : [ 10, 10, 10 ],
       expected : [ 10, 10, 10, 1 ]
     },
     {
       case : 'rgba component > 1',
-      arg : [ 10,10,10,10 ],
+      arg : [ 10, 10, 10, 10 ],
       expected : [ 10, 10, 10, 10 ]
     },
     {
@@ -605,14 +606,14 @@ function rgbaFrom( test )
   test.case = 'rgbaFrom bitmask';
   var color = 0xff0000;
   var got = _.color.rgbaFrom( color );
-  var expected = [ 1,0,0,1 ];
-  test.identical( got,expected );
+  var expected = [ 1, 0, 0, 1 ];
+  test.identical( got, expected );
 
   test.case = 'rgbaFrom name';
   var color = 'red';
   var got = _.color.rgbaFrom( color );
-  var expected = [ 1,0,0,1 ];
-  test.identical( got,expected );
+  var expected = [ 1, 0, 0, 1 ];
+  test.identical( got, expected );
 
   test.case = 'string rgb';
   var exp = [ 0.666, 0.733, 0.8, 1 ];
@@ -696,7 +697,7 @@ function rgbFrom( test )
     },
     {
       case : 'rgb component > 1',
-      arg : [ 10,10,10 ],
+      arg : [ 10, 10, 10 ],
       expected : [ 10, 10, 10 ]
     },
     {
