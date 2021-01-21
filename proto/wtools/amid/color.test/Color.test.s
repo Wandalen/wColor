@@ -939,6 +939,172 @@ function cmykStrToRgba( test )
 
 //
 
+function cmykStructureStrToRgb( test )
+{
+
+  test.open( 'basic colors' );
+
+  test.case = 'Black';
+  var src = 'C0/M0/Y0/K100';
+  var expected = [ 0, 0, 0 ];
+  var got = _.color.cmykStructureStrToRgb( src );
+  test.identical( got, expected );
+
+  test.case = 'White';
+  var src = 'C0/M0/Y0/K0';
+  var expected = [ 255, 255, 255 ];
+  var got = _.color.cmykStructureStrToRgb( src );
+  test.identical( got, expected );
+
+  test.case = 'Red';
+  var src = 'C0/M100/Y100/K100';
+  var expected = [ 255, 0, 0 ];
+  var got = _.color.cmykStructureStrToRgb( src );
+  test.identical( got, expected );
+
+  test.case = 'Green';
+  var src = 'C100/M0/Y100/K100';
+  var expected = [ 0, 255, 0 ];
+  var got = _.color.cmykStructureStrToRgb( src );
+  test.identical( got, expected );
+
+  test.case = 'Blue';
+  var src = 'C100/M100/Y0/K0';
+  var expected = [ 0, 0, 255 ];
+  var got = _.color.cmykStructureStrToRgb( src );
+  test.identical( got, expected );
+
+  test.case = 'Yellow';
+  var src = 'C0/M0/Y100/K0';
+  var expected = [ 255, 255, 0 ];
+  var got = _.color.cmykStructureStrToRgb( src );
+  test.identical( got, expected );
+
+  test.case = 'Cyan';
+  var src = 'C100/M0/Y0/K0';
+  var expected = [ 0, 255, 255 ];
+  var got = _.color.cmykStructureStrToRgb( src );
+  test.identical( got, expected );
+
+  test.case = 'Magenta';
+  var src = 'C0/M100/Y0/K0';
+  var expected = [ 255, 0, 255 ];
+  var got = _.color.cmykStructureStrToRgb( src );
+  test.identical( got, expected );
+
+  test.close( 'basic colors' );
+
+  /* */
+
+  test.open( 'non basic colors' );
+
+  test.case = 'C12/M34/Y99/K27';
+  var src = 'C12/M34/Y99/K27';
+  var expected = [ 164, 123, 2 ];
+  var got = _.color.cmykStructureStrToRgb( src );
+  test.identical( got, expected );
+
+  test.case = 'C87/M1/Y33/K5';
+  var src = 'C87/M1/Y33/K5';
+  var expected = [ 31, 240, 162 ];
+  var got = _.color.cmykStructureStrToRgb( src );
+  test.identical( got, expected );
+
+  test.case = 'C11/M16/Y75/K4';
+  var src = 'C11/M16/Y75/K4';
+  var expected = [ 218, 206, 61 ];
+  var got = _.color.cmykStructureStrToRgb( src );
+  test.identical( got, expected );
+
+  test.close( 'non basic colors' );
+
+}
+
+//
+
+function cmykStructureStrToRgba( test )
+{
+
+  test.open( 'basic colors' );
+
+  test.case = 'Black';
+  var src = 'C0/M0/Y0/K100';
+  var expected = [ 0, 0, 0, 1 ];
+  var got = _.color.cmykStructureStrToRgba( src );
+  test.identical( got, expected );
+
+  test.case = 'White';
+  var src = 'C0/M0/Y0/K0';
+  var expected = [ 255, 255, 255, 1 ];
+  var got = _.color.cmykStructureStrToRgba( src );
+  test.identical( got, expected );
+
+  test.case = 'Red';
+  var src = 'C0/M100/Y100/K100';
+  var expected = [ 255, 0, 0, 1 ];
+  var got = _.color.cmykStructureStrToRgba( src );
+  test.identical( got, expected );
+
+  test.case = 'Green';
+  var src = 'C100/M0/Y100/K100';
+  var expected = [ 0, 255, 0, 1 ];
+  var got = _.color.cmykStructureStrToRgba( src );
+  test.identical( got, expected );
+
+  test.case = 'Blue';
+  var src = 'C100/M100/Y0/K0';
+  var expected = [ 0, 0, 255, 1 ];
+  var got = _.color.cmykStructureStrToRgba( src );
+  test.identical( got, expected );
+
+  test.case = 'Yellow';
+  var src = 'C0/M0/Y100/K0';
+  var expected = [ 255, 255, 0, 1 ];
+  var got = _.color.cmykStructureStrToRgba( src );
+  test.identical( got, expected );
+
+  test.case = 'Cyan';
+  var src = 'C100/M0/Y0/K0';
+  var expected = [ 0, 255, 255, 1 ];
+  var got = _.color.cmykStructureStrToRgba( src );
+  test.identical( got, expected );
+
+  test.case = 'Magenta';
+  var src = 'C0/M100/Y0/K0';
+  var expected = [ 255, 0, 255, 1 ];
+  var got = _.color.cmykStructureStrToRgba( src );
+  test.identical( got, expected );
+
+  test.close( 'basic colors' );
+
+  /* */
+
+  test.open( 'non basic colors' );
+
+  test.case = 'C12/M34/Y99/K27';
+  var src = 'C12/M34/Y99/K27';
+  var expected = [ 164, 123, 2, 1 ];
+  var got = _.color.cmykStructureStrToRgba( src );
+  test.identical( got, expected );
+
+  test.case = 'C87/M1/Y33/K5';
+  var src = 'C87/M1/Y33/K5';
+  var expected = [ 31, 240, 162, 1 ];
+  var got = _.color.cmykStructureStrToRgba( src );
+  test.identical( got, expected );
+
+  test.case = 'C11/M16/Y75/K4';
+  var src = 'C11/M16/Y75/K4';
+  var expected = [ 218, 206, 61, 1 ];
+  var got = _.color.cmykStructureStrToRgba( src );
+  test.identical( got, expected );
+
+  test.close( 'non basic colors' );
+
+}
+
+//
+
 function hwbStrToRgb( test )
 {
 
@@ -3227,6 +3393,8 @@ let Self =
 
     cmykStrToRgb,
     cmykStrToRgba,
+    cmykStructureStrToRgb,
+    cmykStructureStrToRgba,
     hwbStrToRgb,
     hwbStrToRgba,
     hexStrToRgb,
