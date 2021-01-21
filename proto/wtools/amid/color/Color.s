@@ -1373,6 +1373,26 @@ function rgbaStrToRgba( src )
 
 //
 
+function hslStrToRgb( src )
+{
+  _.assert( arguments.length === 1, 'Expects single argument' );
+  _.assert( _.strIs( src ) );
+
+  let result = hslaStrToRgba.call( this, src );
+
+  if( result )
+  return _.longSlice( result, 0, 3 );
+
+  return null;
+}
+
+//
+
+function hslaStrToRgba( src )
+{
+  _.assert( arguments.length === 1, 'Expects single argument' );
+  _.assert( _.strIs( src ) );
+}
 
 // --
 // int
@@ -1859,6 +1879,8 @@ let Extension =
   hexToRgba,
   rgbStrToRgb,
   rgbaStrToRgba,
+  hslStrToRgb,
+  hslStrToRgba,
 
 
   // int
