@@ -1237,7 +1237,10 @@ function cmykToRgb( src )
 
   let result = cmykToRgba.call( this, src );
 
+  if( result )
   return _.longSlice( result, 0, 3 );
+
+  return null;
 }
 
 //
@@ -1277,7 +1280,10 @@ function hwbToRgb( src )
 
   let result = hwbToRgba.call( this, src );
 
+  if( result )
   return _.longSlice( result, 0, 3 );
+
+  return null;
 }
 
 //
@@ -1317,8 +1323,55 @@ function hexToRgb( src )
 
   let result = hexToRgba.call( this, src );
 
+  if( result )
   return _.longSlice( result, 0, 3 );
+
+  return null;
 }
+
+//
+
+function rgbaStrToRgba( src )
+{
+  _.assert( arguments.length === 1, 'Expects single argument' );
+  _.assert( _.strIs( src ) );
+
+  let result = rgbaHtmlToRgba.call( this, src );
+
+  result[ 0 ] = result[ 0 ] * 255;
+  result[ 1 ] = result[ 1 ] * 255;
+  result[ 2 ] = result[ 2 ] * 255;
+
+  if( !verify() )
+  return null;
+
+  return result;
+
+  function verify()
+  {
+    return ( result[ 0 ] >= 0 && result[ 0 ] <= 255 )
+           && ( result[ 1 ] >= 0 && result[ 1 ] <= 255 )
+           && ( result[ 2 ] >= 0 && result[ 2 ] <= 255 )
+  }
+}
+
+//
+
+function rgbStrToRgb( src )
+{
+  _.assert( arguments.length === 1, 'Expects single argument' );
+  _.assert( _.strIs( src ) );
+
+  let result = rgbaStrToRgba.call( this, src );
+
+  if( result )
+  return _.longSlice( result, 0, 3 );
+
+  return null;
+}
+
+//
+
 
 // --
 // int
@@ -1803,6 +1856,9 @@ let Extension =
   hwbToRgba,
   hexToRgb,
   hexToRgba,
+  rgbStrToRgb,
+  rgbaStrToRgba,
+
 
   // int
 

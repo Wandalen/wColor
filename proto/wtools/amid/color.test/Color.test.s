@@ -1413,6 +1413,197 @@ function hexToRgba( test )
 
 }
 
+//
+
+function rgbStrToRgb( test )
+{
+
+  test.open( 'basic colors' );
+
+  test.case = 'Black';
+  var src = 'rgb(0, 0, 0)';
+  var expected = [ 0, 0, 0 ];
+  var got = _.color.rgbStrToRgb( src );
+  test.identical( got, expected );
+
+  test.case = 'White';
+  var src = 'rgb(255, 255, 255)';
+  var expected = [ 255, 255, 255 ];
+  var got = _.color.rgbStrToRgb( src );
+  test.identical( got, expected );
+
+  test.case = 'Red';
+  var src = 'rgb(255, 0, 0)';
+  var expected = [ 255, 0, 0 ];
+  var got = _.color.rgbStrToRgb( src );
+  test.identical( got, expected );
+
+  test.case = 'Green';
+  var src = 'rgb(0, 255, 0)';
+  var expected = [ 0, 255, 0 ];
+  var got = _.color.rgbStrToRgb( src );
+  test.identical( got, expected );
+
+  test.case = 'Blue';
+  var src = 'rgb(0, 0, 255)';
+  var expected = [ 0, 0, 255 ];
+  var got = _.color.rgbStrToRgb( src );
+  test.identical( got, expected );
+
+  test.case = 'Yellow';
+  var src = 'rgb(255, 255, 0)';
+  var expected = [ 255, 255, 0 ];
+  var got = _.color.rgbStrToRgb( src );
+  test.identical( got, expected );
+
+  test.case = 'Cyan';
+  var src = 'rgb(0, 255, 255)';
+  var expected = [ 0, 255, 255 ];
+  var got = _.color.rgbStrToRgb( src );
+  test.identical( got, expected );
+
+  test.case = 'Magenta';
+  var src = 'rgb(255, 0, 255)';
+  var expected = [ 255, 0, 255 ];
+  var got = _.color.rgbStrToRgb( src );
+  test.identical( got, expected );
+
+  test.close( 'basic colors' );
+
+  /* */
+
+  test.open( 'non basic colors' );
+
+  test.case = 'rgb(164, 123, 2)';
+  var src = 'rgb(164, 123, 2)';
+  var expected = [ 164, 123, 2 ];
+  var got = _.color.rgbStrToRgb( src );
+  test.identical( got, expected );
+
+  test.case = 'rgb(31, 240, 162)';
+  var src = 'rgb(31, 240, 162)';
+  var expected = [ 31, 240, 162 ];
+  var got = _.color.rgbStrToRgb( src );
+  test.identical( got, expected );
+
+  test.case = 'rgb(218, 206, 61)';
+  var src = 'rgb(218, 206, 61)';
+  var expected = [ 218, 206, 61 ];
+  var got = _.color.rgbStrToRgb( src );
+  test.identical( got, expected );
+
+  test.close( 'non basic colors' );
+
+  test.case = 'first arg > 255';
+  var src = 'rgb(280, 123, 2)';
+  var expected = null;
+  var got = _.color.rgbStrToRgb( src );
+  test.identical( got, expected );
+
+  test.case = 'second arg > 255';
+  var src = 'rgb(244, 256, 2)';
+  var expected = null;
+  var got = _.color.rgbStrToRgb( src );
+  test.identical( got, expected );
+
+}
+
+//
+
+function rgbaStrToRgba( test )
+{
+
+  test.open( 'basic colors' );
+
+  test.case = 'Black';
+  var src = 'rgba(0, 0, 0, 1)';
+  var expected = [ 0, 0, 0, 1 ];
+  var got = _.color.rgbaStrToRgba( src );
+  test.identical( got, expected );
+
+  test.case = 'White';
+  var src = 'rgba(255, 255, 255, 1)';
+  var expected = [ 255, 255, 255, 1 ];
+  var got = _.color.rgbaStrToRgba( src );
+  test.identical( got, expected );
+
+  test.case = 'Red';
+  var src = 'rgba(255, 0, 0, 1)';
+  var expected = [ 255, 0, 0, 1 ];
+  var got = _.color.rgbaStrToRgba( src );
+  test.identical( got, expected );
+
+  test.case = 'Green';
+  var src = 'rgba(0, 255, 0, 1)';
+  var expected = [ 0, 255, 0, 1 ];
+  var got = _.color.rgbaStrToRgba( src );
+  test.identical( got, expected );
+
+  test.case = 'Blue';
+  var src = 'rgba(0, 0, 255, 1)';
+  var expected = [ 0, 0, 255, 1 ];
+  var got = _.color.rgbaStrToRgba( src );
+  test.identical( got, expected );
+
+  test.case = 'Yellow';
+  var src = 'rgba(255, 255, 0, 1)';
+  var expected = [ 255, 255, 0, 1 ];
+  var got = _.color.rgbaStrToRgba( src );
+  test.identical( got, expected );
+
+  test.case = 'Cyan';
+  var src = 'rgba(0, 255, 255, 1)';
+  var expected = [ 0, 255, 255, 1 ];
+  var got = _.color.rgbaStrToRgba( src );
+  test.identical( got, expected );
+
+  test.case = 'Magenta';
+  var src = 'rgba(255, 0, 255, 1)';
+  var expected = [ 255, 0, 255, 1 ];
+  var got = _.color.rgbaStrToRgba( src );
+  test.identical( got, expected );
+
+  test.close( 'basic colors' );
+
+  /* */
+
+  test.open( 'non basic colors' );
+
+  test.case = 'rgba(164, 123, 2, 0.1)';
+  var src = 'rgba(164, 123, 2, 0.1)';
+  var expected = [ 164, 123, 2, 0.1 ];
+  var got = _.color.rgbaStrToRgba( src );
+  test.identical( got, expected );
+
+  test.case = 'rgba(31, 240, 162, 0.55)';
+  var src = 'rgba(31, 240, 162, 0.55)';
+  var expected = [ 31, 240, 162, 0.55 ];
+  var got = _.color.rgbaStrToRgba( src );
+  test.identical( got, expected );
+
+  test.case = 'rgba(218, 206, 61, 0.39)';
+  var src = 'rgba(218, 206, 61, 0.39)';
+  var expected = [ 218, 206, 61, 0.39 ];
+  var got = _.color.rgbaStrToRgba( src );
+  test.identical( got, expected );
+
+  test.close( 'non basic colors' );
+
+  test.case = 'first arg > 255';
+  var src = 'rgba(280, 123, 2, 1)';
+  var expected = null;
+  var got = _.color.rgbaStrToRgba( src );
+  test.identical( got, expected );
+
+  test.case = 'second arg > 255';
+  var src = 'rgba(244, 256, 2, 1)';
+  var expected = null;
+  var got = _.color.rgbaStrToRgba( src );
+  test.identical( got, expected );
+
+}
+
+
 // --
 // declare
 // --
@@ -1443,6 +1634,8 @@ let Self =
     hwbToRgba,
     hexToRgb,
     hexToRgba,
+    rgbStrToRgb,
+    rgbaStrToRgba,
 
   },
 
