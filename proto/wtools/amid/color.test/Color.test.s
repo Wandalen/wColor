@@ -1333,6 +1333,12 @@ function hwbStrToRgba( test )
   var got = _.color.hwbStrToRgba( src );
   test.identical( got, expected );
 
+  test.case = 'third arg > 100%';
+  var src = 'hwb(35,10%,175%)';
+  var expected = null;
+  var got = _.color.hwbStrToRgba( src );
+  test.identical( got, expected );
+
 }
 
 //

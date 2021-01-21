@@ -1312,6 +1312,46 @@ function hwbStrToRgba( src )
   if( !verify() )
   return null;
 
+  let h = H / 360;
+  let wh = W / 100;
+  let bl = B / 100;
+  let ratio = wh + bl;
+  let i, v, f, n;
+
+  // wh + bl cant be > 1
+  if( ratio > 1 )
+  {
+    wh /= ratio;
+    bl /= ratio;
+  }
+
+  i = Math.floor( 6 * h );
+  v = 1 - bl;
+  f = 6 * h - i;
+
+  if( ( i & 0x01 ) !== 0 )
+  {
+    f = 1 - f;
+  }
+
+  n = wh + f * ( v - wh ); // linear interpolation
+
+  let r, g, b;
+
+  switch( i )
+  {
+  default :
+  case 6 :
+  case 0 : r = v; g = n; b = wh; break;
+  case 1 : r = n; g = v; b = wh; break;
+  case 2 : r = wh; g = v; b = n; break;
+  case 3 : r = wh; g = n; b = v; break;
+  case 4 : r = n; g = wh; b = v; break;
+  case 5 : r = v; g = wh; b = n; break;
+  }
+
+  return [ Math.round( r * 255 ), Math.round( g * 255 ), Math.round( b * 255 ), 1 ]
+
   /* Implement */
 
   function verify()
@@ -2019,8 +2059,8 @@ let Extension =
 
   cmykStrToRgb, /* tested */
   cmykStrToRgba, /* tested */
-  cmykStructureStrToRgb,
-  cmykStructureStrToRgba,
+  cmykStructureStrToRgb, /* tested */
+  cmykStructureStrToRgba, /* tested */
   hwbStrToRgb,
   hwbStrToRgba,
   hexStrToRgb,
