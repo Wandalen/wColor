@@ -1200,6 +1200,8 @@ function complexToRgba( src )
 
 function cmykStrToRgb( src )
 {
+  /* cmyk(C, M, Y, K) */
+
   _.assert( arguments.length === 1, 'Expects single argument' );
   _.assert( _.strIs( src ) );
 
@@ -1215,6 +1217,8 @@ function cmykStrToRgb( src )
 
 function cmykStrToRgba( src )
 {
+  /* cmyk(C, M, Y, K) */
+
   _.assert( arguments.length === 1, 'Expects single argument' );
   _.assert( _.strIs( src ) );
 
@@ -1245,6 +1249,8 @@ function cmykStrToRgba( src )
 
 function cmykStructureStrToRgb( src )
 {
+  /* C100/M80/Y0/K35 */
+
   _.assert( arguments.length === 1, 'Expects single argument' );
   _.assert( _.strIs( src ) );
 
@@ -1260,32 +1266,17 @@ function cmykStructureStrToRgb( src )
 
 function cmykStructureStrToRgba( src )
 {
-  /* cmyk(C, M, Y, K), no alpha info */
+  /* C100/M80/Y0/K35 */
 
   _.assert( arguments.length === 1, 'Expects single argument' );
   _.assert( _.strIs( src ) );
 
-  // let colorArr = src.slice( 5 ).split( ',' );
+  let numbers = src.match( /\d+/g );
 
-  // let C = parseInt( colorArr[ 0 ] );
-  // let M = parseInt( colorArr[ 1 ] );
-  // let Y = parseInt( colorArr[ 2 ] );
-  // let K = parseInt( colorArr[ 3 ] );
+  let cmykString = 'cmyk(' + numbers[ 0 ] + ', ' + numbers[ 1 ] + ', ' + numbers[ 2 ] + ', ' + numbers[ 3 ] + ')';
 
-  // if( !verify( C ) || !verify( M ) || !verify( Y ) || !verify( K ) )
-  // return null;
+  return cmykStrToRgba.call( this, cmykString );
 
-  // let r = Math.round( 255 * ( 1 - C / 100 ) * ( 1 - K / 100 ) );
-  // let g = Math.round( 255 * ( 1 - M / 100 ) * ( 1 - K / 100 ) );
-  // let b = Math.round( 255 * ( 1 - Y / 100 ) * ( 1 - K / 100 ) );
-  // let a = 1;
-
-  // return [ r, g, b, a ];
-
-  // function verify( arg )
-  // {
-  //   return arg <= 100 && arg >= 0;
-  // }
 }
 
 //

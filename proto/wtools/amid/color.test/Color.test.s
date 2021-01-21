@@ -975,13 +975,13 @@ function cmykStructureStrToRgb( test )
   test.identical( got, expected );
 
   test.case = 'Red';
-  var src = 'C0/M100/Y100/K100';
+  var src = 'C0/M100/Y100/K0';
   var expected = [ 255, 0, 0 ];
   var got = _.color.cmykStructureStrToRgb( src );
   test.identical( got, expected );
 
   test.case = 'Green';
-  var src = 'C100/M0/Y100/K100';
+  var src = 'C100/M0/Y100/K0';
   var expected = [ 0, 255, 0 ];
   var got = _.color.cmykStructureStrToRgb( src );
   test.identical( got, expected );
@@ -1058,13 +1058,13 @@ function cmykStructureStrToRgba( test )
   test.identical( got, expected );
 
   test.case = 'Red';
-  var src = 'C0/M100/Y100/K100';
+  var src = 'C0/M100/Y100/K0';
   var expected = [ 255, 0, 0, 1 ];
   var got = _.color.cmykStructureStrToRgba( src );
   test.identical( got, expected );
 
   test.case = 'Green';
-  var src = 'C100/M0/Y100/K100';
+  var src = 'C100/M0/Y100/K0';
   var expected = [ 0, 255, 0, 1 ];
   var got = _.color.cmykStructureStrToRgba( src );
   test.identical( got, expected );
@@ -1118,6 +1118,30 @@ function cmykStructureStrToRgba( test )
   test.identical( got, expected );
 
   test.close( 'non basic colors' );
+
+  test.case = 'first arg > 100%';
+  var src = 'C111/M16/Y75/K4';
+  var expected = null;
+  var got = _.color.cmykStrToRgba( src );
+  test.identical( got, expected );
+
+  test.case = 'second arg > 100%';
+  var src = 'cC11/M162/Y75/K4';
+  var expected = null;
+  var got = _.color.cmykStrToRgba( src );
+  test.identical( got, expected );
+
+  test.case = 'third arg > 100%';
+  var src = 'C11/M16/Y750/K4';
+  var expected = null;
+  var got = _.color.cmykStrToRgba( src );
+  test.identical( got, expected );
+
+  test.case = 'fourth arg > 100%';
+  var src = 'C11/M16/Y75/K400';
+  var expected = null;
+  var got = _.color.cmykStrToRgba( src );
+  test.identical( got, expected );
 
 }
 
