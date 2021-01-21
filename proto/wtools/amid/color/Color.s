@@ -1198,12 +1198,12 @@ function complexToRgba( src )
 
 //
 
-function cmykToRgb( src )
+function cmykStrToRgb( src )
 {
   _.assert( arguments.length === 1, 'Expects single argument' );
   _.assert( _.strIs( src ) );
 
-  let result = cmykToRgba.call( this, src );
+  let result = cmykStrToRgba.call( this, src );
 
   if( result )
   return _.longSlice( result, 0, 3 );
@@ -1213,7 +1213,7 @@ function cmykToRgb( src )
 
 //
 
-function cmykToRgba( src )
+function cmykStrToRgba( src )
 {
   /* cmyk(C, M, Y, K), no alpha info */
 
@@ -1245,12 +1245,12 @@ function cmykToRgba( src )
 
 //
 
-function hwbToRgb( src )
+function hwbStrToRgb( src )
 {
   _.assert( arguments.length === 1, 'Expects single argument' );
   _.assert( _.strIs( src ) );
 
-  let result = hwbToRgba.call( this, src );
+  let result = hwbStrToRgba.call( this, src );
 
   if( result )
   return _.longSlice( result, 0, 3 );
@@ -1260,7 +1260,7 @@ function hwbToRgb( src )
 
 //
 
-function hwbToRgba( src )
+function hwbStrToRgba( src )
 {
   /* hwb(H, W, B), no alpha info */
 
@@ -1288,12 +1288,12 @@ function hwbToRgba( src )
 
 //
 
-function hexToRgb( src )
+function hexStrToRgb( src )
 {
   _.assert( arguments.length === 1, 'Expects single argument' );
   _.assert( _.strIs( string ) );
 
-  let result = hexToRgba.call( this, src );
+  let result = hexStrToRgba.call( this, src );
 
   if( result )
   return _.longSlice( result, 0, 3 );
@@ -1304,7 +1304,7 @@ function hexToRgb( src )
 
 //
 
-function hexToRgba( src )
+function hexStrToRgba( src )
 {
   /* hwb(H, W, B), no alpha info */
 
@@ -1458,6 +1458,29 @@ function lchStrToRgb( src )
 //
 
 function lchStrToRgba( src )
+{
+  _.assert( arguments.length === 1, 'Expects single argument' );
+  _.assert( _.strIs( src ) );
+}
+
+//
+
+function luvStrToRgb( src )
+{
+  _.assert( arguments.length === 1, 'Expects single argument' );
+  _.assert( _.strIs( src ) );
+
+  let result = luvStrToRgba.call( this, src );
+
+  if( result )
+  return _.longSlice( result, 0, 3 );
+
+  return null;
+}
+
+//
+
+function luvStrToRgba( src )
 {
   _.assert( arguments.length === 1, 'Expects single argument' );
   _.assert( _.strIs( src ) );
@@ -1940,12 +1963,12 @@ let Extension =
   complexToRgb,
   complexToRgba,
 
-  cmykToRgb,
-  cmykToRgba,
-  hwbToRgb,
-  hwbToRgba,
-  hexToRgb,
-  hexToRgba,
+  cmykStrToRgb,
+  cmykStrToRgba,
+  hwbStrToRgb,
+  hwbStrToRgba,
+  hexStrToRgb,
+  hexStrToRgba,
   rgbStrToRgb,
   rgbaStrToRgba,
   hslStrToRgb,
@@ -1956,6 +1979,8 @@ let Extension =
   labStrToRgba,
   lchStrToRgb,
   lchStrToRgba,
+  luvStrToRgb,
+  luvStrToRgba,
 
 
   // int
