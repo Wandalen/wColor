@@ -1283,6 +1283,8 @@ function cmykStructureStrToRgba( src )
 
 function hwbStrToRgb( src )
 {
+  /* hwb(H, W, B) */
+
   _.assert( arguments.length === 1, 'Expects single argument' );
   _.assert( _.strIs( src ) );
 
@@ -1298,7 +1300,7 @@ function hwbStrToRgb( src )
 
 function hwbStrToRgba( src )
 {
-  /* hwb(H, W, B), no alpha info */
+  /* hwb(H, W, B) */
 
   _.assert( arguments.length === 1, 'Expects single argument' );
   _.assert( _.strIs( src ) );
