@@ -2316,37 +2316,37 @@ function labStrToRgb( test )
   test.identical( got, expected );
 
   test.case = 'Red';
-  var src = 'lab(54.29 80.81 69.89)';
+  var src = 'lab(54.29, 80.81, 69.89)';
   var expected = [ 255, 0, 0 ];
   var got = _.color.labStrToRgb( src );
   test.identical( got, expected );
 
   test.case = 'Green';
-  var src = 'lab(87.82 -79.29 80.99)';
+  var src = 'lab(87.82, -79.29, 80.99)';
   var expected = [ 0, 255, 0 ];
   var got = _.color.labStrToRgb( src );
   test.identical( got, expected );
 
   test.case = 'Blue';
-  var src = 'lab(29.57 68.30 -112.03)';
+  var src = 'lab(29.57, 68.30, -112.03)';
   var expected = [ 0, 0, 255 ];
   var got = _.color.labStrToRgb( src );
   test.identical( got, expected );
 
   test.case = 'Yellow';
-  var src = 'lab(97.61 -15.75 93.39)';
+  var src = 'lab(97.61, -15.75, 93.39)';
   var expected = [ 255, 255, 0 ];
   var got = _.color.labStrToRgb( src );
   test.identical( got, expected );
 
   test.case = 'Cyan';
-  var src = 'lab(90.67 -50.67 -14.96)';
+  var src = 'lab(90.67, -50.67, -14.96)';
   var expected = [ 0, 255, 255 ];
   var got = _.color.labStrToRgb( src );
   test.identical( got, expected );
 
   test.case = 'Magenta';
-  var src = 'lab(60.17 93.55 -60.50)';
+  var src = 'lab(60.17, 93.55, -60.50)';
   var expected = [ 255, 0, 255 ];
   var got = _.color.labStrToRgb( src );
   test.identical( got, expected );
@@ -2357,20 +2357,20 @@ function labStrToRgb( test )
 
   test.open( 'non basic colors' );
 
-  test.case = 'lab(54.51 9.81 59.36)';
-  var src = 'lab(54.51 9.81 59.36)';
+  test.case = 'lab(54.51, 9.81, 59.36)';
+  var src = 'lab(54.51, 9.81, 59.36)';
   var expected = [ 164, 123, 2 ];
   var got = _.color.labStrToRgb( src );
   test.identical( got, expected );
 
-  test.case = 'lab(84.46 -62.25 23.98)';
-  var src = 'lab(84.46 -62.25 23.98)';
+  test.case = 'lab(84.46, -62.25, 23.98)';
+  var src = 'lab(84.46, -62.25, 23.98)';
   var expected = [ 31, 240, 162 ];
   var got = _.color.labStrToRgb( src );
   test.identical( got, expected );
 
-  test.case = 'lab(81.91 -7.33 68.85)';
-  var src = 'lab(81.91 -7.33 68.85)';
+  test.case = 'lab(81.91, -7.33, 68.85)';
+  var src = 'lab(81.91, -7.33, 68.85)';
   var expected = [ 218, 206, 61 ];
   var got = _.color.labStrToRgb( src );
   test.identical( got, expected );
@@ -2378,7 +2378,7 @@ function labStrToRgb( test )
   test.close( 'non basic colors' );
 
   test.case = 'first arg > 100';
-  var src = 'lab(102.35 -7.33 68.85)';
+  var src = 'lab(102.35, -7.33, 68.85)';
   var expected = null;
   var got = _.color.labStrToRgb( src );
   test.identical( got, expected );
@@ -2405,43 +2405,43 @@ function labStrToRgba( test )
   test.identical( got, expected );
 
   test.case = 'White';
-  var src = 'lab(100.00 0.00 0.00)';
+  var src = 'lab(100.00, 0.00, 0.00)';
   var expected = [ 255, 255, 255, 1 ];
   var got = _.color.labStrToRgba( src );
   test.identical( got, expected );
 
   test.case = 'Red';
-  var src = 'lab(54.29 80.81 69.89)';
+  var src = 'lab(54.29, 80.81, 69.89)';
   var expected = [ 255, 0, 0, 1 ];
   var got = _.color.labStrToRgba( src );
   test.identical( got, expected );
 
   test.case = 'Green';
-  var src = 'lab(87.82 -79.29 80.99)';
+  var src = 'lab(87.82, -79.29, 80.99)';
   var expected = [ 0, 255, 0, 1 ];
   var got = _.color.labStrToRgba( src );
   test.identical( got, expected );
 
   test.case = 'Blue';
-  var src = 'lab(29.57 68.30 -112.03)';
+  var src = 'lab(29.57, 68.30, -112.03)';
   var expected = [ 0, 0, 255, 1 ];
   var got = _.color.labStrToRgba( src );
   test.identical( got, expected );
 
   test.case = 'Yellow';
-  var src = 'lab(97.61 -15.75 93.39)';
+  var src = 'lab(97.61, -15.75, 93.39)';
   var expected = [ 255, 255, 0, 1 ];
   var got = _.color.labStrToRgba( src );
   test.identical( got, expected );
 
   test.case = 'Cyan';
-  var src = 'lab(90.67 -50.67 -14.96)';
+  var src = 'lab(90.67, -50.67, -14.96)';
   var expected = [ 0, 255, 255, 1 ];
   var got = _.color.labStrToRgba( src );
   test.identical( got, expected );
 
   test.case = 'Magenta';
-  var src = 'lab(60.17 93.55 -60.50)';
+  var src = 'lab(60.17, 93.55, -60.50)';
   var expected = [ 255, 0, 255, 1 ];
   var got = _.color.labStrToRgba( src );
   test.identical( got, expected );
@@ -2452,20 +2452,20 @@ function labStrToRgba( test )
 
   test.open( 'non basic colors' );
 
-  test.case = 'lab(54.51 9.81 59.36)';
-  var src = 'lab(54.51 9.81 59.36)';
+  test.case = 'lab(54.51, 9.81, 59.36)';
+  var src = 'lab(54.51, 9.81, 59.36)';
   var expected = [ 164, 123, 2, 1 ];
   var got = _.color.labStrToRgba( src );
   test.identical( got, expected );
 
-  test.case = 'lab(84.46 -62.25 23.98)';
-  var src = 'lab(84.46 -62.25 23.98)';
+  test.case = 'lab(84.46, -62.25, 23.98)';
+  var src = 'lab(84.46, -62.25, 23.98)';
   var expected = [ 31, 240, 162, 1 ];
   var got = _.color.labStrToRgba( src );
   test.identical( got, expected );
 
-  test.case = 'lab(81.91 -7.33 68.85)';
-  var src = 'lab(81.91 -7.33 68.85)';
+  test.case = 'lab(81.91, -7.33, 68.85)';
+  var src = 'lab(81.91, -7.33, 68.85)';
   var expected = [ 218, 206, 61, 1 ];
   var got = _.color.labStrToRgba( src );
   test.identical( got, expected );
@@ -2488,7 +2488,7 @@ function lchStrToRgb( test )
   test.identical( got, expected );
 
   test.case = 'White';
-  var src = 'lch(100 0,0116 296,812)';
+  var src = 'lch((100.000, 0.000, 338.199)';
   var expected = [ 255, 255, 255 ];
   var got = _.color.lchStrToRgb( src );
   test.identical( got, expected );
@@ -2556,7 +2556,7 @@ function lchStrToRgb( test )
   test.close( 'non basic colors' );
 
   test.case = 'first arg > 100';
-  var src = 'lch(102.35 70.33 68.85)';
+  var src = 'lch(102.35, 70.33, 68.85)';
   var expected = null;
   var got = _.color.lchStrToRgb( src );
   test.identical( got, expected );
@@ -2577,7 +2577,7 @@ function lchStrToRgba( test )
   test.identical( got, expected );
 
   test.case = 'White';
-  var src = 'lch(100 0,0116 296,812)';
+  var src = 'lch(100.000, 0.000, 338.199)';
   var expected = [ 255, 255, 255, 1 ];
   var got = _.color.lchStrToRgba( src );
   test.identical( got, expected );
@@ -2645,9 +2645,211 @@ function lchStrToRgba( test )
   test.close( 'non basic colors' );
 
   test.case = 'first arg > 100';
-  var src = 'lch(102.35 70.33 68.85)';
+  var src = 'lch(102.35, 70.33, 68.85)';
   var expected = null;
   var got = _.color.lchStrToRgba( src );
+  test.identical( got, expected );
+
+}
+
+//
+
+function luvStrToRgb( test )
+{
+
+  test.open( 'basic colors' );
+
+  test.case = 'Black';
+  var src = 'luv(0, 0, 0)';
+  var expected = [ 0, 0, 0 ];
+  var got = _.color.luvStrToRgb( src );
+  test.identical( got, expected );
+
+  test.case = 'White';
+  var src = 'luv(100.000, 0.000, -0.000)';
+  var expected = [ 255, 255, 255 ];
+  var got = _.color.luvStrToRgb( src );
+  test.identical( got, expected );
+
+  test.case = 'Red';
+  var src = 'luv(61.427, 201.926, 43.562)';
+  var expected = [ 255, 0, 0 ];
+  var got = _.color.luvStrToRgb( src );
+  test.identical( got, expected );
+
+  test.case = 'Green';
+  var src = 'luv(83.303, -132.296, 116.242)';
+  var expected = [ 0, 255, 0 ];
+  var got = _.color.luvStrToRgb( src );
+  test.identical( got, expected );
+
+  test.case = 'Blue';
+  var src = 'luv(32.979, -9.604, -133.093)';
+  var expected = [ 0, 0, 255 ];
+  var got = _.color.luvStrToRgb( src );
+  test.identical( got, expected );
+
+  test.case = 'Yellow';
+  var src = 'luv(97.013, 8.121, 112.544)';
+  var expected = [ 255, 255, 0 ];
+  var got = _.color.luvStrToRgb( src );
+  test.identical( got, expected );
+
+  test.case = 'Cyan';
+  var src = 'luv(87.125, -103.979, -22.432)';
+  var expected = [ 0, 255, 255 ];
+  var got = _.color.luvStrToRgb( src );
+  test.identical( got, expected );
+
+  test.case = 'Magenta';
+  var src = 'luv(67.475, 111.701, -98.146)';
+  var expected = [ 255, 0, 255 ];
+  var got = _.color.luvStrToRgb( src );
+  test.identical( got, expected );
+
+  test.close( 'basic colors' );
+
+  /* */
+
+  test.open( 'non basic colors' );
+
+  test.case = 'luv(55.975, 46.348, 59.064)';
+  var src = 'luv(55.975, 46.348, 59.064)';
+  var expected = [ 164, 123, 2 ];
+  var got = _.color.luvStrToRgb( src );
+  test.identical( got, expected );
+
+  test.case = 'luv(80.721, -110.068, 44.474)';
+  var src = 'luv(80.721, -110.068, 44.474)';
+  var expected = [ 31, 240, 162 ];
+  var got = _.color.luvStrToRgb( src );
+  test.identical( got, expected );
+
+  test.case = 'luv(82.178, 17.545, 85.824)';
+  var src = 'luv(82.178, 17.545, 85.824)';
+  var expected = [ 218, 206, 61 ];
+  var got = _.color.luvStrToRgb( src );
+  test.identical( got, expected );
+
+  test.close( 'non basic colors' );
+
+  test.case = 'first arg > 100';
+  var src = 'luv(102.35, 70.33, 68.85)';
+  var expected = null;
+  var got = _.color.luvStrToRgb( src );
+  test.identical( got, expected );
+
+  test.case = 'second arg > 224';
+  var src = 'luv(98.35, 225.33, 68.85)';
+  var expected = null;
+  var got = _.color.luvStrToRgb( src );
+  test.identical( got, expected );
+
+  test.case = 'third arg > 122';
+  var src = 'luv(98.35, 66.33, 123.85)';
+  var expected = null;
+  var got = _.color.luvStrToRgb( src );
+  test.identical( got, expected );
+
+}
+
+//
+
+function luvStrToRgba( test )
+{
+
+  test.open( 'basic colors' );
+
+  test.case = 'Black';
+  var src = 'luv(0, 0, 0)';
+  var expected = [ 0, 0, 0, 1 ];
+  var got = _.color.luvStrToRgba( src );
+  test.identical( got, expected );
+
+  test.case = 'White';
+  var src = 'luv(100.000, 0.000, -0.000)';
+  var expected = [ 255, 255, 255, 1 ];
+  var got = _.color.luvStrToRgba( src );
+  test.identical( got, expected );
+
+  test.case = 'Red';
+  var src = 'luv(61.427, 201.926, 43.562)';
+  var expected = [ 255, 0, 0, 1 ];
+  var got = _.color.luvStrToRgba( src );
+  test.identical( got, expected );
+
+  test.case = 'Green';
+  var src = 'luv(83.303, -132.296, 116.242)';
+  var expected = [ 0, 255, 0, 1 ];
+  var got = _.color.luvStrToRgba( src );
+  test.identical( got, expected );
+
+  test.case = 'Blue';
+  var src = 'luv(32.979, -9.604, -133.093)';
+  var expected = [ 0, 0, 255, 1 ];
+  var got = _.color.luvStrToRgba( src );
+  test.identical( got, expected );
+
+  test.case = 'Yellow';
+  var src = 'luv(97.013, 8.121, 112.544)';
+  var expected = [ 255, 255, 0, 1 ];
+  var got = _.color.luvStrToRgba( src );
+  test.identical( got, expected );
+
+  test.case = 'Cyan';
+  var src = 'luv(87.125, -103.979, -22.432)';
+  var expected = [ 0, 255, 255, 1 ];
+  var got = _.color.luvStrToRgba( src );
+  test.identical( got, expected );
+
+  test.case = 'Magenta';
+  var src = 'luv(67.475, 111.701, -98.146)';
+  var expected = [ 255, 0, 255, 1 ];
+  var got = _.color.luvStrToRgba( src );
+  test.identical( got, expected );
+
+  test.close( 'basic colors' );
+
+  /* */
+
+  test.open( 'non basic colors' );
+
+  test.case = 'luv(55.975, 46.348, 59.064)';
+  var src = 'luv(55.975, 46.348, 59.064)';
+  var expected = [ 164, 123, 2, 1 ];
+  var got = _.color.luvStrToRgba( src );
+  test.identical( got, expected );
+
+  test.case = 'luv(80.721, -110.068, 44.474)';
+  var src = 'luv(80.721, -110.068, 44.474)';
+  var expected = [ 31, 240, 162, 1 ];
+  var got = _.color.luvStrToRgba( src );
+  test.identical( got, expected );
+
+  test.case = 'luv(82.178, 17.545, 85.824)';
+  var src = 'luv(82.178, 17.545, 85.824)';
+  var expected = [ 218, 206, 61, 1 ];
+  var got = _.color.luvStrToRgba( src );
+  test.identical( got, expected );
+
+  test.close( 'non basic colors' );
+
+  test.case = 'first arg > 100';
+  var src = 'luv(102.35, 70.33, 68.85)';
+  var expected = null;
+  var got = _.color.luvStrToRgba( src );
+  test.identical( got, expected );
+
+  test.case = 'second arg > 224';
+  var src = 'luv(98.35, 225.33, 68.85)';
+  var expected = null;
+  var got = _.color.luvStrToRgba( src );
+  test.identical( got, expected );
+
+  test.case = 'third arg > 122';
+  var src = 'luv(98.35, 66.33, 123.85)';
+  var expected = null;
+  var got = _.color.luvStrToRgba( src );
   test.identical( got, expected );
 
 }
