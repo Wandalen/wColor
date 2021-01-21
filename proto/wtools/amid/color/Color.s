@@ -1440,6 +1440,29 @@ function labStrToRgba( src )
   _.assert( _.strIs( src ) );
 }
 
+//
+
+function lchStrToRgb( src )
+{
+  _.assert( arguments.length === 1, 'Expects single argument' );
+  _.assert( _.strIs( src ) );
+
+  let result = lchStrToRgba.call( this, src );
+
+  if( result )
+  return _.longSlice( result, 0, 3 );
+
+  return null;
+}
+
+//
+
+function lchStrToRgba( src )
+{
+  _.assert( arguments.length === 1, 'Expects single argument' );
+  _.assert( _.strIs( src ) );
+}
+
 // --
 // int
 // --
@@ -1931,6 +1954,8 @@ let Extension =
   xyzStrToRgba,
   labStrToRgb,
   labStrToRgba,
+  lchStrToRgb,
+  lchStrToRgba,
 
 
   // int
