@@ -1198,6 +1198,21 @@ function complexToRgba( src )
 
 //
 
+function cmykToRgb( src )
+{
+  _.assert( arguments.length === 1, 'Expects single argument' );
+  _.assert( _.strIs( src ) );
+
+  let result = cmykToRgba.call( this, src );
+
+  if( result )
+  return _.longSlice( result, 0, 3 );
+
+  return null;
+}
+
+//
+
 function cmykToRgba( src )
 {
   /* cmyk(C, M, Y, K), no alpha info */
@@ -1230,12 +1245,12 @@ function cmykToRgba( src )
 
 //
 
-function cmykToRgb( src )
+function hwbToRgb( src )
 {
   _.assert( arguments.length === 1, 'Expects single argument' );
   _.assert( _.strIs( src ) );
 
-  let result = cmykToRgba.call( this, src );
+  let result = hwbToRgba.call( this, src );
 
   if( result )
   return _.longSlice( result, 0, 3 );
@@ -1273,18 +1288,19 @@ function hwbToRgba( src )
 
 //
 
-function hwbToRgb( src )
+function hexToRgb( src )
 {
   _.assert( arguments.length === 1, 'Expects single argument' );
-  _.assert( _.strIs( src ) );
+  _.assert( _.strIs( string ) );
 
-  let result = hwbToRgba.call( this, src );
+  let result = hexToRgba.call( this, src );
 
   if( result )
   return _.longSlice( result, 0, 3 );
 
   return null;
 }
+
 
 //
 
@@ -1316,12 +1332,12 @@ function hexToRgba( src )
 
 //
 
-function hexToRgb( src )
+function rgbStrToRgb( src )
 {
   _.assert( arguments.length === 1, 'Expects single argument' );
-  _.assert( _.strIs( string ) );
+  _.assert( _.strIs( src ) );
 
-  let result = hexToRgba.call( this, src );
+  let result = rgbaStrToRgba.call( this, src );
 
   if( result )
   return _.longSlice( result, 0, 3 );
@@ -1353,21 +1369,6 @@ function rgbaStrToRgba( src )
            && ( result[ 1 ] >= 0 && result[ 1 ] <= 255 )
            && ( result[ 2 ] >= 0 && result[ 2 ] <= 255 )
   }
-}
-
-//
-
-function rgbStrToRgb( src )
-{
-  _.assert( arguments.length === 1, 'Expects single argument' );
-  _.assert( _.strIs( src ) );
-
-  let result = rgbaStrToRgba.call( this, src );
-
-  if( result )
-  return _.longSlice( result, 0, 3 );
-
-  return null;
 }
 
 //
