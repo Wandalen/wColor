@@ -929,8 +929,26 @@ function cmykStrToRgba( test )
 
   test.close( 'non basic colors' );
 
-  test.case = '1 arg > 100%';
+  test.case = 'first arg > 100%';
   var src = 'cmyk(111%,16%,75%,4%)';
+  var expected = null;
+  var got = _.color.cmykStrToRgba( src );
+  test.identical( got, expected );
+
+  test.case = 'second arg > 100%';
+  var src = 'cmyk(11%,160%,75%,4%)';
+  var expected = null;
+  var got = _.color.cmykStrToRgba( src );
+  test.identical( got, expected );
+
+  test.case = 'third arg > 100%';
+  var src = 'cmyk(11%,16%,750%,4%)';
+  var expected = null;
+  var got = _.color.cmykStrToRgba( src );
+  test.identical( got, expected );
+
+  test.case = 'fourth arg > 100%';
+  var src = 'cmyk(11%,16%,75%,400%)';
   var expected = null;
   var got = _.color.cmykStrToRgba( src );
   test.identical( got, expected );

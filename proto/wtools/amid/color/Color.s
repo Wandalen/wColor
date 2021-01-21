@@ -1215,8 +1215,6 @@ function cmykStrToRgb( src )
 
 function cmykStrToRgba( src )
 {
-  /* cmyk(C, M, Y, K), no alpha info */
-
   _.assert( arguments.length === 1, 'Expects single argument' );
   _.assert( _.strIs( src ) );
 
@@ -2028,8 +2026,8 @@ let Extension =
   complexToRgb,
   complexToRgba,
 
-  cmykStrToRgb,
-  cmykStrToRgba,
+  cmykStrToRgb, /* tested */
+  cmykStrToRgba, /* tested */
   cmykStructureStrToRgb,
   cmykStructureStrToRgba,
   hwbStrToRgb,
