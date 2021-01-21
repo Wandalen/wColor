@@ -1394,6 +1394,29 @@ function hslaStrToRgba( src )
   _.assert( _.strIs( src ) );
 }
 
+//
+
+function xyzStrToRgb( src )
+{
+  _.assert( arguments.length === 1, 'Expects single argument' );
+  _.assert( _.strIs( src ) );
+
+  let result = xyzStrToRgba.call( this, src );
+
+  if( result )
+  return _.longSlice( result, 0, 3 );
+
+  return null;
+}
+
+//
+
+function xyzStrToRgba( src )
+{
+  _.assert( arguments.length === 1, 'Expects single argument' );
+  _.assert( _.strIs( src ) );
+}
+
 // --
 // int
 // --
@@ -1880,7 +1903,9 @@ let Extension =
   rgbStrToRgb,
   rgbaStrToRgba,
   hslStrToRgb,
-  hslStrToRgba,
+  hslaStrToRgba,
+  xyzStrToRgb,
+  xyzStrToRgba,
 
 
   // int
