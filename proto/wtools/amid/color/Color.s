@@ -1373,6 +1373,24 @@ function rgbaStrToRgba( src )
 
 //
 
+function rgbStructureStrToRgb( src )
+{
+  _.assert( arguments.length === 1, 'Expects single argument' );
+  _.assert( _.strIs( src ) );
+
+}
+
+//
+
+// function rgbaStructureStrToRgba( src )
+// {
+//   _.assert( arguments.length === 1, 'Expects single argument' );
+//   _.assert( _.strIs( src ) );
+
+// }
+
+//
+
 function hslStrToRgb( src )
 {
   _.assert( arguments.length === 1, 'Expects single argument' );
@@ -1971,6 +1989,8 @@ let Extension =
   hexStrToRgba,
   rgbStrToRgb,
   rgbaStrToRgba,
+  rgbStructureStrToRgb,
+  // rgbaStructureStrToRgba,
   hslStrToRgb,
   hslaStrToRgba,
   xyzStrToRgb,

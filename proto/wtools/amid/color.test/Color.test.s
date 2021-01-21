@@ -1761,6 +1761,352 @@ function rgbaStrToRgba( test )
 
 //
 
+function rgbStructureStrToRgb( test )
+{
+
+  test.open( 'basic colors' );
+
+  test.case = 'Black';
+  var src = 'R:0 G:0 B:0';
+  var expected = [ 0, 0, 0 ];
+  var got = _.color.rgbStructureStrToRgb( src );
+  test.identical( got, expected );
+
+  test.case = 'Black with slashes';
+  var src = '(R:0 / G:0 / B:0)';
+  var expected = [ 0, 0, 0 ];
+  var got = _.color.rgbStructureStrToRgb( src );
+  test.identical( got, expected );
+
+  test.case = 'White';
+  var src = 'R:255 G:255 B:255';
+  var expected = [ 255, 255, 255 ];
+  var got = _.color.rgbStructureStrToRgb( src );
+  test.identical( got, expected );
+
+  test.case = 'White with slashes';
+  var src = '(R255 / G255 / B255)';
+  var expected = [ 255, 255, 255 ];
+  var got = _.color.rgbStructureStrToRgb( src );
+  test.identical( got, expected );
+
+  test.case = 'Red';
+  var src = 'R:255 G:0 B:0';
+  var expected = [ 255, 0, 0 ];
+  var got = _.color.rgbStructureStrToRgb( src );
+  test.identical( got, expected );
+
+  test.case = 'Red with slashes';
+  var src = '(R255 / G0 / B0)';
+  var expected = [ 255, 0, 0 ];
+  var got = _.color.rgbStructureStrToRgb( src );
+  test.identical( got, expected );
+
+  test.case = 'Green';
+  var src = 'R:0 G:255 B:0';
+  var expected = [ 0, 255, 0 ];
+  var got = _.color.rgbStructureStrToRgb( src );
+  test.identical( got, expected );
+
+  test.case = 'Green with slashes';
+  var src = '(R0 / G255 / B0)';
+  var expected = [ 0, 255, 0 ];
+  var got = _.color.rgbStructureStrToRgb( src );
+  test.identical( got, expected );
+
+  test.case = 'Blue';
+  var src = 'R:0 G:0 B:255';
+  var expected = [ 0, 0, 255 ];
+  var got = _.color.rgbStructureStrToRgb( src );
+  test.identical( got, expected );
+
+  test.case = 'Blue with slashes';
+  var src = '(R0 / G0 / B255)';
+  var expected = [ 0, 0, 255 ];
+  var got = _.color.rgbStructureStrToRgb( src );
+  test.identical( got, expected );
+
+  test.case = 'Yellow';
+  var src = 'R:255 G:255 B:0';
+  var expected = [ 255, 255, 0 ];
+  var got = _.color.rgbStructureStrToRgb( src );
+  test.identical( got, expected );
+
+  test.case = 'Yellow with slashes';
+  var src = '(R255 / G255 / B0)';
+  var expected = [ 255, 255, 0 ];
+  var got = _.color.rgbStructureStrToRgb( src );
+  test.identical( got, expected );
+
+  test.case = 'Cyan';
+  var src = 'R:0 G:255 B:255';
+  var expected = [ 0, 255, 255 ];
+  var got = _.color.rgbStructureStrToRgb( src );
+  test.identical( got, expected );
+
+  test.case = 'Cyan with slashes';
+  var src = '(R0 / G255 / B255)';
+  var expected = [ 0, 255, 255 ];
+  var got = _.color.rgbStructureStrToRgb( src );
+  test.identical( got, expected );
+
+  test.case = 'Magenta';
+  var src = 'R:255 G:0 B:255';
+  var expected = [ 255, 0, 255 ];
+  var got = _.color.rgbStructureStrToRgb( src );
+  test.identical( got, expected );
+
+  test.case = 'Magenta with slashes';
+  var src = '(R255 / G0 / B255)';
+  var expected = [ 255, 0, 255 ];
+  var got = _.color.rgbStructureStrToRgb( src );
+  test.identical( got, expected );
+
+  test.close( 'basic colors' );
+
+  /* */
+
+  test.open( 'non basic colors' );
+
+  test.case = 'R:164 G:123 B:2';
+  var src = 'R:164 G:123 B:2';
+  var expected = [ 164, 123, 2 ];
+  var got = _.color.rgbStructureStrToRgb( src );
+  test.identical( got, expected );
+
+  test.case = '(R164 / G123 / B2)';
+  var src = '(R164 / G123 / B2)';
+  var expected = [ 164, 123, 2 ];
+  var got = _.color.rgbStructureStrToRgb( src );
+  test.identical( got, expected );
+
+  test.case = 'R:31 G:240 B:162';
+  var src = 'R:31 G:240 B:162';
+  var expected = [ 31, 240, 162 ];
+  var got = _.color.rgbStructureStrToRgb( src );
+  test.identical( got, expected );
+
+  test.case = '(R31 / G240 / B162)';
+  var src = '(R31 / G240 / B162)';
+  var expected = [ 31, 240, 162 ];
+  var got = _.color.rgbStructureStrToRgb( src );
+  test.identical( got, expected );
+
+  test.case = 'R:218 G:206 B:61';
+  var src = 'R:218 G:206 B:61';
+  var expected = [ 218, 206, 61 ];
+  var got = _.color.rgbStructureStrToRgb( src );
+  test.identical( got, expected );
+
+  test.case = '(R218 / G206 / B61)';
+  var src = '(R218 / G206 / B61)';
+  var expected = [ 218, 206, 61 ];
+  var got = _.color.rgbStructureStrToRgb( src );
+  test.identical( got, expected );
+
+  test.close( 'non basic colors' );
+
+  test.case = 'first arg > 255';
+  var src = 'R:259 G:0 B:0';
+  var expected = null;
+  var got = _.color.rgbStructureStrToRgb( src );
+  test.identical( got, expected );
+
+  test.case = 'first arg > 255, with slashes';
+  var src = '(R259 / G20 / B30)';
+  var expected = null;
+  var got = _.color.rgbStructureStrToRgb( src );
+  test.identical( got, expected );
+
+  test.case = 'second arg > 255';
+  var src = 'R:29 G:259 B:0';
+  var expected = null;
+  var got = _.color.rgbStructureStrToRgb( src );
+  test.identical( got, expected );
+
+  test.case = 'second arg > 255, with slashes';
+  var src = '(R29 / G259 / B30)';
+  var expected = null;
+  var got = _.color.rgbStructureStrToRgb( src );
+  test.identical( got, expected );
+
+}
+
+//
+
+// function rgbaStructureStrToRgba( test )
+// {
+
+//   test.open( 'basic colors' );
+
+//   test.case = 'Black';
+//   var src = 'R:0 G:0 B:0 A:1';
+//   var expected = [ 0, 0, 0, 1 ];
+//   var got = _.color.rgbaStructureStrToRgba( src );
+//   test.identical( got, expected );
+
+//   test.case = 'Black with slashes';
+//   var src = '(R:0 / G:0 / B:0 / A1)';
+//   var expected = [ 0, 0, 0, 1 ];
+//   var got = _.color.rgbaStructureStrToRgba( src );
+//   test.identical( got, expected );
+
+//   test.case = 'White';
+//   var src = 'R:255 G:255 B:255 A:1';
+//   var expected = [ 255, 255, 255, 1 ];
+//   var got = _.color.rgbaStructureStrToRgba( src );
+//   test.identical( got, expected );
+
+//   test.case = 'White with slashes';
+//   var src = '(R255 / G255 / B255 / A1)';
+//   var expected = [ 255, 255, 255, 1 ];
+//   var got = _.color.rgbaStructureStrToRgba( src );
+//   test.identical( got, expected );
+
+//   test.case = 'Red';
+//   var src = 'R:255 G:0 B:0 A:1';
+//   var expected = [ 255, 0, 0, 1 ];
+//   var got = _.color.rgbaStructureStrToRgba( src );
+//   test.identical( got, expected );
+
+//   test.case = 'Red with slashes';
+//   var src = '(R255 / G0 / B0 / A1)';
+//   var expected = [ 255, 0, 0, 1 ];
+//   var got = _.color.rgbaStructureStrToRgba( src );
+//   test.identical( got, expected );
+
+//   test.case = 'Green';
+//   var src = 'R:0 G:255 B:0 A:1';
+//   var expected = [ 0, 255, 0, 1 ];
+//   var got = _.color.rgbaStructureStrToRgba( src );
+//   test.identical( got, expected );
+
+//   test.case = 'Green with slashes';
+//   var src = '(R0 / G255 / B0 / A1)';
+//   var expected = [ 0, 255, 0, 1 ];
+//   var got = _.color.rgbaStructureStrToRgba( src );
+//   test.identical( got, expected );
+
+//   test.case = 'Blue';
+//   var src = 'R:0 G:0 B:255 A:1';
+//   var expected = [ 0, 0, 255, 1 ];
+//   var got = _.color.rgbaStructureStrToRgba( src );
+//   test.identical( got, expected );
+
+//   test.case = 'Blue with slashes';
+//   var src = '(R0 / G0 / B255 / A1)';
+//   var expected = [ 0, 0, 255, 1 ];
+//   var got = _.color.rgbaStructureStrToRgba( src );
+//   test.identical( got, expected );
+
+//   test.case = 'Yellow';
+//   var src = 'R:255 G:255 B:0 A:1';
+//   var expected = [ 255, 255, 0, 1 ];
+//   var got = _.color.rgbaStructureStrToRgba( src );
+//   test.identical( got, expected );
+
+//   test.case = 'Yellow with slashes';
+//   var src = '(R255 / G255 / B0 / A1)';
+//   var expected = [ 255, 255, 0, 1 ];
+//   var got = _.color.rgbaStructureStrToRgba( src );
+//   test.identical( got, expected );
+
+//   test.case = 'Cyan';
+//   var src = 'R:0 G:255 B:255 A:1';
+//   var expected = [ 0, 255, 255, 1 ];
+//   var got = _.color.rgbaStructureStrToRgba( src );
+//   test.identical( got, expected );
+
+//   test.case = 'Cyan with slashes';
+//   var src = '(R0 / G255 / B255 / A1)';
+//   var expected = [ 0, 255, 255, 1 ];
+//   var got = _.color.rgbaStructureStrToRgba( src );
+//   test.identical( got, expected );
+
+//   test.case = 'Magenta';
+//   var src = 'R:255 G:0 B:255 A:1';
+//   var expected = [ 255, 0, 255, 1 ];
+//   var got = _.color.rgbaStructureStrToRgba( src );
+//   test.identical( got, expected );
+
+//   test.case = 'Magenta with slashes';
+//   var src = '(R255 / G0 / B255 / A1)';
+//   var expected = [ 255, 0, 255, 1 ];
+//   var got = _.color.rgbaStructureStrToRgba( src );
+//   test.identical( got, expected );
+
+//   test.close( 'basic colors' );
+
+//   /* */
+
+//   test.open( 'non basic colors' );
+
+//   test.case = 'R:164 G:123 B:2 A:0.23';
+//   var src = 'R:164 G:123 B:2 A:0.23';
+//   var expected = [ 164, 123, 2 ];
+//   var got = _.color.rgbaStructureStrToRgba( src );
+//   test.identical( got, expected );
+
+//   test.case = '(R164 / G123 / B2)';
+//   var src = '(R164 / G123 / B2)';
+//   var expected = [ 164, 123, 2 ];
+//   var got = _.color.rgbaStructureStrToRgba( src );
+//   test.identical( got, expected );
+
+//   test.case = 'R:31 G:240 B:162';
+//   var src = 'R:31 G:240 B:162';
+//   var expected = [ 31, 240, 162 ];
+//   var got = _.color.rgbaStructureStrToRgba( src );
+//   test.identical( got, expected );
+
+//   test.case = '(R31 / G240 / B162)';
+//   var src = '(R31 / G240 / B162)';
+//   var expected = [ 31, 240, 162 ];
+//   var got = _.color.rgbaStructureStrToRgba( src );
+//   test.identical( got, expected );
+
+//   test.case = 'R:218 G:206 B:61';
+//   var src = 'R:218 G:206 B:61';
+//   var expected = [ 218, 206, 61 ];
+//   var got = _.color.rgbaStructureStrToRgba( src );
+//   test.identical( got, expected );
+
+//   test.case = '(R218 / G206 / B61)';
+//   var src = '(R218 / G206 / B61)';
+//   var expected = [ 218, 206, 61 ];
+//   var got = _.color.rgbaStructureStrToRgba( src );
+//   test.identical( got, expected );
+
+//   test.close( 'non basic colors' );
+
+//   test.case = 'first arg > 255';
+//   var src = 'R:259 G:0 B:0';
+//   var expected = null;
+//   var got = _.color.rgbaStructureStrToRgba( src );
+//   test.identical( got, expected );
+
+//   test.case = 'first arg > 255, with slashes';
+//   var src = '(R259 / G20 / B30)';
+//   var expected = null;
+//   var got = _.color.rgbaStructureStrToRgba( src );
+//   test.identical( got, expected );
+
+//   test.case = 'second arg > 255';
+//   var src = 'R:29 G:259 B:0';
+//   var expected = null;
+//   var got = _.color.rgbaStructureStrToRgba( src );
+//   test.identical( got, expected );
+
+//   test.case = 'second arg > 255, with slashes';
+//   var src = '(R29 / G259 / B30)';
+//   var expected = null;
+//   var got = _.color.rgbaStructureStrToRgba( src );
+//   test.identical( got, expected );
+
+// }
+
+//
+
 function hslStrToRgb( test )
 {
 
@@ -2887,6 +3233,8 @@ let Self =
     hexStrToRgba,
     rgbStrToRgb,
     rgbaStrToRgba,
+    rgbStructureStrToRgb,
+    // rgbaStructureStrToRgba,
     hslStrToRgb,
     hslaStrToRgba,
     xyzStrToRgb,
