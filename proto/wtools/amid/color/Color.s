@@ -1159,53 +1159,17 @@ function paler( rgb, factor )
 // to rgb/a
 // --
 
-function stringToRgb( src )
+function _cmykStrToRgb( src )
 {
-  _.assert( arguments.length === 1, 'Expects single argument' );
-  _.assert( _.strIs( src ) );
-
-  let result = stringToRgba.call( this, src );
-
-  return _.longSlice( result, 0, 3 );
-
-}
-
-//
-
-function stringToRgba( src )
-{
-  _.assert( _.strIs( src ) );
-}
-
-//
-
-function complexToRgb( src )
-{
-  _.assert( arguments.length === 1, 'Expects single argument' );
-  _.assert( _.strIs( string ) );
-
-  let result = complexToRgba.call( this, src );
-
-  return _.longSlice( result, 0, 3 );
-}
-
-//
-
-function complexToRgba( src )
-{
-  _.assert( _.strIs( string ) );
-}
-
-//
-
-function cmykStrToRgb( src )
-{
-  /* cmyk(C, M, Y, K) */
+  /*
+    - cmyk(C, M, Y, K)
+    - C100/M80/Y0/K35
+  */
 
   _.assert( arguments.length === 1, 'Expects single argument' );
   _.assert( _.strIs( src ) );
 
-  let result = cmykStrToRgba.call( this, src );
+  let result = _.color._cmykStrToRgba( src );
 
   if( result )
   return _.longSlice( result, 0, 3 );
@@ -1215,82 +1179,52 @@ function cmykStrToRgb( src )
 
 //
 
-function cmykStrToRgba( src )
+function _cmykStrToRgba( src )
 {
-  /* cmyk(C, M, Y, K) */
+  /*
+    - cmyk(C, M, Y, K)
+    - C100/M80/Y0/K35
+  */
 
   _.assert( arguments.length === 1, 'Expects single argument' );
   _.assert( _.strIs( src ) );
 
-  let colorArr = src.slice( 5 ).split( ',' );
+  let [ C, M, Y, K ] = _.color._formatStringParse( src );
 
-  let C = parseInt( colorArr[ 0 ] );
-  let M = parseInt( colorArr[ 1 ] );
-  let Y = parseInt( colorArr[ 2 ] );
-  let K = parseInt( colorArr[ 3 ] );
-
-  if( !verify( C ) || !verify( M ) || !verify( Y ) || !verify( K ) )
+  if
+  (
+    !_validateRangeInclusive( C, 0, 100 )
+    || !_validateRangeInclusive( M, 0, 100 )
+    || !_validateRangeInclusive( Y, 0, 100 )
+    || !_validateRangeInclusive( K, 0, 100 )
+  )
   return null;
 
-  let r = ( 1 - C / 100 ) * ( 1 - K / 100 );
-  let g = ( 1 - M / 100 ) * ( 1 - K / 100 );
-  let b = ( 1 - Y / 100 ) * ( 1 - K / 100 );
-  let a = 1;
-
-  return [ r, g, b, a ];
+  return convert();
 
   /* - */
 
-  function verify( arg )
+  function convert()
   {
-    return arg <= 100 && arg >= 0;
+    let r = ( 1 - C / 100 ) * ( 1 - K / 100 );
+    let g = ( 1 - M / 100 ) * ( 1 - K / 100 );
+    let b = ( 1 - Y / 100 ) * ( 1 - K / 100 );
+    let a = 1;
+
+    return [ r, g, b, a ]
   }
 }
 
 //
 
-function cmykStructureStrToRgb( src )
-{
-  /* C100/M80/Y0/K35 */
-
-  _.assert( arguments.length === 1, 'Expects single argument' );
-  _.assert( _.strIs( src ) );
-
-  let result = cmykStructureStrToRgba.call( this, src );
-
-  if( result )
-  return _.longSlice( result, 0, 3 );
-
-  return null;
-}
-
-//
-
-function cmykStructureStrToRgba( src )
-{
-  /* C100/M80/Y0/K35 */
-
-  _.assert( arguments.length === 1, 'Expects single argument' );
-  _.assert( _.strIs( src ) );
-
-  let numbers = src.match( /\d+/g );
-
-  let cmykString = 'cmyk(' + numbers[ 0 ] + ', ' + numbers[ 1 ] + ', ' + numbers[ 2 ] + ', ' + numbers[ 3 ] + ')';
-
-  return cmykStrToRgba.call( this, cmykString );
-
-}
-
-//
-
-function hwbStrToRgb( src )
+function _hwbStrToRgb( src )
 {
   /* hwb(H, W, B) */
 
   _.assert( arguments.length === 1, 'Expects single argument' );
   _.assert( _.strIs( src ) );
 
-  let result = hwbStrToRgba.call( this, src );
+  let result = _.color._hwbStrToRgba( src );
 
   if( result )
   return _.longSlice( result, 0, 3 );
@@ -1300,75 +1234,74 @@ function hwbStrToRgb( src )
 
 //
 
-function hwbStrToRgba( src )
+function _hwbStrToRgba( src )
 {
   /* hwb(H, W, B) */
 
   _.assert( arguments.length === 1, 'Expects single argument' );
   _.assert( _.strIs( src ) );
 
-  let colorArr = src.slice( 4 ).split( ',' );
+  let [ H, W, B ] = _.color._formatStringParse( src );
 
-  let H = parseInt( colorArr[ 0 ] );
-  let W = parseInt( colorArr[ 1 ] );
-  let B = parseInt( colorArr[ 2 ] );
-
-  if( !verify() )
+  if
+  (
+    !_validateRangeInclusive( H, 0, 360 )
+    || !_validateRangeInclusive( W, 0, 100 )
+    || !_validateRangeInclusive( B, 0, 100 )
+  )
   return null;
 
-  let h = H / 360;
-  let wh = W / 100;
-  let bl = B / 100;
-  let ratio = wh + bl;
-  let i, v, f, n;
-
-  // wh + bl cannot be > 1
-  if( ratio > 1 )
-  {
-    wh /= ratio;
-    bl /= ratio;
-  }
-
-  i = Math.floor( 6 * h );
-  v = 1 - bl;
-  f = 6 * h - i;
-
-  if( ( i & 0x01 ) !== 0 )
-  {
-    f = 1 - f;
-  }
-
-  n = wh + f * ( v - wh ); // linear interpolation
-
-  let r, g, b;
-
-  switch( i )
-  {
-  case 6 :
-  case 0 : r = v; g = n; b = wh; break;
-  case 1 : r = n; g = v; b = wh; break;
-  case 2 : r = wh; g = v; b = n; break;
-  case 3 : r = wh; g = n; b = v; break;
-  case 4 : r = n; g = wh; b = v; break;
-  case 5 : r = v; g = wh; b = n; break;
-  default : break;
-  }
-
-  return [ r, g, b, 1 ]
+  return convert();
 
   /* - */
 
-  function verify()
+  function convert()
   {
-    return ( H >= 0 && H <= 360 )
-           && ( W >= 0 && W <= 100 )
-           && ( B >= 0 && B <= 100 )
+    let h = H / 360;
+    let wh = W / 100;
+    let bl = B / 100;
+    let ratio = wh + bl;
+    let i, v, f, n;
+
+    // wh + bl cannot be > 1
+    if( ratio > 1 )
+    {
+      wh /= ratio;
+      bl /= ratio;
+    }
+
+    i = Math.floor( 6 * h );
+    v = 1 - bl;
+    f = 6 * h - i;
+
+    if( ( i & 0x01 ) !== 0 )
+    {
+      f = 1 - f;
+    }
+
+    n = wh + f * ( v - wh ); // linear interpolation
+
+    let r, g, b;
+
+    switch( i )
+    {
+    case 6 :
+    case 0 : r = v; g = n; b = wh; break;
+    case 1 : r = n; g = v; b = wh; break;
+    case 2 : r = wh; g = v; b = n; break;
+    case 3 : r = wh; g = n; b = v; break;
+    case 4 : r = n; g = wh; b = v; break;
+    case 5 : r = v; g = wh; b = n; break;
+    default : break;
+    }
+
+    return [ r, g, b, 1 ]
   }
 }
 
 //
 
-function hexStrToRgb( src )
+function _hexStrToRgb( src )
 {
   /*
     #RGB[A]
@@ -1378,7 +1311,7 @@ function hexStrToRgb( src )
   _.assert( arguments.length === 1, 'Expects single argument' );
   _.assert( _.strIs( src ) );
 
-  let result = hexStrToRgba.call( this, src );
+  let result = _.color._hexStrToRgba( src );
 
   if( result )
   return _.longSlice( result, 0, 3 );
@@ -1388,25 +1321,25 @@ function hexStrToRgb( src )
 
 //
 
-function hexStrToRgba( src )
+function _hexStrToRgba( src )
 {
   /*
     #RGB[A]
     #RRGGBB[AA]
   */
 
-  return hexToColor.call( this, src );
+  return _.color.hexToColor( src );
 
 }
 
 //
 
-function rgbStrToRgb( src )
+function _rgbStrToRgb( src )
 {
   _.assert( arguments.length === 1, 'Expects single argument' );
   _.assert( _.strIs( src ) );
 
-  let result = rgbaStrToRgba.call( this, src );
+  let result = _.color._rgbaStrToRgba( src );
 
   if( result )
   return _.longSlice( result, 0, 3 );
@@ -1416,56 +1349,45 @@ function rgbStrToRgb( src )
 
 //
 
-function rgbaStrToRgba( src )
+function _rgbaStrToRgba( src ) /* parse alpha */
 {
   _.assert( arguments.length === 1, 'Expects single argument' );
   _.assert( _.strIs( src ) );
 
-  let result = rgbaHtmlToRgba.call( this, src );
+  let [ r, g, b, a ] = _.color._formatStringParse( src );
 
-  result[ 0 ] = result[ 0 ] * 255;
-  result[ 1 ] = result[ 1 ] * 255;
-  result[ 2 ] = result[ 2 ] * 255;
-
-  if( !verify() )
+  if
+  (
+    !_.color._validateRangeInclusive( r, 0, 255 )
+    || !_.color._validateRangeInclusive( g, 0, 255 )
+    || !_.color._validateRangeInclusive( b, 0, 255 )
+  )
   return null;
+
+  let result =
+  [
+    r / 255,
+    g / 255,
+    b / 255,
+  ]
+
+  if( a && _.color._validateRangeInclusive( a, 0, 1 ) )
+  result.push( a );
 
   return result;
 
-  function verify()
-  {
-    return ( result[ 0 ] >= 0 && result[ 0 ] <= 255 )
-           && ( result[ 1 ] >= 0 && result[ 1 ] <= 255 )
-           && ( result[ 2 ] >= 0 && result[ 2 ] <= 255 )
-  }
-}
-
-//
-
-function rgbStructureStrToRgb( src )
-{
-  _.assert( arguments.length === 1, 'Expects single argument' );
-  _.assert( _.strIs( src ) );
+  // return _.color.rgbaHtmlToRgba( src );
 
 }
 
 //
 
-// function rgbaStructureStrToRgba( src )
-// {
-//   _.assert( arguments.length === 1, 'Expects single argument' );
-//   _.assert( _.strIs( src ) );
-
-// }
-
-//
-
-function hslStrToRgb( src )
+function _hslStrToRgb( src )
 {
   _.assert( arguments.length === 1, 'Expects single argument' );
   _.assert( _.strIs( src ) );
 
-  let result = hslaStrToRgba.call( this, src );
+  let result = _.color._hslaStrToRgba( src );
 
   if( result )
   return _.longSlice( result, 0, 3 );
@@ -1475,7 +1397,7 @@ function hslStrToRgb( src )
 
 //
 
-function hslaStrToRgba( src )
+function _hslaStrToRgba( src )
 {
   _.assert( arguments.length === 1, 'Expects single argument' );
   _.assert( _.strIs( src ) );
@@ -1483,12 +1405,12 @@ function hslaStrToRgba( src )
 
 //
 
-function xyzStrToRgb( src )
+function _xyzStrToRgb( src )
 {
   _.assert( arguments.length === 1, 'Expects single argument' );
   _.assert( _.strIs( src ) );
 
-  let result = xyzStrToRgba.call( this, src );
+  let result = _.color._xyzStrToRgba( src );
 
   if( result )
   return _.longSlice( result, 0, 3 );
@@ -1498,7 +1420,7 @@ function xyzStrToRgb( src )
 
 //
 
-function xyzStrToRgba( src )
+function _xyzStrToRgba( src )
 {
   _.assert( arguments.length === 1, 'Expects single argument' );
   _.assert( _.strIs( src ) );
@@ -1506,12 +1428,12 @@ function xyzStrToRgba( src )
 
 //
 
-function labStrToRgb( src )
+function _labStrToRgb( src )
 {
   _.assert( arguments.length === 1, 'Expects single argument' );
   _.assert( _.strIs( src ) );
 
-  let result = labStrToRgba.call( this, src );
+  let result = _.color._labStrToRgba( src );
 
   if( result )
   return _.longSlice( result, 0, 3 );
@@ -1521,7 +1443,7 @@ function labStrToRgb( src )
 
 //
 
-function labStrToRgba( src )
+function _labStrToRgba( src )
 {
   _.assert( arguments.length === 1, 'Expects single argument' );
   _.assert( _.strIs( src ) );
@@ -1529,12 +1451,12 @@ function labStrToRgba( src )
 
 //
 
-function lchStrToRgb( src )
+function _lchStrToRgb( src )
 {
   _.assert( arguments.length === 1, 'Expects single argument' );
   _.assert( _.strIs( src ) );
 
-  let result = lchStrToRgba.call( this, src );
+  let result = _.color._lchStrToRgba( src );
 
   if( result )
   return _.longSlice( result, 0, 3 );
@@ -1544,7 +1466,7 @@ function lchStrToRgb( src )
 
 //
 
-function lchStrToRgba( src )
+function _lchStrToRgba( src )
 {
   _.assert( arguments.length === 1, 'Expects single argument' );
   _.assert( _.strIs( src ) );
@@ -1552,12 +1474,12 @@ function lchStrToRgba( src )
 
 //
 
-function luvStrToRgb( src )
+function _luvStrToRgb( src )
 {
   _.assert( arguments.length === 1, 'Expects single argument' );
   _.assert( _.strIs( src ) );
 
-  let result = luvStrToRgba.call( this, src );
+  let result = _.color._luvStrToRgba( src );
 
   if( result )
   return _.longSlice( result, 0, 3 );
@@ -1567,10 +1489,22 @@ function luvStrToRgb( src )
 
 //
 
-function luvStrToRgba( src )
+function _luvStrToRgba( src )
 {
   _.assert( arguments.length === 1, 'Expects single argument' );
   _.assert( _.strIs( src ) );
+}
+
+//
+
+function _formatStringParse( src )
+{
+  return src.match( /\d+/g ).map( ( el ) => parseInt( el ) );
+}
+
+function _validateRangeInclusive( val, lower, upper )
+{
+  return ( val >= lower ) && ( val <= upper );
 }
 
 // --
@@ -2045,32 +1979,35 @@ let Extension =
 
   // to rgb/a
 
-  stringToRgb,
-  stringToRgba,
-  complexToRgb,
-  complexToRgba,
+  _cmykStrToRgb, /* tested++ */
+  _cmykStrToRgba, /* tested++ */
 
-  cmykStrToRgb, /* tested */
-  cmykStrToRgba, /* tested */
-  cmykStructureStrToRgb, /* tested */
-  cmykStructureStrToRgba, /* tested */
-  hwbStrToRgb, /* tested */
-  hwbStrToRgba, /* tested */
-  hexStrToRgb,
-  hexStrToRgba,
-  rgbStrToRgb,
-  rgbaStrToRgba,
-  rgbStructureStrToRgb,
-  hslStrToRgb,
-  hslaStrToRgba,
-  xyzStrToRgb,
-  xyzStrToRgba,
-  labStrToRgb,
-  labStrToRgba,
-  lchStrToRgb,
-  lchStrToRgba,
-  luvStrToRgb,
-  luvStrToRgba,
+  _hwbStrToRgb, /* tested+ */
+  _hwbStrToRgba, /* tested+ */
+
+  _hexStrToRgb, /* tested */
+  _hexStrToRgba, /* tested */
+
+  _rgbStrToRgb,
+  _rgbaStrToRgba,
+
+  _hslStrToRgb,
+  _hslaStrToRgba,
+
+  _xyzStrToRgb,
+  _xyzStrToRgba,
+
+  _labStrToRgb,
+  _labStrToRgba,
+
+  _lchStrToRgb,
+  _lchStrToRgba,
+
+  _luvStrToRgb,
+  _luvStrToRgba,
+
+  _formatStringParse,
+  _validateRangeInclusive,
 
 
   // int
