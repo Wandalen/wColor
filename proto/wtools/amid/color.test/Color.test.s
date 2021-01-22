@@ -1208,19 +1208,19 @@ function hwbStrToRgb( test )
 
   test.case = 'hwb(45, 1%, 36%)';
   var src = 'hwb(45, 1%, 36%)';
-  var expected = [ 164, 123, 2 ];
+  var expected = [ 163, 123, 3 ];
   var got = _.color.hwbStrToRgb( src );
   test.identical( got, expected );
 
   test.case = 'hwb(158, 12%, 6%)';
   var src = 'hwb(158, 12%, 6%)';
-  var expected = [ 31, 240, 162 ];
+  var expected = [ 31, 240, 163 ];
   var got = _.color.hwbStrToRgb( src );
   test.identical( got, expected );
 
   test.case = 'hwb(55, 24%, 15%)';
   var src = 'hwb(55, 24%, 15%)';
-  var expected = [ 218, 206, 61 ];
+  var expected = [ 217, 204, 61 ];
   var got = _.color.hwbStrToRgb( src );
   test.identical( got, expected );
 
@@ -1303,19 +1303,19 @@ function hwbStrToRgba( test )
 
   test.case = 'hwb(45, 1%, 36%)';
   var src = 'hwb(45, 1%, 36%)';
-  var expected = [ 164, 123, 2, 1 ];
+  var expected = [ 163, 123, 3, 1 ];
   var got = _.color.hwbStrToRgba( src );
   test.identical( got, expected );
 
   test.case = 'hwb(158, 12%, 6%)';
   var src = 'hwb(158, 12%, 6%)';
-  var expected = [ 31, 240, 162, 1 ];
+  var expected = [ 31, 240, 163, 1 ];
   var got = _.color.hwbStrToRgba( src );
   test.identical( got, expected );
 
   test.case = 'hwb(55, 24%, 15%)';
   var src = 'hwb(55, 24%, 15%)';
-  var expected = [ 218, 206, 61, 1 ];
+  var expected = [ 217, 204, 61, 1 ];
   var got = _.color.hwbStrToRgba( src );
   test.identical( got, expected );
 

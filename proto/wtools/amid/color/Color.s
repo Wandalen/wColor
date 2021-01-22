@@ -1239,6 +1239,8 @@ function cmykStrToRgba( src )
 
   return [ r, g, b, a ];
 
+  /* - */
+
   function verify( arg )
   {
     return arg <= 100 && arg >= 0;
@@ -1320,7 +1322,7 @@ function hwbStrToRgba( src )
   let ratio = wh + bl;
   let i, v, f, n;
 
-  // wh + bl cant be > 1
+  // wh + bl cannot be > 1
   if( ratio > 1 )
   {
     wh /= ratio;
@@ -1342,7 +1344,6 @@ function hwbStrToRgba( src )
 
   switch( i )
   {
-  default :
   case 6 :
   case 0 : r = v; g = n; b = wh; break;
   case 1 : r = n; g = v; b = wh; break;
@@ -1350,11 +1351,12 @@ function hwbStrToRgba( src )
   case 3 : r = wh; g = n; b = v; break;
   case 4 : r = n; g = wh; b = v; break;
   case 5 : r = v; g = wh; b = n; break;
+  default : break;
   }
 
   return [ Math.round( r * 255 ), Math.round( g * 255 ), Math.round( b * 255 ), 1 ]
 
-  /* Implement */
+  /* - */
 
   function verify()
   {
@@ -1378,7 +1380,6 @@ function hexStrToRgb( src )
 
   return null;
 }
-
 
 //
 
@@ -2063,8 +2064,8 @@ let Extension =
   cmykStrToRgba, /* tested */
   cmykStructureStrToRgb, /* tested */
   cmykStructureStrToRgba, /* tested */
-  hwbStrToRgb,
-  hwbStrToRgba,
+  hwbStrToRgb, /* tested */
+  hwbStrToRgba, /* tested */
   hexStrToRgb,
   hexStrToRgba,
   rgbStrToRgb,
