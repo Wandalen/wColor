@@ -1390,6 +1390,14 @@ function hexStrToRgba( src )
   _.assert( arguments.length === 1, 'Expects single argument' );
   _.assert( _.strIs( src ) );
 
+  let result = hexToColor.call( this, src );
+
+  if( !result )
+  return null;
+
+  if( result.length === 3 )
+  return [ result[ 0 ]*255, result[ 1 ]*255, result[ 2 ]*255 ];
+
   // let colorArr = string.slice( 4 ).split( ',' );
 
   // let H = parseInt( colorArr[ 0 ] );
