@@ -830,25 +830,25 @@ function cmykStrToRgb( test )
   var src = 'cmyk(12%,34%,99%,27%)';
   var expected = [ 0.6431372549019608, 0.4823529411764706, 0.00784313725490196 ];
   var got = _.color.cmykStrToRgb( src );
-  test.identical( got, expected );
+  test.equivalent( got, expected );
 
   test.case = 'cmyk(87%,1%,33%,5%)';
   var src = 'cmyk(87%,1%,33%,5%)';
   var expected = [ 0.12156862745098039, 0.9411764705882353, 0.6352941176470588 ];
   var got = _.color.cmykStrToRgb( src );
-  test.identical( got, expected );
+  test.equivalent( got, expected );
 
   test.case = 'cmyk(11%,16%,75%,4%)';
   var src = 'cmyk(11%,16%,75%,4%)';
   var expected = [ 0.8549019607843137, 0.807843137254902, 0.23921568627450981 ];
   var got = _.color.cmykStrToRgb( src );
-  test.identical( got, expected );
+  test.equivalent( got, expected );
 
   test.close( 'non basic colors' );
 
 }
 
-cmykStrToRgb.accuracy = 2e-3;
+cmykStrToRgb.accuracy = 1e-2;
 
 //
 
@@ -915,19 +915,19 @@ function cmykStrToRgba( test )
   var src = 'cmyk(12%,34%,99%,27%)';
   var expected = [ 0.6431372549019608, 0.4823529411764706, 0.00784313725490196, 1 ];
   var got = _.color.cmykStrToRgba( src );
-  test.identical( got, expected );
+  test.equivalent( got, expected );
 
   test.case = 'cmyk(87%,1%,33%,5%)';
   var src = 'cmyk(87%,1%,33%,5%)';
   var expected = [ 0.12156862745098039, 0.9411764705882353, 0.6352941176470588, 1 ];
   var got = _.color.cmykStrToRgba( src );
-  test.identical( got, expected );
+  test.equivalent( got, expected );
 
   test.case = 'cmyk(11%,16%,75%,4%)';
   var src = 'cmyk(11%,16%,75%,4%)';
   var expected = [ 0.8549019607843137, 0.807843137254902, 0.23921568627450981, 1 ];
   var got = _.color.cmykStrToRgba( src );
-  test.identical( got, expected );
+  test.equivalent( got, expected );
 
   test.close( 'non basic colors' );
 
@@ -957,7 +957,7 @@ function cmykStrToRgba( test )
 
 }
 
-cmykStrToRgba.accuracy = 2e-3;
+cmykStrToRgba.accuracy = 1e-2;
 
 //
 
@@ -1024,25 +1024,25 @@ function cmykStructureStrToRgb( test )
   var src = 'C12/M34/Y99/K27';
   var expected = [ 0.6431372549019608, 0.4823529411764706, 0.00784313725490196 ];
   var got = _.color.cmykStructureStrToRgb( src );
-  test.identical( got, expected );
+  test.equivalent( got, expected );
 
   test.case = 'C87/M1/Y33/K5';
   var src = 'C87/M1/Y33/K5';
   var expected = [ 0.12156862745098039, 0.9411764705882353, 0.6352941176470588 ];
   var got = _.color.cmykStructureStrToRgb( src );
-  test.identical( got, expected );
+  test.equivalent( got, expected );
 
   test.case = 'C11/M16/Y75/K4';
   var src = 'C11/M16/Y75/K4';
   var expected = [ 0.8549019607843137, 0.807843137254902, 0.23921568627450981 ];
   var got = _.color.cmykStructureStrToRgb( src );
-  test.identical( got, expected );
+  test.equivalent( got, expected );
 
   test.close( 'non basic colors' );
 
 }
 
-cmykStructureStrToRgb.accuracy = 2e-3;
+cmykStructureStrToRgb.accuracy = 1e-2;
 
 //
 
@@ -1109,19 +1109,19 @@ function cmykStructureStrToRgba( test )
   var src = 'C12/M34/Y99/K27';
   var expected = [ 0.6431372549019608, 0.4823529411764706, 0.00784313725490196, 1 ];
   var got = _.color.cmykStructureStrToRgba( src );
-  test.identical( got, expected );
+  test.equivalent( got, expected );
 
   test.case = 'C87/M1/Y33/K5';
   var src = 'C87/M1/Y33/K5';
   var expected = [ 0.12156862745098039, 0.9411764705882353, 0.6352941176470588, 1 ];
   var got = _.color.cmykStructureStrToRgba( src );
-  test.identical( got, expected );
+  test.equivalent( got, expected );
 
   test.case = 'C11/M16/Y75/K4';
   var src = 'C11/M16/Y75/K4';
   var expected = [ 0.8549019607843137, 0.807843137254902, 0.23921568627450981, 1 ];
   var got = _.color.cmykStructureStrToRgba( src );
-  test.identical( got, expected );
+  test.equivalent( got, expected );
 
   test.close( 'non basic colors' );
 
@@ -1151,7 +1151,7 @@ function cmykStructureStrToRgba( test )
 
 }
 
-cmykStructureStrToRgba.accuracy = 2e-3;
+cmykStructureStrToRgba.accuracy = 1e-2;
 
 //
 
@@ -1218,19 +1218,19 @@ function hwbStrToRgb( test )
   var src = 'hwb(45, 1%, 36%)';
   var expected = [ 0.6392156862745098, 0.4823529411764706, 0.011764705882352941 ];
   var got = _.color.hwbStrToRgb( src );
-  test.identical( got, expected );
+  test.equivalent( got, expected );
 
   test.case = 'hwb(158, 12%, 6%)';
   var src = 'hwb(158, 12%, 6%)';
   var expected = [ 0.12156862745098039, 0.9411764705882353, 0.6392156862745098 ];
   var got = _.color.hwbStrToRgb( src );
-  test.identical( got, expected );
+  test.equivalent( got, expected );
 
   test.case = 'hwb(55, 24%, 15%)';
   var src = 'hwb(55, 24%, 15%)';
   var expected = [ 0.8509803921568627, 0.8, 0.23921568627450981 ];
   var got = _.color.hwbStrToRgb( src );
-  test.identical( got, expected );
+  test.equivalent( got, expected );
 
   test.close( 'non basic colors' );
 
@@ -1247,6 +1247,8 @@ function hwbStrToRgb( test )
   test.identical( got, expected );
 
 }
+
+hwbStrToRgb.accuracy = 1e-2;
 
 //
 
@@ -1313,19 +1315,19 @@ function hwbStrToRgba( test )
   var src = 'hwb(45, 1%, 36%)';
   var expected = [ 0.6392156862745098, 0.4823529411764706, 0.011764705882352941, 1 ];
   var got = _.color.hwbStrToRgba( src );
-  test.identical( got, expected );
+  test.equivalent( got, expected );
 
   test.case = 'hwb(158, 12%, 6%)';
   var src = 'hwb(158, 12%, 6%)';
   var expected = [ 0.12156862745098039, 0.9411764705882353, 0.6392156862745098, 1 ];
   var got = _.color.hwbStrToRgba( src );
-  test.identical( got, expected );
+  test.equivalent( got, expected );
 
   test.case = 'hwb(55, 24%, 15%)';
   var src = 'hwb(55, 24%, 15%)';
   var expected = [ 0.8509803921568627, 0.8, 0.23921568627450981, 1 ];
   var got = _.color.hwbStrToRgba( src );
-  test.identical( got, expected );
+  test.equivalent( got, expected );
 
   test.close( 'non basic colors' );
 
@@ -1348,6 +1350,8 @@ function hwbStrToRgba( test )
   test.identical( got, expected );
 
 }
+
+hwbStrToRgba.accuracy = 1e-2;
 
 //
 
@@ -2861,7 +2865,7 @@ function labStrToRgba( test )
 
   test.case = 'lab(81.91, -7.33, 68.85)';
   var src = 'lab(81.91, -7.33, 68.85)';
-  var expected = [ 0.8549019607843137, 0.807843137254902, 0.23921568627450981 , 1 ];
+  var expected = [ 0.8549019607843137, 0.807843137254902, 0.23921568627450981, 1 ];
   var got = _.color.labStrToRgba( src );
   test.identical( got, expected );
 
@@ -3280,21 +3284,21 @@ let Self =
     cmykStructureStrToRgba,
     hwbStrToRgb,
     hwbStrToRgba,
-    hexStrToRgb,
-    hexStrToRgba,
-    rgbStrToRgb,
-    rgbaStrToRgba,
-    rgbStructureStrToRgb,
-    hslStrToRgb,
-    hslaStrToRgba,
-    xyzStrToRgb,
-    xyzStrToRgba,
-    labStrToRgb,
-    labStrToRgba,
-    lchStrToRgb,
-    lchStrToRgba,
-    luvStrToRgb,
-    luvStrToRgba,
+    // hexStrToRgb,
+    // hexStrToRgba,
+    // rgbStrToRgb,
+    // rgbaStrToRgba,
+    // rgbStructureStrToRgb,
+    // hslStrToRgb,
+    // hslaStrToRgba,
+    // xyzStrToRgb,
+    // xyzStrToRgba,
+    // labStrToRgb,
+    // labStrToRgba,
+    // lchStrToRgb,
+    // lchStrToRgba,
+    // luvStrToRgb,
+    // luvStrToRgba,
 
   },
 

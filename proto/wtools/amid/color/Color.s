@@ -1232,9 +1232,9 @@ function cmykStrToRgba( src )
   if( !verify( C ) || !verify( M ) || !verify( Y ) || !verify( K ) )
   return null;
 
-  let r = Math.round( 255 * ( 1 - C / 100 ) * ( 1 - K / 100 ) );
-  let g = Math.round( 255 * ( 1 - M / 100 ) * ( 1 - K / 100 ) );
-  let b = Math.round( 255 * ( 1 - Y / 100 ) * ( 1 - K / 100 ) );
+  let r = ( 1 - C / 100 ) * ( 1 - K / 100 );
+  let g = ( 1 - M / 100 ) * ( 1 - K / 100 );
+  let b = ( 1 - Y / 100 ) * ( 1 - K / 100 );
   let a = 1;
 
   return [ r, g, b, a ];
@@ -1354,7 +1354,7 @@ function hwbStrToRgba( src )
   default : break;
   }
 
-  return [ Math.round( r * 255 ), Math.round( g * 255 ), Math.round( b * 255 ), 1 ]
+  return [ r, g, b, 1 ]
 
   /* - */
 
@@ -2079,7 +2079,6 @@ let Extension =
   rgbStrToRgb,
   rgbaStrToRgba,
   rgbStructureStrToRgb,
-  // rgbaStructureStrToRgba,
   hslStrToRgb,
   hslaStrToRgba,
   xyzStrToRgb,
