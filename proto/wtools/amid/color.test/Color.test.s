@@ -2300,37 +2300,37 @@ function _hslStrToRgb( test )
   var src = 'hsl(45, 98%, 33%)';
   var expected = [ 0.6431372549019608, 0.4823529411764706, 0.00784313725490196 ];
   var got = _.color._hslStrToRgb( src );
-  test.identical( got, expected );
+  test.equivalent( got, expected );
 
   test.case = 'hsl(45 98% 33%)';
   var src = 'hsl(45 98% 33%)';
   var expected = [ 0.6431372549019608, 0.4823529411764706, 0.00784313725490196 ];
   var got = _.color._hslStrToRgb( src );
-  test.identical( got, expected );
+  test.equivalent( got, expected );
 
   test.case = 'hsl(158, 87%, 53%)';
   var src = 'hsl(158, 87%, 53%)';
   var expected = [ 0.12156862745098039, 0.9411764705882353, 0.6352941176470588 ];
   var got = _.color._hslStrToRgb( src );
-  test.identical( got, expected );
+  test.equivalent( got, expected );
 
   test.case = 'hsl(158 87% 53%)';
   var src = 'hsl(158 87% 53%)';
   var expected = [ 0.12156862745098039, 0.9411764705882353, 0.6352941176470588 ];
   var got = _.color._hslStrToRgb( src );
-  test.identical( got, expected );
+  test.equivalent( got, expected );
 
   test.case = 'hsl(55, 68%, 55%)';
   var src = 'hsl(55, 68%, 55%)';
   var expected = [ 0.8549019607843137, 0.807843137254902, 0.23921568627450981 ];
   var got = _.color._hslStrToRgb( src );
-  test.identical( got, expected );
+  test.equivalent( got, expected );
 
   test.case = 'hsl(55 68% 55%)';
   var src = 'hsl(55 68% 55%)';
   var expected = [ 0.8549019607843137, 0.807843137254902, 0.23921568627450981 ];
   var got = _.color._hslStrToRgb( src );
-  test.identical( got, expected );
+  test.equivalent( got, expected );
 
   test.close( 'non basic colors' );
 
@@ -2359,6 +2359,8 @@ function _hslStrToRgb( test )
   test.identical( got, expected );
 
 }
+
+_hslStrToRgb.accuracy = 1e-2;
 
 //
 
@@ -2369,97 +2371,97 @@ function _hslaStrToRgba( test )
   test.open( 'basic colors' );
 
   test.case = 'Black';
-  var src = 'hsl(0, 0%, 0%, 1)';
+  var src = 'hsla(0, 0%, 0%, 1)';
   var expected = [ 0, 0, 0, 1 ];
   var got = _.color._hslaStrToRgba( src );
   test.identical( got, expected );
 
   test.case = 'Black with spaces';
-  var src = 'hsl(0 0% 0% 1)';
+  var src = 'hsla(0 0% 0% 1)';
   var expected = [ 0, 0, 0, 1 ];
   var got = _.color._hslaStrToRgba( src );
   test.identical( got, expected );
 
   test.case = 'White';
-  var src = 'hsl(0, 0%, 0%, 1)';
+  var src = 'hsla(0, 0%, 0%, 1)';
   var expected = [ 1, 1, 1, 1 ];
   var got = _.color._hslaStrToRgba( src );
   test.identical( got, expected );
 
   test.case = 'White with spaces';
-  var src = 'hsl(0 0% 0% 1)';
+  var src = 'hsla(0 0% 0% 1)';
   var expected = [ 1, 1, 1, 1 ];
   var got = _.color._hslaStrToRgba( src );
   test.identical( got, expected );
 
   test.case = 'Red';
-  var src = 'hsl(0, 100%, 50%, 1)';
+  var src = 'hsla(0, 100%, 50%, 1)';
   var expected = [ 1, 0, 0, 1 ];
   var got = _.color._hslaStrToRgba( src );
   test.identical( got, expected );
 
   test.case = 'Red with spaces';
-  var src = 'hsl(0 100% 50% 1)';
+  var src = 'hsla(0 100% 50% 1)';
   var expected = [ 1, 0, 0, 1 ];
   var got = _.color._hslaStrToRgba( src );
   test.identical( got, expected );
 
   test.case = 'Green';
-  var src = 'hsl(120, 100%, 50%, 1)';
+  var src = 'hsla(120, 100%, 50%, 1)';
   var expected = [ 0, 1, 0, 1 ];
   var got = _.color._hslaStrToRgba( src );
   test.identical( got, expected );
 
   test.case = 'Green with spaces';
-  var src = 'hsl(120 100% 50% 1)';
+  var src = 'hsla(120 100% 50% 1)';
   var expected = [ 0, 1, 0, 1 ];
   var got = _.color._hslaStrToRgba( src );
   test.identical( got, expected );
 
   test.case = 'Blue';
-  var src = 'hsl(240, 100%, 50%, 1)';
+  var src = 'hsla(240, 100%, 50%, 1)';
   var expected = [ 0, 0, 1, 1 ];
   var got = _.color._hslaStrToRgba( src );
   test.identical( got, expected );
 
   test.case = 'Blue with spaces';
-  var src = 'hsl(240 100% 50% 1)';
+  var src = 'hsla(240 100% 50% 1)';
   var expected = [ 0, 0, 1, 1 ];
   var got = _.color._hslaStrToRgba( src );
   test.identical( got, expected );
 
   test.case = 'Yellow';
-  var src = 'hsl(60, 100%, 50%, 1)';
+  var src = 'hsla(60, 100%, 50%, 1)';
   var expected = [ 1, 1, 0, 1 ];
   var got = _.color._hslaStrToRgba( src );
   test.identical( got, expected );
 
   test.case = 'Yellow with spaces';
-  var src = 'hsl(60 100% 50% 1)';
+  var src = 'hsla(60 100% 50% 1)';
   var expected = [ 1, 1, 0, 1 ];
   var got = _.color._hslaStrToRgba( src );
   test.identical( got, expected );
 
   test.case = 'Cyan';
-  var src = 'hsl(180, 100%, 50%, 1)';
+  var src = 'hsla(180, 100%, 50%, 1)';
   var expected = [ 0, 1, 1, 1 ];
   var got = _.color._hslaStrToRgba( src );
   test.identical( got, expected );
 
   test.case = 'Cyan with spaces';
-  var src = 'hsl(180 100% 50% 1)';
+  var src = 'hsla(180 100% 50% 1)';
   var expected = [ 0, 1, 1, 1 ];
   var got = _.color._hslaStrToRgba( src );
   test.identical( got, expected );
 
   test.case = 'Magenta';
-  var src = 'hsl(300, 100%, 50%, 1)';
+  var src = 'hsla(300, 100%, 50%, 1)';
   var expected = [ 1, 0, 1, 1 ];
   var got = _.color._hslaStrToRgba( src );
   test.identical( got, expected );
 
   test.case = 'Magenta with spaces';
-  var src = 'hsl(300 100% 50% 1)';
+  var src = 'hsla(300 100% 50% 1)';
   var expected = [ 1, 0, 1, 1 ];
   var got = _.color._hslaStrToRgba( src );
   test.identical( got, expected );
@@ -2470,69 +2472,71 @@ function _hslaStrToRgba( test )
 
   test.open( 'non basic colors' );
 
-  test.case = 'hsl(45, 98%, 33%, 0.5)';
-  var src = 'hsl(45, 98%, 33%, 0.5)';
+  test.case = 'hsla(45, 98%, 33%, 0.5)';
+  var src = 'hsla(45, 98%, 33%, 0.5)';
   var expected = [ 0.6431372549019608, 0.4823529411764706, 0.00784313725490196, 0.5 ];
   var got = _.color._hslaStrToRgba( src );
-  test.identical( got, expected );
+  test.equivalent( got, expected );
 
-  test.case = 'hsl(45 98% 33% 0.5)';
-  var src = 'hsl(45 98% 33% 0.5)';
+  test.case = 'hsla(45 98% 33% 0.5)';
+  var src = 'hsla(45 98% 33% 0.5)';
   var expected = [ 0.6431372549019608, 0.4823529411764706, 0.00784313725490196, 0.5 ];
   var got = _.color._hslaStrToRgba( src );
-  test.identical( got, expected );
+  test.equivalent( got, expected );
 
-  test.case = 'hsl(158, 87%, 53%, 0.34)';
-  var src = 'hsl(158, 87%, 53%, 0.34)';
+  test.case = 'hsla(158, 87%, 53%, 0.34)';
+  var src = 'hsla(158, 87%, 53%, 0.34)';
   var expected = [ 0.12156862745098039, 0.9411764705882353, 0.6352941176470588, 0.34 ];
   var got = _.color._hslaStrToRgba( src );
-  test.identical( got, expected );
+  test.equivalent( got, expected );
 
-  test.case = 'hsl(158 87% 53% 0.34)';
-  var src = 'hsl(158 87% 53% 0.34)';
+  test.case = 'hsla(158 87% 53% 0.34)';
+  var src = 'hsla(158 87% 53% 0.34)';
   var expected = [ 0.12156862745098039, 0.9411764705882353, 0.6352941176470588, 0.34 ];
   var got = _.color._hslaStrToRgba( src );
-  test.identical( got, expected );
+  test.equivalent( got, expected );
 
-  test.case = 'hsl(55, 68%, 55%, 0.19)';
-  var src = 'hsl(55, 68%, 55%, 0.19)';
+  test.case = 'hsla(55, 68%, 55%, 0.19)';
+  var src = 'hsla(55, 68%, 55%, 0.19)';
   var expected = [ 0.8549019607843137, 0.807843137254902, 0.23921568627450981, 0.19 ];
   var got = _.color._hslaStrToRgba( src );
-  test.identical( got, expected );
+  test.equivalent( got, expected );
 
-  test.case = 'hsl(55 68% 55% 0.19)';
-  var src = 'hsl(55 68% 55% 0.19)';
+  test.case = 'hsla(55 68% 55% 0.19)';
+  var src = 'hsla(55 68% 55% 0.19)';
   var expected = [ 0.8549019607843137, 0.807843137254902, 0.23921568627450981, 0.19 ];
   var got = _.color._hslaStrToRgba( src );
-  test.identical( got, expected );
+  test.equivalent( got, expected );
 
   test.close( 'non basic colors' );
 
   test.case = 'first arg > 360';
-  var src = 'hsl(366, 88%, 2%)';
+  var src = 'hsla(366, 88%, 2%)';
   var expected = null;
   var got = _.color._hslaStrToRgba( src );
   test.identical( got, expected );
 
   test.case = 'first arg > 360, with spaces';
-  var src = 'hsl(366 88% 2%)';
+  var src = 'hsla(366 88% 2%)';
   var expected = null;
   var got = _.color._hslaStrToRgba( src );
   test.identical( got, expected );
 
   test.case = 'second arg > 100';
-  var src = 'hsl(244, 102%, 2%)';
+  var src = 'hsla(244, 102%, 2%)';
   var expected = null;
   var got = _.color._hslaStrToRgba( src );
   test.identical( got, expected );
 
   test.case = 'second arg > 100, with space';
-  var src = 'hsl(244 102% 2%)';
+  var src = 'hsla(244 102% 2%)';
   var expected = null;
   var got = _.color._hslaStrToRgba( src );
   test.identical( got, expected );
 
 }
+
+_hslaStrToRgba.accuracy = 1e-2;
 
 //
 
@@ -2599,19 +2603,19 @@ function _xyzStrToRgb( test )
   var src = 'xyz(0.2382, 0.2246, 0.0248)';
   var expected = [ 0.6431372549019608, 0.4823529411764706, 0.00784313725490196 ];
   var got = _.color._xyzStrToRgb( src );
-  test.identical( got, expected );
+  test.equivalent( got, expected );
 
   test.case = 'xyz(0.3932, 0.6496, 0.3428)';
   var src = 'xyz(0.3932, 0.6496, 0.3428)';
   var expected = [ 0.12156862745098039, 0.9411764705882353, 0.6352941176470588 ];
   var got = _.color._xyzStrToRgb( src );
-  test.identical( got, expected );
+  test.equivalent( got, expected );
 
   test.case = 'xyz(0.5501, 0.6013, 0.1030)';
   var src = 'xyz(0.5501, 0.6013, 0.1030)';
   var expected = [ 0.8549019607843137, 0.807843137254902, 0.23921568627450981 ];
   var got = _.color._xyzStrToRgb( src );
-  test.identical( got, expected );
+  test.equivalent( got, expected );
 
   test.close( 'non basic colors' );
 
@@ -2628,6 +2632,8 @@ function _xyzStrToRgb( test )
   test.identical( got, expected );
 
 }
+
+_xyzStrToRgb.accuracy = 1e-2;
 
 //
 
@@ -2724,6 +2730,8 @@ function _xyzStrToRgba( test )
 
 }
 
+_xyzStrToRgba.accuracy = 1e-2;
+
 //
 
 function _labStrToRgb( test )
@@ -2819,6 +2827,8 @@ function _labStrToRgb( test )
 
 }
 
+_labStrToRgb.accuracy = 1e-2;
+
 //
 
 function _labStrToRgba( test )
@@ -2901,6 +2911,8 @@ function _labStrToRgba( test )
   test.close( 'non basic colors' );
 
 }
+
+_labStrToRgba.accuracy = 1e-2;
 
 //
 
@@ -2991,6 +3003,8 @@ function _lchStrToRgb( test )
 
 }
 
+_lchStrToRgb.accuracy = 1e-2;
+
 //
 
 function _lchStrToRgba( test )
@@ -3079,6 +3093,8 @@ function _lchStrToRgba( test )
   test.identical( got, expected );
 
 }
+
+_lchStrToRgba.accuracy = 1e-2;
 
 //
 
@@ -3181,6 +3197,8 @@ function _luvStrToRgb( test )
 
 }
 
+_luvStrToRgb.accuracy = 1e-2;
+
 //
 
 function _luvStrToRgba( test )
@@ -3282,6 +3300,8 @@ function _luvStrToRgba( test )
 
 }
 
+_luvStrToRgba.accuracy = 1e-2;
+
 
 // --
 // declare
@@ -3320,10 +3340,10 @@ let Self =
     _hexStrToRgb,
     _hexStrToRgba,
 
-    // _rgbStrToRgb,
-    // _rgbaStrToRgba,
-    // rgbStrWithDelimiterSpaceToRgb,
-    // rgbStrWithDelimiterSlashToRgb,
+    _rgbStrToRgb,
+    _rgbaStrToRgba,
+    rgbStrWithDelimiterSpaceToRgb,
+    rgbStrWithDelimiterSlashToRgb,
 
     // _hslStrToRgb,
     // _hslaStrToRgba,

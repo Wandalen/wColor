@@ -1349,7 +1349,7 @@ function _rgbStrToRgb( src )
 
 //
 
-function _rgbaStrToRgba( src ) /* parse alpha */
+function _rgbaStrToRgba( src )
 {
   _.assert( arguments.length === 1, 'Expects single argument' );
   _.assert( _.strIs( src ) );
@@ -1499,7 +1499,7 @@ function _luvStrToRgba( src )
 
 function _formatStringParse( src )
 {
-  return src.match( /\d+/g ).map( ( el ) => parseInt( el ) );
+  return src.match( /\d+(\.\d+)?/g ).map( ( el ) => +el );
 }
 
 function _validateRangeInclusive( val, lower, upper )
