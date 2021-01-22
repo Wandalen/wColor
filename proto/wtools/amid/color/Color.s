@@ -1370,8 +1370,13 @@ function hwbStrToRgba( src )
 
 function hexStrToRgb( src )
 {
+  /*
+    #RGB[A]
+    #RRGGBB[AA]
+  */
+
   _.assert( arguments.length === 1, 'Expects single argument' );
-  _.assert( _.strIs( string ) );
+  _.assert( _.strIs( src ) );
 
   let result = hexStrToRgba.call( this, src );
 
@@ -1385,36 +1390,13 @@ function hexStrToRgb( src )
 
 function hexStrToRgba( src )
 {
-  /* hwb(H, W, B), no alpha info */
+  /*
+    #RGB[A]
+    #RRGGBB[AA]
+  */
 
-  _.assert( arguments.length === 1, 'Expects single argument' );
-  _.assert( _.strIs( src ) );
+  return hexToColor.call( this, src );
 
-  let result = hexToColor.call( this, src );
-
-  if( !result )
-  return null;
-
-  if( result.length === 3 )
-  return [ result[ 0 ]*255, result[ 1 ]*255, result[ 2 ]*255 ];
-
-  // let colorArr = string.slice( 4 ).split( ',' );
-
-  // let H = parseInt( colorArr[ 0 ] );
-  // let W = parseInt( colorArr[ 1 ] );
-  // let B = parseInt( colorArr[ 2 ] );
-
-  // if( !verify() )
-  // return null;
-
-  // /* Implement */
-
-  // function verify()
-  // {
-  //   return ( H >= 0 && H <= 360 )
-  //          && ( W >= 0 && W <= 100 )
-  //          && ( B >= 0 && B <= 100 )
-  // }
 }
 
 //

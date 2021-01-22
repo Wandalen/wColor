@@ -1466,19 +1466,19 @@ function hexStrToRgb( test )
   var src = '#a47b02';
   var expected = [ 0.6431372549019608, 0.4823529411764706, 0.00784313725490196 ];
   var got = _.color.hexStrToRgb( src );
-  test.identical( got, expected );
+  test.equivalent( got, expected );
 
   test.case = '#1ff0a2';
   var src = '#1ff0a2';
   var expected = [ 0.12156862745098039, 0.9411764705882353, 0.6352941176470588 ];
   var got = _.color.hexStrToRgb( src );
-  test.identical( got, expected );
+  test.equivalent( got, expected );
 
   test.case = '#dace3d';
   var src = '#dace3d';
   var expected = [ 0.8549019607843137, 0.807843137254902, 0.23921568627450981 ];
   var got = _.color.hexStrToRgb( src );
-  test.identical( got, expected );
+  test.equivalent( got, expected );
 
   test.close( 'non basic colors' );
 
@@ -1496,6 +1496,8 @@ function hexStrToRgb( test )
 
 }
 
+hexStrToRgb.accuracy = 1e-2;
+
 //
 
 function hexStrToRgba( test )
@@ -1507,97 +1509,97 @@ function hexStrToRgba( test )
   var src = '#000000ff';
   var expected = [ 0, 0, 0, 1 ];
   var got = _.color.hexStrToRgba( src );
-  test.identical( got, expected );
+  test.equivalent( got, expected );
 
   test.case = 'Black short';
   var src = '#000f';
   var expected = [ 0, 0, 0, 1 ];
   var got = _.color.hexStrToRgba( src );
-  test.identical( got, expected );
+  test.equivalent( got, expected );
 
   test.case = 'White';
   var src = '#ffffff00';
   var expected = [ 1, 1, 1, 0 ];
   var got = _.color.hexStrToRgba( src );
-  test.identical( got, expected );
+  test.equivalent( got, expected );
 
   test.case = 'White short';
   var src = '#fff0';
   var expected = [ 1, 1, 1, 0 ];
   var got = _.color.hexStrToRgba( src );
-  test.identical( got, expected );
+  test.equivalent( got, expected );
 
   test.case = 'Red';
   var src = '#ff0000cc';
   var expected = [ 1, 0, 0, 0.8 ];
   var got = _.color.hexStrToRgba( src );
-  test.identical( got, expected );
+  test.equivalent( got, expected );
 
   test.case = 'Red short';
   var src = '#f00c';
   var expected = [ 1, 0, 0, 0.8 ];
   var got = _.color.hexStrToRgba( src );
-  test.identical( got, expected );
+  test.equivalent( got, expected );
 
   test.case = 'Green';
   var src = '#00ff0011';
   var expected = [ 0, 1, 0, 0.07 ];
   var got = _.color.hexStrToRgba( src );
-  test.identical( got, expected );
+  test.equivalent( got, expected );
 
   test.case = 'Green short';
   var src = '#0f01';
   var expected = [ 0, 1, 0, 0.07 ];
   var got = _.color.hexStrToRgba( src );
-  test.identical( got, expected );
+  test.equivalent( got, expected );
 
   test.case = 'Blue';
   var src = '#0000ffdd';
   var expected = [ 0, 0, 1, 0.87 ];
   var got = _.color.hexStrToRgba( src );
-  test.identical( got, expected );
+  test.equivalent( got, expected );
 
   test.case = 'Blue short';
   var src = '#00fd';
   var expected = [ 0, 0, 1, 0.87 ];
   var got = _.color.hexStrToRgba( src );
-  test.identical( got, expected );
+  test.equivalent( got, expected );
 
   test.case = 'Yellow';
   var src = '#ffff0033';
   var expected = [ 1, 1, 0, 0.2 ];
   var got = _.color.hexStrToRgba( src );
-  test.identical( got, expected );
+  test.equivalent( got, expected );
 
   test.case = 'Yellow short';
   var src = '#ff03';
   var expected = [ 1, 1, 0, 0.2 ];
   var got = _.color.hexStrToRgba( src );
-  test.identical( got, expected );
+  test.equivalent( got, expected );
 
   test.case = 'Cyan';
   var src = '#00ffff66';
   var expected = [ 0, 1, 1, 0.4 ];
   var got = _.color.hexStrToRgba( src );
-  test.identical( got, expected );
+  test.equivalent( got, expected );
 
   test.case = 'Cyan short';
-  var src = '#0ff66';
+  var src = '#0ff6';
   var expected = [ 0, 1, 1, 0.4 ];
   var got = _.color.hexStrToRgba( src );
-  test.identical( got, expected );
+  test.equivalent( got, expected );
 
   test.case = 'Magenta';
   var src = '#ff00ffee';
   var expected = [ 1, 0, 1, 0.93 ];
   var got = _.color.hexStrToRgba( src );
-  test.identical( got, expected );
+  test.equivalent( got, expected );
 
   test.case = 'Magenta short';
   var src = '#f0fe';
   var expected = [ 1, 0, 1, 0.93 ];
   var got = _.color.hexStrToRgba( src );
-  test.identical( got, expected );
+  test.equivalent( got, expected );
 
   test.close( 'basic colors' );
 
@@ -1605,23 +1607,23 @@ function hexStrToRgba( test )
 
   test.open( 'non basic colors' );
 
-  test.case = '#a47b02';
-  var src = '#a47b02';
+  test.case = '#a47b02ff';
+  var src = '#a47b02ff';
   var expected = [ 0.6431372549019608, 0.4823529411764706, 0.00784313725490196, 1 ];
   var got = _.color.hexStrToRgba( src );
-  test.identical( got, expected );
+  test.equivalent( got, expected );
 
   test.case = '#1ff0a218';
   var src = '#1ff0a218';
   var expected = [ 0.12156862745098039, 0.9411764705882353, 0.6352941176470588, 0.09 ];
   var got = _.color.hexStrToRgba( src );
-  test.identical( got, expected );
+  test.equivalent( got, expected );
 
   test.case = '#dace3dd2';
   var src = '#dace3dd2';
   var expected = [ 0.8549019607843137, 0.807843137254902, 0.23921568627450981, 0.82 ];
   var got = _.color.hexStrToRgba( src );
-  test.identical( got, expected );
+  test.equivalent( got, expected );
 
   test.close( 'non basic colors' );
 
@@ -1638,6 +1640,8 @@ function hexStrToRgba( test )
   test.identical( got, expected );
 
 }
+
+hexStrToRgba.accuracy = 1e-2;
 
 //
 
@@ -3284,8 +3288,8 @@ let Self =
     cmykStructureStrToRgba,
     hwbStrToRgb,
     hwbStrToRgba,
-    // hexStrToRgb,
-    // hexStrToRgba,
+    hexStrToRgb,
+    hexStrToRgba,
     // rgbStrToRgb,
     // rgbaStrToRgba,
     // rgbStructureStrToRgb,
