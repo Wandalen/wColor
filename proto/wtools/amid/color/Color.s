@@ -1336,6 +1336,14 @@ function _hexStrToRgba( src )
 
 function _rgbStrToRgb( src )
 {
+  /*
+    rgb[a](R, G, B[, A])
+    rgb[a](R G B[ / A])
+    R:10 G:20 B:30
+    (R10 / G20 / B30)
+  */
+
+
   _.assert( arguments.length === 1, 'Expects single argument' );
   _.assert( _.strIs( src ) );
 
@@ -1351,6 +1359,13 @@ function _rgbStrToRgb( src )
 
 function _rgbaStrToRgba( src )
 {
+  /*
+    rgb[a](R, G, B[, A])
+    rgb[a](R G B[ / A])
+    R:10 G:20 B:30
+    (R10 / G20 / B30)
+  */
+
   _.assert( arguments.length === 1, 'Expects single argument' );
   _.assert( _.strIs( src ) );
 
@@ -1979,17 +1994,17 @@ let Extension =
 
   // to rgb/a
 
-  _cmykStrToRgb, /* tested++ */
-  _cmykStrToRgba, /* tested++ */
+  _cmykStrToRgb, /* tested */
+  _cmykStrToRgba, /* tested */
 
-  _hwbStrToRgb, /* tested+ */
-  _hwbStrToRgba, /* tested+ */
+  _hwbStrToRgb, /* tested */
+  _hwbStrToRgba, /* tested */
 
   _hexStrToRgb, /* tested */
   _hexStrToRgba, /* tested */
 
-  _rgbStrToRgb,
-  _rgbaStrToRgba,
+  _rgbStrToRgb, /* tested */
+  _rgbaStrToRgba, /* tested */
 
   _hslStrToRgb,
   _hslaStrToRgba,
