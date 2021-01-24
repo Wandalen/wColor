@@ -15,7 +15,7 @@ npm install wColor
 git clone https://github.com/Wandalen/wColor
 cd wColor
 npm install
-node sample/Sample.s
+node sample/trivial/Sample.s
 ```
 
 ## To add to your project
