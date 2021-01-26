@@ -2066,8 +2066,8 @@ let Extension =
   _rgbStrToRgb, /* tested */
   _rgbaStrToRgba, /* tested */
 
-  _hslStrToRgb,
-  _hslaStrToRgba,
+  _hslStrToRgb, /* tested */
+  _hslaStrToRgba, /* tested */
 
   _xyzStrToRgb,
   _xyzStrToRgba,
