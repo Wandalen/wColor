@@ -41,7 +41,7 @@ Colors map is avaible at:
 * Convert rgb values from 0-1 range to browser compatible notation - [ colorToRgbHtml ]()
 * Convert rgba values from 0-1 range to browser compatible notation - [ colorToRgbaHtml ]()
 * Convert from rgb to hsl - [ rgbToHsl ]()
-* Convert from hsl to rgb - [ hslToRgb ]()
+* Convert from hsl to rgb - [ _hslToRgb ]()
 
 ##### Example #1
 ```javascript

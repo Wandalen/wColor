@@ -1106,7 +1106,7 @@ function mulSaturation( rgb, factor )
 
   hsl[ 1 ] *= factor;
 
-  let result = hslToRgb( hsl );
+  let result = _hslToRgb( hsl );
 
   if( rgb.length === 4 )
   result[ 3 ] = rgb[ 3 ];
@@ -1416,6 +1416,66 @@ function _hslaStrToRgba( src )
 {
   _.assert( arguments.length === 1, 'Expects single argument' );
   _.assert( _.strIs( src ) );
+
+  let [ h, s, l, a ] = _.color._formatStringParse( src );
+
+  if
+  (
+    !_.color._validateRangeInclusive( h, 0, 360 )
+    || !_.color._validateRangeInclusive( s, 0, 100 )
+    || !_.color._validateRangeInclusive( l, 0, 100 )
+  )
+  return null;
+
+  h = h / 360;
+  s = s / 100;
+  l = l / 100;
+
+  // let result = convert();
+
+  // if( a && _.color._validateRangeInclusive( a, 0, 1 ) )
+  // result.push( a );
+
+  // return result;
+
+  let result = _.color._hslToRgb([ h, s, l ]);
+
+  if( a && _.color._validateRangeInclusive( a, 0, 1 ) )
+  result.push( a );
+
+  return result;
+
+  /* - */
+
+  // function convert()
+  // {
+  //   if( s === 0 )
+  //   {
+  //     r = g = b = l; // achromatic
+  //   }
+  //   else
+  //   {
+  //     let q = l < 0.5 ? l * ( 1 + s ) : l + s - l * s;
+  //     let p = 2 * l - q;
+  //     r = hue2rgb( p, q, h + 1/3 );
+  //     g = hue2rgb( p, q, h );
+  //     b = hue2rgb( p, q, h - 1/3 );
+  //   }
+
+  //   return [ r, g, b ];
+
+  //   /* - */
+
+  //   function hue2rgb( p, q, t )
+  //   {
+  //     if( t < 0 ) t += 1;
+  //     if( t > 1 ) t -= 1;
+  //     if( t < 1/6 )return p + ( q - p ) * 6 * t;
+  //     if( t < 1/2 )return q;
+  //     if( t < 2/3 )return p + ( q - p ) * ( 2/3 - t ) * 6;
+  //     return p;
+  //   }
+  // }
 }
 
 //
@@ -1661,9 +1721,9 @@ function _rgbWithInt( srcInt )
   srcInt = srcInt % c;
   srcInt -= 0.3;
   if( srcInt < 0 ) srcInt += c;
-  //result = hslToRgb([ srcInt / 11, 1, 0.5 ]);
+  //result = _hslToRgb([ srcInt / 11, 1, 0.5 ]);
 
-  result = hslToRgb([ srcInt / c, 1, 0.5 ]);
+  result = _hslToRgb([ srcInt / c, 1, 0.5 ]);
 
   return result;
 }
@@ -1672,18 +1732,18 @@ function _rgbWithInt( srcInt )
 // hsl
 // --
 
-function hslToRgb( hsl, result )
+function _hslToRgb( hsl, result )
 {
   result = result || [];
   let h = hsl[ 0 ];
   let s = hsl[ 1 ];
   let l = hsl[ 2 ];
 
-  if( s === 0 )
+  if( s === 0 ) /* Yevhen : achromatic, r = g = b = l, not 1 */
   {
-    result[ 0 ] = 1;
-    result[ 1 ] = 1;
-    result[ 2 ] = 1;
+    result[ 0 ] = l;
+    result[ 1 ] = l;
+    result[ 2 ] = l;
     return result;
   }
 
@@ -1820,7 +1880,7 @@ function randomRgbWithSl( s, l )
   if( l === undefined )
   l = 0.5;
 
-  let rgb = hslToRgb([ Math.random(), s, l ]);
+  let rgb = _hslToRgb([ Math.random(), s, l ]);
 
   return rgb;
 }
@@ -2033,7 +2093,7 @@ let Extension =
 
   // hsl
 
-  hslToRgb, //qqq:extend with support of hsl( h, s, l ), cover
+  _hslToRgb, //qqq:extend with support of hsl( h, s, l ), cover
   hslaToRgba, //qqq:implement,extend with support of hsla( h, s, l, a ), cover
   rgbToHsl,
   rgbaToHsla, //qqq:implement,cover
