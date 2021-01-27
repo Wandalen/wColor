@@ -2945,13 +2945,13 @@ let Self =
     // _cmykStrToRgba,
 
     _hwbStrToRgb,
-    _hwbStrToRgba,
+    // _hwbStrToRgba,
 
     _hexStrToRgb,
-    _hexStrToRgba,
+    // _hexStrToRgba,
 
-    _rgbStrToRgb,
-    _rgbaStrToRgba,
+    // _rgbStrToRgb,
+    // _rgbaStrToRgba,
 
     // _hslStrToRgb,
     // _hslaStrToRgba,

@@ -1184,6 +1184,7 @@ function _cmykStrToRgb( src, alpha )
 
   _.assert( arguments.length === 1, 'Expects single argument' );
   _.assert( _.strIs( src ) );
+  _.assert( alpha === undefined || _.boolLike( alpha ) );
 
   let cmykColors = _.color._formatStringParse( src );
 
@@ -1218,91 +1219,118 @@ function _cmykToRgbConvert( cmyk, alpha )
 
 //
 
-function _hwbStrToRgb( src )
-{
-  /* hwb(H, W, B) */
+// function _hwbStrToRgb( src )
+// {
+//   /* hwb(H, W, B) */
 
-  _.assert( arguments.length === 1, 'Expects single argument' );
-  _.assert( _.strIs( src ) );
+//   _.assert( arguments.length === 1, 'Expects single argument' );
+//   _.assert( _.strIs( src ) );
 
-  let result = _.color._hwbStrToRgba( src );
+//   let result = _.color._hwbStrToRgba( src );
 
-  if( result )
-  return _.longSlice( result, 0, 3 );
+//   if( result )
+//   return _.longSlice( result, 0, 3 );
 
-  return null;
-}
+//   return null;
+// }
 
 //
 
-function _hwbStrToRgba( src )
+function _hwbStrToRgb( src, alpha )
 {
   /* hwb(H, W, B) */
 
   _.assert( arguments.length === 1, 'Expects single argument' );
   _.assert( _.strIs( src ) );
+  _.assert( alpha === undefined || _.boolLike( alpha ) );
 
-  let [ H, W, B ] = _.color._formatStringParse( src );
+  let hwbColors = _.color._formatStringParse( src );
 
   if
   (
-    !_.cinterval.has( [ 0, 360 ], H )
-    || !_.cinterval.has( [ 0, 100 ], W )
-    || !_.cinterval.has( [ 0, 100 ], B )
+    !_.cinterval.has( [ 0, 360 ], hwbColors[ 0 ] )
+    || !_.cinterval.has( [ 0, 100 ], hwbColors[ 1 ] )
+    || !_.cinterval.has( [ 0, 100 ], hwbColors[ 2 ] )
   )
   return null;
 
-  return convert();
+  return _.color._hwbToRgbConvert( hwbColors, alpha );
 
-  /* - */
-
-  function convert()
-  {
-    let h = H / 360;
-    let wh = W / 100;
-    let bl = B / 100;
-    let ratio = wh + bl;
-    let i, v, f, n;
-
-    // wh + bl cannot be > 1
-    if( ratio > 1 )
-    {
-      wh /= ratio;
-      bl /= ratio;
-    }
-
-    i = Math.floor( 6 * h );
-    v = 1 - bl;
-    f = 6 * h - i;
-
-    if( ( i & 0x01 ) !== 0 )
-    {
-      f = 1 - f;
-    }
-
-    n = wh + f * ( v - wh ); // linear interpolation
-
-    let r, g, b;
-
-    switch( i )
-    {
-      case 6 :
-      case 0 : r = v; g = n; b = wh; break;
-      case 1 : r = n; g = v; b = wh; break;
-      case 2 : r = wh; g = v; b = n; break;
-      case 3 : r = wh; g = n; b = v; break;
-      case 4 : r = n; g = wh; b = v; break;
-      case 5 : r = v; g = wh; b = n; break;
-      default : break;
-    }
-
-    return [ r, g, b, 1 ]
-  }
 }
 
 //
 
-function _hexStrToRgb( src )
+function _hwbToRgbConvert( hwb, alpha )
+{
+  let h = hwb[ 0 ] / 360;
+  let wh = hwb[ 1 ] / 100;
+  let bl = hwb[ 2 ] / 100;
+  let ratio = wh + bl;
+  let i, v, f, n;
+
+  /* wh + bl cannot be > 1 */
+  if( ratio > 1 )
+  {
+    wh /= ratio;
+    bl /= ratio;
+  }
+
+  i = Math.floor( 6 * h );
+  v = 1 - bl;
+  f = 6 * h - i;
+
+  if( ( i & 0x01 ) !== 0 )
+  {
+    f = 1 - f;
+  }
+
+  /* linear interpolation */
+  n = wh + f * ( v - wh );
+
+  let r, g, b;
+
+  switch( i )
+  {
+    case 6 :
+    case 0 : r = v; g = n; b = wh; break;
+    case 1 : r = n; g = v; b = wh; break;
+    case 2 : r = wh; g = v; b = n; break;
+    case 3 : r = wh; g = n; b = v; break;
+    case 4 : r = n; g = wh; b = v; break;
+    case 5 : r = v; g = wh; b = n; break;
+    default : break;
+  }
+
+  if( alpha )
+  return [ r, g, b, 1 ]
+  else
+  return [ r, g, b ]
+
+}
+
+//
+
+// function _hexStrToRgb( src )
+// {
+//   /*
+//     #RGB[A]
+//     #RRGGBB[AA]
+//   */
+
+//   _.assert( arguments.length === 1, 'Expects single argument' );
+//   _.assert( _.strIs( src ) );
+
+//   let result = _.color._hexStrToRgba( src );
+
+//   if( result )
+//   return _.longSlice( result, 0, 3 );
+
+//   return null;
+// }
+
+//
+
+function _hexStrToRgb( src, alpha )
 {
   /*
     #RGB[A]
@@ -1311,26 +1339,26 @@ function _hexStrToRgb( src )
 
   _.assert( arguments.length === 1, 'Expects single argument' );
   _.assert( _.strIs( src ) );
+  _.assert( alpha === undefined || _.boolLike( alpha ) );
 
-  let result = _.color._hexStrToRgba( src );
+  if( !alpha )
+  src = _.color._hexRemoveAlfa( src )
 
-  if( result )
-  return _.longSlice( result, 0, 3 );
+  return _.color.hexToColor( src );
 
-  return null;
 }
 
 //
 
-function _hexStrToRgba( src )
+function _hexRemoveAlfa( src )
 {
-  /*
-    #RGB[A]
-    #RRGGBB[AA]
-  */
+  if( src.length === 9 )
+  return src.slice( 0, 8 );
 
-  return _.color.hexToColor( src );
+  if( src.length === 4 )
+  return src.slice( 0, 4 );
 
+  return src;
 }
 
 //
@@ -2055,10 +2083,12 @@ let Extension =
   _cmykToRgbConvert,
 
   _hwbStrToRgb, /* tested */
-  _hwbStrToRgba, /* tested */
+  // _hwbStrToRgba, /* tested */
+  _hwbToRgbConvert,
 
   _hexStrToRgb, /* tested */
-  _hexStrToRgba, /* tested */
+  // _hexStrToRgba, /* tested */
+  _hexRemoveAlfa,
 
   _rgbStrToRgb, /* tested */
   _rgbaStrToRgba, /* tested */
