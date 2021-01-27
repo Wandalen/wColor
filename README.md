@@ -7,7 +7,7 @@ Contains map of predefined colors( ColorMap ) with rgb channels in [ 0,1 ] range
 
 ## Installation
 ```terminal
-npm install wColor
+npm install wColor@alpha
 ```
 
 ## Try out from the repository
