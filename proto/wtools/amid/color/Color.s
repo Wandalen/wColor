@@ -1193,10 +1193,10 @@ function _cmykStrToRgba( src )
 
   if
   (
-    !_validateRangeInclusive( C, 0, 100 )
-    || !_validateRangeInclusive( M, 0, 100 )
-    || !_validateRangeInclusive( Y, 0, 100 )
-    || !_validateRangeInclusive( K, 0, 100 )
+    !_.cinterval.has( [ 0, 100 ], C )
+    || !_.cinterval.has( [ 0, 100 ], M )
+    || !_.cinterval.has( [ 0, 100 ], Y )
+    || !_.cinterval.has( [ 0, 100 ], K )
   )
   return null;
 
@@ -1245,9 +1245,9 @@ function _hwbStrToRgba( src )
 
   if
   (
-    !_validateRangeInclusive( H, 0, 360 )
-    || !_validateRangeInclusive( W, 0, 100 )
-    || !_validateRangeInclusive( B, 0, 100 )
+    !_.cinterval.has( [ 0, 360 ], H )
+    || !_.cinterval.has( [ 0, 100 ], W )
+    || !_.cinterval.has( [ 0, 100 ], B )
   )
   return null;
 
@@ -1373,9 +1373,9 @@ function _rgbaStrToRgba( src )
 
   if
   (
-    !_.color._validateRangeInclusive( r, 0, 255 )
-    || !_.color._validateRangeInclusive( g, 0, 255 )
-    || !_.color._validateRangeInclusive( b, 0, 255 )
+    !_.cinterval.has( [ 0, 255 ], r )
+    || !_.cinterval.has( [ 0, 255 ], g )
+    || !_.cinterval.has( [ 0, 255 ], b )
   )
   return null;
 
@@ -1386,7 +1386,7 @@ function _rgbaStrToRgba( src )
     b / 255,
   ]
 
-  if( a && _.color._validateRangeInclusive( a, 0, 1 ) )
+  if( a && _.cinterval.has( [ 0, 1 ], a ) )
   result.push( a );
 
   return result;
@@ -1421,9 +1421,9 @@ function _hslaStrToRgba( src )
 
   if
   (
-    !_.color._validateRangeInclusive( h, 0, 360 )
-    || !_.color._validateRangeInclusive( s, 0, 100 )
-    || !_.color._validateRangeInclusive( l, 0, 100 )
+    !_.cinterval.has( [ 0, 360 ], h )
+    || !_.cinterval.has( [ 0, 100 ], s )
+    || !_.cinterval.has( [ 0, 100 ], l )
   )
   return null;
 
@@ -1433,14 +1433,14 @@ function _hslaStrToRgba( src )
 
   // let result = convert();
 
-  // if( a && _.color._validateRangeInclusive( a, 0, 1 ) )
+  // if( a && _.cinterval.has( a, 0, 1 ) )
   // result.push( a );
 
   // return result;
 
   let result = _.color._hslToRgb([ h, s, l ]);
 
-  if( a && _.color._validateRangeInclusive( a, 0, 1 ) )
+  if( a && _.cinterval.has( [ 0, 1 ], a ) )
   result.push( a );
 
   return result;
@@ -1575,11 +1575,6 @@ function _luvStrToRgba( src )
 function _formatStringParse( src )
 {
   return src.match( /\d+(\.\d+)?/g ).map( ( el ) => +el );
-}
-
-function _validateRangeInclusive( val, lower, upper )
-{
-  return ( val >= lower ) && ( val <= upper );
 }
 
 // --
@@ -2082,8 +2077,6 @@ let Extension =
   _luvStrToRgba,
 
   _formatStringParse,
-  _validateRangeInclusive,
-
 
   // int
 
