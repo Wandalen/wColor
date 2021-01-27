@@ -18,13 +18,140 @@ let fileProvider = _.fileProvider;
 let path = fileProvider.path;
 
 // --
+// context
+// --
+
+function onSuiteBegin( test )
+{
+  let context = this;
+  context.provider = fileProvider;
+  let path = context.provider.path;
+  context.suiteTempPath = context.provider.path.tempOpen( path.join( __dirname, '../..'  ), 'integration' );
+}
+
+//
+
+function onSuiteEnd( test )
+{
+  let context = this;
+  let path = context.provider.path;
+  _.assert( _.strHas( context.suiteTempPath, 'integration' ), context.suiteTempPath );
+  path.tempClose( context.suiteTempPath );
+}
+
+// --
 // test
 // --
+
+function production( test )
+{
+  let context = this;
+  let a = test.assetFor( 'production' );
+  let runList = [];
+
+  if( process.env.GITHUB_EVENT_NAME === 'pull_request' )
+  {
+    test.true( true );
+    return;
+  }
+
+  console.log( `Event : ${process.env.GITHUB_EVENT_NAME}` );
+  console.log( `Env :\n${_.toStr( process.env )}` );
+
+  /* */
+
+  let sampleDir = a.abs( __dirname, '../sample/trivial' );
+  let samplePath = a.find
+  ({
+    filePath : sampleDir,
+    filter : { filePath : { 'Sample.(s|js|ss)' : 1 } }
+  });
+
+  if( !samplePath.length )
+  throw _.err( `Sample with name "Sample.(s|ss|js)" does not exist in directory ${ sampleDir }` );
+
+  /* */
+
+  a.fileProvider.filesReflect({ reflectMap : { [ sampleDir ] : a.abs( 'sample/trivial' ) } });
+  let mdlPath = a.abs( __dirname, '../package.json' );
+  let mdl = a.fileProvider.fileRead({ filePath : mdlPath, encoding : 'json' });
+
+  let version;
+  let remotePath = null;
+  let localPath = null;
+
+  if( _.git.insideRepository( _.path.join( __dirname, '..' ) ) )
+  {
+    remotePath = _.git.remotePathFromLocal( _.path.join( __dirname, '..' ) );
+    localPath = _.git.localPathFromInside( _.path.join( __dirname, '..' ) );
+  }
+
+  debugger;
+  let remotePathParsed1, remotePathParsed2;
+  if( remotePath )
+  {
+    remotePathParsed1 = _.git.pathParse( remotePath );
+    remotePathParsed2 = _.uri.parseFull( remotePath );
+    /* qqq : should be no 2 parse */
+  }
+
+  // if( mdl.repository.url === remotePath.full || remotePath === null )
+  // version = _.npm.versionRemoteRetrive( `npm:///${ mdl.name }!alpha` ) === '' ? 'latest' : 'alpha';
+  // else
+  version = remotePathParsed1.remoteVcsLongerPath;
+
+  if( !version )
+  throw _.err( 'Cannot obtain version to install' );
+
+  let structure = { dependencies : { [ mdl.name ] : version } };
+  a.fileProvider.fileWrite({ filePath : a.abs( 'package.json' ), data : structure, encoding : 'json' });
+  let data = a.fileProvider.fileRead({ filePath : a.abs( 'package.json' ) });
+  console.log( data );
+
+  /* */
+
+  a.shell( `npm i --production` )
+  .then( ( op ) =>
+  {
+    test.case = 'install module';
+    test.identical( op.exitCode, 0 );
+    return null;
+  });
+
+  run( 'Sample.s' );
+  run( 'Sample.ss' );
+
+  /* */
+
+  return a.ready;
+
+  /* */
+
+  function run( name )
+  {
+    let filePath = `sample/trivial/${ name }`;
+    if( !a.fileProvider.fileExists( a.abs( filePath ) ) )
+    return null;
+    runList.push( filePath );
+    a.shell( `node ${ filePath }` )
+    .then( ( op ) =>
+    {
+      test.case = `running of sample ${filePath}`;
+      test.identical( op.exitCode, 0 );
+      test.ge( op.output.length, 3 );
+      return null;
+    });
+
+  }
+
+}
+
+//
 
 function samples( test )
 {
   let context = this;
-  let ready = new _.Consequence().take( null );
+  let ready = _.take( null );
 
   let sampleDir = path.join( __dirname, '../sample' );
 
@@ -117,7 +244,7 @@ function eslint( test )
   let eslint = process.platform === 'win32' ? 'node_modules/eslint/bin/eslint' : 'node_modules/.bin/eslint';
   eslint = path.join( rootPath, eslint );
   let sampleDir = path.join( rootPath, 'sample' );
-  let ready = new _.Consequence().take( null );
+  let ready = _.take( null );
 
   // if( _.process.insideTestContainer() && process.platform !== 'linux' )
   // return test.true( true );
@@ -148,6 +275,12 @@ function eslint( test )
       '--ignore-pattern', '_asset',
       '--ignore-pattern', 'out',
       '--ignore-pattern', '*.tgs',
+      '--ignore-pattern', '*.bat',
+      '--ignore-pattern', '*.sh',
+      '--ignore-pattern', '*.jslike',
+      '--ignore-pattern', '*.less',
+      '--ignore-pattern', '*.hbs',
+      '--ignore-pattern', '*.noeslint',
       '--quiet'
     ],
     throwingExitCode : 0,
@@ -203,8 +336,18 @@ let Self =
   routineTimeOut : 1500000,
   silencing : 0,
 
+  onSuiteBegin,
+  onSuiteEnd,
+  context :
+  {
+    provider : null,
+    suiteTempPath : null,
+    appJsPath : null
+  },
+
   tests :
   {
+    production,
     samples,
     eslint,
   },
@@ -218,3 +361,4 @@ if( typeof module !== 'undefined' && !module.parent )
 _global_.wTester.test( Self.name );
 
 })();
+

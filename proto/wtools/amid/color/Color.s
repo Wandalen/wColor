@@ -157,7 +157,7 @@ function _rgbaFromNotName( src )
   if( _.numberIs( src ) )
   {
     let result = this._rgbByBitmask( src );
-    return _.longGrowInplace( result, [ 0, 4 ], 1 );
+    return _.longGrow_( result, result, [ 0, 3 ], 1 );
   }
 
   let result = [];
@@ -258,7 +258,7 @@ function rgbaFrom( o )
   // {
   //   _.assert( _.longIs( result ) );
   //   if( result.length !== 4 )
-  //   result = _.longGrowInplace( result, [ 0, 4 ], 1 ); /* xxx : replace */
+  //   result = _.longGrow_( result, result, [ 0, 3 ], 1 ); /* xxx : replace */
   //   return result;
   // }
 
@@ -377,7 +377,7 @@ function rgbaFromTry( o )
   {
     _.assert( _.longIs( result ) );
     if( result.length !== 4 )
-    result = _.longGrowInplace( result, [ 0, 4 ], 1 ); /* xxx : replace */
+    result = _.longGrow_( result, result, [ 0, 3 ], 1 ); /* xxx : replace */
     return result;
   }
 
@@ -522,7 +522,7 @@ function rgbaHtmlFrom( o )
   // {
   //   _.assert( _.longIs( result ) );
   //   if( result.length !== 4 )
-  //   result = _.longGrowInplace( result, [ 0, 4 ], 1 ); /* xxx : replace */
+  //   result = _.longGrow_( result, result, [ 0, 3 ], 1 ); /* xxx : replace */
   //   return result;
   // }
 
@@ -604,7 +604,7 @@ function rgbaHtmlFromTry( o )
   {
     _.assert( _.longIs( result ) );
     if( result.length !== 4 )
-    result = _.longGrowInplace( result, [ 0, 4 ], 1 ); /* xxx : replace */
+    result = _.longGrow_( result, result, [ 0, 3 ], 1 ); /* xxx : replace */
     return result;
   }
 
@@ -1152,8 +1152,6 @@ function paler( rgb, factor )
 
   return mulSaturation( rgb, 1 - efactor );
 }
-
-//
 
 // --
 // to rgb/a
