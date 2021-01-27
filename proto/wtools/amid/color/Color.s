@@ -1159,60 +1159,63 @@ function paler( rgb, factor )
 // to rgb/a
 // --
 
-function _cmykStrToRgb( src )
+// function _cmykStrToRgb( src, dst )
+// {
+//   /*
+//     cmyk(C, M, Y, K)
+//   */
+
+//   _.assert( arguments.length === 1, 'Expects single argument' );
+//   _.assert( _.strIs( src ) );
+
+//   let result = _.color._cmykStrToRgba( src );
+
+//   if( result )
+//   return _.longSlice( result, 0, 3 );
+
+//   return null;
+// }
+
+//
+
+function _cmykStrToRgb( src, alpha )
 {
   /*
-    - cmyk(C, M, Y, K)
-    - C100/M80/Y0/K35
+    cmyk(C, M, Y, K)
   */
 
   _.assert( arguments.length === 1, 'Expects single argument' );
   _.assert( _.strIs( src ) );
 
-  let result = _.color._cmykStrToRgba( src );
+  let cmykColors = _.color._formatStringParse( src );
 
-  if( result )
-  return _.longSlice( result, 0, 3 );
-
+  if
+  (
+    !_.cinterval.has( [ 0, 100 ], cmykColors[ 0 ] )
+    || !_.cinterval.has( [ 0, 100 ], cmykColors[ 1 ] )
+    || !_.cinterval.has( [ 0, 100 ], cmykColors[ 2 ] )
+    || !_.cinterval.has( [ 0, 100 ], cmykColors[ 3 ] )
+    || ( alpha && !_.cinterval.has( [ 0, 1 ], alpha ) )
+  )
   return null;
+
+  return _.color._cmykToRgbConvert( cmykColors, alpha );
+
 }
 
 //
 
-function _cmykStrToRgba( src )
+function _cmykToRgbConvert( cmyk, alpha )
 {
-  /*
-    - cmyk(C, M, Y, K)
-    - C100/M80/Y0/K35
-  */
+  let r = ( 1 - cmyk[ 0 ] / 100 ) * ( 1 - cmyk[ 3 ] / 100 );
+  let g = ( 1 - cmyk[ 1 ] / 100 ) * ( 1 - cmyk[ 3 ] / 100 );
+  let b = ( 1 - cmyk[ 2 ] / 100 ) * ( 1 - cmyk[ 3 ] / 100 );
 
-  _.assert( arguments.length === 1, 'Expects single argument' );
-  _.assert( _.strIs( src ) );
+  if( alpha )
+  return [ r, g, b, 1 ]
+  else
+  return [ r, g, b ]
 
-  let [ C, M, Y, K ] = _.color._formatStringParse( src );
-
-  if
-  (
-    !_.cinterval.has( [ 0, 100 ], C )
-    || !_.cinterval.has( [ 0, 100 ], M )
-    || !_.cinterval.has( [ 0, 100 ], Y )
-    || !_.cinterval.has( [ 0, 100 ], K )
-  )
-  return null;
-
-  return convert();
-
-  /* - */
-
-  function convert()
-  {
-    let r = ( 1 - C / 100 ) * ( 1 - K / 100 );
-    let g = ( 1 - M / 100 ) * ( 1 - K / 100 );
-    let b = ( 1 - Y / 100 ) * ( 1 - K / 100 );
-    let a = 1;
-
-    return [ r, g, b, a ]
-  }
 }
 
 //
@@ -1285,14 +1288,14 @@ function _hwbStrToRgba( src )
 
     switch( i )
     {
-    case 6 :
-    case 0 : r = v; g = n; b = wh; break;
-    case 1 : r = n; g = v; b = wh; break;
-    case 2 : r = wh; g = v; b = n; break;
-    case 3 : r = wh; g = n; b = v; break;
-    case 4 : r = n; g = wh; b = v; break;
-    case 5 : r = v; g = wh; b = n; break;
-    default : break;
+      case 6 :
+      case 0 : r = v; g = n; b = wh; break;
+      case 1 : r = n; g = v; b = wh; break;
+      case 2 : r = wh; g = v; b = n; break;
+      case 3 : r = wh; g = n; b = v; break;
+      case 4 : r = n; g = wh; b = v; break;
+      case 5 : r = v; g = wh; b = n; break;
+      default : break;
     }
 
     return [ r, g, b, 1 ]
@@ -2050,7 +2053,8 @@ let Extension =
   // to rgb/a
 
   _cmykStrToRgb, /* tested */
-  _cmykStrToRgba, /* tested */
+  // _cmykStrToRgba, /* tested */
+  _cmykToRgbConvert,
 
   _hwbStrToRgb, /* tested */
   _hwbStrToRgba, /* tested */
