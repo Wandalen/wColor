@@ -1106,7 +1106,7 @@ function mulSaturation( rgb, factor )
 
   hsl[ 1 ] *= factor;
 
-  let result = _hslToRgb( hsl );
+  let result = hslToRgb( hsl );
 
   if( rgb.length === 4 )
   result[ 3 ] = rgb[ 3 ];
@@ -1438,7 +1438,7 @@ function _hslaStrToRgba( src )
 
   // return result;
 
-  let result = _.color._hslToRgb([ h, s, l ]);
+  let result = _.color.hslToRgb([ h, s, l ]);
 
   if( a && _.cinterval.has( [ 0, 1 ], a ) )
   result.push( a );
@@ -1716,9 +1716,9 @@ function _rgbWithInt( srcInt )
   srcInt = srcInt % c;
   srcInt -= 0.3;
   if( srcInt < 0 ) srcInt += c;
-  //result = _hslToRgb([ srcInt / 11, 1, 0.5 ]);
+  //result = hslToRgb([ srcInt / 11, 1, 0.5 ]);
 
-  result = _hslToRgb([ srcInt / c, 1, 0.5 ]);
+  result = hslToRgb([ srcInt / c, 1, 0.5 ]);
 
   return result;
 }
@@ -1727,7 +1727,7 @@ function _rgbWithInt( srcInt )
 // hsl
 // --
 
-function _hslToRgb( hsl, result )
+function hslToRgb( hsl, result )
 {
   result = result || [];
   let h = hsl[ 0 ];
@@ -1875,7 +1875,7 @@ function randomRgbWithSl( s, l )
   if( l === undefined )
   l = 0.5;
 
-  let rgb = _hslToRgb([ Math.random(), s, l ]);
+  let rgb = hslToRgb([ Math.random(), s, l ]);
 
   return rgb;
 }
@@ -2061,8 +2061,8 @@ let Extension =
   _rgbStrToRgb, /* tested */
   _rgbaStrToRgba, /* tested */
 
-  _hslStrToRgb, /* tested */
-  _hslaStrToRgba, /* tested */
+  _hslStrToRgb,
+  _hslaStrToRgba,
 
   _xyzStrToRgb,
   _xyzStrToRgba,
@@ -2086,7 +2086,7 @@ let Extension =
 
   // hsl
 
-  _hslToRgb, //qqq:extend with support of hsl( h, s, l ), cover
+  hslToRgb, //qqq:extend with support of hsl( h, s, l ), cover
   hslaToRgba, //qqq:implement,extend with support of hsla( h, s, l, a ), cover
   rgbToHsl,
   rgbaToHsla, //qqq:implement,cover

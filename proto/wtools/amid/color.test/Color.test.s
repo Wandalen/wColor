@@ -2953,8 +2953,8 @@ let Self =
     _rgbStrToRgb,
     _rgbaStrToRgba,
 
-    _hslStrToRgb,
-    _hslaStrToRgba,
+    // _hslStrToRgb,
+    // _hslaStrToRgba,
 
     // _xyzStrToRgb,
     // _xyzStrToRgba,
