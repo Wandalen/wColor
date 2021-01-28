@@ -1211,6 +1211,15 @@ function _cmykLongToRgbVector( dst, src )
 
     rgb = _.color._cmykLongToRgbLong( src );
 
+    /*
+      TypedArray:
+
+      For non-basic colors with r, g, b values range ( 0, 1 )
+      only instances of those constructors can be used
+      Float32Array,
+      Float64Array,
+    */
+
     dst[ 0 ] = rgb[ 0 ];
     dst[ 1 ] = rgb[ 1 ];
     dst[ 2 ] = rgb[ 2 ];
