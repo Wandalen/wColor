@@ -1942,10 +1942,10 @@ function rgbToHsl( rgb, result )
 
     switch( max )
     {
-    case r : hue = ( g - b ) / diff + ( g < b ? 6 : 0 ); break;
-    case g : hue = ( b - r ) / diff + 2; break;
-    case b : hue = ( r - g ) / diff + 4; break;
-    default : break
+      case r : hue = ( g - b ) / diff + ( g < b ? 6 : 0 ); break;
+      case g : hue = ( b - r ) / diff + 2; break;
+      case b : hue = ( r - g ) / diff + 4; break;
+      default : break
     }
 
     hue /= 6;
@@ -2189,7 +2189,6 @@ let Extension =
   _cmykStrToRgba,
   _cmykLongToRgbVector,
   _cmykLongToRgbaVector,
-  // _cmykLongToRgbLong,
   _validateCmyk,
 
   _hwbStrToRgb,
