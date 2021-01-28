@@ -1201,15 +1201,15 @@ function _cmykStrToRgba( dst, src )
 
 function _cmykLongToRgbVector( dst, src )
 {
-  let rgb;
-  debugger
+  let r, g, b;
+
   if( dst === null || _.longIs( dst ) )
   {
     dst = dst || new Array( 3 );
 
-    _.assert( dst.length === 3, `{-dst-} container length must be 3, but got : ${dst.length}` );
+    _.assert( dst.length === 3, `{-dst-} container length must be 4, but got : ${dst.length}` );
 
-    rgb = _.color._cmykLongToRgbLong( src );
+    convert( src );
 
     /*
       TypedArray:
@@ -1220,9 +1220,9 @@ function _cmykLongToRgbVector( dst, src )
       Float64Array,
     */
 
-    dst[ 0 ] = rgb[ 0 ];
-    dst[ 1 ] = rgb[ 1 ];
-    dst[ 2 ] = rgb[ 2 ];
+    dst[ 0 ] = r;
+    dst[ 1 ] = g;
+    dst[ 2 ] = b;
 
   }
   else if( _.vadIs( dst ) )
@@ -1231,14 +1231,26 @@ function _cmykLongToRgbVector( dst, src )
 
     _.assert( dst.length === 3, `{-dst-} container length must be 3, but got : ${dst.length}` );
 
-    rgb = _.color._cmykLongToRgbLong( src );
+    convert( src );
 
-    dst.assign( rgb );
+    dst.eSet( 0, r );
+    dst.eSet( 1, g );
+    dst.eSet( 2, b );
 
   }
   else _.assert( 0, '{-dts-} container must be of type Vector' );
 
   return dst;
+
+  /* - */
+
+  function convert( src )
+  {
+    r = ( 1 - src[ 0 ] / 100 ) * ( 1 - src[ 3 ] / 100 );
+    g = ( 1 - src[ 1 ] / 100 ) * ( 1 - src[ 3 ] / 100 );
+    b = ( 1 - src[ 2 ] / 100 ) * ( 1 - src[ 3 ] / 100 );
+  }
+
 
 }
 
@@ -1246,7 +1258,7 @@ function _cmykLongToRgbVector( dst, src )
 
 function _cmykLongToRgbaVector( dst, src )
 {
-  let rgb;
+  let r, g, b;
 
   if( dst === null || _.longIs( dst ) )
   {
@@ -1254,11 +1266,20 @@ function _cmykLongToRgbaVector( dst, src )
 
     _.assert( dst.length === 4, `{-dst-} container length must be 4, but got : ${dst.length}` );
 
-    rgb = _.color._cmykLongToRgbLong( src );
+    convert( src );
 
-    dst[ 0 ] = rgb[ 0 ];
-    dst[ 1 ] = rgb[ 1 ];
-    dst[ 2 ] = rgb[ 2 ];
+    /*
+      TypedArray:
+
+      For non-basic colors with r, g, b values range ( 0, 1 )
+      only instances of those constructors can be used
+      Float32Array,
+      Float64Array,
+    */
+
+    dst[ 0 ] = r;
+    dst[ 1 ] = g;
+    dst[ 2 ] = b;
     dst[ 3 ] = 1;
 
   }
@@ -1268,28 +1289,27 @@ function _cmykLongToRgbaVector( dst, src )
 
     _.assert( dst.length === 4, `{-dst-} container length must be 4, but got : ${dst.length}` );
 
-    rgb = _.color._cmykLongToRgbLong( src );
+    convert( src );
 
-    dst.assign([ ... rgb, 1 ]);
+    dst.eSet( 0, r );
+    dst.eSet( 1, g );
+    dst.eSet( 2, b );
+    dst.eSet( 3, 1 );
 
   }
   else _.assert( 0, '{-dts-} container must be of type Vector' );
 
   return dst;
 
-  // return result;
+  /* - */
 
-}
+  function convert( src )
+  {
+    r = ( 1 - src[ 0 ] / 100 ) * ( 1 - src[ 3 ] / 100 );
+    g = ( 1 - src[ 1 ] / 100 ) * ( 1 - src[ 3 ] / 100 );
+    b = ( 1 - src[ 2 ] / 100 ) * ( 1 - src[ 3 ] / 100 );
+  }
 
-//
-
-function _cmykLongToRgbLong( src )
-{
-  let r = ( 1 - src[ 0 ] / 100 ) * ( 1 - src[ 3 ] / 100 );
-  let g = ( 1 - src[ 1 ] / 100 ) * ( 1 - src[ 3 ] / 100 );
-  let b = ( 1 - src[ 2 ] / 100 ) * ( 1 - src[ 3 ] / 100 );
-
-  return [ r, g, b ];
 }
 
 //
@@ -2169,7 +2189,7 @@ let Extension =
   _cmykStrToRgba,
   _cmykLongToRgbVector,
   _cmykLongToRgbaVector,
-  _cmykLongToRgbLong,
+  // _cmykLongToRgbLong,
   _validateCmyk,
 
   _hwbStrToRgb,
