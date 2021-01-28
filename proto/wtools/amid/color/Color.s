@@ -1166,12 +1166,13 @@ function _cmykStrToRgb( src )
   _.assert( arguments.length === 1, 'Expects single argument' );
   _.assert( _.strIs( src ) );
 
-  let result = _.color._cmykStrToRgba( src );
+  let cmykColors = _.color._formatStringParse( src );
 
-  if( result )
-  return _.longSlice( result, 0, 3 );
-
+  if( !_.color._validateCmyk( cmykColors ) )
   return null;
+
+  return _.color._cmykLongToRgb( cmykColors );
+
 }
 
 //
@@ -1187,13 +1188,7 @@ function _cmykStrToRgba( src )
 
   let cmykColors = _.color._formatStringParse( src );
 
-  if
-  (
-    !_.cinterval.has( [ 0, 100 ], cmykColors[ 0 ] )
-    || !_.cinterval.has( [ 0, 100 ], cmykColors[ 1 ] )
-    || !_.cinterval.has( [ 0, 100 ], cmykColors[ 2 ] )
-    || !_.cinterval.has( [ 0, 100 ], cmykColors[ 3 ] )
-  )
+  if( !_.color._validateCmyk( cmykColors ) )
   return null;
 
   return _.color._cmykLongToRgba( cmykColors );
@@ -1202,14 +1197,42 @@ function _cmykStrToRgba( src )
 
 //
 
-function _cmykLongToRgba( cmyk )
+function _cmykLongToRgb( src )
 {
-  let r = ( 1 - cmyk[ 0 ] / 100 ) * ( 1 - cmyk[ 3 ] / 100 );
-  let g = ( 1 - cmyk[ 1 ] / 100 ) * ( 1 - cmyk[ 3 ] / 100 );
-  let b = ( 1 - cmyk[ 2 ] / 100 ) * ( 1 - cmyk[ 3 ] / 100 );
+  let r = ( 1 - src[ 0 ] / 100 ) * ( 1 - src[ 3 ] / 100 );
+  let g = ( 1 - src[ 1 ] / 100 ) * ( 1 - src[ 3 ] / 100 );
+  let b = ( 1 - src[ 2 ] / 100 ) * ( 1 - src[ 3 ] / 100 );
 
-  return [ r, g, b, 1 ]
+  return [ r, g, b ]
 
+}
+
+//
+
+function _cmykLongToRgba( src )
+{
+
+  let result = _.color._cmykLongToRgb( src );
+  result.push( 1 );
+
+  return result;
+
+}
+
+//
+
+function _validateCmyk ( src )
+{
+  if
+  (
+    !_.cinterval.has( [ 0, 100 ], src[ 0 ] )
+    || !_.cinterval.has( [ 0, 100 ], src[ 1 ] )
+    || !_.cinterval.has( [ 0, 100 ], src[ 2 ] )
+    || !_.cinterval.has( [ 0, 100 ], src[ 3 ] )
+  )
+  return false;
+
+  return true;
 }
 
 //
@@ -2071,7 +2094,9 @@ let Extension =
 
   _cmykStrToRgb, /* tested */
   _cmykStrToRgba, /* tested */
+  _cmykLongToRgb,
   _cmykLongToRgba,
+  _validateCmyk,
 
   _hwbStrToRgb, /* tested */
   _hwbStrToRgba, /* tested */

@@ -2942,12 +2942,12 @@ let Self =
     // to rgb/a
 
     _cmykStrToRgb,
-    // _cmykStrToRgba,
+    _cmykStrToRgba,
 
-    _hwbStrToRgb,
+    // _hwbStrToRgb,
     // _hwbStrToRgba,
 
-    _hexStrToRgb,
+    // _hexStrToRgb,
     // _hexStrToRgba,
 
     // _rgbStrToRgb,
