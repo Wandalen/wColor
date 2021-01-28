@@ -1207,7 +1207,7 @@ function _cmykLongToRgbVector( dst, src )
   {
     dst = dst || new Array( 3 );
 
-    _.assert( dst.length === 3, `{-dst-} container length must be 4, but got : ${dst.length}` );
+    _.assert( dst.length === 3, `{-dst-} container length must be 3, but got : ${dst.length}` );
 
     convert( src );
 
