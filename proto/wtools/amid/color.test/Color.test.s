@@ -1067,6 +1067,28 @@ function _cmykStrToRgbWithDst( test )
   var got = _.color._cmykStrToRgb( [ 1, 2, 3 ], src );
   test.identical( got, expected );
 
+  /* - */
+
+  test.case = 'dst : Array; dst.length !== 3';
+  var src = 'cmyk(12%,34%,99%,27%)';
+  var dst = [ 1, 2, 3, 5 ];
+  test.shouldThrowErrorSync( () => _.color._cmykStrToRgb( dst, src ) )
+
+  test.case = 'dst : Long; dst.length !== 3';
+  var src = 'cmyk(12%,34%,99%,27%)';
+  var dst = _.longFrom([ 1, 2 ]);
+  test.shouldThrowErrorSync( () => _.color._cmykStrToRgb( dst, src ) )
+
+  test.case = 'dst : TypedArray; dst.length !== 3';
+  var src = 'cmyk(12%,34%,99%,27%)';
+  var dst = new Float32Array([ 1, 2, 3, 4, 5, 6 ]);
+  test.shouldThrowErrorSync( () => _.color._cmykStrToRgb( dst, src ) )
+
+  test.case = 'dst : VectorAdapter; dst.length !== 3';
+  var src = 'cmyk(12%,34%,99%,27%)';
+  var dst = _.vad.fromLong([ 1 ]);
+  test.shouldThrowErrorSync( () => _.color._cmykStrToRgb( dst, src ) )
+
 }
 
 _cmykStrToRgbWithDst.accuracy = 1e-2;

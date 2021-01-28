@@ -1202,7 +1202,7 @@ function _cmykStrToRgba( dst, src )
 function _cmykLongToRgbVector( dst, src )
 {
   let rgb;
-
+  debugger
   if( dst === null || _.longIs( dst ) )
   {
     dst = dst || new Array( 3 );
