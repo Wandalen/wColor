@@ -985,10 +985,10 @@ function _cmykStrToRgbWithDst( test )
 
   test.case = 'Red, dst = TypedArray';
   var src = 'cmyk(0%,100%,100%,0%)';
-  var dst = new I8x([ 1, 5, 15 ]);
+  var dst = new I8x([ 1, 5, 15 ]); /* 1 and 0 -> Integer Typed Array can be used */
   var expected = [ 1, 0, 0 ];
   var got = _.color._cmykStrToRgb( dst, src );
-  for( let i = 0 ; i < expected.length ; i++ )
+  for( let i = 0; i < expected.length; i++ )
   test.identical( got[ i ], expected[ i ] );
   test.true( got === dst );
 
@@ -997,7 +997,7 @@ function _cmykStrToRgbWithDst( test )
   var dst = _.vad.fromLong([ 1, 2, 3 ]);
   var expected = [ 1, 1, 1 ];
   var got = _.color._cmykStrToRgb( dst, src );
-  for( let i = 0 ; i < expected.length ; i++ )
+  for( let i = 0; i < expected.length; i++ )
   test.identical( got.eGet( i ), expected[ i ] );
   test.true( got === dst );
 
@@ -1007,83 +1007,65 @@ function _cmykStrToRgbWithDst( test )
 
   test.open( 'non basic colors' );
 
-  // test.case = 'cmyk(12%,34%,99%,27%), dst = Array';
-  // var src = 'cmyk(0%,0%,0%,100%)';
-  // var dst = [ 1, 2, 3 ];
-  // var expected = [ 0, 0, 0 ];
-  // var got = _.color._cmykStrToRgb( dst, src );
-  // test.identical( got, expected );
-  // test.true( got === dst );
+  test.case = 'cmyk(12%,34%,99%,27%), dst = Array';
+  var src = 'cmyk(12%,34%,99%,27%), dst = Array';
+  var dst = [ 1, 2, 3 ];
+  var expected = [ 0.6431372549019608, 0.4823529411764706, 0.00784313725490196 ];
+  var got = _.color._cmykStrToRgb( dst, src );
+  test.equivalent( got, expected );
+  test.true( got === dst );
 
-  // test.case = 'Green, dst = Long';
-  // var src = 'cmyk(100%,0%,100%,0%)';
-  // var dst = _.longFrom([ 1, 4, 13 ]);
-  // var expected = [ 0, 1, 0 ];
-  // var got = _.color._cmykStrToRgb( dst, src );
-  // test.identical( got, expected );
-  // test.true( got === dst );
+  test.case = 'cmyk(12%,34%,99%,27%), dst = Long';
+  var src = 'cmyk(12%,34%,99%,27%)';
+  var dst = _.longFrom([ 1, 2, 3 ]);
+  var expected = [ 0.6431372549019608, 0.4823529411764706, 0.00784313725490196 ];
+  var got = _.color._cmykStrToRgb( dst, src );
+  test.equivalent( got, expected );
+  test.true( got === dst );
 
-  // test.case = 'Red, dst = TypedArray';
-  // var src = 'cmyk(0%,100%,100%,0%)';
-  // var dst = new I8x([ 1, 5, 15 ]);
-  // var expected = [ 1, 0, 0 ];
-  // var got = _.color._cmykStrToRgb( dst, src );
-  // for( let i = 0 ; i < expected.length ; i++ )
-  // test.identical( got[ i ], expected[ i ] );
-  // test.true( got === dst );
+  test.case = 'cmyk(12%,34%,99%,27%), dst = TypedArray';
+  var src = 'cmyk(12%,34%,99%,27%)';
+  var dst = new Float32Array([ 1, 2, 3 ]); /* ( 0, 1 ) -> Integer Typed Array can NOT be used */
+  var expected = [ 0.6431372549019608, 0.4823529411764706, 0.00784313725490196 ];
+  var got = _.color._cmykStrToRgb( dst, src );
+  for( let i = 0; i < expected.length; i++ )
+  test.equivalent( got[ i ], expected[ i ] );
+  test.true( got === dst );
 
-  // test.case = 'White, dst = VectorAdapter';
-  // var src = 'cmyk(0%,0%,0%,0%)';
-  // var dst = _.vad.fromLong([ 1, 2, 3 ]);
-  // var expected = [ 1, 1, 1 ];
-  // var got = _.color._cmykStrToRgb( dst, src );
-  // for( let i = 0 ; i < expected.length ; i++ )
-  // test.identical( got.eGet( i ), expected[ i ] );
-  // test.true( got === dst );
+  test.case = 'cmyk(12%,34%,99%,27%), dst = VectorAdapter';
+  var src = 'cmyk(12%,34%,99%,27%)';
+  var dst = _.vad.fromLong([ 1, 2, 3 ]);
+  var expected = [ 0.6431372549019608, 0.4823529411764706, 0.00784313725490196 ];
+  var got = _.color._cmykStrToRgb( dst, src );
+  for( let i = 0; i < expected.length; i++ )
+  test.equivalent( got.eGet( i ), expected[ i ] );
+  test.true( got === dst );
 
-  // test.case = 'cmyk(12%,34%,99%,27%)';
-  // var src = 'cmyk(12%,34%,99%,27%)';
-  // var expected = [ 0.6431372549019608, 0.4823529411764706, 0.00784313725490196 ];
-  // var got = _.color._cmykStrToRgb( null, src );
-  // test.equivalent( got, expected );
+  test.close( 'non basic colors' );
 
-  // test.case = 'cmyk(87%,1%,33%,5%)';
-  // var src = 'cmyk(87%,1%,33%,5%)';
-  // var expected = [ 0.12156862745098039, 0.9411764705882353, 0.6352941176470588 ];
-  // var got = _.color._cmykStrToRgb( null, src );
-  // test.equivalent( got, expected );
+  test.case = 'first arg > 100%';
+  var src = 'cmyk(111%,16%,75%,4%)';
+  var expected = null;
+  var got = _.color._cmykStrToRgb( [ 1, 2, 3 ], src );
+  test.identical( got, expected );
 
-  // test.case = 'cmyk(11%,16%,75%,4%)';
-  // var src = 'cmyk(11%,16%,75%,4%)';
-  // var expected = [ 0.8549019607843137, 0.807843137254902, 0.23921568627450981 ];
-  // var got = _.color._cmykStrToRgb( null, src );
-  // test.equivalent( got, expected );
+  test.case = 'second arg > 100%';
+  var src = 'cmyk(11%,160%,75%,4%)';
+  var expected = null;
+  var got = _.color._cmykStrToRgb( [ 1, 2, 3 ], src );
+  test.identical( got, expected );
 
-  // test.close( 'non basic colors' );
+  test.case = 'third arg > 100%';
+  var src = 'cmyk(11%,16%,750%,4%)';
+  var expected = null;
+  var got = _.color._cmykStrToRgb( [ 1, 2, 3 ], src );
+  test.identical( got, expected );
 
-  // test.case = 'first arg > 100%';
-  // var src = 'cmyk(111%,16%,75%,4%)';
-  // var expected = null;
-  // var got = _.color._cmykStrToRgb( null, src );
-  // test.identical( got, expected );
-
-  // test.case = 'second arg > 100%';
-  // var src = 'cmyk(11%,160%,75%,4%)';
-  // var expected = null;
-  // var got = _.color._cmykStrToRgb( null, src );
-  // test.identical( got, expected );
-
-  // test.case = 'third arg > 100%';
-  // var src = 'cmyk(11%,16%,750%,4%)';
-  // var expected = null;
-  // var got = _.color._cmykStrToRgb( null, src );
-  // test.identical( got, expected );
-
-  // test.case = 'fourth arg > 100%';
-  // var src = 'cmyk(11%,16%,75%,400%)';
-  // var expected = null;
-  // var got = _.color._cmykStrToRgb( null, src );
-  // test.identical( got, expected );
+  test.case = 'fourth arg > 100%';
+  var src = 'cmyk(11%,16%,75%,400%)';
+  var expected = null;
+  var got = _.color._cmykStrToRgb( [ 1, 2, 3 ], src );
+  test.identical( got, expected );
 
 }
 
