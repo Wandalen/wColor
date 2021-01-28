@@ -2092,22 +2092,22 @@ let Extension =
 
   // to rgb/a
 
-  _cmykStrToRgb, /* tested */
-  _cmykStrToRgba, /* tested */
+  _cmykStrToRgb,
+  _cmykStrToRgba,
   _cmykLongToRgb,
   _cmykLongToRgba,
   _validateCmyk,
 
-  _hwbStrToRgb, /* tested */
-  _hwbStrToRgba, /* tested */
+  _hwbStrToRgb,
+  _hwbStrToRgba,
   _hwbLongToRgba,
 
-  _hexStrToRgb, /* tested */
-  _hexStrToRgba, /* tested */
+  _hexStrToRgb,
+  _hexStrToRgba,
   _hexStrRemoveAlfa,
 
-  _rgbStrToRgb, /* tested */
-  _rgbaStrToRgba, /* tested */
+  _rgbStrToRgb,
+  _rgbaStrToRgba,
 
   _hslStrToRgb,
   _hslaStrToRgba,
