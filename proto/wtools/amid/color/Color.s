@@ -1270,7 +1270,7 @@ function _cmykLongToRgbaVector( dst, src )
 
     rgb = _.color._cmykLongToRgbLong( src );
 
-    dst.assign( [ ... rgb, 1 ] );
+    dst.assign([ ... rgb, 1 ]);
 
   }
   else _.assert( 0, '{-dts-} container must be of type Vector' );
