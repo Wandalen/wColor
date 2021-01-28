@@ -1157,66 +1157,130 @@ function paler( rgb, factor )
 // to rgb/a
 // --
 
-function _cmykStrToRgb( src )
+function _cmykStrToRgb( dst, src )
 {
   /*
     cmyk(C, M, Y, K)
   */
 
-  _.assert( arguments.length === 1, 'Expects single argument' );
+  _.assert( arguments.length === 2, 'Expects 2 arguments' );
   _.assert( _.strIs( src ) );
+  _.assert( dst === null || _.vectorIs( dst ) );
 
   let cmykColors = _.color._formatStringParse( src );
 
   if( !_.color._validateCmyk( cmykColors ) )
   return null;
 
-  return _.color._cmykLongToRgb( cmykColors );
+  return _.color._cmykLongToRgbVector( dst, cmykColors );
 
 }
 
 //
 
-function _cmykStrToRgba( src )
+function _cmykStrToRgba( dst, src )
 {
   /*
     cmyk(C, M, Y, K)
   */
 
-  _.assert( arguments.length === 1, 'Expects single argument' );
+  _.assert( arguments.length === 2, 'Expects 2 arguments' );
   _.assert( _.strIs( src ) );
+  _.assert( dst === null || _.vectorIs( dst ) );
 
   let cmykColors = _.color._formatStringParse( src );
 
   if( !_.color._validateCmyk( cmykColors ) )
   return null;
 
-  return _.color._cmykLongToRgba( cmykColors );
+  return _.color._cmykLongToRgbaVector( dst, cmykColors );
 
 }
 
 //
 
-function _cmykLongToRgb( src )
+function _cmykLongToRgbVector( dst, src )
+{
+  let rgb;
+
+  if( dst === null || _.longIs( dst ) )
+  {
+    dst = dst || new Array( 3 );
+
+    _.assert( dst.length === 3, `{-dst-} container length must be 3, but got : ${dst.length}` );
+
+    rgb = _.color._cmykLongToRgbLong( src );
+
+    dst[ 0 ] = rgb[ 0 ];
+    dst[ 1 ] = rgb[ 1 ];
+    dst[ 2 ] = rgb[ 2 ];
+
+  }
+  else if( _.vadIs( dst ) )
+  {
+    /* optional dependency */
+
+    _.assert( dst.length === 3, `{-dst-} container length must be 3, but got : ${dst.length}` );
+
+    rgb = _.color._cmykLongToRgbLong( src );
+
+    dst.assign( rgb );
+
+  }
+  else _.assert( 0, '{-dts-} container must be of type Vector' );
+
+  return dst;
+
+}
+
+//
+
+function _cmykLongToRgbaVector( dst, src )
+{
+  let rgb;
+
+  if( dst === null || _.longIs( dst ) )
+  {
+    dst = dst || new Array( 4 );
+
+    _.assert( dst.length === 4, `{-dst-} container length must be 4, but got : ${dst.length}` );
+
+    rgb = _.color._cmykLongToRgbLong( src );
+
+    dst[ 0 ] = rgb[ 0 ];
+    dst[ 1 ] = rgb[ 1 ];
+    dst[ 2 ] = rgb[ 2 ];
+    dst[ 3 ] = 1;
+
+  }
+  else if( _.vadIs( dst ) )
+  {
+    /* optional dependency */
+
+    _.assert( dst.length === 4, `{-dst-} container length must be 4, but got : ${dst.length}` );
+
+    rgb = _.color._cmykLongToRgbLong( src );
+
+    dst.assign( [ ... rgb, 1 ] );
+
+  }
+  else _.assert( 0, '{-dts-} container must be of type Vector' );
+
+  return dst;
+
+  // return result;
+
+}
+
+//
+
+function _cmykLongToRgbLong( src )
 {
   let r = ( 1 - src[ 0 ] / 100 ) * ( 1 - src[ 3 ] / 100 );
   let g = ( 1 - src[ 1 ] / 100 ) * ( 1 - src[ 3 ] / 100 );
   let b = ( 1 - src[ 2 ] / 100 ) * ( 1 - src[ 3 ] / 100 );
 
-  return [ r, g, b ]
-
-}
-
-//
-
-function _cmykLongToRgba( src )
-{
-
-  let result = _.color._cmykLongToRgb( src );
-  result.push( 1 );
-
-  return result;
-
+  return [ r, g, b ];
 }
 
 //
@@ -2094,8 +2158,9 @@ let Extension =
 
   _cmykStrToRgb,
   _cmykStrToRgba,
-  _cmykLongToRgb,
-  _cmykLongToRgba,
+  _cmykLongToRgbVector,
+  _cmykLongToRgbaVector,
+  _cmykLongToRgbLong,
   _validateCmyk,
 
   _hwbStrToRgb,

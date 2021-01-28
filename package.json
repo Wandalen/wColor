@@ -38,7 +38,8 @@
     "url": "https://github.com/Wandalen/wColor/issues"
   },
   "dependencies": {
-    "wTools": "alpha"
+    "wTools": "alpha",
+    "wmathvector": "alpha"
   },
   "devDependencies": {
     "eslint": "7.1.0",
