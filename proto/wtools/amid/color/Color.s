@@ -1157,26 +1157,7 @@ function paler( rgb, factor )
 // to rgb/a
 // --
 
-// function _cmykStrToRgb( src, dst )
-// {
-//   /*
-//     cmyk(C, M, Y, K)
-//   */
-
-//   _.assert( arguments.length === 1, 'Expects single argument' );
-//   _.assert( _.strIs( src ) );
-
-//   let result = _.color._cmykStrToRgba( src );
-
-//   if( result )
-//   return _.longSlice( result, 0, 3 );
-
-//   return null;
-// }
-
-//
-
-function _cmykStrToRgb( src, alpha )
+function _cmykStrToRgb( src )
 {
   /*
     cmyk(C, M, Y, K)
@@ -1184,7 +1165,25 @@ function _cmykStrToRgb( src, alpha )
 
   _.assert( arguments.length === 1, 'Expects single argument' );
   _.assert( _.strIs( src ) );
-  _.assert( alpha === undefined || _.boolLike( alpha ) );
+
+  let result = _.color._cmykStrToRgba( src );
+
+  if( result )
+  return _.longSlice( result, 0, 3 );
+
+  return null;
+}
+
+//
+
+function _cmykStrToRgba( src )
+{
+  /*
+    cmyk(C, M, Y, K)
+  */
+
+  _.assert( arguments.length === 1, 'Expects single argument' );
+  _.assert( _.strIs( src ) );
 
   let cmykColors = _.color._formatStringParse( src );
 
@@ -1194,55 +1193,53 @@ function _cmykStrToRgb( src, alpha )
     || !_.cinterval.has( [ 0, 100 ], cmykColors[ 1 ] )
     || !_.cinterval.has( [ 0, 100 ], cmykColors[ 2 ] )
     || !_.cinterval.has( [ 0, 100 ], cmykColors[ 3 ] )
-    || ( alpha && !_.cinterval.has( [ 0, 1 ], alpha ) )
   )
   return null;
 
-  return _.color._cmykToRgbConvert( cmykColors, alpha );
+  return _.color._cmykLongToRgba( cmykColors );
 
 }
 
 //
 
-function _cmykToRgbConvert( cmyk, alpha )
+function _cmykLongToRgba( cmyk )
 {
   let r = ( 1 - cmyk[ 0 ] / 100 ) * ( 1 - cmyk[ 3 ] / 100 );
   let g = ( 1 - cmyk[ 1 ] / 100 ) * ( 1 - cmyk[ 3 ] / 100 );
   let b = ( 1 - cmyk[ 2 ] / 100 ) * ( 1 - cmyk[ 3 ] / 100 );
 
-  if( alpha )
   return [ r, g, b, 1 ]
-  else
-  return [ r, g, b ]
 
 }
 
 //
 
-// function _hwbStrToRgb( src )
-// {
-//   /* hwb(H, W, B) */
-
-//   _.assert( arguments.length === 1, 'Expects single argument' );
-//   _.assert( _.strIs( src ) );
-
-//   let result = _.color._hwbStrToRgba( src );
-
-//   if( result )
-//   return _.longSlice( result, 0, 3 );
-
-//   return null;
-// }
-
-//
-
-function _hwbStrToRgb( src, alpha )
+function _hwbStrToRgb( src )
 {
   /* hwb(H, W, B) */
 
   _.assert( arguments.length === 1, 'Expects single argument' );
   _.assert( _.strIs( src ) );
-  _.assert( alpha === undefined || _.boolLike( alpha ) );
+
+  let result = _.color._hwbStrToRgba( src );
+
+  if( result )
+  {
+    result.pop();
+    return result;
+  }
+
+  return null;
+}
+
+//
+
+function _hwbStrToRgba( src )
+{
+  /* hwb(H, W, B) */
+
+  _.assert( arguments.length === 1, 'Expects single argument' );
+  _.assert( _.strIs( src ) );
 
   let hwbColors = _.color._formatStringParse( src );
 
@@ -1254,13 +1251,13 @@ function _hwbStrToRgb( src, alpha )
   )
   return null;
 
-  return _.color._hwbToRgbConvert( hwbColors, alpha );
+  return _.color._hwbLongToRgba( hwbColors );
 
 }
 
 //
 
-function _hwbToRgbConvert( hwb, alpha )
+function _hwbLongToRgba( hwb )
 {
   let h = hwb[ 0 ] / 360;
   let wh = hwb[ 1 ] / 100;
@@ -1301,36 +1298,13 @@ function _hwbToRgbConvert( hwb, alpha )
     default : break;
   }
 
-  if( alpha )
   return [ r, g, b, 1 ]
-  else
-  return [ r, g, b ]
 
 }
 
 //
 
-// function _hexStrToRgb( src )
-// {
-//   /*
-//     #RGB[A]
-//     #RRGGBB[AA]
-//   */
-
-//   _.assert( arguments.length === 1, 'Expects single argument' );
-//   _.assert( _.strIs( src ) );
-
-//   let result = _.color._hexStrToRgba( src );
-
-//   if( result )
-//   return _.longSlice( result, 0, 3 );
-
-//   return null;
-// }
-
-//
-
-function _hexStrToRgb( src, alpha )
+function _hexStrToRgb( src )
 {
   /*
     #RGB[A]
@@ -1339,10 +1313,29 @@ function _hexStrToRgb( src, alpha )
 
   _.assert( arguments.length === 1, 'Expects single argument' );
   _.assert( _.strIs( src ) );
-  _.assert( alpha === undefined || _.boolLike( alpha ) );
 
-  if( !alpha )
-  src = _.color._hexRemoveAlfa( src )
+  let result = _.color._hexStrToRgba( src );
+
+  if( result )
+  return _.longSlice( result, 0, 3 );
+
+  return null;
+}
+
+//
+
+function _hexStrToRgba( src )
+{
+  /*
+    #RGB[A]
+    #RRGGBB[AA]
+  */
+
+  _.assert( arguments.length === 1, 'Expects single argument' );
+  _.assert( _.strIs( src ) );
+
+  // if( !alpha )
+  // src = _.color._hexStrRemoveAlfa( src )
 
   return _.color.hexToColor( src );
 
@@ -1350,7 +1343,7 @@ function _hexStrToRgb( src, alpha )
 
 //
 
-function _hexRemoveAlfa( src )
+function _hexStrRemoveAlfa( src )
 {
   if( src.length === 9 )
   return src.slice( 0, 8 );
@@ -1368,8 +1361,6 @@ function _rgbStrToRgb( src )
   /*
     rgb[a](R, G, B[, A])
     rgb[a](R G B[ / A])
-    R:10 G:20 B:30
-    (R10 / G20 / B30)
   */
 
 
@@ -2079,16 +2070,16 @@ let Extension =
   // to rgb/a
 
   _cmykStrToRgb, /* tested */
-  // _cmykStrToRgba, /* tested */
-  _cmykToRgbConvert,
+  _cmykStrToRgba, /* tested */
+  _cmykLongToRgba,
 
   _hwbStrToRgb, /* tested */
-  // _hwbStrToRgba, /* tested */
-  _hwbToRgbConvert,
+  _hwbStrToRgba, /* tested */
+  _hwbLongToRgba,
 
   _hexStrToRgb, /* tested */
-  // _hexStrToRgba, /* tested */
-  _hexRemoveAlfa,
+  _hexStrToRgba, /* tested */
+  _hexStrRemoveAlfa,
 
   _rgbStrToRgb, /* tested */
   _rgbaStrToRgba, /* tested */
