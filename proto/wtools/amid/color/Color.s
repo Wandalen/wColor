@@ -1157,6 +1157,73 @@ function paler( rgb, factor )
 // to rgb/a
 // --
 
+function _formatLongToRgbVector( o )
+{
+  _.assert( _.mapIs( o ) );
+  _.assertRoutineOptions( _formatLongToRgbVector, o );
+
+  let r, g, b, a;
+
+  if( o.dst === null || _.longIs( o.dst ) )
+  {
+    o.dst = o.dst || new Array( 3 );
+
+    _.assert( o.dst.length === 3, `{-o.dst-} container length must be 3, but got : ${o.dst.length}` );
+
+    if( o.alpha )
+    [ r, g, b ] = o.parser( o.src );
+    else
+    [ r, g, b, a ] = o.parser( o.src );
+
+    /*
+      TypedArray:
+
+      For non-basic colors with r, g, b values range ( 0, 1 )
+      only instances of those constructors can be used
+      Float32Array,
+      Float64Array,
+    */
+
+    dst[ 0 ] = r;
+    dst[ 1 ] = g;
+    dst[ 2 ] = b;
+    if( o.alpha )
+    dst[ 3 ] = a;
+
+  }
+  else if( _.vadIs( dst ) )
+  {
+    /* optional dependency */
+
+    _.assert( dst.length === 3, `{-dst-} container length must be 3, but got : ${dst.length}` );
+
+    if( o.alpha )
+    [ r, g, b ] = o.parser( o.src );
+    else
+    [ r, g, b, a ] = o.parser( o.src );
+
+    dst.eSet( 0, r );
+    dst.eSet( 1, g );
+    dst.eSet( 2, b );
+    if( o.alpha )
+    dst.eSet( 3, a );
+
+  }
+  else _.assert( 0, '{-dts-} container must be of type Vector' );
+
+  return dst;
+
+}
+
+_formatLongToRgbVector.defaults =
+{
+  dst : null,
+  src : null,
+  parser : null,
+  alpha : 0
+}
+
+
 function _cmykStrToRgb( dst, src )
 {
   /*
@@ -1545,6 +1612,8 @@ function _hwbLongToRgbaVector( dst, src )
 
 }
 
+//
+
 function _validateHwb ( src )
 {
   if
@@ -1560,55 +1629,152 @@ function _validateHwb ( src )
 
 //
 
-function _hexStrToRgb( src )
+function _hexStrToRgb( dst, src )
 {
   /*
     #RGB[A]
     #RRGGBB[AA]
   */
 
-  _.assert( arguments.length === 1, 'Expects single argument' );
+  _.assert( arguments.length === 2, 'Expects single argument' );
   _.assert( _.strIs( src ) );
+  _.assert( dst === null || _.vectorIs( dst ) );
 
-  let result = _.color._hexStrToRgba( src );
+  let hexColors = _.color._formatStringParse( src );
 
-  if( result )
-  return _.longSlice( result, 0, 3 );
-
+  if( !_.color._validateHwb( hexColors ) )
   return null;
+
+  return _.color._hexLongToRgbVector( dst, hexColors );
 }
 
 //
 
-function _hexStrToRgba( src )
+function _hexStrToRgba( dst, src )
 {
   /*
     #RGB[A]
     #RRGGBB[AA]
   */
 
-  _.assert( arguments.length === 1, 'Expects single argument' );
+  _.assert( arguments.length === 2, 'Expects single argument' );
   _.assert( _.strIs( src ) );
+  _.assert( dst === null || _.vectorIs( dst ) );
 
-  // if( !alpha )
-  // src = _.color._hexStrRemoveAlfa( src )
+  let hexColors = _.color._formatStringParse( src );
 
-  return _.color.hexToColor( src );
+  if( !_.color._validateHwb( hexColors ) )
+  return null;
+
+  return _.color._hexLongToRgbaVector( dst, hexColors );
+}
+
+//
+
+function _hwbLongToRgbVector( dst, src )
+{
+  if( dst === null || _.longIs( dst ) )
+  {
+    dst = dst || new Array( 3 );
+
+    _.assert( dst.length === 3, `{-dst-} container length must be 3, but got : ${dst.length}` );
+
+    let [ r, g, b ] = _.color.hexToColor( src );
+
+    /*
+      TypedArray:
+
+      For non-basic colors with r, g, b values range ( 0, 1 )
+      only instances of those constructors can be used
+      Float32Array,
+      Float64Array,
+    */
+
+    dst[ 0 ] = r;
+    dst[ 1 ] = g;
+    dst[ 2 ] = b;
+    dst[ 3 ] = 1;
+
+  }
+  else if( _.vadIs( dst ) )
+  {
+    /* optional dependency */
+
+    _.assert( dst.length === 3, `{-dst-} container length must be 3, but got : ${dst.length}` );
+
+    let [ r, g, b ] = _.color.hexToColor( src );( src );
+
+    dst.eSet( 0, r );
+    dst.eSet( 1, g );
+    dst.eSet( 2, b );
+    dst.eSet( 3, 1 );
+
+  }
+  else _.assert( 0, '{-dts-} container must be of type Vector' );
+
+  return dst;
 
 }
 
 //
 
-function _hexStrRemoveAlfa( src )
+function _hwbLongToRgbaVector( dst, src )
 {
-  if( src.length === 9 )
-  return src.slice( 0, 8 );
+  if( dst === null || _.longIs( dst ) )
+  {
+    dst = dst || new Array( 4 );
 
-  if( src.length === 4 )
-  return src.slice( 0, 4 );
+    _.assert( dst.length === 4, `{-dst-} container length must be 4, but got : ${dst.length}` );
 
-  return src;
+    let [ r, g, b ] = _.color.hexToColor( src );( src );
+
+    /*
+      TypedArray:
+
+      For non-basic colors with r, g, b values range ( 0, 1 )
+      only instances of those constructors can be used
+      Float32Array,
+      Float64Array,
+    */
+
+    dst[ 0 ] = r;
+    dst[ 1 ] = g;
+    dst[ 2 ] = b;
+    dst[ 3 ] = 1;
+
+  }
+  else if( _.vadIs( dst ) )
+  {
+    /* optional dependency */
+
+    _.assert( dst.length === 4, `{-dst-} container length must be 4, but got : ${dst.length}` );
+
+    let [ r, g, b ] = _.color.hexToColor( src );( src );
+
+    dst.eSet( 0, r );
+    dst.eSet( 1, g );
+    dst.eSet( 2, b );
+    dst.eSet( 3, 1 );
+
+  }
+  else _.assert( 0, '{-dts-} container must be of type Vector' );
+
+  return dst;
+
 }
+
+//
+
+// function _hexStrRemoveAlfa( src )
+// {
+//   if( src.length === 9 )
+//   return src.slice( 0, 8 );
+
+//   if( src.length === 4 )
+//   return src.slice( 0, 4 );
+
+//   return src;
+// }
 
 //
 
@@ -2324,6 +2490,8 @@ let Extension =
   paler,
 
   // to rgb/a
+
+  _formatLongToRgbVector,
 
   _cmykStrToRgb,
   _cmykStrToRgba,
