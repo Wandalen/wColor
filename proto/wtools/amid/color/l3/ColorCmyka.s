@@ -143,12 +143,6 @@ let Extension =
 }
 
 _.mapSupplement( _.color.cmyka, Extension );
-// _.mapSupplement( _.color.ColorMap, ColorMap );
-// _.mapSupplement( _.color.ColorMapGreyscale, ColorMapGreyscale );
-// _.mapSupplement( _.color.ColorMapDistinguishable, ColorMapDistinguishable );
-
-// _.mapSupplement( _.color.ColorMap, ColorMapGreyscale );
-// _.mapSupplement( _.color.ColorMap, ColorMapDistinguishable );
 
 // --
 // export
