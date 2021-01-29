@@ -51,10 +51,15 @@ function _cmykaStrToRgba( dst, src )
 
 function _cmykaLongToRgba( dst, src )
 {
+
+  _.assert( src.length === 5, `{-src-} length must be 5, but got : ${src.length}` );
+
   let r, g, b, a;
   /* qqq : bad!
   assert
   alpha channel
+
+  aaa : Added
   */
 
   if( dst === null || _.longIs( dst ) )

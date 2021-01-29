@@ -52,6 +52,8 @@ function _cmykStrToRgb( dst, src )
 
 function _cmykLongToRgb( dst, src )
 {
+  _.assert( src.length === 4, `{-src-} length must be 4, but got : ${src.length}` );
+
   let r, g, b;
 
   if( dst === null || _.longIs( dst ) )
