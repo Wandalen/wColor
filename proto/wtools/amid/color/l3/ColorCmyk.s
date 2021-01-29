@@ -39,12 +39,12 @@ function _cmykStrToRgb( dst, src )
   _.assert( dst === null || _.vectorIs( dst ) );
 
   let cmykColors = _.color._formatStringParse( src );
-  _.assert( cmykColors.length === 3, `{-src-} string must contain exactly 3 numbers, but got ${cmykColors.length}` );
+  _.assert( cmykColors.length === 4, `{-src-} string must contain exactly 4 numbers, but got ${cmykColors.length}` );
 
   if( !_.color.cmyk._сmykValidate( cmykColors ) )
   return null;
 
-  return _.color._cmykLongToRgb( dst, cmykColors );
+  return _.color.cmyk._cmykLongToRgb( dst, cmykColors );
 
 }
 
@@ -114,6 +114,7 @@ function _сmykValidate ( src )
     !_.cinterval.has( [ 0, 100 ], src[ 0 ] )
     || !_.cinterval.has( [ 0, 100 ], src[ 1 ] )
     || !_.cinterval.has( [ 0, 100 ], src[ 2 ] )
+    || !_.cinterval.has( [ 0, 100 ], src[ 3 ] )
   )
   return false;
 

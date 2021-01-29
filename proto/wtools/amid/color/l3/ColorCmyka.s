@@ -38,12 +38,12 @@ function _cmykaStrToRgba( dst, src )
   _.assert( dst === null || _.vectorIs( dst ) );
 
   let cmykColors = _.color._formatStringParse( src );
-  _.assert( cmykColors.length === 4, `{-src-} string must contain exactly 4 numbers, but got ${cmykColors.length}` );
+  _.assert( cmykColors.length === 5, `{-src-} string must contain exactly 5 numbers, but got ${cmykColors.length}` );
 
   if( !_.color.cmyka._сmykaValidate( cmykColors ) )
   return null;
 
-  return _.color._cmykaLongToRgba( dst, cmykColors );
+  return _.color.cmyka._cmykaLongToRgba( dst, cmykColors );
 
 }
 
@@ -51,7 +51,7 @@ function _cmykaStrToRgba( dst, src )
 
 function _cmykaLongToRgba( dst, src )
 {
-  let r, g, b;
+  let r, g, b, a;
   /* qqq : bad!
   assert
   alpha channel
@@ -77,7 +77,7 @@ function _cmykaLongToRgba( dst, src )
     dst[ 0 ] = r;
     dst[ 1 ] = g;
     dst[ 2 ] = b;
-    dst[ 3 ] = 1;
+    dst[ 3 ] = a;
 
   }
   else if( _.vadIs( dst ) )
@@ -91,7 +91,7 @@ function _cmykaLongToRgba( dst, src )
     dst.eSet( 0, r );
     dst.eSet( 1, g );
     dst.eSet( 2, b );
-    dst.eSet( 3, 1 );
+    dst.eSet( 3, a );
 
   }
   else _.assert( 0, '{-dts-} container must be of type Vector' );
@@ -105,13 +105,14 @@ function _cmykaLongToRgba( dst, src )
     r = ( 1 - src[ 0 ] / 100 ) * ( 1 - src[ 3 ] / 100 );
     g = ( 1 - src[ 1 ] / 100 ) * ( 1 - src[ 3 ] / 100 );
     b = ( 1 - src[ 2 ] / 100 ) * ( 1 - src[ 3 ] / 100 );
+    a = src[ 4 ] / 100;
   }
 
 }
 
 //
 
-function _сmykaValidate ( src, alpha )
+function _сmykaValidate ( src )
 {
   if
   (
