@@ -10,7 +10,7 @@
     { "name" : "Kostiantyn Wandalen", "email" : "wanalen@01.school" },
     { "name" : "Volodymyr M.", "email" : "volodymyr.migdal@gmail.com" }
   ],
-  "main": "proto/wtools/amid/color/entry/ColorBasic.s",
+  "main" : "proto/wtools/amid/color/entry/ColorBasic.s",
   "files" : [ "proto/wtools/amid/color", "proto/wtools/Tools.s", "out", "out" ],
   "directories" : { "doc" : "doc", "main" : "proto/wtools/amid/color/Color.s" },
   "scripts" : { "test" : "wtest .run 'proto/**' rapidity:-1", "docgen" : "wdocgen proto" },
