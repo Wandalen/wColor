@@ -1168,7 +1168,10 @@ function _formatLongToRgbVector( o )
   {
     o.dst = o.dst || new Array( 3 );
 
+    if( o.alpha )
     _.assert( o.dst.length === 3, `{-o.dst-} container length must be 3, but got : ${o.dst.length}` );
+    else
+    _.assert( o.dst.length === 4, `{-o.dst-} container length must be 4, but got : ${o.dst.length}` );
 
     if( o.alpha )
     [ r, g, b ] = o.parser( o.src );
@@ -1195,7 +1198,10 @@ function _formatLongToRgbVector( o )
   {
     /* optional dependency */
 
-    _.assert( dst.length === 3, `{-dst-} container length must be 3, but got : ${dst.length}` );
+    if( o.alpha )
+    _.assert( o.dst.length === 3, `{-o.dst-} container length must be 3, but got : ${o.dst.length}` );
+    else
+    _.assert( o.dst.length === 4, `{-o.dst-} container length must be 4, but got : ${o.dst.length}` );
 
     if( o.alpha )
     [ r, g, b ] = o.parser( o.src );
