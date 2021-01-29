@@ -1236,49 +1236,49 @@ function _hwbStrToRgb( test )
   test.case = 'Black';
   var src = 'hwb(0, 0%, 100%)';
   var expected = [ 0, 0, 0 ];
-  var got = _.color._hwbStrToRgb( src );
+  var got = _.color._hwbStrToRgb( null, src );
   test.identical( got, expected );
 
   test.case = 'White';
   var src = 'hwb(0, 100%, 0%)';
   var expected = [ 1, 1, 1 ];
-  var got = _.color._hwbStrToRgb( src );
+  var got = _.color._hwbStrToRgb( null, src );
   test.identical( got, expected );
 
   test.case = 'Red';
   var src = 'hwb(0, 0%, 0%)';
   var expected = [ 1, 0, 0 ];
-  var got = _.color._hwbStrToRgb( src );
+  var got = _.color._hwbStrToRgb( null, src );
   test.identical( got, expected );
 
   test.case = 'Green';
   var src = 'hwb(120, 0%, 0%)';
   var expected = [ 0, 1, 0 ];
-  var got = _.color._hwbStrToRgb( src );
+  var got = _.color._hwbStrToRgb( null, src );
   test.identical( got, expected );
 
   test.case = 'Blue';
   var src = 'hwb(240,0%,0%)';
   var expected = [ 0, 0, 1 ];
-  var got = _.color._hwbStrToRgb( src );
+  var got = _.color._hwbStrToRgb( null, src );
   test.identical( got, expected );
 
   test.case = 'Yellow';
   var src = 'hwb(60,0%,0%)';
   var expected = [ 1, 1, 0 ];
-  var got = _.color._hwbStrToRgb( src );
+  var got = _.color._hwbStrToRgb( null, src );
   test.identical( got, expected );
 
   test.case = 'Cyan';
   var src = 'hwb(180,0%,0%)';
   var expected = [ 0, 1, 1 ];
-  var got = _.color._hwbStrToRgb( src );
+  var got = _.color._hwbStrToRgb( null, src );
   test.identical( got, expected );
 
   test.case = 'Magenta';
   var src = 'hwb(300,0%,0%)';
   var expected = [ 1, 0, 1 ];
-  var got = _.color._hwbStrToRgb( src );
+  var got = _.color._hwbStrToRgb( null, src );
   test.identical( got, expected );
 
   test.close( 'basic colors' );
@@ -1290,19 +1290,19 @@ function _hwbStrToRgb( test )
   test.case = 'hwb(45, 1%, 36%)';
   var src = 'hwb(45, 1%, 36%)';
   var expected = [ 0.6392156862745098, 0.4823529411764706, 0.011764705882352941 ];
-  var got = _.color._hwbStrToRgb( src );
+  var got = _.color._hwbStrToRgb( null, src );
   test.equivalent( got, expected );
 
   test.case = 'hwb(158, 12%, 6%)';
   var src = 'hwb(158, 12%, 6%)';
   var expected = [ 0.12156862745098039, 0.9411764705882353, 0.6392156862745098 ];
-  var got = _.color._hwbStrToRgb( src );
+  var got = _.color._hwbStrToRgb( null, src );
   test.equivalent( got, expected );
 
   test.case = 'hwb(55, 24%, 15%)';
   var src = 'hwb(55, 24%, 15%)';
   var expected = [ 0.8509803921568627, 0.8, 0.23921568627450981 ];
-  var got = _.color._hwbStrToRgb( src );
+  var got = _.color._hwbStrToRgb( null, src );
   test.equivalent( got, expected );
 
   test.close( 'non basic colors' );
@@ -1310,13 +1310,13 @@ function _hwbStrToRgb( test )
   test.case = 'first arg > 360';
   var src = 'hwb(366,16%,75%)';
   var expected = null;
-  var got = _.color._hwbStrToRgb( src );
+  var got = _.color._hwbStrToRgb( null, src );
   test.identical( got, expected );
 
   test.case = 'second arg > 100%';
   var src = 'hwb(35,160%,75%)';
   var expected = null;
-  var got = _.color._hwbStrToRgb( src );
+  var got = _.color._hwbStrToRgb( null, src );
   test.identical( got, expected );
 
 }
@@ -1333,49 +1333,49 @@ function _hwbStrToRgba( test )
   test.case = 'Black';
   var src = 'hwb(0, 0%, 100%)';
   var expected = [ 0, 0, 0, 1 ];
-  var got = _.color._hwbStrToRgba( src );
+  var got = _.color._hwbStrToRgba( null, src );
   test.identical( got, expected );
 
   test.case = 'White';
   var src = 'hwb(0, 100%, 0%)';
   var expected = [ 1, 1, 1, 1 ];
-  var got = _.color._hwbStrToRgba( src );
+  var got = _.color._hwbStrToRgba( null, src );
   test.identical( got, expected );
 
   test.case = 'Red';
   var src = 'hwb(0, 0%, 0%)';
   var expected = [ 1, 0, 0, 1 ];
-  var got = _.color._hwbStrToRgba( src );
+  var got = _.color._hwbStrToRgba( null, src );
   test.identical( got, expected );
 
   test.case = 'Green';
   var src = 'hwb(120, 0%, 0%)';
   var expected = [ 0, 1, 0, 1 ];
-  var got = _.color._hwbStrToRgba( src );
+  var got = _.color._hwbStrToRgba( null, src );
   test.identical( got, expected );
 
   test.case = 'Blue';
   var src = 'hwb(240,0%,0%)';
   var expected = [ 0, 0, 1, 1 ];
-  var got = _.color._hwbStrToRgba( src );
+  var got = _.color._hwbStrToRgba( null, src );
   test.identical( got, expected );
 
   test.case = 'Yellow';
   var src = 'hwb(60,0%,0%)';
   var expected = [ 1, 1, 0, 1 ];
-  var got = _.color._hwbStrToRgba( src );
+  var got = _.color._hwbStrToRgba( null, src );
   test.identical( got, expected );
 
   test.case = 'Cyan';
   var src = 'hwb(180,0%,0%)';
   var expected = [ 0, 1, 1, 1 ];
-  var got = _.color._hwbStrToRgba( src );
+  var got = _.color._hwbStrToRgba( null, src );
   test.identical( got, expected );
 
   test.case = 'Magenta';
   var src = 'hwb(300,0%,0%)';
   var expected = [ 1, 0, 1, 1 ];
-  var got = _.color._hwbStrToRgba( src );
+  var got = _.color._hwbStrToRgba( null, src );
   test.identical( got, expected );
 
   test.close( 'basic colors' );
@@ -1387,19 +1387,19 @@ function _hwbStrToRgba( test )
   test.case = 'hwb(45, 1%, 36%)';
   var src = 'hwb(45, 1%, 36%)';
   var expected = [ 0.6392156862745098, 0.4823529411764706, 0.011764705882352941, 1 ];
-  var got = _.color._hwbStrToRgba( src );
+  var got = _.color._hwbStrToRgba( null, src );
   test.equivalent( got, expected );
 
   test.case = 'hwb(158, 12%, 6%)';
   var src = 'hwb(158, 12%, 6%)';
   var expected = [ 0.12156862745098039, 0.9411764705882353, 0.6392156862745098, 1 ];
-  var got = _.color._hwbStrToRgba( src );
+  var got = _.color._hwbStrToRgba( null, src );
   test.equivalent( got, expected );
 
   test.case = 'hwb(55, 24%, 15%)';
   var src = 'hwb(55, 24%, 15%)';
   var expected = [ 0.8509803921568627, 0.8, 0.23921568627450981, 1 ];
-  var got = _.color._hwbStrToRgba( src );
+  var got = _.color._hwbStrToRgba( null, src );
   test.equivalent( got, expected );
 
   test.close( 'non basic colors' );
@@ -1407,24 +1407,279 @@ function _hwbStrToRgba( test )
   test.case = 'first arg > 360';
   var src = 'hwb(366,16%,75%)';
   var expected = null;
-  var got = _.color._hwbStrToRgba( src );
+  var got = _.color._hwbStrToRgba( null, src );
   test.identical( got, expected );
 
   test.case = 'second arg > 100%';
   var src = 'hwb(35,160%,75%)';
   var expected = null;
-  var got = _.color._hwbStrToRgba( src );
+  var got = _.color._hwbStrToRgba( null, src );
   test.identical( got, expected );
 
   test.case = 'third arg > 100%';
   var src = 'hwb(35,10%,175%)';
   var expected = null;
-  var got = _.color._hwbStrToRgba( src );
+  var got = _.color._hwbStrToRgba( null, src );
   test.identical( got, expected );
 
 }
 
 _hwbStrToRgba.accuracy = 1e-2;
+
+//
+
+function _hwbStrToRgbWithDst( test )
+{
+
+  test.open( 'basic colors' );
+
+  test.case = 'Black, dst = Array';
+  var src = 'hwb(0, 0%, 100%)';
+  var dst = [ 1, 2, 3 ];
+  var expected = [ 0, 0, 0 ];
+  var got = _.color._hwbStrToRgb( dst, src );
+  test.identical( got, expected );
+  test.true( got === dst );
+
+  test.case = 'Green, dst = Long';
+  var src = 'hwb(120, 0%, 0%)';
+  var dst = _.longFrom([ 1, 4, 13 ]);
+  var expected = [ 0, 1, 0 ];
+  var got = _.color._hwbStrToRgb( dst, src );
+  test.identical( got, expected );
+  test.true( got === dst );
+
+  test.case = 'Red, dst = TypedArray';
+  var src = 'hwb(0, 0%, 0%)';
+  var dst = new I8x([ 1, 5, 15 ]); /* 1 and 0 -> Integer Typed Array can be used */
+  var expected = [ 1, 0, 0 ];
+  var got = _.color._hwbStrToRgb( dst, src );
+  for( let i = 0; i < expected.length; i++ )
+  test.identical( got[ i ], expected[ i ] );
+  test.true( got === dst );
+
+  test.case = 'White, dst = VectorAdapter';
+  var src = 'hwb(0, 100%, 0%)';
+  var dst = _.vad.fromLong([ 1, 2, 3 ]);
+  var expected = [ 1, 1, 1 ];
+  var got = _.color._hwbStrToRgb( dst, src );
+  for( let i = 0; i < expected.length; i++ )
+  test.identical( got.eGet( i ), expected[ i ] );
+  test.true( got === dst );
+
+  test.close( 'basic colors' );
+
+  /* */
+
+  test.open( 'non basic colors' );
+
+  test.case = 'hwb(45, 1%, 36%, dst = Array';
+  var src = 'hwb(45, 1%, 36%, dst = Array';
+  var dst = [ 1, 2, 3 ];
+  var expected = [ 0.6392156862745098, 0.4823529411764706, 0.011764705882352941 ];
+  var got = _.color._hwbStrToRgb( dst, src );
+  test.equivalent( got, expected );
+  test.true( got === dst );
+
+  test.case = 'hwb(45, 1%, 36%, dst = Long';
+  var src = 'hwb(45, 1%, 36%';
+  var dst = _.longFrom([ 1, 2, 3 ]);
+  var expected = [ 0.6392156862745098, 0.4823529411764706, 0.011764705882352941 ];
+  var got = _.color._hwbStrToRgb( dst, src );
+  test.equivalent( got, expected );
+  test.true( got === dst );
+
+  test.case = 'hwb(45, 1%, 36%, dst = TypedArray';
+  var src = 'hwb(45, 1%, 36%';
+  var dst = new Float32Array([ 1, 2, 3 ]); /* ( 0, 1 ) -> Integer Typed Array can NOT be used */
+  var expected = [ 0.6392156862745098, 0.4823529411764706, 0.011764705882352941 ];
+  var got = _.color._hwbStrToRgb( dst, src );
+  for( let i = 0; i < expected.length; i++ )
+  test.equivalent( got[ i ], expected[ i ] );
+  test.true( got === dst );
+
+  test.case = 'hwb(45, 1%, 36%, dst = VectorAdapter';
+  var src = 'hwb(45, 1%, 36%';
+  var dst = _.vad.fromLong([ 1, 2, 3 ]);
+  var expected = [ 0.6392156862745098, 0.4823529411764706, 0.011764705882352941 ];
+  var got = _.color._hwbStrToRgb( dst, src );
+  for( let i = 0; i < expected.length; i++ )
+  test.equivalent( got.eGet( i ), expected[ i ] );
+  test.true( got === dst );
+
+  test.close( 'non basic colors' );
+
+  test.case = 'first arg > 360';
+  var src = 'hwb(366,16%,75%)';
+  var expected = null;
+  var got = _.color._hwbStrToRgb( [ 1, 2, 3 ], src );
+  test.identical( got, expected );
+
+  test.case = 'second arg > 100%';
+  var src = 'hwb(35,160%,75%)';
+  var expected = null;
+  var got = _.color._hwbStrToRgb( [ 1, 2, 3 ], src );
+  test.identical( got, expected );
+
+  test.case = 'third arg > 100%';
+  var src = 'hwb(35,10%,175%)';
+  var expected = null;
+  var got = _.color._hwbStrToRgb( [ 1, 2, 3 ], src );
+  test.identical( got, expected );
+
+  /* - */
+
+  test.case = 'dst : Array; dst.length !== 4';
+  var src = 'cmyk(12%,34%,99%,27%)';
+  var dst = [ 1, 2, 3, 5, 6 ];
+  test.shouldThrowErrorSync( () => _.color._hwbStrToRgb( dst, src ) )
+
+  test.case = 'dst : Long; dst.length !== 4';
+  var src = 'cmyk(12%,34%,99%,27%)';
+  var dst = _.longFrom([ 1, 2 ]);
+  test.shouldThrowErrorSync( () => _.color._hwbStrToRgb( dst, src ) )
+
+  test.case = 'dst : TypedArray; dst.length !== 4';
+  var src = 'cmyk(12%,34%,99%,27%)';
+  var dst = new Float32Array([ 1, 2, 3, 4 ]);
+  test.shouldThrowErrorSync( () => _.color._hwbStrToRgb( dst, src ) )
+
+  test.case = 'dst : VectorAdapter; dst.length !== 4';
+  var src = 'cmyk(12%,34%,99%,27%)';
+  var dst = _.vad.fromLong([ 1 ]);
+  test.shouldThrowErrorSync( () => _.color._hwbStrToRgb( dst, src ) )
+
+}
+
+_hwbStrToRgbWithDst.accuracy = 1e-2;
+
+
+//
+
+function _hwbStrToRgbaWithDst( test )
+{
+
+  test.open( 'basic colors' );
+
+  test.case = 'Black, dst = Array';
+  var src = 'hwb(0, 0%, 100%)';
+  var dst = [ 1, 2, 3, 4 ];
+  var expected = [ 0, 0, 0, 1 ];
+  var got = _.color._hwbStrToRgba( dst, src );
+  test.identical( got, expected );
+  test.true( got === dst );
+
+  test.case = 'Green, dst = Long';
+  var src = 'hwb(120, 0%, 0%)';
+  var dst = _.longFrom([ 1, 4, 13, 14 ]);
+  var expected = [ 0, 1, 0, 1 ];
+  var got = _.color._hwbStrToRgba( dst, src );
+  test.identical( got, expected );
+  test.true( got === dst );
+
+  test.case = 'Red, dst = TypedArray';
+  var src = 'hwb(0, 0%, 0%)';
+  var dst = new I8x([ 1, 5, 15, 14 ]); /* 1 and 0 -> Integer Typed Array can be used */
+  var expected = [ 1, 0, 0, 1 ];
+  var got = _.color._hwbStrToRgba( dst, src );
+  for( let i = 0; i < expected.length; i++ )
+  test.identical( got[ i ], expected[ i ] );
+  test.true( got === dst );
+
+  test.case = 'White, dst = VectorAdapter';
+  var src = 'hwb(0, 100%, 0%)';
+  var dst = _.vad.fromLong([ 1, 2, 3, 4 ]);
+  var expected = [ 1, 1, 1, 1 ];
+  var got = _.color._hwbStrToRgba( dst, src );
+  for( let i = 0; i < expected.length; i++ )
+  test.identical( got.eGet( i ), expected[ i ] );
+  test.true( got === dst );
+
+  test.close( 'basic colors' );
+
+  /* */
+
+  test.open( 'non basic colors' );
+
+  test.case = 'hwb(45, 1%, 36%, dst = Array';
+  var src = 'hwb(45, 1%, 36%, dst = Array';
+  var dst = [ 1, 2, 3, 4 ];
+  var expected = [ 0.6392156862745098, 0.4823529411764706, 0.011764705882352941, 1  ];
+  var got = _.color._hwbStrToRgba( dst, src );
+  test.equivalent( got, expected );
+  test.true( got === dst );
+
+  test.case = 'hwb(45, 1%, 36%, dst = Long';
+  var src = 'hwb(45, 1%, 36%';
+  var dst = _.longFrom([ 1, 2, 3, 4 ]);
+  var expected = [ 0.6392156862745098, 0.4823529411764706, 0.011764705882352941, 1  ];
+  var got = _.color._hwbStrToRgba( dst, src );
+  test.equivalent( got, expected );
+  test.true( got === dst );
+
+  test.case = 'hwb(45, 1%, 36%, dst = TypedArray';
+  var src = 'hwb(45, 1%, 36%';
+  var dst = new Float32Array([ 1, 2, 3, 4 ]); /* ( 0, 1 ) -> Integer Typed Array can NOT be used */
+  var expected = [ 0.6392156862745098, 0.4823529411764706, 0.011764705882352941, 1  ];
+  var got = _.color._hwbStrToRgba( dst, src );
+  for( let i = 0; i < expected.length; i++ )
+  test.equivalent( got[ i ], expected[ i ] );
+  test.true( got === dst );
+
+  test.case = 'hwb(45, 1%, 36%, dst = VectorAdapter';
+  var src = 'hwb(45, 1%, 36%';
+  var dst = _.vad.fromLong([ 1, 2, 3, 4 ]);
+  var expected = [ 0.6392156862745098, 0.4823529411764706, 0.011764705882352941, 1  ];
+  var got = _.color._hwbStrToRgba( dst, src );
+  for( let i = 0; i < expected.length; i++ )
+  test.equivalent( got.eGet( i ), expected[ i ] );
+  test.true( got === dst );
+
+  test.close( 'non basic colors' );
+
+  test.case = 'first arg > 360';
+  var src = 'hwb(366,16%,75%)';
+  var expected = null;
+  var got = _.color._hwbStrToRgba( [ 1, 2, 3, 4 ], src );
+  test.identical( got, expected );
+
+  test.case = 'second arg > 100%';
+  var src = 'hwb(35,160%,75%)';
+  var expected = null;
+  var got = _.color._hwbStrToRgba( [ 1, 2, 3, 4 ], src );
+  test.identical( got, expected );
+
+  test.case = 'third arg > 100%';
+  var src = 'hwb(35,10%,175%)';
+  var expected = null;
+  var got = _.color._hwbStrToRgba( [ 1, 2, 3, 4 ], src );
+  test.identical( got, expected );
+
+  /* - */
+
+  test.case = 'dst : Array; dst.length !== 4';
+  var src = 'cmyk(12%,34%,99%,27%)';
+  var dst = [ 1, 2, 3, 5, 6 ];
+  test.shouldThrowErrorSync( () => _.color._hwbStrToRgba( dst, src ) )
+
+  test.case = 'dst : Long; dst.length !== 4';
+  var src = 'cmyk(12%,34%,99%,27%)';
+  var dst = _.longFrom([ 1, 2 ]);
+  test.shouldThrowErrorSync( () => _.color._hwbStrToRgba( dst, src ) )
+
+  test.case = 'dst : TypedArray; dst.length !== 4';
+  var src = 'cmyk(12%,34%,99%,27%)';
+  var dst = new Float32Array([ 1, 2, 3 ]);
+  test.shouldThrowErrorSync( () => _.color._hwbStrToRgba( dst, src ) )
+
+  test.case = 'dst : VectorAdapter; dst.length !== 4';
+  var src = 'cmyk(12%,34%,99%,27%)';
+  var dst = _.vad.fromLong([ 1 ]);
+  test.shouldThrowErrorSync( () => _.color._hwbStrToRgba( dst, src ) )
+
+}
+
+_hwbStrToRgbaWithDst.accuracy = 1e-2;
 
 //
 
@@ -3213,8 +3468,10 @@ let Self =
     _cmykStrToRgbWithDst,
     _cmykStrToRgbaWithDst,
 
-    // _hwbStrToRgb,
-    // _hwbStrToRgba,
+    _hwbStrToRgb,
+    _hwbStrToRgba,
+    _hwbStrToRgbWithDst,
+    _hwbStrToRgbaWithDst,
 
     // _hexStrToRgb,
     // _hexStrToRgba,
