@@ -4,6 +4,9 @@ submodule :
   wTools :
     path : npm:///wTools
     enabled : 0 # submodule
+  wmathvector :
+    path : npm:///wmathvector
+    enabled : 0 # submodule
   wColor :
     path : hd://.
     enabled : 0 # submodule

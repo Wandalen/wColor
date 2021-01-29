@@ -2,15 +2,12 @@ format: outwillfile-2.0
 root:
   - wColor.out
 consistency:
-  wColor.out.will.yml: &ref_0
-    hash: a7736115ffcfd27679156cfac9da3485
-    size: 38905
-  ../.ex.will.yml: &ref_1
+  ../.ex.will.yml: &ref_0
     hash: ace0c95cd1cf6dbb4884e3c51999ad93
     size: 2311
-  ../.im.will.yml: &ref_2
-    hash: 949eebcd4d7ef1890e90e5f70e008baa
-    size: 4928
+  ../.im.will.yml: &ref_1
+    hash: 95dc26540c97827689a3354d695e6655
+    size: 5002
 module:
   wColor.out:
     about:
@@ -26,11 +23,11 @@ module:
         sophisticated operations with colors.
       enabled: 1
       version: 0.4.0
-      interpreters:
+      interpreters: &ref_2
         - njs >= 10.0.0
         - chrome >= 60.0.0
         - firefox >= 60.0.0
-      keywords:
+      keywords: &ref_3
         - wTools
         - color
         - colors
@@ -42,14 +39,14 @@ module:
         - hsl
       license: MIT
       author: Kostiantyn Wandalen <wanalen@01.school>
-      contributors:
+      contributors: &ref_4
         - Kostiantyn Wandalen <wanalen@01.school>
         - Volodymyr M. <volodymyr.migdal@gmail.com>
       npm.name: wColor
-      npm.scripts:
+      npm.scripts: &ref_5
         test: wtest .run proto/**
         docgen: wdocgen .build proto
-      npm.directories:
+      npm.directories: &ref_6
         doc: doc
         main: proto/wtools/amid/color/Color.s
     path:
@@ -186,6 +183,10 @@ module:
     submodule:
       wTools:
         path: npm:///wTools
+        autoExporting: 0
+        enabled: 0
+      wmathvector:
+        path: npm:///wmathvector
         autoExporting: 0
         enabled: 0
       wColor:
@@ -707,24 +708,6 @@ module:
           content: prime
         inherit:
           - files.transpile
-      exported.proto.export:
-        opts:
-          filePath: reflector::exported.proto.export
-        criterion:
-          generated: 1
-          content: proto
-          export: 1
-        inherit:
-          - files.reflect
-      exported.files.proto.export:
-        opts:
-          filePath: reflector::exported.files.proto.export
-        criterion:
-          generated: 1
-          content: proto
-          export: 1
-        inherit:
-          - files.reflect
     build:
       proto.export:
         steps:
@@ -813,9 +796,8 @@ module:
           content: proto
           export: 1
     consistency:
-      wColor.out.will.yml: *ref_0
-      ../.ex.will.yml: *ref_1
-      ../.im.will.yml: *ref_2
+      ../.ex.will.yml: *ref_0
+      ../.im.will.yml: *ref_1
   ../:
     about:
       name: wColor
@@ -830,32 +812,14 @@ module:
         sophisticated operations with colors.
       enabled: 1
       version: 0.4.0
-      interpreters:
-        - njs >= 10.0.0
-        - chrome >= 60.0.0
-        - firefox >= 60.0.0
-      keywords:
-        - wTools
-        - color
-        - colors
-        - colorful
-        - color conversion
-        - convert color
-        - rgb
-        - rgba
-        - hsl
+      interpreters: *ref_2
+      keywords: *ref_3
       license: MIT
       author: Kostiantyn Wandalen <wanalen@01.school>
-      contributors:
-        - Kostiantyn Wandalen <wanalen@01.school>
-        - Volodymyr M. <volodymyr.migdal@gmail.com>
+      contributors: *ref_4
       npm.name: wColor
-      npm.scripts:
-        test: wtest .run proto/**
-        docgen: wdocgen .build proto
-      npm.directories:
-        doc: doc
-        main: proto/wtools/amid/color/Color.s
+      npm.scripts: *ref_5
+      npm.directories: *ref_6
     path:
       module.willfiles:
         criterion:
@@ -967,6 +931,10 @@ module:
     submodule:
       wTools:
         path: npm:///wTools
+        autoExporting: 0
+        enabled: 0
+      wmathvector:
+        path: npm:///wmathvector
         autoExporting: 0
         enabled: 0
       wColor:
@@ -1516,6 +1484,5 @@ module:
         hash: ace0c95cd1cf6dbb4884e3c51999ad93
         size: 2311
       ../.im.will.yml:
-        hash: 949eebcd4d7ef1890e90e5f70e008baa
-        size: 4928
-      wColor.out.will.yml: *ref_0
+        hash: 95dc26540c97827689a3354d695e6655
+        size: 5002
