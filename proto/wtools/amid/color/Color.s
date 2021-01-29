@@ -1169,16 +1169,16 @@ function _cmykStrToRgb( dst, src )
 
   let cmykColors = _.color._formatStringParse( src );
 
-  if( !_.color._validateCmyk( cmykColors ) )
+  if( !_.color._сmykValidate( cmykColors ) )
   return null;
 
-  return _.color._cmykLongToRgbVector( dst, cmykColors );
+  return _.color._cmykLongToRgb( dst, cmykColors );
 
 }
 
 //
 
-function _cmykStrToRgba( dst, src )
+function _cmykaStrToRgba( dst, src )
 {
   /*
     cmyk(C, M, Y, K)
@@ -1190,16 +1190,16 @@ function _cmykStrToRgba( dst, src )
 
   let cmykColors = _.color._formatStringParse( src );
 
-  if( !_.color._validateCmyk( cmykColors ) )
+  if( !_.color._сmykValidate( cmykColors ) )
   return null;
 
-  return _.color._cmykLongToRgbaVector( dst, cmykColors );
+  return _.color._cmykaLongToRgba( dst, cmykColors );
 
 }
 
 //
 
-function _cmykLongToRgbVector( dst, src )
+function _cmykLongToRgb( dst, src )
 {
   let r, g, b;
 
@@ -1256,7 +1256,7 @@ function _cmykLongToRgbVector( dst, src )
 
 //
 
-function _cmykLongToRgbaVector( dst, src )
+function _cmykaLongToRgba( dst, src )
 {
   let r, g, b;
 
@@ -1314,7 +1314,7 @@ function _cmykLongToRgbaVector( dst, src )
 
 //
 
-function _validateCmyk ( src )
+function _сmykValidate ( src )
 {
   if
   (
@@ -1332,6 +1332,7 @@ function _validateCmyk ( src )
 
 function _formatStringParse( src )
 {
+  /* qqq : not safe! does not assert string consists of numbers */
   return src.match( /\d+(\.\d+)?/g ).map( ( el ) => +el );
 }
 
@@ -1808,10 +1809,10 @@ let Extension =
   // to rgb/a
 
   _cmykStrToRgb,
-  _cmykStrToRgba,
-  _cmykLongToRgbVector,
-  _cmykLongToRgbaVector,
-  _validateCmyk,
+  _cmykaStrToRgba,
+  _cmykLongToRgb,
+  _cmykaLongToRgba,
+  _сmykValidate,
 
   _formatStringParse,
 
