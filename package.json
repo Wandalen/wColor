@@ -45,6 +45,9 @@
     "wColor": "file:.",
     "wTesting": "alpha"
   },
+  "optionalDependencies": {
+    "wmathvector": "alpha"
+  },
   "keywords": [
     "wTools",
     "color",

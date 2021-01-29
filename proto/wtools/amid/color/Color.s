@@ -18,7 +18,6 @@ if( typeof module !== 'undefined' )
 {
 
   require( '../../../wtools/Tools.s' );
-  require( 'wmathvector' );
 
 }
 
