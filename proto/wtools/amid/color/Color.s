@@ -1260,6 +1260,11 @@ function _cmykaLongToRgba( dst, src )
 {
   let r, g, b;
 
+  /* qqq : bad!
+  assert
+  alpha channel
+  */
+
   if( dst === null || _.longIs( dst ) )
   {
     dst = dst || new Array( 4 );
