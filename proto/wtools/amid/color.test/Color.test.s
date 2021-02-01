@@ -848,7 +848,43 @@ function _strToRgb( test )
   var got = _.color.cmyk._strToRgb( null, src );
   test.equivalent( got, expected );
 
+  test.case = 'cmyk with alpha';
+  var src = 'cmyk(11%,16%,75%,4%,10%)';
+  var expected = [ 0.8549019607843137, 0.807843137254902, 0.23921568627450981, 0.1 ];
+  var got = _.color.cmyk._strToRgb( null, src );
+  test.equivalent( got, expected );
+
   test.close( 'non basic colors' );
+
+  test.case = 'first arg > 100%';
+  var src = 'cmyk(111%,16%,75%,4%)';
+  var expected = null;
+  var got = _.color.cmyk._strToRgb( null, src );
+  test.identical( got, expected );
+
+  test.case = 'second arg > 100%';
+  var src = 'cmyk(11%,160%,75%,4%)';
+  var expected = null;
+  var got = _.color.cmyk._strToRgb( null, src );
+  test.identical( got, expected );
+
+  test.case = 'third arg > 100%';
+  var src = 'cmyk(11%,16%,750%,4%)';
+  var expected = null;
+  var got = _.color.cmyk._strToRgb( null, src );
+  test.identical( got, expected );
+
+  test.case = 'fourth arg > 100%';
+  var src = 'cmyk(11%,16%,75%,400%)';
+  var expected = null;
+  var got = _.color.cmyk._strToRgb( null, src );
+  test.identical( got, expected );
+
+  test.case = 'fifth arg > 100%';
+  var src = 'cmyk(11%,16%,75%,40%,500%)';
+  var expected = null;
+  var got = _.color.cmyk._strToRgb( null, src );
+  test.identical( got, expected );
 
 }
 
@@ -1044,6 +1080,14 @@ function _strToRgbWithDst( test )
   test.equivalent( got.eGet( i ), expected[ i ] );
   test.true( got === dst );
 
+  test.case = 'cmyk with alpha, dst = Long';
+  var src = 'cmyk(12%,34%,99%,27%,22%)';
+  var dst = _.longFrom([ 1, 2, 3, 4 ]);
+  var expected = [ 0.6431372549019608, 0.4823529411764706, 0.00784313725490196, 0.22 ];
+  var got = _.color.cmyk._strToRgb( dst, src );
+  test.equivalent( got, expected );
+  test.true( got === dst );
+
   test.close( 'non basic colors' );
 
   test.case = 'first arg > 100%';
@@ -1070,6 +1114,12 @@ function _strToRgbWithDst( test )
   var got = _.color.cmyk._strToRgb( [ 1, 2, 3 ], src );
   test.identical( got, expected );
 
+  test.case = 'fifth arg > 100%';
+  var src = 'cmyk(11%,16%,75%,40%,200%)';
+  var expected = null;
+  var got = _.color.cmyk._strToRgb( [ 1, 2, 3, 4 ], src );
+  test.identical( got, expected );
+
   /* - */
 
   test.case = 'dst : Array; dst.length !== 3';
@@ -1090,6 +1140,11 @@ function _strToRgbWithDst( test )
   test.case = 'dst : VectorAdapter; dst.length !== 3';
   var src = 'cmyk(12%,34%,99%,27%)';
   var dst = _.vad.fromLong([ 1 ]);
+  test.shouldThrowErrorSync( () => _.color.cmyk._strToRgb( dst, src ) )
+
+  test.case = 'dst : Long; dst.length !== 4';
+  var src = 'cmyk(12%,34%,99%,27%,22%)';
+  var dst = _.longFrom([ 1, 2, 3 ]);
   test.shouldThrowErrorSync( () => _.color.cmyk._strToRgb( dst, src ) )
 
 }
