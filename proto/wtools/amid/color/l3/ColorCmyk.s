@@ -27,7 +27,6 @@ let Self = _.color.cmyk = _.color.cmyk || Object.create( null );
 // implement
 // --
 
-
 function _strToRgb( dst, src )
 {
   /*
