@@ -2,10 +2,13 @@ format: outwillfile-2.0
 root:
   - wColor.out
 consistency:
-  ../.ex.will.yml: &ref_0
+  wColor.out.will.yml: &ref_0
+    hash: 2cc0b2349cdfd4bbf4d59dc696e10afa
+    size: 38951
+  ../.ex.will.yml: &ref_1
     hash: ace0c95cd1cf6dbb4884e3c51999ad93
     size: 2311
-  ../.im.will.yml: &ref_1
+  ../.im.will.yml: &ref_2
     hash: c3c8ce8f2a86ef2b00e18954a4997419
     size: 5037
 module:
@@ -23,11 +26,11 @@ module:
         sophisticated operations with colors.
       enabled: 1
       version: 0.4.0
-      interpreters: &ref_2
+      interpreters:
         - njs >= 10.0.0
         - chrome >= 60.0.0
         - firefox >= 60.0.0
-      keywords: &ref_3
+      keywords:
         - wTools
         - color
         - colors
@@ -39,14 +42,14 @@ module:
         - hsl
       license: MIT
       author: Kostiantyn Wandalen <wanalen@01.school>
-      contributors: &ref_4
+      contributors:
         - Kostiantyn Wandalen <wanalen@01.school>
         - Volodymyr M. <volodymyr.migdal@gmail.com>
       npm.name: wColor
-      npm.scripts: &ref_5
+      npm.scripts:
         test: wtest .run proto/**
         docgen: wdocgen .build proto
-      npm.directories: &ref_6
+      npm.directories:
         doc: doc
         main: proto/wtools/amid/color/Color.s
     path:
@@ -176,7 +179,15 @@ module:
           - ../proto/wtools/abase
           - ../proto/wtools/amid
           - ../proto/wtools/amid/color
-          - ../proto/wtools/amid/color/Color.s
+          - ../proto/wtools/amid/color/entry
+          - ../proto/wtools/amid/color/entry/ColorBasic.s
+          - ../proto/wtools/amid/color/include
+          - ../proto/wtools/amid/color/include/Basic.s
+          - ../proto/wtools/amid/color/include/Mid.s
+          - ../proto/wtools/amid/color/l3
+          - ../proto/wtools/amid/color/l3/Color.s
+          - ../proto/wtools/amid/color/l3/ColorCmyk.s
+          - ../proto/wtools/amid/color/l3/ColorCmyka.s
           - ../proto/wtools/amid/color.test
           - ../proto/wtools/amid/color.test/Color.test.s
           - ../proto/wtools/atop
@@ -710,6 +721,24 @@ module:
           content: prime
         inherit:
           - files.transpile
+      exported.proto.export:
+        opts:
+          filePath: reflector::exported.proto.export
+        criterion:
+          generated: 1
+          content: proto
+          export: 1
+        inherit:
+          - files.reflect
+      exported.files.proto.export:
+        opts:
+          filePath: reflector::exported.files.proto.export
+        criterion:
+          generated: 1
+          content: proto
+          export: 1
+        inherit:
+          - files.reflect
     build:
       proto.export:
         steps:
@@ -798,8 +827,9 @@ module:
           content: proto
           export: 1
     consistency:
-      ../.ex.will.yml: *ref_0
-      ../.im.will.yml: *ref_1
+      wColor.out.will.yml: *ref_0
+      ../.ex.will.yml: *ref_1
+      ../.im.will.yml: *ref_2
   ../:
     about:
       name: wColor
@@ -814,14 +844,32 @@ module:
         sophisticated operations with colors.
       enabled: 1
       version: 0.4.0
-      interpreters: *ref_2
-      keywords: *ref_3
+      interpreters:
+        - njs >= 10.0.0
+        - chrome >= 60.0.0
+        - firefox >= 60.0.0
+      keywords:
+        - wTools
+        - color
+        - colors
+        - colorful
+        - color conversion
+        - convert color
+        - rgb
+        - rgba
+        - hsl
       license: MIT
       author: Kostiantyn Wandalen <wanalen@01.school>
-      contributors: *ref_4
+      contributors:
+        - Kostiantyn Wandalen <wanalen@01.school>
+        - Volodymyr M. <volodymyr.migdal@gmail.com>
       npm.name: wColor
-      npm.scripts: *ref_5
-      npm.directories: *ref_6
+      npm.scripts:
+        test: wtest .run proto/**
+        docgen: wdocgen .build proto
+      npm.directories:
+        doc: doc
+        main: proto/wtools/amid/color/Color.s
     path:
       module.willfiles:
         criterion:
@@ -1490,3 +1538,6 @@ module:
       ../.im.will.yml:
         hash: c3c8ce8f2a86ef2b00e18954a4997419
         size: 5037
+      wColor.out.will.yml:
+        hash: 2cc0b2349cdfd4bbf4d59dc696e10afa
+        size: 38951
