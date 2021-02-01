@@ -27,7 +27,7 @@ let Self = _.color.cmyka = _.color.cmyka || Object.create( null );
 // implement
 // --
 
-function _cmykaStrToRgba( dst, src )
+function _strToRgba( dst, src )
 {
   /*
     cmyk(C, M, Y, K)
@@ -40,16 +40,16 @@ function _cmykaStrToRgba( dst, src )
   let cmykColors = _.color.cmyka._formatStringParse( src );
   _.assert( cmykColors.length === 5, `{-src-} string must contain exactly 5 numbers, but got ${cmykColors.length}` );
 
-  if( !_.color.cmyka._сmykaValidate( cmykColors ) )
+  if( !_.color.cmyka._validate( cmykColors ) )
   return null;
 
-  return _.color.cmyka._cmykaLongToRgba( dst, cmykColors );
+  return _.color.cmyka._longToRgba( dst, cmykColors );
 
 }
 
 //
 
-function _cmykaLongToRgba( dst, src )
+function _longToRgba( dst, src )
 {
 
   _.assert( src.length === 5, `{-src-} length must be 5, but got : ${src.length}` );
@@ -117,7 +117,7 @@ function _cmykaLongToRgba( dst, src )
 
 //
 
-function _сmykaValidate ( src )
+function _validate ( src )
 {
   if
   (
@@ -151,9 +151,9 @@ let Extension =
 
   // to rgb/a
 
-  _cmykaStrToRgba,
-  _cmykaLongToRgba,
-  _сmykaValidate,
+  _strToRgba,
+  _longToRgba,
+  _validate,
   _formatStringParse
 
 }

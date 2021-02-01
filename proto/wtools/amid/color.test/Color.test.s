@@ -771,7 +771,7 @@ function rgbaHtmlFrom( test )
 
 //
 
-function _cmykStrToRgb( test )
+function _strToRgb( test )
 {
 
   test.open( 'basic colors' );
@@ -779,49 +779,49 @@ function _cmykStrToRgb( test )
   test.case = 'Black';
   var src = 'cmyk(0%,0%,0%,100%)';
   var expected = [ 0, 0, 0 ];
-  var got = _.color.cmyk._cmykStrToRgb( null, src );
+  var got = _.color.cmyk._strToRgb( null, src );
   test.identical( got, expected );
 
   test.case = 'White';
   var src = 'cmyk(0%,0%,0%,0%)';
   var expected = [ 1, 1, 1 ];
-  var got = _.color.cmyk._cmykStrToRgb( null, src );
+  var got = _.color.cmyk._strToRgb( null, src );
   test.identical( got, expected );
 
   test.case = 'Red';
   var src = 'cmyk(0%,100%,100%,0%)';
   var expected = [ 1, 0, 0 ];
-  var got = _.color.cmyk._cmykStrToRgb( null, src );
+  var got = _.color.cmyk._strToRgb( null, src );
   test.identical( got, expected );
 
   test.case = 'Green';
   var src = 'cmyk(100%,0%,100%,0%)';
   var expected = [ 0, 1, 0 ];
-  var got = _.color.cmyk._cmykStrToRgb( null, src );
+  var got = _.color.cmyk._strToRgb( null, src );
   test.identical( got, expected );
 
   test.case = 'Blue';
   var src = 'cmyk(100%,100%,0%,0%)';
   var expected = [ 0, 0, 1 ];
-  var got = _.color.cmyk._cmykStrToRgb( null, src );
+  var got = _.color.cmyk._strToRgb( null, src );
   test.identical( got, expected );
 
   test.case = 'Yellow';
   var src = 'cmyk(0%,0%,100%,0%)';
   var expected = [ 1, 1, 0 ];
-  var got = _.color.cmyk._cmykStrToRgb( null, src );
+  var got = _.color.cmyk._strToRgb( null, src );
   test.identical( got, expected );
 
   test.case = 'Cyan';
   var src = 'cmyk(100%,0%,0%,0%)';
   var expected = [ 0, 1, 1 ];
-  var got = _.color.cmyk._cmykStrToRgb( null, src );
+  var got = _.color.cmyk._strToRgb( null, src );
   test.identical( got, expected );
 
   test.case = 'Magenta';
   var src = 'cmyk(0%,100%,0%,0%)';
   var expected = [ 1, 0, 1 ];
-  var got = _.color.cmyk._cmykStrToRgb( null, src );
+  var got = _.color.cmyk._strToRgb( null, src );
   test.identical( got, expected );
 
   test.close( 'basic colors' );
@@ -833,30 +833,66 @@ function _cmykStrToRgb( test )
   test.case = 'cmyk(12%,34%,99%,27%)';
   var src = 'cmyk(12%,34%,99%,27%)';
   var expected = [ 0.6431372549019608, 0.4823529411764706, 0.00784313725490196 ];
-  var got = _.color.cmyk._cmykStrToRgb( null, src );
+  var got = _.color.cmyk._strToRgb( null, src );
   test.equivalent( got, expected );
 
   test.case = 'cmyk(87%,1%,33%,5%)';
   var src = 'cmyk(87%,1%,33%,5%)';
   var expected = [ 0.12156862745098039, 0.9411764705882353, 0.6352941176470588 ];
-  var got = _.color.cmyk._cmykStrToRgb( null, src );
+  var got = _.color.cmyk._strToRgb( null, src );
   test.equivalent( got, expected );
 
   test.case = 'cmyk(11%,16%,75%,4%)';
   var src = 'cmyk(11%,16%,75%,4%)';
   var expected = [ 0.8549019607843137, 0.807843137254902, 0.23921568627450981 ];
-  var got = _.color.cmyk._cmykStrToRgb( null, src );
+  var got = _.color.cmyk._strToRgb( null, src );
+  test.equivalent( got, expected );
+
+  test.case = 'cmyk with alpha';
+  var src = 'cmyk(11%,16%,75%,4%,10%)';
+  var expected = [ 0.8549019607843137, 0.807843137254902, 0.23921568627450981, 0.1 ];
+  var got = _.color.cmyk._strToRgb( null, src );
   test.equivalent( got, expected );
 
   test.close( 'non basic colors' );
 
+  test.case = 'first arg > 100%';
+  var src = 'cmyk(111%,16%,75%,4%)';
+  var expected = null;
+  var got = _.color.cmyk._strToRgb( null, src );
+  test.identical( got, expected );
+
+  test.case = 'second arg > 100%';
+  var src = 'cmyk(11%,160%,75%,4%)';
+  var expected = null;
+  var got = _.color.cmyk._strToRgb( null, src );
+  test.identical( got, expected );
+
+  test.case = 'third arg > 100%';
+  var src = 'cmyk(11%,16%,750%,4%)';
+  var expected = null;
+  var got = _.color.cmyk._strToRgb( null, src );
+  test.identical( got, expected );
+
+  test.case = 'fourth arg > 100%';
+  var src = 'cmyk(11%,16%,75%,400%)';
+  var expected = null;
+  var got = _.color.cmyk._strToRgb( null, src );
+  test.identical( got, expected );
+
+  test.case = 'fifth arg > 100%';
+  var src = 'cmyk(11%,16%,75%,40%,500%)';
+  var expected = null;
+  var got = _.color.cmyk._strToRgb( null, src );
+  test.identical( got, expected );
+
 }
 
-_cmykStrToRgb.accuracy = 1e-2;
+_strToRgb.accuracy = 1e-2;
 
 //
 
-function _cmykaStrToRgba( test )
+function _strToRgba( test )
 {
 
   test.open( 'basic colors' );
@@ -864,49 +900,49 @@ function _cmykaStrToRgba( test )
   test.case = 'Black';
   var src = 'cmyka(0%,0%,0%,100%,100%)';
   var expected = [ 0, 0, 0, 1 ];
-  var got = _.color.cmyka._cmykaStrToRgba( null, src );
+  var got = _.color.cmyka._strToRgba( null, src );
   test.identical( got, expected );
 
   test.case = 'White';
   var src = 'cmyka(0%,0%,0%,0%,100%)';
   var expected = [ 1, 1, 1, 1 ];
-  var got = _.color.cmyka._cmykaStrToRgba( null, src );
+  var got = _.color.cmyka._strToRgba( null, src );
   test.identical( got, expected );
 
   test.case = 'Red';
   var src = 'cmyka(0%,100%,100%,0%,100%)';
   var expected = [ 1, 0, 0, 1 ];
-  var got = _.color.cmyka._cmykaStrToRgba( null, src );
+  var got = _.color.cmyka._strToRgba( null, src );
   test.identical( got, expected );
 
   test.case = 'Green';
   var src = 'cmyka(100%,0%,100%,0%,100%)';
   var expected = [ 0, 1, 0, 1 ];
-  var got = _.color.cmyka._cmykaStrToRgba( null, src );
+  var got = _.color.cmyka._strToRgba( null, src );
   test.identical( got, expected );
 
   test.case = 'Blue';
   var src = 'cmyka(100%,100%,0%,0%,100%)';
   var expected = [ 0, 0, 1, 1 ];
-  var got = _.color.cmyka._cmykaStrToRgba( null, src );
+  var got = _.color.cmyka._strToRgba( null, src );
   test.identical( got, expected );
 
   test.case = 'Yellow';
   var src = 'cmyka(0%,0%,100%,0%,100%)';
   var expected = [ 1, 1, 0, 1 ];
-  var got = _.color.cmyka._cmykaStrToRgba( null, src );
+  var got = _.color.cmyka._strToRgba( null, src );
   test.identical( got, expected );
 
   test.case = 'Cyan';
   var src = 'cmyka(100%,0%,0%,0%,100%)';
   var expected = [ 0, 1, 1, 1 ];
-  var got = _.color.cmyka._cmykaStrToRgba( null, src );
+  var got = _.color.cmyka._strToRgba( null, src );
   test.identical( got, expected );
 
   test.case = 'Magenta';
   var src = 'cmyka(0%,100%,0%,0%,100%)';
   var expected = [ 1, 0, 1, 1 ];
-  var got = _.color.cmyka._cmykaStrToRgba( null, src );
+  var got = _.color.cmyka._strToRgba( null, src );
   test.identical( got, expected );
 
   test.close( 'basic colors' );
@@ -918,19 +954,19 @@ function _cmykaStrToRgba( test )
   test.case = 'cmyka(12%,34%,99%,27%,40%)';
   var src = 'cmyka(12%,34%,99%,27%,40%)';
   var expected = [ 0.6431372549019608, 0.4823529411764706, 0.00784313725490196, 0.4 ];
-  var got = _.color.cmyka._cmykaStrToRgba( null, src );
+  var got = _.color.cmyka._strToRgba( null, src );
   test.equivalent( got, expected );
 
   test.case = 'cmyka(87%,1%,33%,5%,34%)';
   var src = 'cmyka(87%,1%,33%,5%,34%)';
   var expected = [ 0.12156862745098039, 0.9411764705882353, 0.6352941176470588, 0.34 ];
-  var got = _.color.cmyka._cmykaStrToRgba( null, src );
+  var got = _.color.cmyka._strToRgba( null, src );
   test.equivalent( got, expected );
 
   test.case = 'cmyka(11%,16%,75%,4%,5%)';
   var src = 'cmyka(11%,16%,75%,4%,5%)';
   var expected = [ 0.8549019607843137, 0.807843137254902, 0.23921568627450981, 0.05 ];
-  var got = _.color.cmyka._cmykaStrToRgba( null, src );
+  var got = _.color.cmyka._strToRgba( null, src );
   test.equivalent( got, expected );
 
   test.close( 'non basic colors' );
@@ -938,34 +974,34 @@ function _cmykaStrToRgba( test )
   test.case = 'first arg > 100%';
   var src = 'cmyka(111%,16%,75%,4%,5%)';
   var expected = null;
-  var got = _.color.cmyka._cmykaStrToRgba( null, src );
+  var got = _.color.cmyka._strToRgba( null, src );
   test.identical( got, expected );
 
   test.case = 'second arg > 100%';
   var src = 'cmyka(11%,160%,75%,4%,5%)';
   var expected = null;
-  var got = _.color.cmyka._cmykaStrToRgba( null, src );
+  var got = _.color.cmyka._strToRgba( null, src );
   test.identical( got, expected );
 
   test.case = 'third arg > 100%';
   var src = 'cmyka(11%,16%,750%,4%,5%)';
   var expected = null;
-  var got = _.color.cmyka._cmykaStrToRgba( null, src );
+  var got = _.color.cmyka._strToRgba( null, src );
   test.identical( got, expected );
 
   test.case = 'fourth arg > 100%';
   var src = 'cmyka(11%,16%,75%,400%,5%)';
   var expected = null;
-  var got = _.color.cmyka._cmykaStrToRgba( null, src );
+  var got = _.color.cmyka._strToRgba( null, src );
   test.identical( got, expected );
 
 }
 
-_cmykaStrToRgba.accuracy = 1e-2;
+_strToRgba.accuracy = 1e-2;
 
 //
 
-function _cmykStrToRgbWithDst( test )
+function _strToRgbWithDst( test )
 {
 
   test.open( 'basic colors' );
@@ -974,7 +1010,7 @@ function _cmykStrToRgbWithDst( test )
   var src = 'cmyk(0%,0%,0%,100%)';
   var dst = [ 1, 2, 3 ];
   var expected = [ 0, 0, 0 ];
-  var got = _.color.cmyk._cmykStrToRgb( dst, src );
+  var got = _.color.cmyk._strToRgb( dst, src );
   test.identical( got, expected );
   test.true( got === dst );
 
@@ -982,7 +1018,7 @@ function _cmykStrToRgbWithDst( test )
   var src = 'cmyk(100%,0%,100%,0%)';
   var dst = _.longFrom([ 1, 4, 13 ]);
   var expected = [ 0, 1, 0 ];
-  var got = _.color.cmyk._cmykStrToRgb( dst, src );
+  var got = _.color.cmyk._strToRgb( dst, src );
   test.identical( got, expected );
   test.true( got === dst );
 
@@ -990,7 +1026,7 @@ function _cmykStrToRgbWithDst( test )
   var src = 'cmyk(0%,100%,100%,0%)';
   var dst = new I8x([ 1, 5, 15 ]); /* 1 and 0 -> Integer Typed Array can be used */
   var expected = [ 1, 0, 0 ];
-  var got = _.color.cmyk._cmykStrToRgb( dst, src );
+  var got = _.color.cmyk._strToRgb( dst, src );
   for( let i = 0; i < expected.length; i++ )
   test.identical( got[ i ], expected[ i ] );
   test.true( got === dst );
@@ -999,7 +1035,7 @@ function _cmykStrToRgbWithDst( test )
   var src = 'cmyk(0%,0%,0%,0%)';
   var dst = _.vad.fromLong([ 1, 2, 3 ]);
   var expected = [ 1, 1, 1 ];
-  var got = _.color.cmyk._cmykStrToRgb( dst, src );
+  var got = _.color.cmyk._strToRgb( dst, src );
   for( let i = 0; i < expected.length; i++ )
   test.identical( got.eGet( i ), expected[ i ] );
   test.true( got === dst );
@@ -1014,7 +1050,7 @@ function _cmykStrToRgbWithDst( test )
   var src = 'cmyk(12%,34%,99%,27%)';
   var dst = [ 1, 2, 3 ];
   var expected = [ 0.6431372549019608, 0.4823529411764706, 0.00784313725490196 ];
-  var got = _.color.cmyk._cmykStrToRgb( dst, src );
+  var got = _.color.cmyk._strToRgb( dst, src );
   test.equivalent( got, expected );
   test.true( got === dst );
 
@@ -1022,7 +1058,7 @@ function _cmykStrToRgbWithDst( test )
   var src = 'cmyk(12%,34%,99%,27%)';
   var dst = _.longFrom([ 1, 2, 3 ]);
   var expected = [ 0.6431372549019608, 0.4823529411764706, 0.00784313725490196 ];
-  var got = _.color.cmyk._cmykStrToRgb( dst, src );
+  var got = _.color.cmyk._strToRgb( dst, src );
   test.equivalent( got, expected );
   test.true( got === dst );
 
@@ -1030,7 +1066,7 @@ function _cmykStrToRgbWithDst( test )
   var src = 'cmyk(12%,34%,99%,27%)';
   var dst = new Float32Array([ 1, 2, 3 ]); /* ( 0, 1 ) -> Integer Typed Array can NOT be used */
   var expected = [ 0.6431372549019608, 0.4823529411764706, 0.00784313725490196 ];
-  var got = _.color.cmyk._cmykStrToRgb( dst, src );
+  var got = _.color.cmyk._strToRgb( dst, src );
   for( let i = 0; i < expected.length; i++ )
   test.equivalent( got[ i ], expected[ i ] );
   test.true( got === dst );
@@ -1039,9 +1075,17 @@ function _cmykStrToRgbWithDst( test )
   var src = 'cmyk(12%,34%,99%,27%)';
   var dst = _.vad.fromLong([ 1, 2, 3 ]);
   var expected = [ 0.6431372549019608, 0.4823529411764706, 0.00784313725490196 ];
-  var got = _.color.cmyk._cmykStrToRgb( dst, src );
+  var got = _.color.cmyk._strToRgb( dst, src );
   for( let i = 0; i < expected.length; i++ )
   test.equivalent( got.eGet( i ), expected[ i ] );
+  test.true( got === dst );
+
+  test.case = 'cmyk with alpha, dst = Long';
+  var src = 'cmyk(12%,34%,99%,27%,22%)';
+  var dst = _.longFrom([ 1, 2, 3, 4 ]);
+  var expected = [ 0.6431372549019608, 0.4823529411764706, 0.00784313725490196, 0.22 ];
+  var got = _.color.cmyk._strToRgb( dst, src );
+  test.equivalent( got, expected );
   test.true( got === dst );
 
   test.close( 'non basic colors' );
@@ -1049,25 +1093,31 @@ function _cmykStrToRgbWithDst( test )
   test.case = 'first arg > 100%';
   var src = 'cmyk(111%,16%,75%,4%)';
   var expected = null;
-  var got = _.color.cmyk._cmykStrToRgb( [ 1, 2, 3 ], src );
+  var got = _.color.cmyk._strToRgb( [ 1, 2, 3 ], src );
   test.identical( got, expected );
 
   test.case = 'second arg > 100%';
   var src = 'cmyk(11%,160%,75%,4%)';
   var expected = null;
-  var got = _.color.cmyk._cmykStrToRgb( [ 1, 2, 3 ], src );
+  var got = _.color.cmyk._strToRgb( [ 1, 2, 3 ], src );
   test.identical( got, expected );
 
   test.case = 'third arg > 100%';
   var src = 'cmyk(11%,16%,750%,4%)';
   var expected = null;
-  var got = _.color.cmyk._cmykStrToRgb( [ 1, 2, 3 ], src );
+  var got = _.color.cmyk._strToRgb( [ 1, 2, 3 ], src );
   test.identical( got, expected );
 
   test.case = 'fourth arg > 100%';
   var src = 'cmyk(11%,16%,75%,400%)';
   var expected = null;
-  var got = _.color.cmyk._cmykStrToRgb( [ 1, 2, 3 ], src );
+  var got = _.color.cmyk._strToRgb( [ 1, 2, 3 ], src );
+  test.identical( got, expected );
+
+  test.case = 'fifth arg > 100%';
+  var src = 'cmyk(11%,16%,75%,40%,200%)';
+  var expected = null;
+  var got = _.color.cmyk._strToRgb( [ 1, 2, 3, 4 ], src );
   test.identical( got, expected );
 
   /* - */
@@ -1075,30 +1125,35 @@ function _cmykStrToRgbWithDst( test )
   test.case = 'dst : Array; dst.length !== 3';
   var src = 'cmyk(12%,34%,99%,27%)';
   var dst = [ 1, 2, 3, 5 ];
-  test.shouldThrowErrorSync( () => _.color.cmyk._cmykStrToRgb( dst, src ) )
+  test.shouldThrowErrorSync( () => _.color.cmyk._strToRgb( dst, src ) )
 
   test.case = 'dst : Long; dst.length !== 3';
   var src = 'cmyk(12%,34%,99%,27%)';
   var dst = _.longFrom([ 1, 2 ]);
-  test.shouldThrowErrorSync( () => _.color.cmyk._cmykStrToRgb( dst, src ) )
+  test.shouldThrowErrorSync( () => _.color.cmyk._strToRgb( dst, src ) )
 
   test.case = 'dst : TypedArray; dst.length !== 3';
   var src = 'cmyk(12%,34%,99%,27%)';
   var dst = new Float32Array([ 1, 2, 3, 4, 5, 6 ]);
-  test.shouldThrowErrorSync( () => _.color.cmyk._cmykStrToRgb( dst, src ) )
+  test.shouldThrowErrorSync( () => _.color.cmyk._strToRgb( dst, src ) )
 
   test.case = 'dst : VectorAdapter; dst.length !== 3';
   var src = 'cmyk(12%,34%,99%,27%)';
   var dst = _.vad.fromLong([ 1 ]);
-  test.shouldThrowErrorSync( () => _.color.cmyk._cmykStrToRgb( dst, src ) )
+  test.shouldThrowErrorSync( () => _.color.cmyk._strToRgb( dst, src ) )
+
+  test.case = 'dst : Long; dst.length !== 4';
+  var src = 'cmyk(12%,34%,99%,27%,22%)';
+  var dst = _.longFrom([ 1, 2, 3 ]);
+  test.shouldThrowErrorSync( () => _.color.cmyk._strToRgb( dst, src ) )
 
 }
 
-_cmykStrToRgbWithDst.accuracy = 1e-2;
+_strToRgbWithDst.accuracy = 1e-2;
 
 //
 
-function _cmykaStrToRgbaWithDst( test )
+function _strToRgbaWithDst( test )
 {
 
   test.open( 'basic colors' );
@@ -1107,7 +1162,7 @@ function _cmykaStrToRgbaWithDst( test )
   var src = 'cmyka(0%,0%,0%,100%,100%)';
   var dst = [ 1, 2, 3, 4 ];
   var expected = [ 0, 0, 0, 1 ];
-  var got = _.color.cmyka._cmykaStrToRgba( dst, src );
+  var got = _.color.cmyka._strToRgba( dst, src );
   test.identical( got, expected );
   test.true( got === dst );
 
@@ -1115,7 +1170,7 @@ function _cmykaStrToRgbaWithDst( test )
   var src = 'cmyka(100%,0%,100%,0%,100%)';
   var dst = _.longFrom([ 1, 4, 13, 14 ]);
   var expected = [ 0, 1, 0, 1 ];
-  var got = _.color.cmyka._cmykaStrToRgba( dst, src );
+  var got = _.color.cmyka._strToRgba( dst, src );
   test.identical( got, expected );
   test.true( got === dst );
 
@@ -1123,7 +1178,7 @@ function _cmykaStrToRgbaWithDst( test )
   var src = 'cmyka(0%,100%,100%,0%,100%)';
   var dst = new I8x([ 1, 5, 15, 14 ]); /* 1 and 0 -> Integer Typed Array can be used */
   var expected = [ 1, 0, 0, 1 ];
-  var got = _.color.cmyka._cmykaStrToRgba( dst, src );
+  var got = _.color.cmyka._strToRgba( dst, src );
   for( let i = 0; i < expected.length; i++ )
   test.identical( got[ i ], expected[ i ] );
   test.true( got === dst );
@@ -1132,7 +1187,7 @@ function _cmykaStrToRgbaWithDst( test )
   var src = 'cmyka(0%,0%,0%,0%,100%)';
   var dst = _.vad.fromLong([ 1, 2, 3, 4 ]);
   var expected = [ 1, 1, 1, 1 ];
-  var got = _.color.cmyka._cmykaStrToRgba( dst, src );
+  var got = _.color.cmyka._strToRgba( dst, src );
   for( let i = 0; i < expected.length; i++ )
   test.identical( got.eGet( i ), expected[ i ] );
   test.true( got === dst );
@@ -1147,7 +1202,7 @@ function _cmykaStrToRgbaWithDst( test )
   var src = 'cmyka(12%,34%,99%,27%,31%)';
   var dst = [ 1, 2, 3, 4 ];
   var expected = [ 0.6431372549019608, 0.4823529411764706, 0.00784313725490196, 0.31 ];
-  var got = _.color.cmyka._cmykaStrToRgba( dst, src );
+  var got = _.color.cmyka._strToRgba( dst, src );
   test.equivalent( got, expected );
   test.true( got === dst );
 
@@ -1155,7 +1210,7 @@ function _cmykaStrToRgbaWithDst( test )
   var src = 'cmyka(12%,34%,99%,27%,31%)';
   var dst = _.longFrom([ 1, 2, 3, 4 ]);
   var expected = [ 0.6431372549019608, 0.4823529411764706, 0.00784313725490196, 0.31 ];
-  var got = _.color.cmyka._cmykaStrToRgba( dst, src );
+  var got = _.color.cmyka._strToRgba( dst, src );
   test.equivalent( got, expected );
   test.true( got === dst );
 
@@ -1163,7 +1218,7 @@ function _cmykaStrToRgbaWithDst( test )
   var src = 'cmyka(12%,34%,99%,27%,31%)';
   var dst = new Float32Array([ 1, 2, 3, 4 ]); /* ( 0, 1 ) -> Integer Typed Array can NOT be used */
   var expected = [ 0.6431372549019608, 0.4823529411764706, 0.00784313725490196, 0.31 ];
-  var got = _.color.cmyka._cmykaStrToRgba( dst, src );
+  var got = _.color.cmyka._strToRgba( dst, src );
   for( let i = 0; i < expected.length; i++ )
   test.equivalent( got[ i ], expected[ i ] );
   test.true( got === dst );
@@ -1172,7 +1227,7 @@ function _cmykaStrToRgbaWithDst( test )
   var src = 'cmyka(12%,34%,99%,27%,31%)';
   var dst = _.vad.fromLong([ 1, 2, 3, 4 ]);
   var expected = [ 0.6431372549019608, 0.4823529411764706, 0.00784313725490196, 0.31 ];
-  var got = _.color.cmyka._cmykaStrToRgba( dst, src );
+  var got = _.color.cmyka._strToRgba( dst, src );
   for( let i = 0; i < expected.length; i++ )
   test.equivalent( got.eGet( i ), expected[ i ] );
   test.true( got === dst );
@@ -1182,25 +1237,25 @@ function _cmykaStrToRgbaWithDst( test )
   test.case = 'first arg > 100%';
   var src = 'cmyka(111%,16%,75%,4%,31%)';
   var expected = null;
-  var got = _.color.cmyka._cmykaStrToRgba( [ 1, 2, 3, 4 ], src );
+  var got = _.color.cmyka._strToRgba( [ 1, 2, 3, 4 ], src );
   test.identical( got, expected );
 
   test.case = 'second arg > 100%';
   var src = 'cmyka(11%,160%,75%,4%,31%)';
   var expected = null;
-  var got = _.color.cmyka._cmykaStrToRgba( [ 1, 2, 3 ], src );
+  var got = _.color.cmyka._strToRgba( [ 1, 2, 3 ], src );
   test.identical( got, expected );
 
   test.case = 'third arg > 100%';
   var src = 'cmyka(11%,16%,750%,4%,31%)';
   var expected = null;
-  var got = _.color.cmyka._cmykaStrToRgba( [ 1, 2, 3 ], src );
+  var got = _.color.cmyka._strToRgba( [ 1, 2, 3 ], src );
   test.identical( got, expected );
 
   test.case = 'fourth arg > 100%';
   var src = 'cmyka(11%,16%,75%,400%,31%)';
   var expected = null;
-  var got = _.color.cmyka._cmykaStrToRgba( [ 1, 2, 3 ], src );
+  var got = _.color.cmyka._strToRgba( [ 1, 2, 3 ], src );
   test.identical( got, expected );
 
   /* - */
@@ -1208,26 +1263,26 @@ function _cmykaStrToRgbaWithDst( test )
   test.case = 'dst : Array; dst.length !== 4';
   var src = 'cmyka(12%,34%,99%,27%,31%)';
   var dst = [ 1, 2, 3, 5, 6 ];
-  test.shouldThrowErrorSync( () => _.color.cmyka._cmykaStrToRgba( dst, src ) )
+  test.shouldThrowErrorSync( () => _.color.cmyka._strToRgba( dst, src ) )
 
   test.case = 'dst : Long; dst.length !== 4';
   var src = 'cmyka(12%,34%,99%,27%,31%)';
   var dst = _.longFrom([ 1, 2 ]);
-  test.shouldThrowErrorSync( () => _.color.cmyka._cmykaStrToRgba( dst, src ) )
+  test.shouldThrowErrorSync( () => _.color.cmyka._strToRgba( dst, src ) )
 
   test.case = 'dst : TypedArray; dst.length !== 4';
   var src = 'cmyka(12%,34%,99%,27%,31%)';
   var dst = new Float32Array([ 1, 2, 3 ]);
-  test.shouldThrowErrorSync( () => _.color.cmyka._cmykaStrToRgba( dst, src ) )
+  test.shouldThrowErrorSync( () => _.color.cmyka._strToRgba( dst, src ) )
 
   test.case = 'dst : VectorAdapter; dst.length !== 4';
   var src = 'cmyka(12%,34%,99%,27%,31%)';
   var dst = _.vad.fromLong([ 1 ]);
-  test.shouldThrowErrorSync( () => _.color.cmyka._cmykaStrToRgba( dst, src ) )
+  test.shouldThrowErrorSync( () => _.color.cmyka._strToRgba( dst, src ) )
 
 }
 
-_cmykaStrToRgbaWithDst.accuracy = 1e-2;
+_strToRgbaWithDst.accuracy = 1e-2;
 
 // --
 // declare
@@ -1255,10 +1310,10 @@ let Self =
 
     // to rgb/a
 
-    _cmykStrToRgb,
-    _cmykaStrToRgba,
-    _cmykStrToRgbWithDst,
-    _cmykaStrToRgbaWithDst,
+    _strToRgb,
+    _strToRgba,
+    _strToRgbWithDst,
+    _strToRgbaWithDst,
 
   },
 
