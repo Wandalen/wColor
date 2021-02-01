@@ -28,7 +28,7 @@ let Self = _.color.cmyk = _.color.cmyk || Object.create( null );
 // --
 
 
-function _cmykStrToRgb( dst, src )
+function _strToRgb( dst, src )
 {
   /*
     cmyk(C, M, Y, K)
@@ -41,16 +41,16 @@ function _cmykStrToRgb( dst, src )
   let cmykColors = _.color.cmyk._formatStringParse( src );
   _.assert( cmykColors.length === 4, `{-src-} string must contain exactly 4 numbers, but got ${cmykColors.length}` );
 
-  if( !_.color.cmyk._сmykValidate( cmykColors ) )
+  if( !_.color.cmyk._validate( cmykColors ) )
   return null;
 
-  return _.color.cmyk._cmykLongToRgb( dst, cmykColors );
+  return _.color.cmyk._longToRgb( dst, cmykColors );
 
 }
 
 //
 
-function _cmykLongToRgb( dst, src )
+function _longToRgb( dst, src )
 {
   _.assert( src.length === 4, `{-src-} length must be 4, but got : ${src.length}` );
 
@@ -109,7 +109,7 @@ function _cmykLongToRgb( dst, src )
 
 //
 
-function _сmykValidate ( src )
+function _validate ( src )
 {
   if
   (
@@ -141,9 +141,9 @@ let Extension =
 
   // to rgb/a
 
-  _cmykStrToRgb,
-  _cmykLongToRgb,
-  _сmykValidate,
+  _strToRgb,
+  _longToRgb,
+  _validate,
 
   _formatStringParse
 
