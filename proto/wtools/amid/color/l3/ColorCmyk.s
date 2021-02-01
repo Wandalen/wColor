@@ -44,9 +44,6 @@ function _strToRgb( dst, src )
     `{-src-} string must contain exactly 4 or 5 numbers, but got ${cmykColors.length}`
   );
 
-  if( cmykColors.length === 5 )
-  return _.color.cmyka._strToRgba( dst, src.replace( 'cmyk', 'cmyka' ) );
-
   if( !_.color.cmyk._validate( cmykColors ) )
   return null;
 
@@ -58,22 +55,31 @@ function _strToRgb( dst, src )
 
 function _longToRgb( dst, src )
 {
-  _.assert( src.length === 4, `{-src-} length must be 4, but got : ${src.length}` );
+  _.assert( src.length === 4 || src.length === 5, `{-src-} length must be 4 or 5, but got : ${src.length}` );
 
   let r, g, b;
+  let a = null;
 
   if( dst === null || _.longIs( dst ) )
   {
-    dst = dst || new Array( 3 );
-
-    _.assert( dst.length === 3, `{-dst-} container length must be 3, but got : ${dst.length}` );
+    if( src.length === 4 )
+    {
+      dst = dst || new Array( 3 );
+      _.assert( dst.length === 3, `{-dst-} container length must be 3, but got : ${dst.length}` );
+    }
+    else if( src.length === 5 )
+    {
+      dst = dst || new Array( 4 );
+      _.assert( dst.length === 4, `{-dst-} container length must be 4, but got : ${dst.length}` );
+      a = src[ 4 ] / 100;
+    }
 
     convert( src );
 
     /*
       TypedArray:
 
-      For non-basic colors with r, g, b values range ( 0, 1 )
+      For non-basic colors with r, g, b values in range ( 0, 1 )
       only instances of those constructors can be used
       Float32Array,
       Float64Array,
@@ -82,19 +88,31 @@ function _longToRgb( dst, src )
     dst[ 0 ] = r;
     dst[ 1 ] = g;
     dst[ 2 ] = b;
+    if( a )
+    dst[ 3 ] = a;
 
   }
   else if( _.vadIs( dst ) )
   {
     /* optional dependency */
 
-    _.assert( dst.length === 3, `{-dst-} container length must be 3, but got : ${dst.length}` );
+    if( src.length === 4 )
+    {
+      _.assert( dst.length === 3, `{-dst-} container length must be 3, but got : ${dst.length}` );
+    }
+    else if( src.length === 5 )
+    {
+      _.assert( dst.length === 4, `{-dst-} container length must be 4, but got : ${dst.length}` );
+      a = src[ 4 ] / 100;
+    }
 
     convert( src );
 
     dst.eSet( 0, r );
     dst.eSet( 1, g );
     dst.eSet( 2, b );
+    if( a )
+    dst.eSet( 3, a );
 
   }
   else _.assert( 0, '{-dts-} container must be of type Vector' );
@@ -123,6 +141,7 @@ function _validate ( src )
     || !_.cinterval.has( [ 0, 100 ], src[ 1 ] )
     || !_.cinterval.has( [ 0, 100 ], src[ 2 ] )
     || !_.cinterval.has( [ 0, 100 ], src[ 3 ] )
+    || src[ 4 ] && !_.cinterval.has( [ 0, 100 ], src[ 4 ] )
   )
   return false;
 

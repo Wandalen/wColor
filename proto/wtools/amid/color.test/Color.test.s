@@ -1085,6 +1085,15 @@ function _strToRgbWithDst( test )
   test.equivalent( got, expected );
   test.true( got === dst );
 
+  test.case = 'cmyk with alpha, dst = VectorAdapter';
+  var src = 'cmyk(12%,34%,99%,27%,22%)';
+  var dst = _.vad.fromLong([ 1, 2, 3, 4 ]);
+  var expected = [ 0.6431372549019608, 0.4823529411764706, 0.00784313725490196, 0.22 ];
+  var got = _.color.cmyk._strToRgb( dst, src );
+  for( let i = 0; i < expected.length; i++ )
+  test.equivalent( got.eGet( i ), expected[ i ] );
+  test.true( got === dst );
+
   test.close( 'non basic colors' );
 
   test.case = 'first arg > 100%';
@@ -1142,6 +1151,11 @@ function _strToRgbWithDst( test )
   test.case = 'dst : Long; dst.length !== 4';
   var src = 'cmyk(12%,34%,99%,27%,22%)';
   var dst = _.longFrom([ 1, 2, 3 ]);
+  test.shouldThrowErrorSync( () => _.color.cmyk._strToRgb( dst, src ) )
+
+  test.case = 'dst : VectorAdapter; dst.length !== 4';
+  var src = 'cmyk(12%,34%,99%,27%,22%)';
+  var dst = _.vad.fromLong([ 1, 2, 3 ]);
   test.shouldThrowErrorSync( () => _.color.cmyk._strToRgb( dst, src ) )
 
 }

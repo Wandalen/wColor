@@ -148,7 +148,7 @@ function _formatStringParse( src )
 let Extension =
 {
 
-  // to rgb/a
+  // to rgba
 
   _strToRgba,
   _longToRgba,
