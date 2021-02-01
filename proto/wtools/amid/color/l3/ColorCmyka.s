@@ -37,7 +37,7 @@ function _cmykaStrToRgba( dst, src )
   _.assert( _.strIs( src ) );
   _.assert( dst === null || _.vectorIs( dst ) );
 
-  let cmykColors = _.color._formatStringParse( src );
+  let cmykColors = _.color.cmyka._formatStringParse( src );
   _.assert( cmykColors.length === 5, `{-src-} string must contain exactly 5 numbers, but got ${cmykColors.length}` );
 
   if( !_.color.cmyka._сmykaValidate( cmykColors ) )
@@ -132,6 +132,16 @@ function _сmykaValidate ( src )
   return true;
 }
 
+//
+
+function _formatStringParse( src )
+{
+  /* qqq : not safe! does not assert string consists of numbers | aaa : Fixed */
+  _.assert( /^cmyka\(\d{1,3}%,\d{1,3}%,\d{1,3}%,\d{1,3}%,\d{1,3}%\)$/g.test( src ), 'Wrong source string pattern' );
+  return src.match( /\d+(\.\d+)?/g ).map( ( el ) => +el );
+}
+
+
 // --
 // declare
 // --
@@ -144,6 +154,7 @@ let Extension =
   _cmykaStrToRgba,
   _cmykaLongToRgba,
   _сmykaValidate,
+  _formatStringParse
 
 }
 

@@ -1153,14 +1153,6 @@ function paler( rgb, factor )
   return mulSaturation( rgb, 1 - efactor );
 }
 
-//
-
-function _formatStringParse( src )
-{
-  /* qqq : not safe! does not assert string consists of numbers */
-  return src.match( /\d+(\.\d+)?/g ).map( ( el ) => +el );
-}
-
 // --
 // int
 // --
@@ -1630,8 +1622,6 @@ let Extension =
   mulSaturation,
   brighter,
   paler,
-
-  _formatStringParse,
 
   // int
 

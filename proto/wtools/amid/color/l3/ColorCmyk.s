@@ -38,7 +38,7 @@ function _cmykStrToRgb( dst, src )
   _.assert( _.strIs( src ) );
   _.assert( dst === null || _.vectorIs( dst ) );
 
-  let cmykColors = _.color._formatStringParse( src );
+  let cmykColors = _.color.cmyk._formatStringParse( src );
   _.assert( cmykColors.length === 4, `{-src-} string must contain exactly 4 numbers, but got ${cmykColors.length}` );
 
   if( !_.color.cmyk._сmykValidate( cmykColors ) )
@@ -123,6 +123,15 @@ function _сmykValidate ( src )
   return true;
 }
 
+//
+
+function _formatStringParse( src )
+{
+  /* qqq : not safe! does not assert string consists of numbers | aaa : Fixed */
+  _.assert( /^cmyk\(\d{1,3}%,\d{1,3}%,\d{1,3}%,\d{1,3}%\)$/g.test( src ), 'Wrong source string pattern' );
+  return src.match( /\d+(\.\d+)?/g ).map( ( el ) => +el );
+}
+
 // --
 // declare
 // --
@@ -135,6 +144,8 @@ let Extension =
   _cmykStrToRgb,
   _cmykLongToRgb,
   _сmykValidate,
+
+  _formatStringParse
 
 }
 
