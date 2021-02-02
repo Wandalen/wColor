@@ -966,6 +966,12 @@ function _strToRgba( test )
   var got = _.color.cmyka._strToRgba( null, src );
   test.equivalent( got, expected );
 
+  test.case = 'cmyka(11%,16%,75%,4%) no alpha info';
+  var src = 'cmyka(11%,16%,75%,4%)';
+  var expected = [ 0.8549019607843137, 0.807843137254902, 0.23921568627450981, 1 ];
+  var got = _.color.cmyka._strToRgba( null, src );
+  test.equivalent( got, expected );
+
   test.close( 'non basic colors' );
 
   test.case = 'first arg > 100%';
@@ -988,6 +994,12 @@ function _strToRgba( test )
 
   test.case = 'fourth arg > 100%';
   var src = 'cmyka(11%,16%,75%,400%,5%)';
+  var expected = null;
+  var got = _.color.cmyka._strToRgba( null, src );
+  test.identical( got, expected );
+
+  test.case = 'fifth arg > 100%';
+  var src = 'cmyka(11%,16%,75%,40%,500%)';
   var expected = null;
   var got = _.color.cmyka._strToRgba( null, src );
   test.identical( got, expected );
@@ -1232,6 +1244,23 @@ function _strToRgbaWithDst( test )
   var src = 'cmyka(12%,34%,99%,27%,31%)';
   var dst = _.vad.fromLong([ 1, 2, 3, 4 ]);
   var expected = [ 0.6431372549019608, 0.4823529411764706, 0.00784313725490196, 0.31 ];
+  var got = _.color.cmyka._strToRgba( dst, src );
+  for( let i = 0; i < expected.length; i++ )
+  test.equivalent( got.eGet( i ), expected[ i ] );
+  test.true( got === dst );
+
+  test.case = 'cmyka(12%,34%,99%,27%) no alpha info, dst = Array';
+  var src = 'cmyka(12%,34%,99%,27%)';
+  var dst = [ 1, 2, 3, 4 ];
+  var expected = [ 0.6431372549019608, 0.4823529411764706, 0.00784313725490196, 1 ];
+  var got = _.color.cmyka._strToRgba( dst, src );
+  test.equivalent( got, expected );
+  test.true( got === dst );
+
+  test.case = 'cmyka(12%,34%,99%,27%) no alpha info, dst = VectorAdapter';
+  var src = 'cmyka(12%,34%,99%,27%)';
+  var dst = _.vad.fromLong([ 1, 2, 3, 4 ]);
+  var expected = [ 0.6431372549019608, 0.4823529411764706, 0.00784313725490196, 1 ];
   var got = _.color.cmyka._strToRgba( dst, src );
   for( let i = 0; i < expected.length; i++ )
   test.equivalent( got.eGet( i ), expected[ i ] );
