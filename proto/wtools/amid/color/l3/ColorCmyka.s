@@ -14,11 +14,6 @@
  * @module Tools/mid/Color
 */
 
-if( typeof module !== 'undefined' )
-{
-  require( '../../../../wtools/Tools.s' );
-}
-
 let _ = _global_.wTools;
 let Self = _.color.cmyka = _.color.cmyka || Object.create( null );
 
@@ -37,7 +32,11 @@ function _strToRgba( dst, src )
   _.assert( dst === null || _.vectorIs( dst ) );
 
   let cmykColors = _.color.cmyka._formatStringParse( src );
-  _.assert( cmykColors.length === 5, `{-src-} string must contain exactly 5 numbers, but got ${cmykColors.length}` );
+  _.assert
+  (
+    cmykColors.length === 4 || cmykColors.length === 5,
+    `{-src-} string must contain exactly 4 or 5 numbers, but got ${cmykColors.length}`
+  );
 
   if( !_.color.cmyka._validate( cmykColors ) )
   return null;
