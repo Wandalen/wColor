@@ -6,9 +6,11 @@
 if( typeof module !== 'undefined' )
 {
   let _ = require( '../../../wtools/Tools.s' );
-  _.include( 'wColor' )
   _.include( 'wTesting' );
   _.include( 'wMathVector' );
+  require( '../color/l3/Color.s' )
+  require( '../color/l3/ColorCmyk.s' )
+  require( '../color/l3/ColorCmyka.s' )
 }
 
 let _ = _global_.wTools;
