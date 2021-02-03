@@ -185,9 +185,9 @@ module:
           - ../proto/wtools/amid/color/include/Basic.s
           - ../proto/wtools/amid/color/include/Mid.s
           - ../proto/wtools/amid/color/l3
+          - ../proto/wtools/amid/color/l3/Cmyk.s
+          - ../proto/wtools/amid/color/l3/Cmyka.s
           - ../proto/wtools/amid/color/l3/Color.s
-          - ../proto/wtools/amid/color/l3/ColorCmyk.s
-          - ../proto/wtools/amid/color/l3/ColorCmyka.s
           - ../proto/wtools/amid/color.test
           - ../proto/wtools/amid/color.test/Color.test.s
           - ../proto/wtools/atop
