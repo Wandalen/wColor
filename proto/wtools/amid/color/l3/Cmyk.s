@@ -53,7 +53,7 @@ function _strToRgb( dst, src )
 function _longToRgb( dst, src )
 {
   _.assert( src.length === 4 || src.length === 5, `{-src-} length must be 4 or 5, but got : ${src.length}` );
-  _.assert( src[ 5 ] === undefined || src[ 5 ] === 100, `alpha channel must be 100, but got : ${src[ 5 ]}` );
+  _.assert( src[ 4 ] === undefined || src[ 4 ] === 100, `alpha channel must be 100, but got : ${src[ 5 ]}` );
 
   if( !_.color.cmyk._validate( src ) )
   return null;
