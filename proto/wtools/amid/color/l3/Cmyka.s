@@ -109,7 +109,7 @@ function _longToRgba( dst, src )
     r = ( 1 - src[ 0 ] / 100 ) * ( 1 - src[ 3 ] / 100 );
     g = ( 1 - src[ 1 ] / 100 ) * ( 1 - src[ 3 ] / 100 );
     b = ( 1 - src[ 2 ] / 100 ) * ( 1 - src[ 3 ] / 100 );
-    if( src[ 4 ] )
+    if( src[ 4 ] !== undefined )
     a = src[ 4 ] / 100;
   }
 
@@ -125,7 +125,7 @@ function _validate ( src )
     || !_.cinterval.has( [ 0, 100 ], src[ 1 ] )
     || !_.cinterval.has( [ 0, 100 ], src[ 2 ] )
     || !_.cinterval.has( [ 0, 100 ], src[ 3 ] )
-    || src[ 4 ] && !_.cinterval.has( [ 0, 100 ], src[ 4 ] )
+    || src[ 4 ] !== undefined && !_.cinterval.has( [ 0, 100 ], src[ 4 ] )
   )
   return false;
 
