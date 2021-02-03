@@ -5,11 +5,8 @@
 
 if( typeof module !== 'undefined' )
 {
-  // let _ = require( '../../../wtools/Tools.s' );
   let _ = require( '../../../wtools/Tools.s' );
-  require( '../color/l3/Color.s' );
-  require( '../color/l3/ColorCmyk.s' );
-  require( '../color/l3/ColorCmyka.s' );
+  require( '../color/entry/ColorBasic.s' );
   _.include( 'wTesting' );
   _.include( 'wMathVector' );
 }
@@ -848,9 +845,9 @@ function _strToRgb( test )
   var got = _.color.cmyk._strToRgb( null, src );
   test.equivalent( got, expected );
 
-  test.case = 'cmyk with alpha';
-  var src = 'cmyk(11%,16%,75%,4%,10%)';
-  var expected = [ 0.8549019607843137, 0.807843137254902, 0.23921568627450981, 0.1 ];
+  test.case = 'cmyk with alpha=100%';
+  var src = 'cmyk(11%,16%,75%,4%,100%)';
+  var expected = [ 0.8549019607843137, 0.807843137254902, 0.23921568627450981 ];
   var got = _.color.cmyk._strToRgb( null, src );
   test.equivalent( got, expected );
 
@@ -880,11 +877,11 @@ function _strToRgb( test )
   var got = _.color.cmyk._strToRgb( null, src );
   test.identical( got, expected );
 
-  test.case = 'fifth arg > 100%';
-  var src = 'cmyk(11%,16%,75%,40%,500%)';
-  var expected = null;
-  var got = _.color.cmyk._strToRgb( null, src );
-  test.identical( got, expected );
+  /* */
+
+  test.case = 'alpha !== 100%';
+  var src = 'cmyk(11%,16%,75%,40%,50%)';
+  test.shouldThrowErrorSync( () => _.color.cmyk._strToRgb( null, src ) )
 
 }
 
@@ -969,6 +966,12 @@ function _strToRgba( test )
   var got = _.color.cmyka._strToRgba( null, src );
   test.equivalent( got, expected );
 
+  test.case = 'cmyka(11%,16%,75%,4%) no alpha info';
+  var src = 'cmyka(11%,16%,75%,4%)';
+  var expected = [ 0.8549019607843137, 0.807843137254902, 0.23921568627450981, 1 ];
+  var got = _.color.cmyka._strToRgba( null, src );
+  test.equivalent( got, expected );
+
   test.close( 'non basic colors' );
 
   test.case = 'first arg > 100%';
@@ -991,6 +994,12 @@ function _strToRgba( test )
 
   test.case = 'fourth arg > 100%';
   var src = 'cmyka(11%,16%,75%,400%,5%)';
+  var expected = null;
+  var got = _.color.cmyka._strToRgba( null, src );
+  test.identical( got, expected );
+
+  test.case = 'fifth arg > 100%';
+  var src = 'cmyka(11%,16%,75%,40%,500%)';
   var expected = null;
   var got = _.color.cmyka._strToRgba( null, src );
   test.identical( got, expected );
@@ -1080,12 +1089,21 @@ function _strToRgbWithDst( test )
   test.equivalent( got.eGet( i ), expected[ i ] );
   test.true( got === dst );
 
-  test.case = 'cmyk with alpha, dst = Long';
-  var src = 'cmyk(12%,34%,99%,27%,22%)';
-  var dst = _.longFrom([ 1, 2, 3, 4 ]);
-  var expected = [ 0.6431372549019608, 0.4823529411764706, 0.00784313725490196, 0.22 ];
+  test.case = 'cmyk with alpha = 100, dst = Long';
+  var src = 'cmyk(12%,34%,99%,27%,100%)';
+  var dst = _.longFrom([ 1, 2, 3 ]);
+  var expected = [ 0.6431372549019608, 0.4823529411764706, 0.00784313725490196 ];
   var got = _.color.cmyk._strToRgb( dst, src );
   test.equivalent( got, expected );
+  test.true( got === dst );
+
+  test.case = 'cmyk with alpha, dst = VectorAdapter';
+  var src = 'cmyk(12%,34%,99%,27%,100%)';
+  var dst = _.vad.fromLong([ 1, 2, 3 ]);
+  var expected = [ 0.6431372549019608, 0.4823529411764706, 0.00784313725490196 ];
+  var got = _.color.cmyk._strToRgb( dst, src );
+  for( let i = 0; i < expected.length; i++ )
+  test.equivalent( got.eGet( i ), expected[ i ] );
   test.true( got === dst );
 
   test.close( 'non basic colors' );
@@ -1114,12 +1132,6 @@ function _strToRgbWithDst( test )
   var got = _.color.cmyk._strToRgb( [ 1, 2, 3 ], src );
   test.identical( got, expected );
 
-  test.case = 'fifth arg > 100%';
-  var src = 'cmyk(11%,16%,75%,40%,200%)';
-  var expected = null;
-  var got = _.color.cmyk._strToRgb( [ 1, 2, 3, 4 ], src );
-  test.identical( got, expected );
-
   /* - */
 
   test.case = 'dst : Array; dst.length !== 3';
@@ -1142,9 +1154,14 @@ function _strToRgbWithDst( test )
   var dst = _.vad.fromLong([ 1 ]);
   test.shouldThrowErrorSync( () => _.color.cmyk._strToRgb( dst, src ) )
 
-  test.case = 'dst : Long; dst.length !== 4';
+  test.case = 'dst : Long; alpha !== 100';
   var src = 'cmyk(12%,34%,99%,27%,22%)';
   var dst = _.longFrom([ 1, 2, 3 ]);
+  test.shouldThrowErrorSync( () => _.color.cmyk._strToRgb( dst, src ) )
+
+  test.case = 'dst : VectorAdapter; alpha !== 100';
+  var src = 'cmyk(12%,34%,99%,27%,22%)';
+  var dst = _.vad.fromLong([ 1, 2, 3 ]);
   test.shouldThrowErrorSync( () => _.color.cmyk._strToRgb( dst, src ) )
 
 }
@@ -1227,6 +1244,23 @@ function _strToRgbaWithDst( test )
   var src = 'cmyka(12%,34%,99%,27%,31%)';
   var dst = _.vad.fromLong([ 1, 2, 3, 4 ]);
   var expected = [ 0.6431372549019608, 0.4823529411764706, 0.00784313725490196, 0.31 ];
+  var got = _.color.cmyka._strToRgba( dst, src );
+  for( let i = 0; i < expected.length; i++ )
+  test.equivalent( got.eGet( i ), expected[ i ] );
+  test.true( got === dst );
+
+  test.case = 'cmyka(12%,34%,99%,27%) no alpha info, dst = Array';
+  var src = 'cmyka(12%,34%,99%,27%)';
+  var dst = [ 1, 2, 3, 4 ];
+  var expected = [ 0.6431372549019608, 0.4823529411764706, 0.00784313725490196, 1 ];
+  var got = _.color.cmyka._strToRgba( dst, src );
+  test.equivalent( got, expected );
+  test.true( got === dst );
+
+  test.case = 'cmyka(12%,34%,99%,27%) no alpha info, dst = VectorAdapter';
+  var src = 'cmyka(12%,34%,99%,27%)';
+  var dst = _.vad.fromLong([ 1, 2, 3, 4 ]);
+  var expected = [ 0.6431372549019608, 0.4823529411764706, 0.00784313725490196, 1 ];
   var got = _.color.cmyka._strToRgba( dst, src );
   for( let i = 0; i < expected.length; i++ )
   test.equivalent( got.eGet( i ), expected[ i ] );

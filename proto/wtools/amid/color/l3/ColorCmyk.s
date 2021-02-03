@@ -14,12 +14,6 @@
  * @module Tools/mid/Color
 */
 
-if( typeof module !== 'undefined' )
-{
-  require( '../../../../wtools/Tools.s' );
-  require( './Color.s' );
-}
-
 let _ = _global_.wTools;
 let Self = _.color.cmyk = _.color.cmyk || Object.create( null );
 
@@ -38,17 +32,17 @@ function _strToRgb( dst, src )
   _.assert( dst === null || _.vectorIs( dst ) );
 
   let cmykColors = _.color.cmyk._formatStringParse( src );
+
   _.assert
   (
     cmykColors.length === 4 || cmykColors.length === 5,
     `{-src-} string must contain exactly 4 or 5 numbers, but got ${cmykColors.length}`
   );
-
-  if( cmykColors.length === 5 )
-  return _.color.cmyka._strToRgba( dst, src.replace( 'cmyk', 'cmyka' ) );
-
-  if( !_.color.cmyk._validate( cmykColors ) )
-  return null;
+  _.assert
+  (
+    cmykColors[ 4 ] === undefined || cmykColors[ 4 ] === 100,
+    `alpha channel must be 100, but got ${cmykColors[ 4 ]}`
+  );
 
   return _.color.cmyk._longToRgb( dst, cmykColors );
 
@@ -58,14 +52,17 @@ function _strToRgb( dst, src )
 
 function _longToRgb( dst, src )
 {
-  _.assert( src.length === 4, `{-src-} length must be 4, but got : ${src.length}` );
+  _.assert( src.length === 4 || src.length === 5, `{-src-} length must be 4 or 5, but got : ${src.length}` );
+  _.assert( src[ 5 ] === undefined || src[ 5 ] === 100, `alpha channel must be 100, but got : ${src[ 5 ]}` );
+
+  if( !_.color.cmyk._validate( src ) )
+  return null;
 
   let r, g, b;
 
   if( dst === null || _.longIs( dst ) )
   {
     dst = dst || new Array( 3 );
-
     _.assert( dst.length === 3, `{-dst-} container length must be 3, but got : ${dst.length}` );
 
     convert( src );
@@ -73,7 +70,7 @@ function _longToRgb( dst, src )
     /*
       TypedArray:
 
-      For non-basic colors with r, g, b values range ( 0, 1 )
+      For non-basic colors with r, g, b values in range ( 0, 1 )
       only instances of those constructors can be used
       Float32Array,
       Float64Array,
@@ -95,7 +92,6 @@ function _longToRgb( dst, src )
     dst.eSet( 0, r );
     dst.eSet( 1, g );
     dst.eSet( 2, b );
-
   }
   else _.assert( 0, '{-dts-} container must be of type Vector' );
 

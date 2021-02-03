@@ -14,12 +14,6 @@
  * @module Tools/mid/Color
 */
 
-if( typeof module !== 'undefined' )
-{
-  require( '../../../../wtools/Tools.s' );
-  require( './Color.s' );
-}
-
 let _ = _global_.wTools;
 let Self = _.color.cmyka = _.color.cmyka || Object.create( null );
 
@@ -38,10 +32,11 @@ function _strToRgba( dst, src )
   _.assert( dst === null || _.vectorIs( dst ) );
 
   let cmykColors = _.color.cmyka._formatStringParse( src );
-  _.assert( cmykColors.length === 5, `{-src-} string must contain exactly 5 numbers, but got ${cmykColors.length}` );
-
-  if( !_.color.cmyka._validate( cmykColors ) )
-  return null;
+  _.assert
+  (
+    cmykColors.length === 4 || cmykColors.length === 5,
+    `{-src-} string must contain exactly 4 or 5 numbers, but got ${cmykColors.length}`
+  );
 
   return _.color.cmyka._longToRgba( dst, cmykColors );
 
@@ -52,9 +47,13 @@ function _strToRgba( dst, src )
 function _longToRgba( dst, src )
 {
 
-  _.assert( src.length === 5, `{-src-} length must be 5, but got : ${src.length}` );
+  _.assert( src.length === 4 || src.length === 5, `{-src-} length must be 4 or 5, but got : ${src.length}` );
 
-  let r, g, b, a;
+  if( !_.color.cmyka._validate( src ) )
+  return null;
+
+  let r, g, b;
+  let a = 1;
   /* qqq : bad!
   assert
   alpha channel
@@ -110,6 +109,7 @@ function _longToRgba( dst, src )
     r = ( 1 - src[ 0 ] / 100 ) * ( 1 - src[ 3 ] / 100 );
     g = ( 1 - src[ 1 ] / 100 ) * ( 1 - src[ 3 ] / 100 );
     b = ( 1 - src[ 2 ] / 100 ) * ( 1 - src[ 3 ] / 100 );
+    if( src[ 4 ] )
     a = src[ 4 ] / 100;
   }
 
@@ -125,7 +125,7 @@ function _validate ( src )
     || !_.cinterval.has( [ 0, 100 ], src[ 1 ] )
     || !_.cinterval.has( [ 0, 100 ], src[ 2 ] )
     || !_.cinterval.has( [ 0, 100 ], src[ 3 ] )
-    || !_.cinterval.has( [ 0, 100 ], src[ 4 ] )
+    || src[ 4 ] && !_.cinterval.has( [ 0, 100 ], src[ 4 ] )
   )
   return false;
 
@@ -137,7 +137,7 @@ function _validate ( src )
 function _formatStringParse( src )
 {
   /* qqq : not safe! does not assert string consists of numbers | aaa : Fixed */
-  _.assert( /^cmyka\(\d{1,3}%,\d{1,3}%,\d{1,3}%,\d{1,3}%,\d{1,3}%\)$/g.test( src ), 'Wrong source string pattern' );
+  _.assert( /^cmyka\(\d{1,3}%,\d{1,3}%,\d{1,3}%,\d{1,3}%(,\d{1,3}%)?\)$/g.test( src ), 'Wrong source string pattern' );
   return src.match( /\d+(\.\d+)?/g ).map( ( el ) => +el );
 }
 
@@ -149,7 +149,7 @@ function _formatStringParse( src )
 let Extension =
 {
 
-  // to rgb/a
+  // to rgba
 
   _strToRgba,
   _longToRgba,

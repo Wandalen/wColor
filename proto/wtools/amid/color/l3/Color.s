@@ -14,13 +14,6 @@
  * @module Tools/mid/Color
 */
 
-if( typeof module !== 'undefined' )
-{
-
-  require( '../../../../wtools/Tools.s' );
-
-}
-
 let _ = _global_.wTools;
 let Self = _.color = _.color || Object.create( null );
 
