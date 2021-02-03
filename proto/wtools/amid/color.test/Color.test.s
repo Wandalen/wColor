@@ -1559,6 +1559,322 @@ function _longToRgba( test )
 
 _longToRgba.accuracy = 1e-2;
 
+//
+
+function _longToRgbWithDst( test )
+{
+
+  test.open( 'basic colors' );
+
+  test.case = 'Black, dst = Array';
+  var src = [ 0, 0, 0, 100 ];
+  var dst = [ 1, 2, 3 ];
+  var expected = [ 0, 0, 0 ];
+  var got = _.color.cmyk._longToRgb( dst, src );
+  test.identical( got, expected );
+  test.true( got === dst );
+
+  test.case = 'Green, dst = Long';
+  var src = [ 100, 0, 100, 0 ];
+  var dst = _.longFrom([ 1, 4, 13 ]);
+  var expected = [ 0, 1, 0 ];
+  var got = _.color.cmyk._longToRgb( dst, src );
+  test.identical( got, expected );
+  test.true( got === dst );
+
+  test.case = 'Red, dst = TypedArray';
+  var src = [ 0, 100, 100, 0 ];
+  var dst = new I8x([ 1, 5, 15 ]); /* 1 and 0 -> Integer Typed Array can be used */
+  var expected = [ 1, 0, 0 ];
+  var got = _.color.cmyk._longToRgb( dst, src );
+  for( let i = 0; i < expected.length; i++ )
+  test.identical( got[ i ], expected[ i ] );
+  test.true( got === dst );
+
+  test.case = 'White, dst = VectorAdapter';
+  var src = [ 0, 0, 0, 0 ];
+  var dst = _.vad.fromLong([ 1, 2, 3 ]);
+  var expected = [ 1, 1, 1 ];
+  var got = _.color.cmyk._longToRgb( dst, src );
+  for( let i = 0; i < expected.length; i++ )
+  test.identical( got.eGet( i ), expected[ i ] );
+  test.true( got === dst );
+
+  test.close( 'basic colors' );
+
+  /* */
+
+  test.open( 'non basic colors' );
+
+  test.case = '[ 12, 34, 99, 27 ];, dst = Array';
+  var src = [ 12, 34, 99, 27 ];
+  var dst = [ 1, 2, 3 ];
+  var expected = [ 0.6431372549019608, 0.4823529411764706, 0.00784313725490196 ];
+  var got = _.color.cmyk._longToRgb( dst, src );
+  test.equivalent( got, expected );
+  test.true( got === dst );
+
+  test.case = '[ 12, 34, 99, 27 ];, dst = Long';
+  var src = [ 12, 34, 99, 27 ];
+  var dst = _.longFrom([ 1, 2, 3 ]);
+  var expected = [ 0.6431372549019608, 0.4823529411764706, 0.00784313725490196 ];
+  var got = _.color.cmyk._longToRgb( dst, src );
+  test.equivalent( got, expected );
+  test.true( got === dst );
+
+  test.case = '[ 12, 34, 99, 27 ];, dst = TypedArray';
+  var src = [ 12, 34, 99, 27 ];
+  var dst = new Float32Array([ 1, 2, 3 ]); /* ( 0, 1 ) -> Integer Typed Array can NOT be used */
+  var expected = [ 0.6431372549019608, 0.4823529411764706, 0.00784313725490196 ];
+  var got = _.color.cmyk._longToRgb( dst, src );
+  for( let i = 0; i < expected.length; i++ )
+  test.equivalent( got[ i ], expected[ i ] );
+  test.true( got === dst );
+
+  test.case = '[ 12, 34, 99, 27 ];, dst = VectorAdapter';
+  var src = [ 12, 34, 99, 27 ];
+  var dst = _.vad.fromLong([ 1, 2, 3 ]);
+  var expected = [ 0.6431372549019608, 0.4823529411764706, 0.00784313725490196 ];
+  var got = _.color.cmyk._longToRgb( dst, src );
+  for( let i = 0; i < expected.length; i++ )
+  test.equivalent( got.eGet( i ), expected[ i ] );
+  test.true( got === dst );
+
+  test.case = 'cmyk with alpha = 100, dst = Long';
+  var src = [ 12, 34, 99, 27, 100 ];
+  var dst = _.longFrom([ 1, 2, 3 ]);
+  var expected = [ 0.6431372549019608, 0.4823529411764706, 0.00784313725490196 ];
+  var got = _.color.cmyk._longToRgb( dst, src );
+  test.equivalent( got, expected );
+  test.true( got === dst );
+
+  test.case = 'cmyk with alpha = 100, dst = VectorAdapter';
+  var src = [ 12, 34, 99, 27, 100 ];
+  var dst = _.vad.fromLong([ 1, 2, 3 ]);
+  var expected = [ 0.6431372549019608, 0.4823529411764706, 0.00784313725490196 ];
+  var got = _.color.cmyk._longToRgb( dst, src );
+  for( let i = 0; i < expected.length; i++ )
+  test.equivalent( got.eGet( i ), expected[ i ] );
+  test.true( got === dst );
+
+  test.close( 'non basic colors' );
+
+  test.case = 'first arg > 100%';
+  var src = [ 111, 16, 75, 4 ];
+  var expected = null;
+  var got = _.color.cmyk._longToRgb( [ 1, 2, 3 ], src );
+  test.identical( got, expected );
+
+  test.case = 'second arg > 100%';
+  var src = [ 11, 160, 75, 4 ];
+  var expected = null;
+  var got = _.color.cmyk._longToRgb( [ 1, 2, 3 ], src );
+  test.identical( got, expected );
+
+  test.case = 'third arg > 100%';
+  var src = [ 11, 16, 750, 4 ];
+  var expected = null;
+  var got = _.color.cmyk._longToRgb( [ 1, 2, 3 ], src );
+  test.identical( got, expected );
+
+  test.case = 'fourth arg > 100%';
+  var src = [ 11, 16, 75, 400 ];
+  var expected = null;
+  var got = _.color.cmyk._longToRgb( [ 1, 2, 3 ], src );
+  test.identical( got, expected );
+
+  /* - */
+
+  test.case = 'dst : Array; dst.length !== 3';
+  var src = [ 12, 34, 99, 27 ];
+  var dst = [ 1, 2, 3, 5 ];
+  test.shouldThrowErrorSync( () => _.color.cmyk._longToRgb( dst, src ) )
+
+  test.case = 'dst : Long; dst.length !== 3';
+  var src = [ 12, 34, 99, 27 ];
+  var dst = _.longFrom([ 1, 2 ]);
+  test.shouldThrowErrorSync( () => _.color.cmyk._longToRgb( dst, src ) )
+
+  test.case = 'dst : TypedArray; dst.length !== 3';
+  var src = [ 12, 34, 99, 27 ];
+  var dst = new Float32Array([ 1, 2, 3, 4, 5, 6 ]);
+  test.shouldThrowErrorSync( () => _.color.cmyk._longToRgb( dst, src ) )
+
+  test.case = 'dst : VectorAdapter; dst.length !== 3';
+  var src = [ 12, 34, 99, 27 ];
+  var dst = _.vad.fromLong([ 1 ]);
+  test.shouldThrowErrorSync( () => _.color.cmyk._longToRgb( dst, src ) )
+
+  test.case = 'dst : Long; alpha !== 100';
+  var src = [ 12, 34, 99, 27, 22 ];
+  var dst = _.longFrom([ 1, 2, 3 ]);
+  test.shouldThrowErrorSync( () => _.color.cmyk._longToRgb( dst, src ) )
+
+  test.case = 'dst : VectorAdapter; alpha !== 100';
+  var src = [ 12, 34, 99, 27, 22 ];
+  var dst = _.vad.fromLong([ 1, 2, 3 ]);
+  test.shouldThrowErrorSync( () => _.color.cmyk._longToRgb( dst, src ) )
+
+}
+
+_longToRgbWithDst.accuracy = 1e-2;
+
+//
+
+function _longToRgbaWithDst( test )
+{
+
+  test.open( 'basic colors' );
+
+  test.case = 'Black, dst = Array';
+  var src = [ 0, 0, 0, 100, 100 ];
+  var dst = [ 1, 2, 3, 4 ];
+  var expected = [ 0, 0, 0, 1 ];
+  var got = _.color.cmyka._longToRgba( dst, src );
+  test.identical( got, expected );
+  test.true( got === dst );
+
+  test.case = 'Green, dst = Long';
+  var src = [ 100, 0, 100, 0, 100 ];
+  var dst = _.longFrom([ 1, 4, 13, 14 ]);
+  var expected = [ 0, 1, 0, 1 ];
+  var got = _.color.cmyka._longToRgba( dst, src );
+  test.identical( got, expected );
+  test.true( got === dst );
+
+  test.case = 'Red, dst = TypedArray';
+  var src = [ 0, 100, 100, 0, 100 ];
+  var dst = new I8x([ 1, 5, 15, 14 ]); /* 1 and 0 -> Integer Typed Array can be used */
+  var expected = [ 1, 0, 0, 1 ];
+  var got = _.color.cmyka._longToRgba( dst, src );
+  for( let i = 0; i < expected.length; i++ )
+  test.identical( got[ i ], expected[ i ] );
+  test.true( got === dst );
+
+  test.case = 'White, dst = VectorAdapter';
+  var src = [ 0, 0, 0, 0, 100 ];
+  var dst = _.vad.fromLong([ 1, 2, 3, 4 ]);
+  var expected = [ 1, 1, 1, 1 ];
+  var got = _.color.cmyka._longToRgba( dst, src );
+  for( let i = 0; i < expected.length; i++ )
+  test.identical( got.eGet( i ), expected[ i ] );
+  test.true( got === dst );
+
+  test.close( 'basic colors' );
+
+  /* */
+
+  test.open( 'non basic colors' );
+
+  test.case = '[ 12, 34, 99, 27, 40 ], dst = Array';
+  var src = [ 12, 34, 99, 27, 31 ];
+  var dst = [ 1, 2, 3, 4 ];
+  var expected = [ 0.6431372549019608, 0.4823529411764706, 0.00784313725490196, 0.31 ];
+  var got = _.color.cmyka._longToRgba( dst, src );
+  test.equivalent( got, expected );
+  test.true( got === dst );
+
+  test.case = '[ 12, 34, 99, 27, 31 ], dst = Long';
+  var src = [ 12, 34, 99, 27, 31 ];
+  var dst = _.longFrom([ 1, 2, 3, 4 ]);
+  var expected = [ 0.6431372549019608, 0.4823529411764706, 0.00784313725490196, 0.31 ];
+  var got = _.color.cmyka._longToRgba( dst, src );
+  test.equivalent( got, expected );
+  test.true( got === dst );
+
+  test.case = '[ 12, 34, 99, 27, 31 ], dst = TypedArray';
+  var src = [ 12, 34, 99, 27, 31 ];
+  var dst = new Float32Array([ 1, 2, 3, 4 ]); /* ( 0, 1 ) -> Integer Typed Array can NOT be used */
+  var expected = [ 0.6431372549019608, 0.4823529411764706, 0.00784313725490196, 0.31 ];
+  var got = _.color.cmyka._longToRgba( dst, src );
+  for( let i = 0; i < expected.length; i++ )
+  test.equivalent( got[ i ], expected[ i ] );
+  test.true( got === dst );
+
+  test.case = '[ 12, 34, 99, 27, 31 ], dst = VectorAdapter';
+  var src = [ 12, 34, 99, 27, 31 ];
+  var dst = _.vad.fromLong([ 1, 2, 3, 4 ]);
+  var expected = [ 0.6431372549019608, 0.4823529411764706, 0.00784313725490196, 0.31 ];
+  var got = _.color.cmyka._longToRgba( dst, src );
+  for( let i = 0; i < expected.length; i++ )
+  test.equivalent( got.eGet( i ), expected[ i ] );
+  test.true( got === dst );
+
+  test.case = '[ 12, 34, 99, 27 ] no alpha info, dst = Array';
+  var src = [ 12, 34, 99, 27 ];
+  var dst = [ 1, 2, 3, 4 ];
+  var expected = [ 0.6431372549019608, 0.4823529411764706, 0.00784313725490196, 1 ];
+  var got = _.color.cmyka._longToRgba( dst, src );
+  test.equivalent( got, expected );
+  test.true( got === dst );
+
+  test.case = '[ 12, 34, 99, 27 ] no alpha info, dst = VectorAdapter';
+  var src = [ 12, 34, 99, 27 ];
+  var dst = _.vad.fromLong([ 1, 2, 3, 4 ]);
+  var expected = [ 0.6431372549019608, 0.4823529411764706, 0.00784313725490196, 1 ];
+  var got = _.color.cmyka._longToRgba( dst, src );
+  for( let i = 0; i < expected.length; i++ )
+  test.equivalent( got.eGet( i ), expected[ i ] );
+  test.true( got === dst );
+
+  test.close( 'non basic colors' );
+
+  test.case = 'first arg > 100%';
+  var src = [ 111, 16, 75, 4, 5 ];
+  var expected = null;
+  var got = _.color.cmyka._longToRgba( [ 1, 2, 3, 4 ], src );
+  test.identical( got, expected );
+
+  test.case = 'second arg > 100%';
+  var src = [ 11, 160, 75, 4, 5 ];
+  var expected = null;
+  var got = _.color.cmyka._longToRgba( [ 1, 2, 3 ], src );
+  test.identical( got, expected );
+
+  test.case = 'third arg > 100%';
+  var src = [ 11, 16, 750, 4, 5 ];
+  var expected = null;
+  var got = _.color.cmyka._longToRgba( [ 1, 2, 3 ], src );
+  test.identical( got, expected );
+
+  test.case = 'fourth arg > 100%';
+  var src = [ 11, 16, 75, 400, 5 ];
+  var expected = null;
+  var got = _.color.cmyka._longToRgba( [ 1, 2, 3 ], src );
+  test.identical( got, expected );
+
+  test.case = 'fifth arg > 100%';
+  var src = [ 11, 16, 75, 40, 500 ];
+  var expected = null;
+  var got = _.color.cmyka._longToRgba( [ 1, 2, 3 ], src );
+  test.identical( got, expected );
+
+  /* - */
+
+  test.case = 'dst : Array; dst.length !== 4';
+  var src = [ 12, 34, 99, 27, 31 ];
+  var dst = [ 1, 2, 3, 5, 6 ];
+  test.shouldThrowErrorSync( () => _.color.cmyka._longToRgba( dst, src ) )
+
+  test.case = 'dst : Long; dst.length !== 4';
+  var src = [ 12, 34, 99, 27, 31 ];
+  var dst = _.longFrom([ 1, 2 ]);
+  test.shouldThrowErrorSync( () => _.color.cmyka._longToRgba( dst, src ) )
+
+  test.case = 'dst : TypedArray; dst.length !== 4';
+  var src = [ 12, 34, 99, 27, 31 ];
+  var dst = new Float32Array([ 1, 2, 3 ]);
+  test.shouldThrowErrorSync( () => _.color.cmyka._longToRgba( dst, src ) )
+
+  test.case = 'dst : VectorAdapter; dst.length !== 4';
+  var src = [ 12, 34, 99, 27, 31 ];
+  var dst = _.vad.fromLong([ 1 ]);
+  test.shouldThrowErrorSync( () => _.color.cmyka._longToRgba( dst, src ) )
+
+}
+
+_longToRgbaWithDst.accuracy = 1e-2;
+
 
 // --
 // declare
@@ -1592,6 +1908,8 @@ let Self =
     _strToRgbaWithDst,
     _longToRgb,
     _longToRgba,
+    _longToRgbWithDst,
+    _longToRgbaWithDst,
 
   },
 
