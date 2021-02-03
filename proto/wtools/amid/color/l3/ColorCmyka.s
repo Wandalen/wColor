@@ -121,7 +121,7 @@ function _validate ( src )
 {
   if
   (
-    !_.cinterval.has( [ 0, 100 ], src[ 0 ] )
+       !_.cinterval.has( [ 0, 100 ], src[ 0 ] )
     || !_.cinterval.has( [ 0, 100 ], src[ 1 ] )
     || !_.cinterval.has( [ 0, 100 ], src[ 2 ] )
     || !_.cinterval.has( [ 0, 100 ], src[ 3 ] )
@@ -136,7 +136,6 @@ function _validate ( src )
 
 function _formatStringParse( src )
 {
-  /* qqq : not safe! does not assert string consists of numbers | aaa : Fixed */
   _.assert( /^cmyka\(\d{1,3}%,\d{1,3}%,\d{1,3}%,\d{1,3}%(,\d{1,3}%)?\)$/g.test( src ), 'Wrong source string pattern' );
   return src.match( /\d+(\.\d+)?/g ).map( ( el ) => +el );
 }
