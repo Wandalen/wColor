@@ -23,51 +23,51 @@ function _strToRgba( test )
   test.open( 'basic colors' );
 
   test.case = 'Black';
-  var src = 'hwba(0%,0%,0%,100%,100%)';
+  var src = 'hwba(0,0%,100%,100%)';
   var expected = [ 0, 0, 0, 1 ];
-  var got = _.color.hwba._strToRgba( null, src );
+  var got = _.color.hwb._strToRgba( null, src );
   test.identical( got, expected );
 
   test.case = 'White';
-  var src = 'hwba(0%,0%,0%,0%,100%)';
+  var src = 'hwba(0,100%,0%,100%)';
   var expected = [ 1, 1, 1, 1 ];
-  var got = _.color.hwba._strToRgba( null, src );
+  var got = _.color.hwb._strToRgba( null, src );
   test.identical( got, expected );
 
   test.case = 'Red';
-  var src = 'hwba(0%,100%,100%,0%,100%)';
+  var src = 'hwba(0, 0%, 0%)';
   var expected = [ 1, 0, 0, 1 ];
-  var got = _.color.hwba._strToRgba( null, src );
+  var got = _.color.hwb._strToRgba( null, src );
   test.identical( got, expected );
 
   test.case = 'Green';
-  var src = 'hwba(100%,0%,100%,0%,100%)';
+  var src = 'hwba(120, 0%, 0%)';
   var expected = [ 0, 1, 0, 1 ];
-  var got = _.color.hwba._strToRgba( null, src );
+  var got = _.color.hwb._strToRgba( null, src );
   test.identical( got, expected );
 
   test.case = 'Blue';
-  var src = 'hwba(100%,100%,0%,0%,100%)';
+  var src = 'hwba(240,0%,0%)';
   var expected = [ 0, 0, 1, 1 ];
-  var got = _.color.hwba._strToRgba( null, src );
+  var got = _.color.hwb._strToRgba( null, src );
   test.identical( got, expected );
 
   test.case = 'Yellow';
-  var src = 'hwba(0%,0%,100%,0%,100%)';
+  var src = 'hwba(60,0%,0%)';
   var expected = [ 1, 1, 0, 1 ];
-  var got = _.color.hwba._strToRgba( null, src );
+  var got = _.color.hwb._strToRgba( null, src );
   test.identical( got, expected );
 
   test.case = 'Cyan';
-  var src = 'hwba(100%,0%,0%,0%,100%)';
+  var src = 'hwba(180,0%,0%)';
   var expected = [ 0, 1, 1, 1 ];
-  var got = _.color.hwba._strToRgba( null, src );
+  var got = _.color.hwb._strToRgba( null, src );
   test.identical( got, expected );
 
   test.case = 'Magenta';
-  var src = 'hwba(0%,100%,0%,0%,100%)';
+  var src = 'hwba(300,0%,0%)';
   var expected = [ 1, 0, 1, 1 ];
-  var got = _.color.hwba._strToRgba( null, src );
+  var got = _.color.hwb._strToRgba( null, src );
   test.identical( got, expected );
 
   test.close( 'basic colors' );

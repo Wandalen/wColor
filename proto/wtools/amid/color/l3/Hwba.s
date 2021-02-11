@@ -163,7 +163,7 @@ function _validate ( src )
 
 function _formatStringParse( src )
 {
-  _.assert( /^hwb\(\d{1,3}%,\d{1,3}%,\d{1,3}%,\d{1,3}%(,\d{1,3}%)?\)$/g.test( src ), 'Wrong source string pattern' );
+  _.assert( /^hwba\(\d{1,3}, ?\d{1,3}%, ?\d{1,3}%(, ?\d{1,3}%)?\)$/g.test( src ), 'Wrong source string pattern' );
   return src.match( /\d+(\.\d+)?/g ).map( ( el ) => +el );
 }
 
