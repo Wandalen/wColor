@@ -1875,6 +1875,146 @@ function _cmykaLongToRgbaWithDst( test )
 
 _cmykaLongToRgbaWithDst.accuracy = 1e-2;
 
+//
+
+function _cmykValidate( test )
+{
+
+  test.case = 'normal';
+  var src = [ 11, 16, 75, 40 ];
+  var expected = true;
+  var got = _.color.cmyk._validate( src );
+  test.identical( got, expected );
+
+  test.case = 'first arg > 100';
+  var src = [ 111, 16, 75, 4 ];
+  var expected = false;
+  var got = _.color.cmyk._validate( src );
+  test.identical( got, expected );
+
+  test.case = 'first arg < 0';
+  var src = [ -111, 16, 75, 4 ];
+  var expected = false;
+  var got = _.color.cmyk._validate( src );
+  test.identical( got, expected );
+
+  test.case = 'second arg > 100';
+  var src = [ 11, 160, 75, 4 ];
+  var expected = false;
+  var got = _.color.cmyk._validate( src );
+  test.identical( got, expected );
+
+  test.case = 'second arg < 0';
+  var src = [ 11, -160, 75, 4 ];
+  var expected = false;
+  var got = _.color.cmyk._validate( src );
+  test.identical( got, expected );
+
+  test.case = 'third arg > 100';
+  var src = [ 11, 16, 750, 4 ];
+  var expected = false;
+  var got = _.color.cmyk._validate( src );
+  test.identical( got, expected );
+
+  test.case = 'third arg < 0';
+  var src = [ 11, 16, -750, 4 ];
+  var expected = false;
+  var got = _.color.cmyk._validate( src );
+  test.identical( got, expected );
+
+  test.case = 'fourth arg > 100';
+  var src = [ 11, 16, 75, 400 ];
+  var expected = false;
+  var got = _.color.cmyk._validate( src );
+  test.identical( got, expected );
+
+  test.case = 'fourth arg < 0';
+  var src = [ 11, 16, 75, -400 ];
+  var expected = false;
+  var got = _.color.cmyk._validate( src );
+  test.identical( got, expected );
+
+}
+
+//
+
+function _cmykaValidate( test )
+{
+
+  test.case = 'normal 4 elements';
+  var src = [ 11, 16, 75, 40 ];
+  var expected = true;
+  var got = _.color.cmyka._validate( src );
+  test.identical( got, expected );
+
+  test.case = 'normal 5 elements';
+  var src = [ 11, 16, 75, 40, 54 ];
+  var expected = true;
+  var got = _.color.cmyka._validate( src );
+  test.identical( got, expected );
+
+  test.case = 'first arg > 100';
+  var src = [ 111, 16, 75, 4 ];
+  var expected = false;
+  var got = _.color.cmyka._validate( src );
+  test.identical( got, expected );
+
+  test.case = 'first arg < 0';
+  var src = [ -111, 16, 75, 4 ];
+  var expected = false;
+  var got = _.color.cmyka._validate( src );
+  test.identical( got, expected );
+
+  test.case = 'second arg > 100';
+  var src = [ 11, 160, 75, 4 ];
+  var expected = false;
+  var got = _.color.cmyka._validate( src );
+  test.identical( got, expected );
+
+  test.case = 'second arg < 0';
+  var src = [ 11, -160, 75, 4 ];
+  var expected = false;
+  var got = _.color.cmyka._validate( src );
+  test.identical( got, expected );
+
+  test.case = 'third arg > 100';
+  var src = [ 11, 16, 750, 4 ];
+  var expected = false;
+  var got = _.color.cmyka._validate( src );
+  test.identical( got, expected );
+
+  test.case = 'third arg < 0';
+  var src = [ 11, 16, -750, 4 ];
+  var expected = false;
+  var got = _.color.cmyka._validate( src );
+  test.identical( got, expected );
+
+  test.case = 'fourth arg > 100';
+  var src = [ 11, 16, 75, 400 ];
+  var expected = false;
+  var got = _.color.cmyka._validate( src );
+  test.identical( got, expected );
+
+  test.case = 'fourth arg < 0';
+  var src = [ 11, 16, 75, -400 ];
+  var expected = false;
+  var got = _.color.cmyka._validate( src );
+  test.identical( got, expected );
+
+  test.case = 'fifth arg > 100';
+  var src = [ 11, 16, 75, 40, 104 ];
+  var expected = false;
+  var got = _.color.cmyka._validate( src );
+  test.identical( got, expected );
+
+  test.case = 'fifth arg < 0';
+  var src = [ 11, 16, 75, 40, -1 ];
+  var expected = false;
+  var got = _.color.cmyka._validate( src );
+  test.identical( got, expected );
+
+}
+
 
 // --
 // declare
@@ -1910,6 +2050,8 @@ let Self =
     _cmykaLongToRgba,
     _cmykLongToRgbWithDst,
     _cmykaLongToRgbaWithDst,
+    _cmykValidate,
+    _cmykaValidate
 
   },
 
