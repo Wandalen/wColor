@@ -1,4 +1,4 @@
-(function _ColorHwb_s_()
+(function _ColorHwba_s_()
 {
 
 'use strict';
@@ -10,12 +10,12 @@
 
 /**
  * @summary Collection of cross-platform routines to operate colors conveniently.
- * @namespace wTools.color.hwb
+ * @namespace wTools.color.hwba
  * @module Tools/mid/Color
 */
 
 let _ = _global_.wTools;
-let Self = _.color.hwb = _.color.hwb || Object.create( null );
+let Self = _.color.hwba = _.color.hwba || Object.create( null );
 
 // --
 // implement
@@ -24,27 +24,22 @@ let Self = _.color.hwb = _.color.hwb || Object.create( null );
 function _strToRgb( dst, src )
 {
   /*
-    hwb(H, W, B)
+    hwba(H, W, B, A)
   */
 
   _.assert( arguments.length === 2, 'Expects 2 arguments' );
   _.assert( _.strIs( src ) );
   _.assert( dst === null || _.vectorIs( dst ) );
 
-  let hwbColors = _.color.hwb._formatStringParse( src );
+  let hwbColors = _.color.hwba._formatStringParse( src );
 
   _.assert
   (
     hwbColors.length === 3 || hwbColors.length === 4,
     `{-src-} string must contain exactly 3 or 4 numbers, but got ${hwbColors.length}`
   );
-  _.assert
-  (
-    hwbColors[ 3 ] === undefined || hwbColors[ 3 ] === 100,
-    `alpha channel must be 100, but got ${hwbColors[ 3 ]}`
-  );
 
-  return _.color.hwb._longToRgb( dst, hwbColors );
+  return _.color.hwba._longToRgb( dst, hwbColors );
 
 }
 
@@ -53,17 +48,17 @@ function _strToRgb( dst, src )
 function _longToRgb( dst, src )
 {
   _.assert( src.length === 3 || src.length === 4, `{-src-} length must be 4 or 5, but got : ${src.length}` );
-  _.assert( src[ 3 ] === undefined || src[ 3 ] === 100, `alpha channel must be 100, but got : ${src[ 3 ]}` );
 
-  if( !_.color.hwb._validate( src ) )
+  if( !_.color.hwba._validate( src ) )
   return null;
 
   let r, g, b;
+  let a = 1;
 
   if( dst === null || _.longIs( dst ) )
   {
-    dst = dst || new Array( 3 );
-    _.assert( dst.length === 3, `{-dst-} container length must be 3, but got : ${dst.length}` );
+    dst = dst || new Array( 4 );
+    _.assert( dst.length === 4, `{-dst-} container length must be 4, but got : ${dst.length}` );
 
     convert( src );
 
@@ -79,19 +74,21 @@ function _longToRgb( dst, src )
     dst[ 0 ] = r;
     dst[ 1 ] = g;
     dst[ 2 ] = b;
+    dst[ 3 ] = a;
 
   }
   else if( _.vadIs( dst ) )
   {
     /* optional dependency */
 
-    _.assert( dst.length === 3, `{-dst-} container length must be 3, but got : ${dst.length}` );
+    _.assert( dst.length === 4, `{-dst-} container length must be 4, but got : ${dst.length}` );
 
     convert( src );
 
     dst.eSet( 0, r );
     dst.eSet( 1, g );
     dst.eSet( 2, b );
+    dst.eSet( 3, a );
   }
   else _.assert( 0, '{-dts-} container must be of type Vector' );
 
@@ -104,6 +101,7 @@ function _longToRgb( dst, src )
     let h = src[ 0 ] / 360;
     let wh = src[ 1 ] / 100;
     let bl = src[ 2 ] / 100;
+    let alpha = src[ 3 ];
     let ratio = wh + bl;
     let i, v, f, n;
 
@@ -137,6 +135,9 @@ function _longToRgb( dst, src )
       case 5 : r = v; g = wh; b = n; break;
       default : break;
     }
+
+    if( alpha !== undefined )
+    a = alpha / 100;
   }
 
 
@@ -151,6 +152,7 @@ function _validate ( src )
     !_.cinterval.has( [ 0, 360 ], src[ 0 ] )
     || !_.cinterval.has( [ 0, 100 ], src[ 1 ] )
     || !_.cinterval.has( [ 0, 100 ], src[ 2 ] )
+    || src[ 3 ] !== undefined && !_.cinterval.has( [ 0, 100 ], src[ 3 ] )
   )
   return false;
 
@@ -182,7 +184,7 @@ let Extension =
 
 }
 
-_.mapSupplement( _.color.hwb, Extension );
+_.mapSupplement( _.color.hwba, Extension );
 
 // --
 // export
