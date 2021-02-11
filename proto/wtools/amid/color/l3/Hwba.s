@@ -21,7 +21,7 @@ let Self = _.color.hwba = _.color.hwba || Object.create( null );
 // implement
 // --
 
-function _strToRgb( dst, src )
+function _strToRgba( dst, src )
 {
   /*
     hwba(H, W, B, A)
@@ -39,13 +39,13 @@ function _strToRgb( dst, src )
     `{-src-} string must contain exactly 3 or 4 numbers, but got ${hwbColors.length}`
   );
 
-  return _.color.hwba._longToRgb( dst, hwbColors );
+  return _.color.hwba._longToRgba( dst, hwbColors );
 
 }
 
 //
 
-function _longToRgb( dst, src )
+function _longToRgba( dst, src )
 {
   _.assert( src.length === 3 || src.length === 4, `{-src-} length must be 4 or 5, but got : ${src.length}` );
 
@@ -176,8 +176,8 @@ let Extension =
 
   // to rgb/a
 
-  _strToRgb,
-  _longToRgb,
+  _strToRgba,
+  _longToRgba,
   _validate,
 
   _formatStringParse

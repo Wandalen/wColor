@@ -615,7 +615,7 @@ function _formatStringParse( test )
 let Self =
 {
 
-  name : 'Tools/mid/Cmyka',
+  name : 'Tools/mid/Hwb',
   silencing : 1,
 
   tests :
