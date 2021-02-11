@@ -1875,7 +1875,6 @@ function _longToRgbaWithDst( test )
 
 _longToRgbaWithDst.accuracy = 1e-2;
 
-//
 
 // --
 // declare
