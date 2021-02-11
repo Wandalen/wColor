@@ -768,7 +768,7 @@ function rgbaHtmlFrom( test )
 
 //
 
-function _strToRgb( test )
+function _cmykStrToRgb( test )
 {
 
   test.open( 'basic colors' );
@@ -885,11 +885,11 @@ function _strToRgb( test )
 
 }
 
-_strToRgb.accuracy = 1e-2;
+_cmykStrToRgb.accuracy = 1e-2;
 
 //
 
-function _strToRgba( test )
+function _cmykaStrToRgba( test )
 {
 
   test.open( 'basic colors' );
@@ -1006,11 +1006,11 @@ function _strToRgba( test )
 
 }
 
-_strToRgba.accuracy = 1e-2;
+_cmykaStrToRgba.accuracy = 1e-2;
 
 //
 
-function _strToRgbWithDst( test )
+function _cmykStrToRgbWithDst( test )
 {
 
   test.open( 'basic colors' );
@@ -1166,11 +1166,11 @@ function _strToRgbWithDst( test )
 
 }
 
-_strToRgbWithDst.accuracy = 1e-2;
+_cmykStrToRgbWithDst.accuracy = 1e-2;
 
 //
 
-function _strToRgbaWithDst( test )
+function _cmykaStrToRgbaWithDst( test )
 {
 
   test.open( 'basic colors' );
@@ -1316,11 +1316,11 @@ function _strToRgbaWithDst( test )
 
 }
 
-_strToRgbaWithDst.accuracy = 1e-2;
+_cmykaStrToRgbaWithDst.accuracy = 1e-2;
 
 //
 
-function _longToRgb( test )
+function _cmykLongToRgb( test )
 {
 
   test.open( 'basic colors' );
@@ -1437,10 +1437,10 @@ function _longToRgb( test )
 
 }
 
-_longToRgb.accuracy = 1e-2;
+_cmykLongToRgb.accuracy = 1e-2;
 
 //
-function _longToRgba( test )
+function _cmykaLongToRgba( test )
 {
 
   test.open( 'basic colors' );
@@ -1557,11 +1557,11 @@ function _longToRgba( test )
 
 }
 
-_longToRgba.accuracy = 1e-2;
+_cmykaLongToRgba.accuracy = 1e-2;
 
 //
 
-function _longToRgbWithDst( test )
+function _cmykLongToRgbWithDst( test )
 {
 
   test.open( 'basic colors' );
@@ -1717,11 +1717,11 @@ function _longToRgbWithDst( test )
 
 }
 
-_longToRgbWithDst.accuracy = 1e-2;
+_cmykLongToRgbWithDst.accuracy = 1e-2;
 
 //
 
-function _longToRgbaWithDst( test )
+function _cmykaLongToRgbaWithDst( test )
 {
 
   test.open( 'basic colors' );
@@ -1873,7 +1873,7 @@ function _longToRgbaWithDst( test )
 
 }
 
-_longToRgbaWithDst.accuracy = 1e-2;
+_cmykaLongToRgbaWithDst.accuracy = 1e-2;
 
 
 // --
@@ -1902,14 +1902,14 @@ let Self =
 
     // to rgb/a
 
-    _strToRgb,
-    _strToRgba,
-    _strToRgbWithDst,
-    _strToRgbaWithDst,
-    _longToRgb,
-    _longToRgba,
-    _longToRgbWithDst,
-    _longToRgbaWithDst,
+    _cmykStrToRgb,
+    _cmykaStrToRgba,
+    _cmykStrToRgbWithDst,
+    _cmykaStrToRgbaWithDst,
+    _cmykLongToRgb,
+    _cmykaLongToRgba,
+    _cmykLongToRgbWithDst,
+    _cmykaLongToRgbaWithDst,
 
   },
 
