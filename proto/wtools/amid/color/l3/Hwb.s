@@ -1,4 +1,4 @@
-(function _ColorCmyk_s_()
+(function _ColorHwb_s_()
 {
 
 'use strict';
