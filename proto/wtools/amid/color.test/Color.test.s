@@ -768,7 +768,7 @@ function rgbaHtmlFrom( test )
 
 //
 
-function _cmykStrToRgb( test )
+function _strToRgb( test )
 {
 
   test.open( 'basic colors' );
@@ -885,11 +885,11 @@ function _cmykStrToRgb( test )
 
 }
 
-_cmykStrToRgb.accuracy = 1e-2;
+_strToRgb.accuracy = 1e-2;
 
 //
 
-function _cmykaStrToRgba( test )
+function _strToRgba( test )
 {
 
   test.open( 'basic colors' );
@@ -1006,11 +1006,11 @@ function _cmykaStrToRgba( test )
 
 }
 
-_cmykaStrToRgba.accuracy = 1e-2;
+_strToRgba.accuracy = 1e-2;
 
 //
 
-function _cmykStrToRgbWithDst( test )
+function _strToRgbWithDst( test )
 {
 
   test.open( 'basic colors' );
@@ -1166,11 +1166,11 @@ function _cmykStrToRgbWithDst( test )
 
 }
 
-_cmykStrToRgbWithDst.accuracy = 1e-2;
+_strToRgbWithDst.accuracy = 1e-2;
 
 //
 
-function _cmykaStrToRgbaWithDst( test )
+function _strToRgbaWithDst( test )
 {
 
   test.open( 'basic colors' );
@@ -1316,11 +1316,11 @@ function _cmykaStrToRgbaWithDst( test )
 
 }
 
-_cmykaStrToRgbaWithDst.accuracy = 1e-2;
+_strToRgbaWithDst.accuracy = 1e-2;
 
 //
 
-function _cmykLongToRgb( test )
+function _longToRgb( test )
 {
 
   test.open( 'basic colors' );
@@ -1437,10 +1437,10 @@ function _cmykLongToRgb( test )
 
 }
 
-_cmykLongToRgb.accuracy = 1e-2;
+_longToRgb.accuracy = 1e-2;
 
 //
-function _cmykaLongToRgba( test )
+function _longToRgba( test )
 {
 
   test.open( 'basic colors' );
@@ -1557,11 +1557,11 @@ function _cmykaLongToRgba( test )
 
 }
 
-_cmykaLongToRgba.accuracy = 1e-2;
+_longToRgba.accuracy = 1e-2;
 
 //
 
-function _cmykLongToRgbWithDst( test )
+function _longToRgbWithDst( test )
 {
 
   test.open( 'basic colors' );
@@ -1717,11 +1717,11 @@ function _cmykLongToRgbWithDst( test )
 
 }
 
-_cmykLongToRgbWithDst.accuracy = 1e-2;
+_longToRgbWithDst.accuracy = 1e-2;
 
 //
 
-function _cmykaLongToRgbaWithDst( test )
+function _longToRgbaWithDst( test )
 {
 
   test.open( 'basic colors' );
@@ -1873,207 +1873,9 @@ function _cmykaLongToRgbaWithDst( test )
 
 }
 
-_cmykaLongToRgbaWithDst.accuracy = 1e-2;
+_longToRgbaWithDst.accuracy = 1e-2;
 
 //
-
-function _cmykValidate( test )
-{
-
-  test.case = 'normal';
-  var src = [ 11, 16, 75, 40 ];
-  var expected = true;
-  var got = _.color.cmyk._validate( src );
-  test.identical( got, expected );
-
-  test.case = 'first arg > 100';
-  var src = [ 111, 16, 75, 4 ];
-  var expected = false;
-  var got = _.color.cmyk._validate( src );
-  test.identical( got, expected );
-
-  test.case = 'first arg < 0';
-  var src = [ -111, 16, 75, 4 ];
-  var expected = false;
-  var got = _.color.cmyk._validate( src );
-  test.identical( got, expected );
-
-  test.case = 'second arg > 100';
-  var src = [ 11, 160, 75, 4 ];
-  var expected = false;
-  var got = _.color.cmyk._validate( src );
-  test.identical( got, expected );
-
-  test.case = 'second arg < 0';
-  var src = [ 11, -160, 75, 4 ];
-  var expected = false;
-  var got = _.color.cmyk._validate( src );
-  test.identical( got, expected );
-
-  test.case = 'third arg > 100';
-  var src = [ 11, 16, 750, 4 ];
-  var expected = false;
-  var got = _.color.cmyk._validate( src );
-  test.identical( got, expected );
-
-  test.case = 'third arg < 0';
-  var src = [ 11, 16, -750, 4 ];
-  var expected = false;
-  var got = _.color.cmyk._validate( src );
-  test.identical( got, expected );
-
-  test.case = 'fourth arg > 100';
-  var src = [ 11, 16, 75, 400 ];
-  var expected = false;
-  var got = _.color.cmyk._validate( src );
-  test.identical( got, expected );
-
-  test.case = 'fourth arg < 0';
-  var src = [ 11, 16, 75, -400 ];
-  var expected = false;
-  var got = _.color.cmyk._validate( src );
-  test.identical( got, expected );
-
-}
-
-//
-
-function _cmykaValidate( test )
-{
-
-  test.case = 'normal 4 elements';
-  var src = [ 11, 16, 75, 40 ];
-  var expected = true;
-  var got = _.color.cmyka._validate( src );
-  test.identical( got, expected );
-
-  test.case = 'normal 5 elements';
-  var src = [ 11, 16, 75, 40, 54 ];
-  var expected = true;
-  var got = _.color.cmyka._validate( src );
-  test.identical( got, expected );
-
-  test.case = 'first arg > 100';
-  var src = [ 111, 16, 75, 4 ];
-  var expected = false;
-  var got = _.color.cmyka._validate( src );
-  test.identical( got, expected );
-
-  test.case = 'first arg < 0';
-  var src = [ -111, 16, 75, 4 ];
-  var expected = false;
-  var got = _.color.cmyka._validate( src );
-  test.identical( got, expected );
-
-  test.case = 'second arg > 100';
-  var src = [ 11, 160, 75, 4 ];
-  var expected = false;
-  var got = _.color.cmyka._validate( src );
-  test.identical( got, expected );
-
-  test.case = 'second arg < 0';
-  var src = [ 11, -160, 75, 4 ];
-  var expected = false;
-  var got = _.color.cmyka._validate( src );
-  test.identical( got, expected );
-
-  test.case = 'third arg > 100';
-  var src = [ 11, 16, 750, 4 ];
-  var expected = false;
-  var got = _.color.cmyka._validate( src );
-  test.identical( got, expected );
-
-  test.case = 'third arg < 0';
-  var src = [ 11, 16, -750, 4 ];
-  var expected = false;
-  var got = _.color.cmyka._validate( src );
-  test.identical( got, expected );
-
-  test.case = 'fourth arg > 100';
-  var src = [ 11, 16, 75, 400 ];
-  var expected = false;
-  var got = _.color.cmyka._validate( src );
-  test.identical( got, expected );
-
-  test.case = 'fourth arg < 0';
-  var src = [ 11, 16, 75, -400 ];
-  var expected = false;
-  var got = _.color.cmyka._validate( src );
-  test.identical( got, expected );
-
-  test.case = 'fifth arg > 100';
-  var src = [ 11, 16, 75, 40, 104 ];
-  var expected = false;
-  var got = _.color.cmyka._validate( src );
-  test.identical( got, expected );
-
-  test.case = 'fifth arg < 0';
-  var src = [ 11, 16, 75, 40, -1 ];
-  var expected = false;
-  var got = _.color.cmyka._validate( src );
-  test.identical( got, expected );
-
-}
-
-//
-
-function _cmykFormatStringParse( test )
-{
-  test.case = 'normal 5 elems';
-  var src = 'cmyk(0%,0%,0%,0%,100%)';
-  var expected = [ 0, 0, 0, 0, 100 ];
-  var got = _.color.cmyk._formatStringParse( src );
-  test.identical( got, expected );
-
-  test.case = 'normal 4 elems';
-  var src = 'cmyk(0%,0%,0%,0%)';
-  var expected = [ 0, 0, 0, 0 ];
-  var got = _.color.cmyk._formatStringParse( src );
-  test.identical( got, expected );
-
-  test.case = 'wrong format';
-  var src = 'cmyka(0%,0%,0%,0%,100%)';
-  test.shouldThrowErrorSync( () => _.color.cmyk._formatStringParse( src ) );
-
-  test.case = 'redundant channel';
-  var src = 'cmyk(0%,0%,0%,0%,100%,105%)';
-  test.shouldThrowErrorSync( () => _.color.cmyk._formatStringParse( src ) );
-
-  test.case = 'without \'%\'';
-  var src = 'cmyk(0,0%,0%,0%,100%)';
-  test.shouldThrowErrorSync( () => _.color.cmyk._formatStringParse( src ) );
-
-  test.case = 'more than 3 digits \'%\'';
-  var src = 'cmyk(0,0%,0%,0%,1000%)';
-  test.shouldThrowErrorSync( () => _.color.cmyk._formatStringParse( src ) );
-}
-
-//
-
-function _cmykaFormatStringParse( test )
-{
-  test.case = 'normal';
-  var src = 'cmyka(0%,0%,0%,0%,100%)';
-  var expected = [ 0, 0, 0, 0, 100 ];
-  var got = _.color.cmyka._formatStringParse( src );
-  test.identical( got, expected );
-
-  test.case = 'wrong format';
-  var src = 'cmyk(0%,0%,0%,0%,100%)';
-  test.shouldThrowErrorSync( () => _.color.cmyka._formatStringParse( src ) );
-
-  test.case = 'redundant channel';
-  var src = 'cmyka(0%,0%,0%,0%,100%,105%)';
-  test.shouldThrowErrorSync( () => _.color.cmyka._formatStringParse( src ) );
-
-  test.case = 'without \'%\'';
-  var src = 'cmyka(0,0%,0%,0%,100%)';
-  test.shouldThrowErrorSync( () => _.color.cmyka._formatStringParse( src ) );
-
-  test.case = 'more than 3 digits \'%\'';
-  var src = 'cmyka(0,0%,0%,0%,1000%)';
-  test.shouldThrowErrorSync( () => _.color.cmyka._formatStringParse( src ) );
-}
 
 // --
 // declare
@@ -2101,18 +1903,14 @@ let Self =
 
     // to rgb/a
 
-    _cmykStrToRgb,
-    _cmykaStrToRgba,
-    _cmykStrToRgbWithDst,
-    _cmykaStrToRgbaWithDst,
-    _cmykLongToRgb,
-    _cmykaLongToRgba,
-    _cmykLongToRgbWithDst,
-    _cmykaLongToRgbaWithDst,
-    _cmykValidate,
-    _cmykaValidate,
-    _cmykFormatStringParse,
-    _cmykaFormatStringParse
+    _strToRgb,
+    _strToRgba,
+    _strToRgbWithDst,
+    _strToRgbaWithDst,
+    _longToRgb,
+    _longToRgba,
+    _longToRgbWithDst,
+    _longToRgbaWithDst,
 
   },
 
