@@ -2015,6 +2015,65 @@ function _cmykaValidate( test )
 
 }
 
+//
+
+function _cmykFormatStringParse( test )
+{
+  test.case = 'normal 5 elems';
+  var src = 'cmyk(0%,0%,0%,0%,100%)';
+  var expected = [ 0, 0, 0, 0, 100 ];
+  var got = _.color.cmyk._formatStringParse( src );
+  test.identical( got, expected );
+
+  test.case = 'normal 4 elems';
+  var src = 'cmyk(0%,0%,0%,0%)';
+  var expected = [ 0, 0, 0, 0 ];
+  var got = _.color.cmyk._formatStringParse( src );
+  test.identical( got, expected );
+
+  test.case = 'wrong format';
+  var src = 'cmyka(0%,0%,0%,0%,100%)';
+  test.shouldThrowErrorSync( () => _.color.cmyk._formatStringParse( src ) );
+
+  test.case = 'redundant channel';
+  var src = 'cmyk(0%,0%,0%,0%,100%,105%)';
+  test.shouldThrowErrorSync( () => _.color.cmyk._formatStringParse( src ) );
+
+  test.case = 'without \'%\'';
+  var src = 'cmyk(0,0%,0%,0%,100%)';
+  test.shouldThrowErrorSync( () => _.color.cmyk._formatStringParse( src ) );
+
+  test.case = 'more than 3 digits \'%\'';
+  var src = 'cmyk(0,0%,0%,0%,1000%)';
+  test.shouldThrowErrorSync( () => _.color.cmyk._formatStringParse( src ) );
+}
+
+//
+
+function _cmykaFormatStringParse( test )
+{
+  test.case = 'normal';
+  var src = 'cmyka(0%,0%,0%,0%,100%)';
+  var expected = [ 0, 0, 0, 0, 100 ];
+  var got = _.color.cmyka._formatStringParse( src );
+  test.identical( got, expected );
+
+  test.case = 'wrong format';
+  var src = 'cmyk(0%,0%,0%,0%,100%)';
+  test.shouldThrowErrorSync( () => _.color.cmyka._formatStringParse( src ) );
+
+  test.case = 'redundant channel';
+  var src = 'cmyka(0%,0%,0%,0%,100%,105%)';
+  test.shouldThrowErrorSync( () => _.color.cmyka._formatStringParse( src ) );
+
+  test.case = 'without \'%\'';
+  var src = 'cmyka(0,0%,0%,0%,100%)';
+  test.shouldThrowErrorSync( () => _.color.cmyka._formatStringParse( src ) );
+
+  test.case = 'more than 3 digits \'%\'';
+  var src = 'cmyka(0,0%,0%,0%,1000%)';
+  test.shouldThrowErrorSync( () => _.color.cmyka._formatStringParse( src ) );
+}
 
 // --
 // declare
@@ -2051,7 +2110,9 @@ let Self =
     _cmykLongToRgbWithDst,
     _cmykaLongToRgbaWithDst,
     _cmykValidate,
-    _cmykaValidate
+    _cmykaValidate,
+    _cmykFormatStringParse,
+    _cmykaFormatStringParse
 
   },
 
