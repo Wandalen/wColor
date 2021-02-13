@@ -28,9 +28,6 @@ about :
   npm.scripts :
     test : 'wtest .run proto/**'
     docgen : 'wdocgen .build proto'
-  npm.directories :
-    doc : 'doc'
-    main : 'proto/wtools/amid/color/Color.s'
 
 path :
 

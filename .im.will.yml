@@ -59,7 +59,7 @@ path :
       content : prime
 
   entry.proto.no.tests :
-    path : proto/wtools/amid/color/Color.s
+    path : proto/wtools/amid/l1/color/entry/ColorBasic.s
     criterion :
       tests : 'no.tests'
   entry.proto.only.tests :
@@ -71,7 +71,7 @@ path :
   # npm.files : proto
 
   entry.out.raw.debug :
-    path : '{path::out.*=1}/source/wtools/amid/color/Color.s'
+    path : '{path::out.*=1}/source/wtools/amid/l1/color/entry/ColorBasic.s'
     criterion :
       debug : [ debug, release ]
       raw : raw

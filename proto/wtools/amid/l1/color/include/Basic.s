@@ -7,7 +7,7 @@
 
 if( typeof module !== 'undefined' )
 {
-  let _ = require( '../../../../wtools/Tools.s' );
+  let _ = require( '../../../../../wtools/Tools.s' );
   module[ 'exports' ] = _global_.wTools;
 }
 
