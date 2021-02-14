@@ -9,7 +9,6 @@
  * @module Tools/mid/Color
 */
 
-debugger;
 if( typeof module !== 'undefined' )
 {
   let _ = require( '../include/Mid.s' );
