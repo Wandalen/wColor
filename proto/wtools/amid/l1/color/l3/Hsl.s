@@ -24,7 +24,7 @@ let Self = _.color.hsl = _.color.hsl || Object.create( null );
 function _strToRgb( dst, src )
 {
   /*
-    hwb(H, S, L)
+    hsl(H, S, L)
   */
 
   _.assert( arguments.length === 2, 'Expects 2 arguments' );
