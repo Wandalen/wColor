@@ -98,44 +98,8 @@ function _longToRgba( dst, src )
 
   function convert( src )
   {
-    let h = src[ 0 ] / 360;
-    let wh = src[ 1 ] / 100;
-    let bl = src[ 2 ] / 100;
+    [ r, g, b ] = _.color.hslToRgb( src );
     let alpha = src[ 3 ];
-    let ratio = wh + bl;
-    let i, v, f, n;
-
-    /* wh + bl cannot be > 1 */
-    if( ratio > 1 )
-    {
-      wh /= ratio;
-      bl /= ratio;
-    }
-
-    i = Math.floor( 6 * h );
-    v = 1 - bl;
-    f = 6 * h - i;
-
-    if( ( i & 0x01 ) !== 0 )
-    {
-      f = 1 - f;
-    }
-
-    /* linear interpolation */
-    n = wh + f * ( v - wh );
-
-    switch( i )
-    {
-      case 6 :
-      case 0 : r = v; g = n; b = wh; break;
-      case 1 : r = n; g = v; b = wh; break;
-      case 2 : r = wh; g = v; b = n; break;
-      case 3 : r = wh; g = n; b = v; break;
-      case 4 : r = n; g = wh; b = v; break;
-      case 5 : r = v; g = wh; b = n; break;
-      default : break;
-    }
-
     if( alpha !== undefined )
     a = alpha / 100;
   }
