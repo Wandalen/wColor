@@ -1,4 +1,4 @@
-( function _Hwb_test_s_( )
+( function _Hsl_test_s_( )
 {
 
 'use strict';

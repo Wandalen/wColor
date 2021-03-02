@@ -98,7 +98,10 @@ function _longToRgba( dst, src )
 
   function convert( src )
   {
-    [ r, g, b ] = _.color.hslToRgb( src );
+    let h = src[ 0 ] / 360;
+    let s = src[ 1 ] / 100;
+    let l = src[ 2 ] / 100;
+    [ r, g, b ] = _.color.hslToRgb([ h, s, l ]);
     let alpha = src[ 3 ];
     if( alpha !== undefined )
     a = alpha / 100;
