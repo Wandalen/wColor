@@ -1,21 +1,21 @@
-(function _ColorHwb_s_()
+(function _ColorHsl_s_()
 {
 
 'use strict';
 
 /**
- * Collection of cross-platform routines to convert from hwb into rgb.
+ * Collection of cross-platform routines to convert from hsl into rgb.
  * @module Tools/mid/Color
 */
 
 /**
  * @summary Collection of cross-platform routines to operate colors conveniently.
- * @namespace wTools.color.hwb
+ * @namespace wTools.color.hsl
  * @module Tools/mid/Color
 */
 
 let _ = _global_.wTools;
-let Self = _.color.hwb = _.color.hwb || Object.create( null );
+let Self = _.color.hsl = _.color.hsl || Object.create( null );
 
 // --
 // implement
@@ -24,27 +24,27 @@ let Self = _.color.hwb = _.color.hwb || Object.create( null );
 function _strToRgb( dst, src )
 {
   /*
-    hwb(H, W, B)
+    hwb(H, S, L)
   */
 
   _.assert( arguments.length === 2, 'Expects 2 arguments' );
   _.assert( _.strIs( src ) );
   _.assert( dst === null || _.vectorIs( dst ) );
 
-  let hwbColors = _.color.hwb._formatStringParse( src );
+  let hslColors = _.color.hwb._formatStringParse( src );
 
   _.assert
   (
-    hwbColors.length === 3 || hwbColors.length === 4,
-    `{-src-} string must contain exactly 3 or 4 numbers, but got ${hwbColors.length}`
+    hslColors.length === 3 || hslColors.length === 4,
+    `{-src-} string must contain exactly 3 or 4 numbers, but got ${hslColors.length}`
   );
   _.assert
   (
-    hwbColors[ 3 ] === undefined || hwbColors[ 3 ] === 100,
-    `alpha channel must be 100, but got ${hwbColors[ 3 ]}`
+    hslColors[ 3 ] === undefined || hslColors[ 3 ] === 100,
+    `alpha channel must be 100, but got ${hslColors[ 3 ]}`
   );
 
-  return _.color.hwb._longToRgb( dst, hwbColors );
+  return _.color.hsl._longToRgb( dst, hslColors );
 
 }
 
@@ -55,7 +55,7 @@ function _longToRgb( dst, src )
   _.assert( src.length === 3 || src.length === 4, `{-src-} length must be 3 or 4, but got : ${src.length}` );
   _.assert( src[ 3 ] === undefined || src[ 3 ] === 100, `alpha channel must be 100, but got : ${src[ 3 ]}` );
 
-  if( !_.color.hwb._validate( src ) )
+  if( !_.color.hsl._validate( src ) )
   return null;
 
   let r, g, b;
@@ -101,42 +101,44 @@ function _longToRgb( dst, src )
 
   function convert( src )
   {
-    let h = src[ 0 ] / 360;
-    let wh = src[ 1 ] / 100;
-    let bl = src[ 2 ] / 100;
-    let ratio = wh + bl;
-    let i, v, f, n;
+    [ r, g, b ] = _.color.hslToRgb( src );
 
-    /* wh + bl cannot be > 1 */
-    if( ratio > 1 )
-    {
-      wh /= ratio;
-      bl /= ratio;
-    }
+    // let h = src[ 0 ] / 360;
+    // let wh = src[ 1 ] / 100;
+    // let bl = src[ 2 ] / 100;
+    // let ratio = wh + bl;
+    // let i, v, f, n;
 
-    i = Math.floor( 6 * h );
-    v = 1 - bl;
-    f = 6 * h - i;
+    // /* wh + bl cannot be > 1 */
+    // if( ratio > 1 )
+    // {
+    //   wh /= ratio;
+    //   bl /= ratio;
+    // }
 
-    if( ( i & 0x01 ) !== 0 )
-    {
-      f = 1 - f;
-    }
+    // i = Math.floor( 6 * h );
+    // v = 1 - bl;
+    // f = 6 * h - i;
 
-    /* linear interpolation */
-    n = wh + f * ( v - wh );
+    // if( ( i & 0x01 ) !== 0 )
+    // {
+    //   f = 1 - f;
+    // }
 
-    switch( i )
-    {
-      case 6 :
-      case 0 : r = v; g = n; b = wh; break;
-      case 1 : r = n; g = v; b = wh; break;
-      case 2 : r = wh; g = v; b = n; break;
-      case 3 : r = wh; g = n; b = v; break;
-      case 4 : r = n; g = wh; b = v; break;
-      case 5 : r = v; g = wh; b = n; break;
-      default : break;
-    }
+    // /* linear interpolation */
+    // n = wh + f * ( v - wh );
+
+    // switch( i )
+    // {
+    //   case 6 :
+    //   case 0 : r = v; g = n; b = wh; break;
+    //   case 1 : r = n; g = v; b = wh; break;
+    //   case 2 : r = wh; g = v; b = n; break;
+    //   case 3 : r = wh; g = n; b = v; break;
+    //   case 4 : r = n; g = wh; b = v; break;
+    //   case 5 : r = v; g = wh; b = n; break;
+    //   default : break;
+    // }
   }
 
 
@@ -161,7 +163,7 @@ function _validate ( src )
 
 function _formatStringParse( src )
 {
-  _.assert( /^hwb\(\d{1,3}, ?\d{1,3}%, ?\d{1,3}%(, ?\d{1,3}%)?\)$/g.test( src ), 'Wrong source string pattern' );
+  _.assert( /^hsl\(\d{1,3}, ?\d{1,3}%, ?\d{1,3}%(, ?\d{1,3}%)?\)$/g.test( src ), 'Wrong source string pattern' );
   return src.match( /\d+(\.\d+)?/g ).map( ( el ) => +el );
 }
 
