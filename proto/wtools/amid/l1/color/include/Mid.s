@@ -13,6 +13,8 @@ if( typeof module !== 'undefined' )
   require( '../l3/Cmyka.s' );
   require( '../l3/Hwb.s' );
   require( '../l3/Hwba.s' );
+  require( '../l3/Hsl.s' );
+  require( '../l3/Hsla.s' );
   module[ 'exports' ] = _global_.wTools;
 }
 
