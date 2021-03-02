@@ -184,7 +184,7 @@ let Extension =
 
 }
 
-_.mapSupplement( _.color.hwb, Extension );
+_.mapSupplement( _.color.hsl, Extension );
 
 // --
 // export
