@@ -31,7 +31,7 @@ function _strToRgb( dst, src )
   _.assert( _.strIs( src ) );
   _.assert( dst === null || _.vectorIs( dst ) );
 
-  let hslColors = _.color.hwb._formatStringParse( src );
+  let hslColors = _.color.hsl._formatStringParse( src );
 
   _.assert
   (
@@ -101,7 +101,10 @@ function _longToRgb( dst, src )
 
   function convert( src )
   {
-    [ r, g, b ] = _.color.hslToRgb( src );
+    let h = src[ 0 ] / 360;
+    let s = src[ 1 ] / 100;
+    let l = src[ 2 ] / 100;
+    [ r, g, b ] = _.color.hslToRgb([ h, s, l ]);
   }
 
 
