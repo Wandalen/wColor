@@ -600,7 +600,7 @@ function _formatStringParse( test )
 let Self =
 {
 
-  name : 'Tools/mid/Hsl',
+  name : 'Tools/mid/Hsla',
   silencing : 1,
 
   tests :
