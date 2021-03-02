@@ -5,8 +5,8 @@
 
 if( typeof module !== 'undefined' )
 {
-  let _ = require( '../../../wtools/Tools.s' );
-  require( '../color/entry/ColorBasic.s' );
+  let _ = require( '../../../Tools.s' );
+  require( '../../l1/color/entry/ColorBasic.s' );
   _.include( 'wTesting' );
   _.include( 'wMathVector' );
 }
