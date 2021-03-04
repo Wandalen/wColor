@@ -39,6 +39,16 @@ function _strToRgba( dst, src )
     `{-src-} string must contain exactly 3 or 4 numbers, but got ${hslaColors.length}`
   );
 
+  if( !_.color.hsl._validate( hslaColors ) )
+  return null;
+
+  /* normalize ranges */
+  hslaColors[ 0 ] = hslaColors[ 0 ] / 360;
+  hslaColors[ 1 ] = hslaColors[ 1 ] / 100;
+  hslaColors[ 2 ] = hslaColors[ 2 ] / 100;
+  if( hslaColors[ 3 ] )
+  hslaColors[ 3 ] = hslaColors[ 3 ] / 100;
+
   return _.color.hsla._longToRgba( dst, hslaColors );
 
 }
@@ -49,7 +59,7 @@ function _longToRgba( dst, src )
 {
   _.assert( src.length === 3 || src.length === 4, `{-src-} length must be 3 or 4, but got : ${src.length}` );
 
-  if( !_.color.hwba._validate( src ) )
+  if( !_.color._validateNormalized( src ) )
   return null;
 
   let r, g, b;
@@ -98,13 +108,10 @@ function _longToRgba( dst, src )
 
   function convert( src )
   {
-    let h = src[ 0 ] / 360;
-    let s = src[ 1 ] / 100;
-    let l = src[ 2 ] / 100;
-    [ r, g, b ] = _.color.hslToRgb([ h, s, l ]);
-    let alpha = src[ 3 ];
-    if( alpha !== undefined )
-    a = alpha / 100;
+    [ r, g, b ] = _.color.hslToRgb([ src[ 0 ], src[ 1 ], src[ 2 ] ]);
+    if( src[ 3 ] !== undefined )
+    a = src[ 3 ];
+
   }
 
 
