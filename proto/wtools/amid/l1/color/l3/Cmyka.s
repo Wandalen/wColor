@@ -24,7 +24,7 @@ let Self = _.color.cmyka = _.color.cmyka || Object.create( null );
 function _strToRgba( dst, src )
 {
   /*
-    cmyk(C, M, Y, K)
+    cmyka(C, M, Y, K, A)
   */
 
   _.assert( arguments.length === 2, 'Expects 2 arguments' );
@@ -38,6 +38,17 @@ function _strToRgba( dst, src )
     `{-src-} string must contain exactly 4 or 5 numbers, but got ${cmykColors.length}`
   );
 
+  if( !_.color.cmyka._validate( cmykColors ) )
+  return null;
+
+  /* normalize ranges */
+  cmykColors[ 0 ] = cmykColors[ 0 ] / 100;
+  cmykColors[ 1 ] = cmykColors[ 1 ] / 100;
+  cmykColors[ 2 ] = cmykColors[ 2 ] / 100;
+  cmykColors[ 3 ] = cmykColors[ 3 ] / 100;
+  if( cmykColors[ 4 ] )
+  cmykColors[ 4 ] = cmykColors[ 4 ] / 100;
+
   return _.color.cmyka._longToRgba( dst, cmykColors );
 
 }
@@ -49,7 +60,7 @@ function _longToRgba( dst, src )
 
   _.assert( src.length === 4 || src.length === 5, `{-src-} length must be 4 or 5, but got : ${src.length}` );
 
-  if( !_.color.cmyka._validate( src ) )
+  if( !_.color._validateNormalized( src ) )
   return null;
 
   let r, g, b;
@@ -106,11 +117,11 @@ function _longToRgba( dst, src )
 
   function convert( src )
   {
-    r = ( 1 - src[ 0 ] / 100 ) * ( 1 - src[ 3 ] / 100 );
-    g = ( 1 - src[ 1 ] / 100 ) * ( 1 - src[ 3 ] / 100 );
-    b = ( 1 - src[ 2 ] / 100 ) * ( 1 - src[ 3 ] / 100 );
+    r = ( 1 - src[ 0 ] ) * ( 1 - src[ 3 ] );
+    g = ( 1 - src[ 1 ] ) * ( 1 - src[ 3 ] );
+    b = ( 1 - src[ 2 ] ) * ( 1 - src[ 3 ] );
     if( src[ 4 ] !== undefined )
-    a = src[ 4 ] / 100;
+    a = src[ 4 ];
   }
 
 }

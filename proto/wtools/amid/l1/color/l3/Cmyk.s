@@ -44,6 +44,17 @@ function _strToRgb( dst, src )
     `alpha channel must be 100, but got ${cmykColors[ 4 ]}`
   );
 
+  if( !_.color.cmyk._validate( cmykColors ) )
+  return null;
+
+  /* normalize ranges */
+  cmykColors[ 0 ] = cmykColors[ 0 ] / 100;
+  cmykColors[ 1 ] = cmykColors[ 1 ] / 100;
+  cmykColors[ 2 ] = cmykColors[ 2 ] / 100;
+  cmykColors[ 3 ] = cmykColors[ 3 ] / 100;
+  if( cmykColors[ 4 ] )
+  cmykColors[ 4 ] = cmykColors[ 4 ] / 100;
+
   return _.color.cmyk._longToRgb( dst, cmykColors );
 
 }
@@ -53,9 +64,9 @@ function _strToRgb( dst, src )
 function _longToRgb( dst, src )
 {
   _.assert( src.length === 4 || src.length === 5, `{-src-} length must be 4 or 5, but got : ${src.length}` );
-  _.assert( src[ 4 ] === undefined || src[ 4 ] === 100, `alpha channel must be 100, but got : ${src[ 5 ]}` );
+  _.assert( src[ 4 ] === undefined || src[ 4 ] === 1, `alpha channel must be 1, but got : ${src[ 5 ]}` );
 
-  if( !_.color.cmyk._validate( src ) )
+  if( !_.color._validateNormalized( src ) )
   return null;
 
   let r, g, b;
@@ -101,11 +112,10 @@ function _longToRgb( dst, src )
 
   function convert( src )
   {
-    r = ( 1 - src[ 0 ] / 100 ) * ( 1 - src[ 3 ] / 100 );
-    g = ( 1 - src[ 1 ] / 100 ) * ( 1 - src[ 3 ] / 100 );
-    b = ( 1 - src[ 2 ] / 100 ) * ( 1 - src[ 3 ] / 100 );
+    r = ( 1 - src[ 0 ] ) * ( 1 - src[ 3 ] );
+    g = ( 1 - src[ 1 ] ) * ( 1 - src[ 3 ] );
+    b = ( 1 - src[ 2 ] ) * ( 1 - src[ 3 ] );
   }
-
 
 }
 
