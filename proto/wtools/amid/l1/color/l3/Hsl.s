@@ -1,21 +1,21 @@
-(function _ColorHwb_s_()
+(function _ColorHsl_s_()
 {
 
 'use strict';
 
 /**
- * Collection of cross-platform routines to convert from hwb into rgb.
+ * Collection of cross-platform routines to convert from hsl into rgb.
  * @module Tools/mid/Color
 */
 
 /**
  * @summary Collection of cross-platform routines to operate colors conveniently.
- * @namespace wTools.color.hwb
+ * @namespace wTools.color.hsl
  * @module Tools/mid/Color
 */
 
 let _ = _global_.wTools;
-let Self = _.color.hwb = _.color.hwb || Object.create( null );
+let Self = _.color.hsl = _.color.hsl || Object.create( null );
 
 // --
 // implement
@@ -24,37 +24,37 @@ let Self = _.color.hwb = _.color.hwb || Object.create( null );
 function _strToRgb( dst, src )
 {
   /*
-    hwb(H, W, B)
+    hsl(H, S, L)
   */
 
   _.assert( arguments.length === 2, 'Expects 2 arguments' );
   _.assert( _.strIs( src ) );
   _.assert( dst === null || _.vectorIs( dst ) );
 
-  let hwbColors = _.color.hwb._formatStringParse( src );
+  let hslColors = _.color.hsl._formatStringParse( src );
 
   _.assert
   (
-    hwbColors.length === 3 || hwbColors.length === 4,
-    `{-src-} string must contain exactly 3 or 4 numbers, but got ${hwbColors.length}`
+    hslColors.length === 3 || hslColors.length === 4,
+    `{-src-} string must contain exactly 3 or 4 numbers, but got ${hslColors.length}`
   );
   _.assert
   (
-    hwbColors[ 3 ] === undefined || hwbColors[ 3 ] === 100,
-    `alpha channel must be 100, but got ${hwbColors[ 3 ]}`
+    hslColors[ 3 ] === undefined || hslColors[ 3 ] === 100,
+    `alpha channel must be 100, but got ${hslColors[ 3 ]}`
   );
 
-  if( !_.color.hwb._validate( hwbColors ) )
+  if( !_.color.hsl._validate( hslColors ) )
   return null;
 
   /* normalize ranges */
-  hwbColors[ 0 ] = hwbColors[ 0 ] / 360;
-  hwbColors[ 1 ] = hwbColors[ 1 ] / 100;
-  hwbColors[ 2 ] = hwbColors[ 2 ] / 100;
-  if( hwbColors[ 3 ] )
-  hwbColors[ 3 ] = hwbColors[ 3 ] / 100;
+  hslColors[ 0 ] = hslColors[ 0 ] / 360;
+  hslColors[ 1 ] = hslColors[ 1 ] / 100;
+  hslColors[ 2 ] = hslColors[ 2 ] / 100;
+  if( hslColors[ 3 ] )
+  hslColors[ 3 ] = hslColors[ 3 ] / 100;
 
-  return _.color.hwb._longToRgb( dst, hwbColors );
+  return _.color.hsl._longToRgb( dst, hslColors );
 
 }
 
@@ -111,42 +111,7 @@ function _longToRgb( dst, src )
 
   function convert( src )
   {
-    let h = src[ 0 ];
-    let wh = src[ 1 ];
-    let bl = src[ 2 ];
-    let ratio = wh + bl;
-    let i, v, f, n;
-
-    /* wh + bl cannot be > 1 */
-    if( ratio > 1 )
-    {
-      wh /= ratio;
-      bl /= ratio;
-    }
-
-    i = Math.floor( 6 * h );
-    v = 1 - bl;
-    f = 6 * h - i;
-
-    if( ( i & 0x01 ) !== 0 )
-    {
-      f = 1 - f;
-    }
-
-    /* linear interpolation */
-    n = wh + f * ( v - wh );
-
-    switch( i )
-    {
-      case 6 :
-      case 0 : r = v; g = n; b = wh; break;
-      case 1 : r = n; g = v; b = wh; break;
-      case 2 : r = wh; g = v; b = n; break;
-      case 3 : r = wh; g = n; b = v; break;
-      case 4 : r = n; g = wh; b = v; break;
-      case 5 : r = v; g = wh; b = n; break;
-      default : break;
-    }
+    [ r, g, b ] = _.color.hslToRgb( src );
   }
 
 
@@ -171,7 +136,7 @@ function _validate ( src )
 
 function _formatStringParse( src )
 {
-  _.assert( /^hwb\(\d{1,3}, ?\d{1,3}%, ?\d{1,3}%(, ?\d{1,3}%)?\)$/g.test( src ), 'Wrong source string pattern' );
+  _.assert( /^hsl\(\d{1,3}, ?\d{1,3}%, ?\d{1,3}%(, ?\d{1,3}%)?\)$/g.test( src ), 'Wrong source string pattern' );
   return src.match( /\d+(\.\d+)?/g ).map( ( el ) => +el );
 }
 
@@ -192,7 +157,7 @@ let Extension =
 
 }
 
-_.mapSupplement( _.color.hwb, Extension );
+_.mapSupplement( _.color.hsl, Extension );
 
 // --
 // export

@@ -1498,6 +1498,18 @@ function strStrip( srcStr )
   return _.ct.strip( srcStr );
 }
 
+//
+
+function _validateNormalized( src )
+{
+  for( let i = 0; i < src.length; i++ )
+  {
+    if( !_.cinterval.has( [ 0, 1 ], src[ i ] ) )
+    return false;
+  }
+  return true;
+}
+
 // --
 // let
 // --
@@ -1655,6 +1667,8 @@ let Extension =
   strColorStyle,
 
   strStrip,
+
+  _validateNormalized,
 
   // let
 

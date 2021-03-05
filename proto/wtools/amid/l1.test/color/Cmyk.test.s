@@ -304,7 +304,7 @@ function _longToRgb( test )
   test.open( 'basic colors' );
 
   test.case = 'Black';
-  var src = [ 0, 0, 0, 100 ];
+  var src = [ 0, 0, 0, 1 ];
   var expected = [ 0, 0, 0 ];
   var got = _.color.cmyk._longToRgb( null, src );
   test.identical( got, expected );
@@ -316,37 +316,37 @@ function _longToRgb( test )
   test.identical( got, expected );
 
   test.case = 'Red';
-  var src = [ 0, 100, 100, 0 ];
+  var src = [ 0, 1, 1, 0 ];
   var expected = [ 1, 0, 0 ];
   var got = _.color.cmyk._longToRgb( null, src );
   test.identical( got, expected );
 
   test.case = 'Green';
-  var src = [ 100, 0, 100, 0 ];
+  var src = [ 1, 0, 1, 0 ];
   var expected = [ 0, 1, 0 ];
   var got = _.color.cmyk._longToRgb( null, src );
   test.identical( got, expected );
 
   test.case = 'Blue';
-  var src = [ 100, 100, 0, 0 ];
+  var src = [ 1, 1, 0, 0 ];
   var expected = [ 0, 0, 1 ];
   var got = _.color.cmyk._longToRgb( null, src );
   test.identical( got, expected );
 
   test.case = 'Yellow';
-  var src = [ 0, 0, 100, 0 ];
+  var src = [ 0, 0, 1, 0 ];
   var expected = [ 1, 1, 0 ];
   var got = _.color.cmyk._longToRgb( null, src );
   test.identical( got, expected );
 
   test.case = 'Cyan';
-  var src = [ 100, 0, 0, 0 ];
+  var src = [ 1, 0, 0, 0 ];
   var expected = [ 0, 1, 1 ];
   var got = _.color.cmyk._longToRgb( null, src );
   test.identical( got, expected );
 
   test.case = 'Magenta';
-  var src = [ 0, 100, 0, 0 ];
+  var src = [ 0, 1, 0, 0 ];
   var expected = [ 1, 0, 1 ];
   var got = _.color.cmyk._longToRgb( null, src );
   test.identical( got, expected );
@@ -357,26 +357,26 @@ function _longToRgb( test )
 
   test.open( 'non basic colors' );
 
-  test.case = '[ 12, 34, 99, 27 ]';
-  var src = [ 12, 34, 99, 27 ];
+  test.case = '[ 0.12, 0.34, 0.99, 0.27 ]';
+  var src = [ 0.12, 0.34, 0.99, 0.27 ];
   var expected = [ 0.6431372549019608, 0.4823529411764706, 0.00784313725490196 ];
   var got = _.color.cmyk._longToRgb( null, src );
   test.equivalent( got, expected );
 
-  test.case = '[ 87, 1, 33, 5 ]';
-  var src = [ 87, 1, 33, 5 ];
+  test.case = '[ 0.87, 0.01, 0.33, 0.05 ]';
+  var src = [ 0.87, 0.01, 0.33, 0.05 ];
   var expected = [ 0.12156862745098039, 0.9411764705882353, 0.6352941176470588 ];
   var got = _.color.cmyk._longToRgb( null, src );
   test.equivalent( got, expected );
 
-  test.case = '[ 11, 16, 75, 4 ]';
-  var src = [ 11, 16, 75, 4 ];
+  test.case = '[ 0.11, 0.16, 0.75, 0.04 ]';
+  var src = [ 0.11, 0.16, 0.75, 0.04 ];
   var expected = [ 0.8549019607843137, 0.807843137254902, 0.23921568627450981 ];
   var got = _.color.cmyk._longToRgb( null, src );
   test.equivalent( got, expected );
 
   test.case = 'cmyk with alpha=100%';
-  var src = [ 11, 16, 75, 4, 100 ];
+  var src = [ 0.11, 0.16, 0.75, 0.04, 1 ];
   var expected = [ 0.8549019607843137, 0.807843137254902, 0.23921568627450981 ];
   var got = _.color.cmyk._longToRgb( null, src );
   test.equivalent( got, expected );
@@ -384,25 +384,25 @@ function _longToRgb( test )
   test.close( 'non basic colors' );
 
   test.case = 'first arg > 100%';
-  var src = [ 111, 16, 75, 4 ];
+  var src = [ 1.1, 0.16, 0.75, 0.4 ];
   var expected = null;
   var got = _.color.cmyk._longToRgb( null, src );
   test.identical( got, expected );
 
   test.case = 'second arg > 100%';
-  var src = [ 11, 160, 75, 4 ];
+  var src = [ 0.11, 16, 0.75, 0.4 ];
   var expected = null;
   var got = _.color.cmyk._longToRgb( null, src );
   test.identical( got, expected );
 
   test.case = 'third arg > 100%';
-  var src = [ 11, 16, 750, 4 ];
+  var src = [ 0.11, 0.16, 75, 0.4 ];
   var expected = null;
   var got = _.color.cmyk._longToRgb( null, src );
   test.identical( got, expected );
 
   test.case = 'fourth arg > 100%';
-  var src = [ 11, 16, 75, 400 ];
+  var src = [ 0.11, 0.16, 0.75, 4 ];
   var expected = null;
   var got = _.color.cmyk._longToRgb( null, src );
   test.identical( got, expected );
@@ -410,7 +410,7 @@ function _longToRgb( test )
   /* */
 
   test.case = 'alpha !== 100%';
-  var src = [ 11, 16, 75, 40, 50 ];
+  var src = [ 0.11, 0.16, 0.75, 0.4, 0.8 ];
   test.shouldThrowErrorSync( () => _.color.cmyk._longToRgb( null, src ) )
 
 }
@@ -425,7 +425,7 @@ function _longToRgbWithDst( test )
   test.open( 'basic colors' );
 
   test.case = 'Black, dst = Array';
-  var src = [ 0, 0, 0, 100 ];
+  var src = [ 0, 0, 0, 1 ];
   var dst = [ 1, 2, 3 ];
   var expected = [ 0, 0, 0 ];
   var got = _.color.cmyk._longToRgb( dst, src );
@@ -433,7 +433,7 @@ function _longToRgbWithDst( test )
   test.true( got === dst );
 
   test.case = 'Green, dst = Long';
-  var src = [ 100, 0, 100, 0 ];
+  var src = [ 1, 0, 1, 0 ];
   var dst = _.longFrom([ 1, 4, 13 ]);
   var expected = [ 0, 1, 0 ];
   var got = _.color.cmyk._longToRgb( dst, src );
@@ -441,7 +441,7 @@ function _longToRgbWithDst( test )
   test.true( got === dst );
 
   test.case = 'Red, dst = TypedArray';
-  var src = [ 0, 100, 100, 0 ];
+  var src = [ 0, 1, 1, 0 ];
   var dst = new I8x([ 1, 5, 15 ]); /* 1 and 0 -> Integer Typed Array can be used */
   var expected = [ 1, 0, 0 ];
   var got = _.color.cmyk._longToRgb( dst, src );
@@ -464,24 +464,24 @@ function _longToRgbWithDst( test )
 
   test.open( 'non basic colors' );
 
-  test.case = '[ 12, 34, 99, 27 ];, dst = Array';
-  var src = [ 12, 34, 99, 27 ];
+  test.case = '[ 0.12, 0.34, 0.99, 0.27 ];, dst = Array';
+  var src = [ 0.12, 0.34, 0.99, 0.27 ];
   var dst = [ 1, 2, 3 ];
   var expected = [ 0.6431372549019608, 0.4823529411764706, 0.00784313725490196 ];
   var got = _.color.cmyk._longToRgb( dst, src );
   test.equivalent( got, expected );
   test.true( got === dst );
 
-  test.case = '[ 12, 34, 99, 27 ];, dst = Long';
-  var src = [ 12, 34, 99, 27 ];
+  test.case = '[ 0.12, 0.34, 0.99, 0.27 ];, dst = Long';
+  var src = [ 0.12, 0.34, 0.99, 0.27 ];
   var dst = _.longFrom([ 1, 2, 3 ]);
   var expected = [ 0.6431372549019608, 0.4823529411764706, 0.00784313725490196 ];
   var got = _.color.cmyk._longToRgb( dst, src );
   test.equivalent( got, expected );
   test.true( got === dst );
 
-  test.case = '[ 12, 34, 99, 27 ];, dst = TypedArray';
-  var src = [ 12, 34, 99, 27 ];
+  test.case = '[ 0.12, 0.34, 0.99, 0.27 ];, dst = TypedArray';
+  var src = [ 0.12, 0.34, 0.99, 0.27 ];
   var dst = new Float32Array([ 1, 2, 3 ]); /* ( 0, 1 ) -> Integer Typed Array can NOT be used */
   var expected = [ 0.6431372549019608, 0.4823529411764706, 0.00784313725490196 ];
   var got = _.color.cmyk._longToRgb( dst, src );
@@ -489,8 +489,8 @@ function _longToRgbWithDst( test )
   test.equivalent( got[ i ], expected[ i ] );
   test.true( got === dst );
 
-  test.case = '[ 12, 34, 99, 27 ];, dst = VectorAdapter';
-  var src = [ 12, 34, 99, 27 ];
+  test.case = '[ 0.12, 0.34, 0.99, 0.27 ];, dst = VectorAdapter';
+  var src = [ 0.12, 0.34, 0.99, 0.27 ];
   var dst = _.vad.fromLong([ 1, 2, 3 ]);
   var expected = [ 0.6431372549019608, 0.4823529411764706, 0.00784313725490196 ];
   var got = _.color.cmyk._longToRgb( dst, src );
@@ -499,7 +499,7 @@ function _longToRgbWithDst( test )
   test.true( got === dst );
 
   test.case = 'cmyk with alpha = 100, dst = Long';
-  var src = [ 12, 34, 99, 27, 100 ];
+  var src = [ 0.12, 0.34, 0.99, 0.27, 1 ];
   var dst = _.longFrom([ 1, 2, 3 ]);
   var expected = [ 0.6431372549019608, 0.4823529411764706, 0.00784313725490196 ];
   var got = _.color.cmyk._longToRgb( dst, src );
@@ -507,7 +507,7 @@ function _longToRgbWithDst( test )
   test.true( got === dst );
 
   test.case = 'cmyk with alpha = 100, dst = VectorAdapter';
-  var src = [ 12, 34, 99, 27, 100 ];
+  var src = [ 0.12, 0.34, 0.99, 0.27, 1 ];
   var dst = _.vad.fromLong([ 1, 2, 3 ]);
   var expected = [ 0.6431372549019608, 0.4823529411764706, 0.00784313725490196 ];
   var got = _.color.cmyk._longToRgb( dst, src );
@@ -518,25 +518,25 @@ function _longToRgbWithDst( test )
   test.close( 'non basic colors' );
 
   test.case = 'first arg > 100%';
-  var src = [ 111, 16, 75, 4 ];
+  var src = [ 1.1, 0.16, 0.75, 0.4 ];
   var expected = null;
   var got = _.color.cmyk._longToRgb( [ 1, 2, 3 ], src );
   test.identical( got, expected );
 
   test.case = 'second arg > 100%';
-  var src = [ 11, 160, 75, 4 ];
+  var src = [ 0.11, 16, 0.75, 0.4 ];
   var expected = null;
   var got = _.color.cmyk._longToRgb( [ 1, 2, 3 ], src );
   test.identical( got, expected );
 
   test.case = 'third arg > 100%';
-  var src = [ 11, 16, 750, 4 ];
+  var src = [ 0.11, 0.16, 75, 0.4 ];
   var expected = null;
   var got = _.color.cmyk._longToRgb( [ 1, 2, 3 ], src );
   test.identical( got, expected );
 
   test.case = 'fourth arg > 100%';
-  var src = [ 11, 16, 75, 400 ];
+  var src = [ 0.11, 0.16, 0.75, 4 ];
   var expected = null;
   var got = _.color.cmyk._longToRgb( [ 1, 2, 3 ], src );
   test.identical( got, expected );
@@ -544,32 +544,32 @@ function _longToRgbWithDst( test )
   /* - */
 
   test.case = 'dst : Array; dst.length !== 3';
-  var src = [ 12, 34, 99, 27 ];
+  var src = [ 0.12, 0.34, 0.99, 0.27 ];
   var dst = [ 1, 2, 3, 5 ];
   test.shouldThrowErrorSync( () => _.color.cmyk._longToRgb( dst, src ) )
 
   test.case = 'dst : Long; dst.length !== 3';
-  var src = [ 12, 34, 99, 27 ];
+  var src = [ 0.12, 0.34, 0.99, 0.27 ];
   var dst = _.longFrom([ 1, 2 ]);
   test.shouldThrowErrorSync( () => _.color.cmyk._longToRgb( dst, src ) )
 
   test.case = 'dst : TypedArray; dst.length !== 3';
-  var src = [ 12, 34, 99, 27 ];
+  var src = [ 0.12, 0.34, 0.99, 0.27 ];
   var dst = new Float32Array([ 1, 2, 3, 4, 5, 6 ]);
   test.shouldThrowErrorSync( () => _.color.cmyk._longToRgb( dst, src ) )
 
   test.case = 'dst : VectorAdapter; dst.length !== 3';
-  var src = [ 12, 34, 99, 27 ];
+  var src = [ 0.12, 0.34, 0.99, 0.27 ];
   var dst = _.vad.fromLong([ 1 ]);
   test.shouldThrowErrorSync( () => _.color.cmyk._longToRgb( dst, src ) )
 
   test.case = 'dst : Long; alpha !== 100';
-  var src = [ 12, 34, 99, 27, 22 ];
+  var src = [ 0.12, 0.34, 0.99, 0.27, 1.1 ];
   var dst = _.longFrom([ 1, 2, 3 ]);
   test.shouldThrowErrorSync( () => _.color.cmyk._longToRgb( dst, src ) )
 
   test.case = 'dst : VectorAdapter; alpha !== 100';
-  var src = [ 12, 34, 99, 27, 22 ];
+  var src = [ 0.12, 0.34, 0.99, 0.27, 0.1 ];
   var dst = _.vad.fromLong([ 1, 2, 3 ]);
   test.shouldThrowErrorSync( () => _.color.cmyk._longToRgb( dst, src ) )
 

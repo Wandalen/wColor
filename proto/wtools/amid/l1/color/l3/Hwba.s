@@ -39,6 +39,16 @@ function _strToRgba( dst, src )
     `{-src-} string must contain exactly 3 or 4 numbers, but got ${hwbColors.length}`
   );
 
+  if( !_.color.hwb._validate( hwbColors ) )
+  return null;
+
+  /* normalize ranges */
+  hwbColors[ 0 ] = hwbColors[ 0 ] / 360;
+  hwbColors[ 1 ] = hwbColors[ 1 ] / 100;
+  hwbColors[ 2 ] = hwbColors[ 2 ] / 100;
+  if( hwbColors[ 3 ] )
+  hwbColors[ 3 ] = hwbColors[ 3 ] / 100;
+
   return _.color.hwba._longToRgba( dst, hwbColors );
 
 }
@@ -49,7 +59,7 @@ function _longToRgba( dst, src )
 {
   _.assert( src.length === 3 || src.length === 4, `{-src-} length must be 4 or 5, but got : ${src.length}` );
 
-  if( !_.color.hwba._validate( src ) )
+  if( !_.color._validateNormalized( src ) )
   return null;
 
   let r, g, b;
@@ -98,9 +108,9 @@ function _longToRgba( dst, src )
 
   function convert( src )
   {
-    let h = src[ 0 ] / 360;
-    let wh = src[ 1 ] / 100;
-    let bl = src[ 2 ] / 100;
+    let h = src[ 0 ];
+    let wh = src[ 1 ];
+    let bl = src[ 2 ];
     let alpha = src[ 3 ];
     let ratio = wh + bl;
     let i, v, f, n;
@@ -137,7 +147,7 @@ function _longToRgba( dst, src )
     }
 
     if( alpha !== undefined )
-    a = alpha / 100;
+    a = alpha;
   }
 
 
