@@ -44,6 +44,16 @@ function _strToRgb( dst, src )
     `alpha channel must be 100, but got ${hwbColors[ 3 ]}`
   );
 
+  if( !_.color.hwb._validate( hwbColors ) )
+  return null;
+
+  /* normalize ranges */
+  hwbColors[ 0 ] = hwbColors[ 0 ] / 360;
+  hwbColors[ 1 ] = hwbColors[ 1 ] / 100;
+  hwbColors[ 2 ] = hwbColors[ 2 ] / 100;
+  if( hwbColors[ 3 ] )
+  hwbColors[ 3 ] = hwbColors[ 3 ] / 100;
+
   return _.color.hwb._longToRgb( dst, hwbColors );
 
 }
@@ -53,9 +63,9 @@ function _strToRgb( dst, src )
 function _longToRgb( dst, src )
 {
   _.assert( src.length === 3 || src.length === 4, `{-src-} length must be 3 or 4, but got : ${src.length}` );
-  _.assert( src[ 3 ] === undefined || src[ 3 ] === 100, `alpha channel must be 100, but got : ${src[ 3 ]}` );
+  _.assert( src[ 3 ] === undefined || src[ 3 ] === 1, `alpha channel must be 1, but got : ${src[ 3 ]}` );
 
-  if( !_.color.hwb._validate( src ) )
+  if( !_.color._validateNormalized( src ) )
   return null;
 
   let r, g, b;
@@ -101,9 +111,9 @@ function _longToRgb( dst, src )
 
   function convert( src )
   {
-    let h = src[ 0 ] / 360;
-    let wh = src[ 1 ] / 100;
-    let bl = src[ 2 ] / 100;
+    let h = src[ 0 ];
+    let wh = src[ 1 ];
+    let bl = src[ 2 ];
     let ratio = wh + bl;
     let i, v, f, n;
 
