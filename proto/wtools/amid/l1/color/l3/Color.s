@@ -25,7 +25,7 @@ function _fromTable( o )
 {
   let result = o.colorMap[ o.src ];
 
-  _.assertRoutineOptions( fromTable, o );
+  _.assertRoutineOptions( _fromTable, o );
 
   if( !result )
   result = o.def;
