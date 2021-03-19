@@ -952,7 +952,7 @@ function colorToHex( rgb, def )
 
 function hexToColor( hex )
 {
-  return _.color.rgb.hexStrToRgb( hex );
+  return _.color.rgba.fromHexStr( hex );
 }
 
 //
