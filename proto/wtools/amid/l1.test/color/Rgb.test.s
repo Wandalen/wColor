@@ -144,17 +144,20 @@ function fromHexStr( test )
 
   test.close( 'non basic colors' );
 
-  test.case = 'length > 6';
+  test.case = 'length = 7';
   var src = '#fffffff';
   var expected = null;
   var got = _.color.rgb.fromHexStr( src );
   test.identical( got, expected );
 
-  test.case = 'length < 3';
+  test.case = 'length = 3';
   var src = '#ff';
   var expected = null;
   var got = _.color.rgb.fromHexStr( src );
   test.identical( got, expected );
+
+  test.case = 'alpha != 100'
+  test.shouldThrowErrorSync( () => _.color.rgb.fromHexStr( '#a47b0200' ) );
 
 }
 
