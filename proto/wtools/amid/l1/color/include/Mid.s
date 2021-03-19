@@ -16,6 +16,7 @@ if( typeof module !== 'undefined' )
   require( '../l3/Hsl.s' );
   require( '../l3/Hsla.s' );
   require( '../l3/Xyz.s' );
+  require( '../l3/Xyza.s' );
   module[ 'exports' ] = _global_.wTools;
 }
 
