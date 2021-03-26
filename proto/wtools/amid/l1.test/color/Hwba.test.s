@@ -11,7 +11,7 @@ if( typeof module !== 'undefined' )
   _.include( 'wMathVector' );
 }
 
-let _ = _global_.wTools;
+const _ = _global_.wTools;
 
 // --
 // tests
@@ -662,7 +662,7 @@ function _formatStringParse( test )
 // declare
 // --
 
-let Self =
+const Proto =
 {
 
   name : 'Tools/mid/Hwba',
@@ -685,7 +685,7 @@ let Self =
 
 //
 
-Self = wTestSuite( Self );
+const Self = wTestSuite( Proto );
 if( typeof module !== 'undefined' && !module.parent )
 wTester.test( Self.name );
 

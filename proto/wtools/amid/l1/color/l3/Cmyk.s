@@ -14,8 +14,8 @@
  * @module Tools/mid/Color
 */
 
-let _ = _global_.wTools;
-let Self = _.color.cmyk = _.color.cmyk || Object.create( null );
+const _ = _global_.wTools;
+const Self = _.color.cmyk = _.color.cmyk || Object.create( null );
 
 // --
 // implement

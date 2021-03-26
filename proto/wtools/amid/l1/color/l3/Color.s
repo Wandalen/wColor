@@ -14,8 +14,8 @@
  * @module Tools/mid/Color
 */
 
-let _ = _global_.wTools;
-let Self = _.color = _.color || Object.create( null );
+const _ = _global_.wTools;
+const Self = _.color = _.color || Object.create( null );
 
 // --
 // implement
@@ -138,7 +138,7 @@ function _rgbaFromNotName( src )
 
   if( _.objectIs( src ) )
   {
-    _.assertMapHasOnly( src, { r : null, g : null, b : null, a : null } );
+    _.map.assertHasOnly( src, { r : null, g : null, b : null, a : null } );
     let result = [];
     result[ 0 ] = src.r === undefined ? 1 : src.r;
     result[ 1 ] = src.g === undefined ? 1 : src.g;
