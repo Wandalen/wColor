@@ -76,52 +76,52 @@ function _strToRgb( test )
 
   test.open( 'non basic colors' );
 
-  test.case = 'lab(45, 98, 33)';
-  var src = 'lab(45, 98, 33)';
+  test.case = 'lab(54.385, 7.912, 59.883)';
+  var src = 'lab(54.385, 7.912, 59.883)';
   var expected = [ 0.6531372549019608, 0.4823529411764706, 0.00784313725490196 ];
   var got = _.color.lab._strToRgb( null, src );
   test.equivalent( got, expected );
 
-  test.case = 'lab(157, 87, 53)';
-  var src = 'lab(157, 87, 53)';
+  test.case = 'lab(84.594, -64.473, 24.743)';
+  var src = 'lab(84.594, -64.473, 24.743)';
   var expected = [ 0.12156862745098039, 0.9411764705882353, 0.6352941176470588 ];
   var got = _.color.lab._strToRgb( null, src );
   test.equivalent( got, expected );
 
-  test.case = 'lab(55, 68, 55)';
-  var src = 'lab(55, 68, 55)';
+  test.case = 'lab(81.504, -11.785, 69.259)';
+  var src = 'lab(81.504, -11.785, 69.259)';
   var expected = [ 0.8549019607843137, 0.807843137254902, 0.23921568627450981 ];
   var got = _.color.lab._strToRgb( null, src );
   test.equivalent( got, expected );
 
-  test.case = 'lab(55, 68, 55, 100) with alpha = 100';
-  var src = 'lab(55, 68, 55, 100)';
+  test.case = 'lab(81.504, -11.785, 69.259, 100) with alpha = 100';
+  var src = 'lab(81.504, -11.785, 69.259, 100)';
   var expected = [ 0.8549019607843137, 0.807843137254902, 0.23921568627450981 ];
   var got = _.color.lab._strToRgb( null, src );
   test.equivalent( got, expected );
 
   test.close( 'non basic colors' );
 
-  test.case = 'first arg > 360';
-  var src = 'lab(366,16,75)';
+  test.case = 'first arg > 100';
+  var src = 'lab(811.504, -11.785, 69.259)';
   var expected = null;
   var got = _.color.lab._strToRgb( null, src );
   test.identical( got, expected );
 
-  test.case = 'second arg > 100';
-  var src = 'lab(35,160,75)';
+  test.case = 'second arg > 127';
+  var src = 'lab(81.504, 1111.785, 69.259)';
   var expected = null;
   var got = _.color.lab._strToRgb( null, src );
   test.identical( got, expected );
 
-  test.case = 'third arg > 100';
-  var src = 'lab(35,10,175)';
+  test.case = 'third arg > 127';
+  var src = 'lab(81.504, -11.785, 699.259)';
   var expected = null;
   var got = _.color.lab._strToRgb( null, src );
   test.identical( got, expected );
 
   test.case = 'alpha !== 100';
-  var src = 'lab(35,10,15,120)';
+  var src = 'lab(81.504, -11.785, 69.259, 120)';
   test.shouldThrowErrorSync( () => _.color.lab._strToRgb( null, src ) )
 
 }
