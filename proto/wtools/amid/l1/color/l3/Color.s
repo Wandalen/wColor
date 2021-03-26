@@ -212,7 +212,7 @@ function rgbaFrom( o )
   if( !result )
   debugger;
   if( !result )
-  throw _.err( `Not color : "${_.entity.exportStringShort( o.src )}"` );
+  throw _.err( `Not color : "${_.entity.exportStringShallow( o.src )}"` );
 
   return result;
 
@@ -476,7 +476,7 @@ function rgbaHtmlFrom( o )
   if( !result )
   debugger;
   if( !result )
-  throw _.err( `Not color : "${_.entity.exportStringShort( o.src )}"` );
+  throw _.err( `Not color : "${_.entity.exportStringShallow( o.src )}"` );
 
   return result;
 
