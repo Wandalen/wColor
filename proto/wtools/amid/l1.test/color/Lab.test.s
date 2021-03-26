@@ -136,7 +136,7 @@ function _strToRgbWithDst( test )
   test.open( 'basic colors' );
 
   test.case = 'Black, dst = Array';
-  var src = 'lab(0, 0%, 0%)';
+  var src = 'lab(0,0,0)';
   var dst = [ 1, 2, 3 ];
   var expected = [ 0, 0, 0 ];
   var got = _.color.lab._strToRgb( dst, src );
@@ -144,7 +144,7 @@ function _strToRgbWithDst( test )
   test.true( got === dst );
 
   test.case = 'Green, dst = Long';
-  var src = 'lab(120, 100%, 50%)';
+  var src = 'lab(87.735, -86.183, 83.179)';
   var dst = _.longFrom([ 1, 4, 13 ]);
   var expected = [ 0, 1, 0 ];
   var got = _.color.lab._strToRgb( dst, src );
@@ -152,7 +152,7 @@ function _strToRgbWithDst( test )
   test.true( got === dst );
 
   test.case = 'Red, dst = TypedArray';
-  var src = 'lab(0, 100%, 50%)';
+  var src = 'lab(53.241, 80.092, 67.203)';
   var dst = new I8x([ 1, 5, 15 ]); /* 1 and 0 -> Integer Typed Array can be used */
   var expected = [ 1, 0, 0 ];
   var got = _.color.lab._strToRgb( dst, src );
@@ -161,7 +161,7 @@ function _strToRgbWithDst( test )
   test.true( got === dst );
 
   test.case = 'White, dst = VectorAdapter';
-  var src = 'lab(0, 0%, 100%)';
+  var src = 'lab(100, 0, -0)';
   var dst = _.vad.fromLong([ 1, 2, 3 ]);
   var expected = [ 1, 1, 1 ];
   var got = _.color.lab._strToRgb( dst, src );
@@ -175,24 +175,24 @@ function _strToRgbWithDst( test )
 
   test.open( 'non basic colors' );
 
-  test.case = 'lab(45, 98%, 33%), dst = Array';
-  var src = 'lab(45, 98%, 33%)';
+  test.case = 'lab(54.385, 7.912, 59.883), dst = Array';
+  var src = 'lab(54.385, 7.912, 59.883)';
   var dst = [ 1, 2, 3 ];
   var expected = [ 0.6531372549019608, 0.4823529411764706, 0.00784313725490196 ];
   var got = _.color.lab._strToRgb( dst, src );
   test.equivalent( got, expected );
   test.true( got === dst );
 
-  test.case = 'lab(45, 98%, 33%), dst = Long';
-  var src = 'lab(45, 98%, 33%)';
+  test.case = 'lab(54.385, 7.912, 59.883), dst = Long';
+  var src = 'lab(54.385, 7.912, 59.883)';
   var dst = _.longFrom([ 1, 2, 3 ]);
   var expected = [ 0.6531372549019608, 0.4823529411764706, 0.00784313725490196 ];
   var got = _.color.lab._strToRgb( dst, src );
   test.equivalent( got, expected );
   test.true( got === dst );
 
-  test.case = 'lab(45, 98%, 33%), dst = TypedArray';
-  var src = 'lab(45, 98%, 33%)';
+  test.case = 'lab(54.385, 7.912, 59.883), dst = TypedArray';
+  var src = 'lab(54.385, 7.912, 59.883)';
   var dst = new Float32Array([ 1, 2, 3 ]); /* ( 0, 1 ) -> Integer Typed Array can NOT be used */
   var expected = [ 0.6531372549019608, 0.4823529411764706, 0.00784313725490196 ];
   var got = _.color.lab._strToRgb( dst, src );
@@ -200,8 +200,8 @@ function _strToRgbWithDst( test )
   test.equivalent( got[ i ], expected[ i ] );
   test.true( got === dst );
 
-  test.case = 'lab(45, 98%, 33%), dst = VectorAdapter';
-  var src = 'lab(45, 98%, 33%)';
+  test.case = 'lab(54.385, 7.912, 59.883), dst = VectorAdapter';
+  var src = 'lab(54.385, 7.912, 59.883)';
   var dst = _.vad.fromLong([ 1, 2, 3 ]);
   var expected = [ 0.6531372549019608, 0.4823529411764706, 0.00784313725490196 ];
   var got = _.color.lab._strToRgb( dst, src );
@@ -209,16 +209,16 @@ function _strToRgbWithDst( test )
   test.equivalent( got.eGet( i ), expected[ i ] );
   test.true( got === dst );
 
-  test.case = 'lab(45, 98%, 33%, 100%) with alpha = 100, dst = Array';
-  var src = 'lab(45, 98%, 33%, 100%)';
+  test.case = 'lab(54.385, 7.912, 59.883, 100%) with alpha = 100, dst = Array';
+  var src = 'lab(54.385, 7.912, 59.883, 100%)';
   var dst = [ 1, 2, 3 ];
   var expected = [ 0.6531372549019608, 0.4823529411764706, 0.00784313725490196 ];
   var got = _.color.lab._strToRgb( dst, src );
   test.equivalent( got, expected );
   test.true( got === dst );
 
-  test.case = 'lab(45, 98%, 33%, 100%) with alpha = 100, dst = VectorAdapter';
-  var src = 'lab(45, 98%, 33%, 100%)';
+  test.case = 'lab(54.385, 7.912, 59.883, 100%) with alpha = 100, dst = VectorAdapter';
+  var src = 'lab(54.385, 7.912, 59.883, 100%)';
   var dst = _.vad.fromLong([ 1, 2, 3 ]);
   var expected = [ 0.6531372549019608, 0.4823529411764706, 0.00784313725490196 ];
   var got = _.color.lab._strToRgb( dst, src );
@@ -231,22 +231,22 @@ function _strToRgbWithDst( test )
   /* - */
 
   test.case = 'dst : Array; dst.length !== 3';
-  var src = 'lab(55, 68%, 55%)';
+  var src = 'lab(54.385, 7.912, 59.883)';
   var dst = [ 1, 2, 3, 5, 6 ];
   test.shouldThrowErrorSync( () => _.color.lab._strToRgb( dst, src ) )
 
   test.case = 'dst : Long; dst.length !== 3';
-  var src = 'lab(55, 68%, 55%)';
+  var src = 'lab(54.385, 7.912, 59.883)';
   var dst = _.longFrom([ 1, 2 ]);
   test.shouldThrowErrorSync( () => _.color.lab._strToRgb( dst, src ) )
 
   test.case = 'dst : TypedArray; dst.length !== 3';
-  var src = 'lab(55, 68%, 55%)';
+  var src = 'lab(54.385, 7.912, 59.883)';
   var dst = new Float32Array([ 1, 2, 3, 4 ]);
   test.shouldThrowErrorSync( () => _.color.lab._strToRgb( dst, src ) )
 
   test.case = 'dst : VectorAdapter; dst.length !== 3';
-  var src = 'lab(55, 68%, 55%)';
+  var src = 'lab(54.385, 7.912, 59.883)';
   var dst = _.vad.fromLong([ 1 ]);
   test.shouldThrowErrorSync( () => _.color.lab._strToRgb( dst, src ) )
 
@@ -268,43 +268,43 @@ function _longToRgb( test )
   test.equivalent( got, expected );
 
   test.case = 'White';
-  var src = [ 0, 0, 1 ];
+  var src = [ 100, 0, -0 ];
   var expected = [ 1, 1, 1 ];
   var got = _.color.lab._longToRgb( null, src );
   test.equivalent( got, expected );
 
   test.case = 'Red';
-  var src = [ 0, 1, 0.5 ];
+  var src = [ 53.241, 80.092, 67.203 ];
   var expected = [ 1, 0, 0 ];
   var got = _.color.lab._longToRgb( null, src );
   test.equivalent( got, expected );
 
   test.case = 'Green';
-  var src = [ 0.3333333333333333, 1, 0.5 ];
+  var src = [ 87.735, -86.183, 83.179 ];
   var expected = [ 0, 1, 0 ];
   var got = _.color.lab._longToRgb( null, src );
   test.equivalent( got, expected );
 
   test.case = 'Blue';
-  var src = [ 0.6666666666666666, 1, 0.5 ];
+  var src = [ 32.297, 79.188, -107.860 ];
   var expected = [ 0, 0, 1 ];
   var got = _.color.lab._longToRgb( null, src );
   test.equivalent( got, expected );
 
   test.case = 'Yellow';
-  var src = [ 0.1666666666666666, 1, 0.5 ];
+  var src = [ 97.139, -21.554, 94.478 ];
   var expected = [ 1, 1, 0 ];
   var got = _.color.lab._longToRgb( null, src );
   test.equivalent( got, expected );
 
   test.case = 'Cyan';
-  var src = [ 0.5, 1, 0.5 ];
+  var src = [ 91.113, -48.088, -14.131 ];
   var expected = [ 0, 1, 1 ];
   var got = _.color.lab._longToRgb( null, src );
   test.equivalent( got, expected );
 
   test.case = 'Magenta';
-  var src = [ 0.8333333333333333, 1, 0.5 ];
+  var src = [ 60.324,98.234,-60.825 ];
   var expected = [ 1, 0, 1 ];
   var got = _.color.lab._longToRgb( null, src );
   test.equivalent( got, expected );
@@ -315,49 +315,49 @@ function _longToRgb( test )
 
   test.open( 'non basic colors' );
 
-  test.case = '[ 0.125, 0.98, 0.33 ]';
-  var src = [ 0.125, 0.98, 0.33 ];
+  test.case = '[ 54.385, 7.912, 59.883 ]';
+  var src = [ 54.385, 7.912, 59.883 ];
   var expected = [ 0.6531372549019608, 0.4823529411764706, 0.00784313725490196 ];
   var got = _.color.lab._longToRgb( null, src );
   test.equivalent( got, expected );
 
-  test.case = '[ 0.4361111111111111, 0.87, 0.53 ]';
-  var src = [ 0.4361111111111111, 0.87, 0.53 ];
+  test.case = '[ 84.594, -64.473, 24.743 ]';
+  var src = [ 84.594, -64.473, 24.743 ];
   var expected = [ 0.12156862745098039, 0.9411764705882353, 0.6352941176470588 ];
   var got = _.color.lab._longToRgb( null, src );
   test.equivalent( got, expected );
 
-  test.case = '[ 0.1527777777777778, 0.68, 0.55 ]';
-  var src = [ 0.1527777777777778, 0.68, 0.55 ];
+  test.case = '[ 81.504, -11.785, 69.259 ]';
+  var src = [ 81.504, -11.785, 69.259 ];
   var expected = [ 0.8549019607843137, 0.807843137254902, 0.23921568627450981 ];
   var got = _.color.lab._longToRgb( null, src );
   test.equivalent( got, expected );
 
-  test.case = '[ 0.1527777777777778, 0.68, 0.55, 1 ] with alpha = 1';
-  var src = [ 0.1527777777777778, 0.68, 0.55, 1 ];
+  test.case = '[ 81.504, -11.785, 69.259, 1 ] with alpha = 1';
+  var src = [ 81.504, -11.785, 69.259, 1 ];
   var expected = [ 0.8549019607843137, 0.807843137254902, 0.23921568627450981 ];
   var got = _.color.lab._longToRgb( null, src );
   test.equivalent( got, expected );
 
   test.close( 'non basic colors' );
 
-  test.case = 'first arg > 1';
-  var src = [ 2, 0.5, 0.5 ];
-  var expected = null;
-  var got = _.color.lab._longToRgb( null, src );
-  test.identical( got, expected );
+  // test.case = 'first arg > 1';
+  // var src = [ 2, 0.5, 0.5 ];
+  // var expected = null;
+  // var got = _.color.lab._longToRgb( null, src );
+  // test.identical( got, expected );
 
-  test.case = 'second arg > 1';
-  var src = [ 0.2, 5, 0.5 ];
-  var expected = null;
-  var got = _.color.lab._longToRgb( null, src );
-  test.identical( got, expected );
+  // test.case = 'second arg > 1';
+  // var src = [ 0.2, 5, 0.5 ];
+  // var expected = null;
+  // var got = _.color.lab._longToRgb( null, src );
+  // test.identical( got, expected );
 
-  test.case = 'third arg > 1';
-  var src = [ 0.2, 0.5, 1.1 ];
-  var expected = null;
-  var got = _.color.lab._longToRgb( null, src );
-  test.identical( got, expected );
+  // test.case = 'third arg > 1';
+  // var src = [ 0.2, 0.5, 1.1 ];
+  // var expected = null;
+  // var got = _.color.lab._longToRgb( null, src );
+  // test.identical( got, expected );
 
 }
 
