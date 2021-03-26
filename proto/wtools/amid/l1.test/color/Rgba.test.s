@@ -160,6 +160,126 @@ function fromHexStr( test )
 
 fromHexStr.accuracy = 1e-2;
 
+//
+
+function fromRgbaStr( test )
+{
+
+  test.open( 'basic colors' );
+
+  test.case = 'Black';
+  var src = 'R:0 G:0 B:0 A:100';
+  var expected = [ 0, 0, 0, 1 ];
+  var got = _.color.rgba.fromRgbaStr( src );
+  test.identical( got, expected );
+
+  test.case = 'White';
+  var src = 'R:255 G:255 B:255 A:100';
+  var expected = [ 1, 1, 1, 1 ];
+  var got = _.color.rgba.fromRgbaStr( src );
+  test.identical( got, expected );
+
+  test.case = 'Red';
+  var src = 'R:255 G:0 B:0 A:100';
+  var expected = [ 1, 0, 0, 1 ];
+  var got = _.color.rgba.fromRgbaStr( src );
+  test.identical( got, expected );
+
+  test.case = 'Green';
+  var src = 'R:0 G:255 B:0 A:100';
+  var expected = [ 0, 1, 0, 1 ];
+  var got = _.color.rgba.fromRgbaStr( src );
+  test.identical( got, expected );
+
+  test.case = 'Blue';
+  var src = 'R:0 G:0 B:255 A:100';
+  var expected = [ 0, 0, 1, 1 ];
+  var got = _.color.rgba.fromRgbaStr( src );
+  test.identical( got, expected );
+
+  test.case = 'Yellow';
+  var src = 'R:255 G:255 B:0 A:100';
+  var expected = [ 1, 1, 0, 1 ];
+  var got = _.color.rgba.fromRgbaStr( src );
+  test.identical( got, expected );
+
+  test.case = 'Cyan';
+  var src = 'R:0 G:255 B:255 A:100';
+  var expected = [ 0, 1, 1, 1 ];
+  var got = _.color.rgba.fromRgbaStr( src );
+  test.identical( got, expected );
+
+  test.case = 'Magenta';
+  var src = 'R:255 G:0 B:255 A:100';
+  var expected = [ 1, 0, 1, 1 ];
+  var got = _.color.rgba.fromRgbaStr( src );
+  test.identical( got, expected );
+
+  test.close( 'basic colors' );
+
+  /* */
+
+  test.open( 'non basic colors' );
+
+  test.case = 'R:111 G:22 B:33 A:12';
+  var src = 'R:111 G:22 B:33 A:12';
+  var expected = [ 111/255, 22/255, 33/255, 0.12 ];
+  var got = _.color.rgba.fromRgbaStr( src );
+  test.equivalent( got, expected );
+
+  test.case = 'R:1 G:1 B:3 A:1';
+  var src = 'R:1 G:1 B:3 A:1';
+  var expected = [ 1/255, 1/255, 3/255, 0.01 ];
+  var got = _.color.rgba.fromRgbaStr( src );
+  test.equivalent( got, expected );
+
+  test.case = 'R:99 G:99 B:99 A:99';
+  var src = 'R:99 G:99 B:99 A:99';
+  var expected = [ 99/255, 99/255, 99/255, 0.99 ];
+  var got = _.color.rgba.fromRgbaStr( src );
+  test.equivalent( got, expected );
+
+  test.close( 'non basic colors' );
+
+  /* */
+
+  test.case = 'R:99 G:99 B:99, withou alpha info';
+  var src = 'R:99 G:99 B:99';
+  var expected = [ 99/255, 99/255, 99/255, 1 ];
+  var got = _.color.rgba.fromRgbaStr( src );
+  test.equivalent( got, expected );
+
+  /* */
+
+  test.case = 'wrong string pattern 1';
+  var src = 'R:567 G:0 B:1';
+  var expected = null;
+  var got = _.color.rgba.fromRgbaStr( src );
+  test.identical( got, expected );
+
+  test.case = 'wrong string pattern 2';
+  var src = 'R:12 G:1111 B:1';
+  var expected = null;
+  var got = _.color.rgba.fromRgbaStr( src );
+  test.identical( got, expected );
+
+  test.case = 'wrong string pattern 3';
+  var src = 'R:0 G:11 B:1111';
+  var expected = null;
+  var got = _.color.rgba.fromRgbaStr( src );
+  test.identical( got, expected );
+
+  debugger
+  test.case = 'wrong string pattern 4';
+  var src = 'R:0 G:11 B:11, A:22232';
+  var expected = null;
+  var got = _.color.rgba.fromRgbaStr( src );
+  test.identical( got, expected );
+
+}
+
+fromRgbaStr.accuracy = 1e-2;
+
 // --
 // declare
 // --
@@ -174,7 +294,8 @@ let Self =
   {
     // to rgba/a
 
-    fromHexStr
+    fromHexStr,
+    fromRgbaStr,
 
   },
 
