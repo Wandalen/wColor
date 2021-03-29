@@ -14,8 +14,8 @@
  * @module Tools/mid/Color
 */
 
-let _ = _global_.wTools;
-let Self = _.color.cmyka = _.color.cmyka || Object.create( null );
+const _ = _global_.wTools;
+const Self = _.color.cmyka = _.color.cmyka || Object.create( null );
 
 // --
 // implement
