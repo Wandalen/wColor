@@ -191,6 +191,10 @@ module:
           - ../proto/wtools/amid/l1/color/l3/Hsla.s
           - ../proto/wtools/amid/l1/color/l3/Hwb.s
           - ../proto/wtools/amid/l1/color/l3/Hwba.s
+          - ../proto/wtools/amid/l1/color/l3/Rgb.s
+          - ../proto/wtools/amid/l1/color/l3/Rgba.s
+          - ../proto/wtools/amid/l1/color/l3/Xyz.s
+          - ../proto/wtools/amid/l1/color/l3/Xyza.s
           - ../proto/wtools/amid/l1.test
           - ../proto/wtools/amid/l1.test/color
           - ../proto/wtools/amid/l1.test/color/Cmyk.test.s
@@ -200,6 +204,10 @@ module:
           - ../proto/wtools/amid/l1.test/color/Hsla.test.s
           - ../proto/wtools/amid/l1.test/color/Hwb.test.s
           - ../proto/wtools/amid/l1.test/color/Hwba.test.s
+          - ../proto/wtools/amid/l1.test/color/Rgb.test.s
+          - ../proto/wtools/amid/l1.test/color/Rgba.test.s
+          - ../proto/wtools/amid/l1.test/color/Xyz.test.s
+          - ../proto/wtools/amid/l1.test/color/Xyza.test.s
           - ../proto/wtools/atop
     submodule:
       wTools:
