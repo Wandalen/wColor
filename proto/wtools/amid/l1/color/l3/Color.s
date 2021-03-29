@@ -952,62 +952,7 @@ function colorToHex( rgb, def )
 
 function hexToColor( hex )
 {
-  let result;
-
-  _.assert( arguments.length === 1, 'Expects single argument' );
-  _.assert( _.strIs( hex ) );
-
-  result = /^#?([a-f\d])([a-f\d])([a-f\d])$/i.exec( hex );
-  if( result )
-  {
-    result =
-    [
-      parseInt( result[ 1 ], 16 ) / 15,
-      parseInt( result[ 2 ], 16 ) / 15,
-      parseInt( result[ 3 ], 16 ) / 15,
-    ]
-    return result;
-  }
-
-  result = /^#?([a-f\d])([a-f\d])([a-f\d])([a-f\d])$/i.exec( hex );
-  if( result )
-  {
-    result =
-    [
-      parseInt( result[ 1 ], 16 ) / 15,
-      parseInt( result[ 2 ], 16 ) / 15,
-      parseInt( result[ 3 ], 16 ) / 15,
-      parseInt( result[ 4 ], 16 ) / 15,
-    ]
-    return result;
-  }
-
-  result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec( hex );
-  if( result )
-  {
-    result =
-    [
-      parseInt( result[ 1 ], 16 ) / 255,
-      parseInt( result[ 2 ], 16 ) / 255,
-      parseInt( result[ 3 ], 16 ) / 255,
-    ]
-    return result;
-  }
-
-  result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec( hex );
-  if( result )
-  {
-    result =
-    [
-      parseInt( result[ 1 ], 16 ) / 255,
-      parseInt( result[ 2 ], 16 ) / 255,
-      parseInt( result[ 3 ], 16 ) / 255,
-      parseInt( result[ 4 ], 16 ) / 255,
-    ]
-    return result;
-  }
-
-  return null;
+  return _.color.rgba.fromHexStr( hex );
 }
 
 //
