@@ -1352,7 +1352,7 @@ function rgbToHsl( rgb, result )
   let b = rgb[ 2 ];
 
   let max = Math.max( r, g, b );
-  let min = Math.min( r, g, b );
+  const min = Math.min( r, g, b );
 
   lightness = ( min + max ) / 2.0;
 
