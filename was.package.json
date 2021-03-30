@@ -11,7 +11,7 @@
     { "name" : "Volodymyr M.", "email" : "volodymyr.migdal@gmail.com" }
   ],
   "main" : "proto/wtools/amid/l1/color/entry/ColorBasic.s",
-  "files" : [ "proto/wtools/amid/l1/color", "proto/wtools/Tools.s", "out", "out" ],
+  "files" : [ "proto/wtools/amid/l1/color", "proto/wtools/Tools.s", "out", "out", "proto/node_modules" ],
   "scripts" : { "test" : "wtest .run 'proto/**' rapidity:-1", "docgen" : "wdocgen proto" },
   "repository" : { "type" : "git", "url" : "https://github.com/Wandalen/wColor.git" },
   "bugs" :
@@ -19,7 +19,7 @@
     "url" : "https://github.com/Wandalen/wColor/issues"
   },
   "dependencies" : { "wTools" : "" },
-  "devDependencies" : { "wTesting" : "", "eslint" : "=7.1.0", "wColor" : "file:." },
+  "devDependencies" : { "wTesting" : "", "eslint" : "=7.1.0" },
   "optionalDependencies" : { "wmathvector" : "" },
   "keywords" :
   [
