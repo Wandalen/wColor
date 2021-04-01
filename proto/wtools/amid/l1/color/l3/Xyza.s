@@ -14,7 +14,7 @@
  * @module Tools/mid/Color
 */
 
-let _ = _global_.wTools;
+const _ = _global_.wTools;
 let Self = _.color.xyza = _.color.xyza || Object.create( null );
 
 // --

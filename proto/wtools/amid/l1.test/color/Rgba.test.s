@@ -11,7 +11,7 @@ if( typeof module !== 'undefined' )
   // _.include( 'wMathVector' );
 }
 
-let _ = _global_.wTools;
+const _ = _global_.wTools;
 
 // --
 // tests
