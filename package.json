@@ -1,50 +1,28 @@
 {
-  "name": "wColor",
-  "version": "0.3.329",
-  "engine": "node >= 10.0.0",
-  "license": "MIT",
-  "description": "Collection of cross-platform routines to operate colors conveniently. Color provides functions to convert color from one color space to another color space, from name to color and from color to the closest name of a color. The module does not introduce any specific storage format of color what is a benefit. Color has a short list of the most common colors. Use the module for formatted colorful output or other sophisticated operations with colors.",
-  "author": "Kostiantyn Wandalen <wanalen@01.school>",
-  "contributors": [
-    {
-      "name": "Kostiantyn Wandalen",
-      "email": "wanalen@01.school"
-    },
-    {
-      "name": "Volodymyr M.",
-      "email": "volodymyr.migdal@gmail.com"
-    }
+  "name" : "wColor",
+  "version" : "0.3.330",
+  "engine" : "node >= 10.0.0",
+  "license" : "MIT",
+  "description" : "Collection of cross-platform routines to operate colors conveniently. Color provides functions to convert color from one color space to another color space, from name to color and from color to the closest name of a color. The module does not introduce any specific storage format of color what is a benefit. Color has a short list of the most common colors. Use the module for formatted colorful output or other sophisticated operations with colors.",
+  "author" : "Kostiantyn Wandalen <wanalen@01.school>",
+  "contributors" :
+  [
+    { "name" : "Kostiantyn Wandalen", "email" : "wanalen@01.school" },
+    { "name" : "Volodymyr M.", "email" : "volodymyr.migdal@gmail.com" }
   ],
-  "main": "proto/wtools/amid/l1/color/entry/ColorBasic.s",
-  "files": [
-    "proto/wtools/amid/l1/color",
-    "proto/wtools/Tools.s",
-    "out",
-    "out",
-    "proto/node_modules"
-  ],
-  "scripts": {
-    "test": "wtest .run 'proto/**' rapidity:-1",
-    "docgen": "wdocgen proto"
+  "main" : "/pro/module/wColor/proto/node_modules/wColor",
+  "files" : [ "proto/wtools/amid/l1/color", "proto/wtools/Tools.s", "out", "out", "proto/node_modules" ],
+  "scripts" : { "test" : "wtest .run 'proto/**' rapidity:-1", "docgen" : "wdocgen proto" },
+  "repository" : { "type" : "git", "url" : "https://github.com/Wandalen/wColor.git" },
+  "bugs" :
+  {
+    "url" : "https://github.com/Wandalen/wColor/issues"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/Wandalen/wColor.git"
-  },
-  "bugs": {
-    "url": "https://github.com/Wandalen/wColor/issues"
-  },
-  "dependencies": {
-    "wTools": "delta"
-  },
-  "devDependencies": {
-    "eslint": "7.1.0",
-    "wTesting": "delta"
-  },
-  "optionalDependencies": {
-    "wmathvector": "delta"
-  },
-  "keywords": [
+  "dependencies" : { "wTools" : "delta" },
+  "devDependencies" : { "eslint" : "=7.1.0", "wTesting" : "delta" },
+  "optionalDependencies" : { "wmathvector" : "delta" },
+  "keywords" :
+  [
     "wTools",
     "color",
     "colors",
