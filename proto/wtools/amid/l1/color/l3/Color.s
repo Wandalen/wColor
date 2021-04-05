@@ -1443,7 +1443,9 @@ function strStrip( srcStr )
   return _.ct.strip( srcStr );
 }
 
-//
+// --
+// etc
+// --
 
 function _validateNormalized( src )
 {
@@ -1602,6 +1604,7 @@ let Extension =
 
   // str
 
+  /* xxx : remove */
   strBg : _.ct.bg,
   strFg : _.ct.fg,
   strFormat : _.ct.format,
@@ -1612,6 +1615,8 @@ let Extension =
   strColorStyle,
 
   strStrip,
+
+  // etc
 
   _validateNormalized,
 
