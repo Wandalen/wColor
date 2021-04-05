@@ -77,8 +77,8 @@ path:
       raw: compiled
       content: prime
   npm.proto.entry:
-    - /pro/module/wColor/proto/wtools/amid/l1/color/entry/ColorBasic.s
-    - /pro/module/wColor/proto/node_modules/wColor
+    - proto/wtools/amid/l1/color/entry/ColorBasic.s
+    - proto/node_modules/wColor
 reflector:
   reflect.proto:
     inherit: predefined.*
