@@ -7,7 +7,7 @@
 
 if( typeof module !== 'undefined' )
 {
-  let _ = require( './Basic.s' );
+  const _ = require( './Basic.s' );
   require( '../l3/Color.s' );
   require( '../l3/Cmyk.s' );
   require( '../l3/Cmyka.s' );

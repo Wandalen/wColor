@@ -5,7 +5,7 @@
 
 if( typeof module !== 'undefined' )
 {
-  let _ = require( '../../../Tools.s' );
+  const _ = require( '../../../Tools.s' );
   require( '../../l1/color/entry/ColorBasic.s' );
   _.include( 'wTesting' );
   _.include( 'wMathVector' );
