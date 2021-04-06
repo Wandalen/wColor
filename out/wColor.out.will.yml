@@ -2,10 +2,13 @@ format: outwillfile-2.0
 root:
   - wColor.out
 consistency:
-  ../.ex.will.yml: &ref_0
+  wColor.out.will.yml: &ref_0
+    hash: 1313a18d098fa522539f4df5539a5b64
+    size: 41038
+  ../.ex.will.yml: &ref_1
     hash: 5f5d0ed40ecbc19a7b6998c5a5857cb6
     size: 2230
-  ../.im.will.yml: &ref_1
+  ../.im.will.yml: &ref_2
     hash: baaabf5a8816869c656403fc078a4c18
     size: 5004
 module:
@@ -23,11 +26,11 @@ module:
         sophisticated operations with colors.
       enabled: 1
       version: 0.4.0
-      interpreters: &ref_2
+      interpreters:
         - njs >= 10.0.0
         - chrome >= 60.0.0
         - firefox >= 60.0.0
-      keywords: &ref_3
+      keywords:
         - wTools
         - color
         - colors
@@ -39,11 +42,11 @@ module:
         - hsl
       license: MIT
       author: Kostiantyn Wandalen <wanalen@01.school>
-      contributors: &ref_4
+      contributors:
         - Kostiantyn Wandalen <wanalen@01.school>
         - Volodymyr M. <volodymyr.migdal@gmail.com>
       npm.name: wColor
-      npm.scripts: &ref_5
+      npm.scripts:
         test: wtest .run proto/**
         docgen: wdocgen .build proto
     path:
@@ -174,9 +177,9 @@ module:
           - ../proto
           - ../proto/Integration.test.ss
           - ../proto/node_modules
+          - ../proto/node_modules/Tools
           - ../proto/node_modules/wColor
           - ../proto/wtools
-          - ../proto/wtools/Tools.s
           - ../proto/wtools/abase
           - ../proto/wtools/amid
           - ../proto/wtools/amid/l1
@@ -742,6 +745,24 @@ module:
           content: prime
         inherit:
           - files.transpile
+      exported.proto.export:
+        opts:
+          filePath: 'reflector::exported.proto.export'
+        criterion:
+          generated: 1
+          content: proto
+          export: 1
+        inherit:
+          - files.reflect
+      exported.files.proto.export:
+        opts:
+          filePath: 'reflector::exported.files.proto.export'
+        criterion:
+          generated: 1
+          content: proto
+          export: 1
+        inherit:
+          - files.reflect
     build:
       proto.export:
         steps:
@@ -830,8 +851,9 @@ module:
           content: proto
           export: 1
     consistency:
-      ../.ex.will.yml: *ref_0
-      ../.im.will.yml: *ref_1
+      wColor.out.will.yml: *ref_0
+      ../.ex.will.yml: *ref_1
+      ../.im.will.yml: *ref_2
   ../:
     about:
       name: wColor
@@ -846,13 +868,29 @@ module:
         sophisticated operations with colors.
       enabled: 1
       version: 0.4.0
-      interpreters: *ref_2
-      keywords: *ref_3
+      interpreters:
+        - njs >= 10.0.0
+        - chrome >= 60.0.0
+        - firefox >= 60.0.0
+      keywords:
+        - wTools
+        - color
+        - colors
+        - colorful
+        - color conversion
+        - convert color
+        - rgb
+        - rgba
+        - hsl
       license: MIT
       author: Kostiantyn Wandalen <wanalen@01.school>
-      contributors: *ref_4
+      contributors:
+        - Kostiantyn Wandalen <wanalen@01.school>
+        - Volodymyr M. <volodymyr.migdal@gmail.com>
       npm.name: wColor
-      npm.scripts: *ref_5
+      npm.scripts:
+        test: wtest .run proto/**
+        docgen: wdocgen .build proto
     path:
       module.willfiles:
         criterion:
@@ -1526,3 +1564,6 @@ module:
       ../.im.will.yml:
         hash: baaabf5a8816869c656403fc078a4c18
         size: 5004
+      wColor.out.will.yml:
+        hash: 1313a18d098fa522539f4df5539a5b64
+        size: 41038
