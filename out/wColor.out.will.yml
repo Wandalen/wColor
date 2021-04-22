@@ -3,14 +3,14 @@ root:
   - wColor.out
 consistency:
   wColor.out.will.yml: &ref_0
-    hash: 88c5c856b0535302502f163d1da4dc2a
-    size: 39382
+    hash: 1313a18d098fa522539f4df5539a5b64
+    size: 41038
   ../.ex.will.yml: &ref_1
     hash: 5f5d0ed40ecbc19a7b6998c5a5857cb6
     size: 2230
   ../.im.will.yml: &ref_2
-    hash: 5c83b8ae9a86532119d7f377cc07c02a
-    size: 5065
+    hash: baaabf5a8816869c656403fc078a4c18
+    size: 5004
 module:
   wColor.out:
     about:
@@ -77,6 +77,7 @@ module:
       download:
         criterion:
           predefined: 1
+        path: ..
       repository:
         path: 'git+https:///github.com/Wandalen/wColor.git'
       origins:
@@ -157,6 +158,10 @@ module:
           raw: compiled
           content: prime
         path: '{path::out.*=}/source/Index.s'
+      npm.proto.entry:
+        path:
+          - ../proto/wtools/amid/l1/color/entry/ColorBasic.s
+          - ../proto/node_modules/wColor
       exported.dir.proto.export:
         criterion:
           generated: 1
@@ -171,8 +176,10 @@ module:
         path:
           - ../proto
           - ../proto/Integration.test.ss
+          - ../proto/node_modules
+          - ../proto/node_modules/Tools
+          - ../proto/node_modules/wColor
           - ../proto/wtools
-          - ../proto/wtools/Tools.s
           - ../proto/wtools/abase
           - ../proto/wtools/amid
           - ../proto/wtools/amid/l1
@@ -190,6 +197,10 @@ module:
           - ../proto/wtools/amid/l1/color/l3/Hsla.s
           - ../proto/wtools/amid/l1/color/l3/Hwb.s
           - ../proto/wtools/amid/l1/color/l3/Hwba.s
+          - ../proto/wtools/amid/l1/color/l3/Rgb.s
+          - ../proto/wtools/amid/l1/color/l3/Rgba.s
+          - ../proto/wtools/amid/l1/color/l3/Xyz.s
+          - ../proto/wtools/amid/l1/color/l3/Xyza.s
           - ../proto/wtools/amid/l1.test
           - ../proto/wtools/amid/l1.test/color
           - ../proto/wtools/amid/l1.test/color/Cmyk.test.s
@@ -199,6 +210,10 @@ module:
           - ../proto/wtools/amid/l1.test/color/Hsla.test.s
           - ../proto/wtools/amid/l1.test/color/Hwb.test.s
           - ../proto/wtools/amid/l1.test/color/Hwba.test.s
+          - ../proto/wtools/amid/l1.test/color/Rgb.test.s
+          - ../proto/wtools/amid/l1.test/color/Rgba.test.s
+          - ../proto/wtools/amid/l1.test/color/Xyz.test.s
+          - ../proto/wtools/amid/l1.test/color/Xyza.test.s
           - ../proto/wtools/atop
     submodule:
       wTools:
@@ -904,6 +919,7 @@ module:
       download:
         criterion:
           predefined: 1
+        path: .
       repository:
         path: 'git+https:///github.com/Wandalen/wColor.git'
       origins:
@@ -984,6 +1000,10 @@ module:
           raw: compiled
           content: prime
         path: '{path::out.*=}/source/Index.s'
+      npm.proto.entry:
+        path:
+          - proto/wtools/amid/l1/color/entry/ColorBasic.s
+          - proto/node_modules/wColor
     submodule:
       wTools:
         path: 'npm:///wTools'
@@ -1542,6 +1562,6 @@ module:
         hash: 5f5d0ed40ecbc19a7b6998c5a5857cb6
         size: 2230
       ../.im.will.yml:
-        hash: 5c83b8ae9a86532119d7f377cc07c02a
-        size: 5065
+        hash: baaabf5a8816869c656403fc078a4c18
+        size: 5004
       wColor.out.will.yml: *ref_0

@@ -1,21 +1,21 @@
-(function _ColorHwb_s_()
+(function _ColorXyz_s_()
 {
 
 'use strict';
 
 /**
- * Collection of cross-platform routines to convert from hwb into rgb.
+ * Collection of cross-platform routines to convert from xyz into rgb.
  * @module Tools/mid/Color
 */
 
 /**
  * @summary Collection of cross-platform routines to operate colors conveniently.
- * @namespace wTools.color.hwb
+ * @namespace wTools.color.xyz
  * @module Tools/mid/Color
 */
 
 const _ = _global_.wTools;
-const Self = _.color.hwb = _.color.hwb || Object.create( null );
+let Self = _.color.xyz = _.color.xyz || Object.create( null );
 
 // --
 // implement
@@ -24,37 +24,37 @@ const Self = _.color.hwb = _.color.hwb || Object.create( null );
 function _strToRgb( dst, src )
 {
   /*
-    hwb(H, W, B)
+    xyz(X, Y, Z)
   */
 
   _.assert( arguments.length === 2, 'Expects 2 arguments' );
   _.assert( _.strIs( src ) );
   _.assert( dst === null || _.vectorIs( dst ) );
 
-  let hwbColors = _.color.hwb._formatStringParse( src );
+  let xyzColors = _.color.xyz._formatStringParse( src );
 
   _.assert
   (
-    hwbColors.length === 3 || hwbColors.length === 4,
-    `{-src-} string must contain exactly 3 or 4 numbers, but got ${hwbColors.length}`
+    xyzColors.length === 3 || xyzColors.length === 4,
+    `{-src-} string must contain exactly 3 or 4 numbers, but got ${xyzColors.length}`
   );
   _.assert
   (
-    hwbColors[ 3 ] === undefined || hwbColors[ 3 ] === 100,
-    `alpha channel must be 100, but got ${hwbColors[ 3 ]}`
+    xyzColors[ 3 ] === undefined || xyzColors[ 3 ] === 100,
+    `alpha channel must be 100, but got ${xyzColors[ 3 ]}`
   );
 
-  if( !_.color.hwb._validate( hwbColors ) )
+  if( !_.color.xyz._validate( xyzColors ) )
   return null;
 
   /* normalize ranges */
-  hwbColors[ 0 ] = hwbColors[ 0 ] / 360;
-  hwbColors[ 1 ] = hwbColors[ 1 ] / 100;
-  hwbColors[ 2 ] = hwbColors[ 2 ] / 100;
-  if( hwbColors[ 3 ] )
-  hwbColors[ 3 ] = hwbColors[ 3 ] / 100;
+  xyzColors[ 0 ] = xyzColors[ 0 ] / 100;
+  xyzColors[ 1 ] = xyzColors[ 1 ] / 100;
+  xyzColors[ 2 ] = xyzColors[ 2 ] / 100;
+  if( xyzColors[ 3 ] )
+  xyzColors[ 3 ] = xyzColors[ 3 ] / 100;
 
-  return _.color.hwb._longToRgb( dst, hwbColors );
+  return _.color.xyz._longToRgb( dst, xyzColors );
 
 }
 
@@ -65,7 +65,13 @@ function _longToRgb( dst, src )
   _.assert( src.length === 3 || src.length === 4, `{-src-} length must be 3 or 4, but got : ${src.length}` );
   _.assert( src[ 3 ] === undefined || src[ 3 ] === 1, `alpha channel must be 1, but got : ${src[ 3 ]}` );
 
-  if( !_.color._validateNormalized( src ) )
+  /*
+    Values greater than 1.0 are allowed and must not be clamped; they represent colors brighter than diffuse white.
+    https://drafts.csswg.org/css-color/#valdef-color-xyz
+  */
+  // if( !_.color._validateNormalized( src ) )
+  // return null;
+  if( src[ 0 ] < 0 || src[ 1 ] < 0 || src[ 2 ] < 0 )
   return null;
 
   let r, g, b;
@@ -111,41 +117,21 @@ function _longToRgb( dst, src )
 
   function convert( src )
   {
-    let h = src[ 0 ];
-    let wh = src[ 1 ];
-    let bl = src[ 2 ];
-    let ratio = wh + bl;
-    let i, v, f, n;
+    let x = src[ 0 ];
+    let y = src[ 1 ];
+    let z = src[ 2 ];
 
-    /* wh + bl cannot be > 1 */
-    if( ratio > 1 )
+    r = adj( x * 3.2406 + y * -1.5372 + z * -0.4986 );
+    g = adj( x * -0.9689 + y * 1.8758 + z * 0.0415 );
+    b = adj( x * 0.0557 + y * -0.2040 + z * 1.0570 );
+
+    function adj( channel ) /* gamma correction */
     {
-      wh /= ratio;
-      bl /= ratio;
-    }
-
-    i = Math.floor( 6 * h );
-    v = 1 - bl;
-    f = 6 * h - i;
-
-    if( ( i & 0x01 ) !== 0 )
-    {
-      f = 1 - f;
-    }
-
-    /* linear interpolation */
-    n = wh + f * ( v - wh );
-
-    switch( i )
-    {
-      case 6 :
-      case 0 : r = v; g = n; b = wh; break;
-      case 1 : r = n; g = v; b = wh; break;
-      case 2 : r = wh; g = v; b = n; break;
-      case 3 : r = wh; g = n; b = v; break;
-      case 4 : r = n; g = wh; b = v; break;
-      case 5 : r = v; g = wh; b = n; break;
-      default : break;
+      if( Math.abs( channel ) < 0.0031308 )
+      {
+        return 12.92 * channel;
+      }
+      return 1.055 * Math.pow( channel, 0.41666 ) - 0.055;
     }
   }
 
@@ -158,9 +144,9 @@ function _validate ( src )
 {
   if
   (
-    !_.cinterval.has( [ 0, 360 ], src[ 0 ] )
-    || !_.cinterval.has( [ 0, 100 ], src[ 1 ] )
-    || !_.cinterval.has( [ 0, 100 ], src[ 2 ] )
+    src[ 0 ] < 0
+    || src[ 1 ] < 0
+    || src[ 2 ] < 0
   )
   return false;
 
@@ -171,7 +157,7 @@ function _validate ( src )
 
 function _formatStringParse( src )
 {
-  _.assert( /^hwb\(\d{1,3}, ?\d{1,3}%, ?\d{1,3}%(, ?\d{1,3}%)?\)$/g.test( src ), 'Wrong source string pattern' );
+  _.assert( /^xyz\(\d+(\.\d+)?, ?\d+(\.\d+)?, ?\d+(\.\d+)?(, ?\d{1,3}%)?\)$/g.test( src ), 'Wrong source string pattern' );
   return src.match( /\d+(\.\d+)?/g ).map( ( el ) => +el );
 }
 
@@ -192,7 +178,7 @@ let Extension =
 
 }
 
-_.mapSupplement( _.color.hwb, Extension );
+_.mapSupplement( _.color.xyz, Extension );
 
 // --
 // export

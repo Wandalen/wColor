@@ -14,8 +14,8 @@
  * @module Tools/mid/Color
 */
 
-let _ = _global_.wTools;
-let Self = _.color = _.color || Object.create( null );
+const _ = _global_.wTools;
+const Self = _.color = _.color || Object.create( null );
 
 // --
 // implement
@@ -138,7 +138,7 @@ function _rgbaFromNotName( src )
 
   if( _.objectIs( src ) )
   {
-    _.assertMapHasOnly( src, { r : null, g : null, b : null, a : null } );
+    _.map.assertHasOnly( src, { r : null, g : null, b : null, a : null } );
     let result = [];
     result[ 0 ] = src.r === undefined ? 1 : src.r;
     result[ 1 ] = src.g === undefined ? 1 : src.g;
@@ -212,7 +212,7 @@ function rgbaFrom( o )
   if( !result )
   debugger;
   if( !result )
-  throw _.err( `Not color : "${_.entity.exportStringShort( o.src )}"` );
+  throw _.err( `Not color : "${_.entity.exportStringShallow( o.src )}"` );
 
   return result;
 
@@ -476,7 +476,7 @@ function rgbaHtmlFrom( o )
   if( !result )
   debugger;
   if( !result )
-  throw _.err( `Not color : "${_.entity.exportStringShort( o.src )}"` );
+  throw _.err( `Not color : "${_.entity.exportStringShallow( o.src )}"` );
 
   return result;
 
@@ -952,62 +952,7 @@ function colorToHex( rgb, def )
 
 function hexToColor( hex )
 {
-  let result;
-
-  _.assert( arguments.length === 1, 'Expects single argument' );
-  _.assert( _.strIs( hex ) );
-
-  result = /^#?([a-f\d])([a-f\d])([a-f\d])$/i.exec( hex );
-  if( result )
-  {
-    result =
-    [
-      parseInt( result[ 1 ], 16 ) / 15,
-      parseInt( result[ 2 ], 16 ) / 15,
-      parseInt( result[ 3 ], 16 ) / 15,
-    ]
-    return result;
-  }
-
-  result = /^#?([a-f\d])([a-f\d])([a-f\d])([a-f\d])$/i.exec( hex );
-  if( result )
-  {
-    result =
-    [
-      parseInt( result[ 1 ], 16 ) / 15,
-      parseInt( result[ 2 ], 16 ) / 15,
-      parseInt( result[ 3 ], 16 ) / 15,
-      parseInt( result[ 4 ], 16 ) / 15,
-    ]
-    return result;
-  }
-
-  result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec( hex );
-  if( result )
-  {
-    result =
-    [
-      parseInt( result[ 1 ], 16 ) / 255,
-      parseInt( result[ 2 ], 16 ) / 255,
-      parseInt( result[ 3 ], 16 ) / 255,
-    ]
-    return result;
-  }
-
-  result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec( hex );
-  if( result )
-  {
-    result =
-    [
-      parseInt( result[ 1 ], 16 ) / 255,
-      parseInt( result[ 2 ], 16 ) / 255,
-      parseInt( result[ 3 ], 16 ) / 255,
-      parseInt( result[ 4 ], 16 ) / 255,
-    ]
-    return result;
-  }
-
-  return null;
+  return _.color.rgba.fromHexStr( hex );
 }
 
 //
@@ -1352,7 +1297,7 @@ function rgbToHsl( rgb, result )
   let b = rgb[ 2 ];
 
   let max = Math.max( r, g, b );
-  let min = Math.min( r, g, b );
+  const min = Math.min( r, g, b );
 
   lightness = ( min + max ) / 2.0;
 
@@ -1498,7 +1443,9 @@ function strStrip( srcStr )
   return _.ct.strip( srcStr );
 }
 
-//
+// --
+// etc
+// --
 
 function _validateNormalized( src )
 {
@@ -1657,6 +1604,7 @@ let Extension =
 
   // str
 
+  /* xxx : remove */
   strBg : _.ct.bg,
   strFg : _.ct.fg,
   strFormat : _.ct.format,
@@ -1667,6 +1615,8 @@ let Extension =
   strColorStyle,
 
   strStrip,
+
+  // etc
 
   _validateNormalized,
 

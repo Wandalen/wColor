@@ -5,13 +5,13 @@
 
 if( typeof module !== 'undefined' )
 {
-  let _ = require( '../../../Tools.s' );
+  const _ = require( 'Tools' );
   require( '../../l1/color/entry/ColorBasic.s' );
   _.include( 'wTesting' );
   _.include( 'wMathVector' );
 }
 
-let _ = _global_.wTools;
+const _ = _global_.wTools;
 
 // --
 // tests
@@ -770,7 +770,7 @@ function rgbaHtmlFrom( test )
 // declare
 // --
 
-let Self =
+const Proto =
 {
 
   name : 'Tools/mid/Color',
@@ -796,7 +796,7 @@ let Self =
 
 //
 
-Self = wTestSuite( Self );
+const Self = wTestSuite( Proto );
 if( typeof module !== 'undefined' && !module.parent )
 wTester.test( Self.name );
 

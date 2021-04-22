@@ -1,21 +1,21 @@
-(function _ColorHsla_s_()
+(function _ColorXyza_s_()
 {
 
 'use strict';
 
 /**
- * Collection of cross-platform routines to convert from hsla into rgb.
+ * Collection of cross-platform routines to convert from xyza into rgb.
  * @module Tools/mid/Color
 */
 
 /**
  * @summary Collection of cross-platform routines to operate colors conveniently.
- * @namespace wTools.color.hsla
+ * @namespace wTools.color.xyza
  * @module Tools/mid/Color
 */
 
 const _ = _global_.wTools;
-const Self = _.color.hsla = _.color.hsla || Object.create( null );
+let Self = _.color.xyza = _.color.xyza || Object.create( null );
 
 // --
 // implement
@@ -24,32 +24,32 @@ const Self = _.color.hsla = _.color.hsla || Object.create( null );
 function _strToRgba( dst, src )
 {
   /*
-    hsla(H, S, L, A)
+    xyza(H, S, L, A)
   */
 
   _.assert( arguments.length === 2, 'Expects 2 arguments' );
   _.assert( _.strIs( src ) );
   _.assert( dst === null || _.vectorIs( dst ) );
 
-  let hslaColors = _.color.hsla._formatStringParse( src );
+  let xyzaColors = _.color.xyza._formatStringParse( src );
 
   _.assert
   (
-    hslaColors.length === 3 || hslaColors.length === 4,
-    `{-src-} string must contain exactly 3 or 4 numbers, but got ${hslaColors.length}`
+    xyzaColors.length === 3 || xyzaColors.length === 4,
+    `{-src-} string must contain exactly 3 or 4 numbers, but got ${xyzaColors.length}`
   );
 
-  if( !_.color.hsl._validate( hslaColors ) )
+  if( !_.color.xyza._validate( xyzaColors ) )
   return null;
 
   /* normalize ranges */
-  hslaColors[ 0 ] = hslaColors[ 0 ] / 360;
-  hslaColors[ 1 ] = hslaColors[ 1 ] / 100;
-  hslaColors[ 2 ] = hslaColors[ 2 ] / 100;
-  if( hslaColors[ 3 ] )
-  hslaColors[ 3 ] = hslaColors[ 3 ] / 100;
+  xyzaColors[ 0 ] = xyzaColors[ 0 ] / 100;
+  xyzaColors[ 1 ] = xyzaColors[ 1 ] / 100;
+  xyzaColors[ 2 ] = xyzaColors[ 2 ] / 100;
+  if( xyzaColors[ 3 ] )
+  xyzaColors[ 3 ] = xyzaColors[ 3 ] / 100;
 
-  return _.color.hsla._longToRgba( dst, hslaColors );
+  return _.color.xyza._longToRgba( dst, xyzaColors );
 
 }
 
@@ -59,7 +59,19 @@ function _longToRgba( dst, src )
 {
   _.assert( src.length === 3 || src.length === 4, `{-src-} length must be 3 or 4, but got : ${src.length}` );
 
-  if( !_.color._validateNormalized( src ) )
+  /*
+    Values greater than 1.0 are allowed and must not be clamped; they represent colors brighter than diffuse white.
+    https://drafts.csswg.org/css-color/#valdef-color-xyz
+  */
+  // if( !_.color._validateNormalized( src ) )
+  // return null;
+  if
+  (
+    src[ 0 ] < 0
+    || src[ 1 ] < 0
+    || src[ 2 ] < 0
+    || src[ 3 ] !== undefined && !_.cinterval.has( [ 0, 100 ], src[ 3 ] )
+  )
   return null;
 
   let r, g, b;
@@ -108,10 +120,24 @@ function _longToRgba( dst, src )
 
   function convert( src )
   {
-    [ r, g, b ] = _.color.hslToRgb([ src[ 0 ], src[ 1 ], src[ 2 ] ]);
+    let x = src[ 0 ];
+    let y = src[ 1 ];
+    let z = src[ 2 ];
     if( src[ 3 ] !== undefined )
     a = src[ 3 ];
 
+    r = adj( x * 3.2406 + y * -1.5372 + z * -0.4986 );
+    g = adj( x * -0.9689 + y * 1.8758 + z * 0.0415 );
+    b = adj( x * 0.0557 + y * -0.2040 + z * 1.0570 );
+
+    function adj( channel ) /* gamma correction */
+    {
+      if( Math.abs( channel ) < 0.0031308 )
+      {
+        return 12.92 * channel;
+      }
+      return 1.055 * Math.pow( channel, 0.41666 ) - 0.055;
+    }
   }
 
 
@@ -123,10 +149,10 @@ function _validate ( src )
 {
   if
   (
-    !_.cinterval.has( [ 0, 360 ], src[ 0 ] )
-    || !_.cinterval.has( [ 0, 100 ], src[ 1 ] )
-    || !_.cinterval.has( [ 0, 100 ], src[ 2 ] )
-    || src[ 3 ] !== undefined && !_.cinterval.has( [ 0, 100 ], src[ 3 ] )
+    src[ 0 ] < 0
+    || src[ 1 ] < 0
+    || src[ 2 ] < 0
+    || ( src[ 3 ] !== undefined && !_.cinterval.has( [ 0, 100 ], src[ 3 ] ) )
   )
   return false;
 
@@ -137,7 +163,7 @@ function _validate ( src )
 
 function _formatStringParse( src )
 {
-  _.assert( /^hsla\(\d{1,3}, ?\d{1,3}%, ?\d{1,3}%(, ?\d{1,3}%)?\)$/g.test( src ), 'Wrong source string pattern' );
+  _.assert( /^xyza\(\d+(\.\d+)?, ?\d+(\.\d+)?, ?\d+(\.\d+)?(, ?\d{1,3}%)?\)$/g.test( src ), 'Wrong source string pattern' );
   return src.match( /\d+(\.\d+)?/g ).map( ( el ) => +el );
 }
 
@@ -158,7 +184,7 @@ let Extension =
 
 }
 
-_.mapSupplement( _.color.hsla, Extension );
+_.mapSupplement( _.color.xyza, Extension );
 
 // --
 // export
