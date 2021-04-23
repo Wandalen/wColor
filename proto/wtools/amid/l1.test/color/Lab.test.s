@@ -5,13 +5,13 @@
 
 if( typeof module !== 'undefined' )
 {
-  let _ = require( '../../../Tools.s' );
+  const _ = require( 'Tools' );
   require( '../../l1/color/entry/ColorBasic.s' );
   _.include( 'wTesting' );
   _.include( 'wMathVector' );
 }
 
-let _ = _global_.wTools;
+const _ = _global_.wTools;
 
 // --
 // tests
@@ -109,7 +109,7 @@ function _strToRgb( test )
   test.identical( got, expected );
 
   test.case = 'second arg > 127';
-  var src = 'lab(81.504, 1111.785, 69.259)';
+  var src = 'lab(81.504, 129.785, 69.259)';
   var expected = null;
   var got = _.color.lab._strToRgb( null, src );
   test.identical( got, expected );
@@ -140,7 +140,7 @@ function _strToRgbWithDst( test )
   var dst = [ 1, 2, 3 ];
   var expected = [ 0, 0, 0 ];
   var got = _.color.lab._strToRgb( dst, src );
-  test.identical( got, expected );
+  test.equivalent( got, expected );
   test.true( got === dst );
 
   test.case = 'Green, dst = Long';
@@ -148,7 +148,7 @@ function _strToRgbWithDst( test )
   var dst = _.longFrom([ 1, 4, 13 ]);
   var expected = [ 0, 1, 0 ];
   var got = _.color.lab._strToRgb( dst, src );
-  test.identical( got, expected );
+  test.equivalent( got, expected );
   test.true( got === dst );
 
   test.case = 'Red, dst = TypedArray';
@@ -157,7 +157,7 @@ function _strToRgbWithDst( test )
   var expected = [ 1, 0, 0 ];
   var got = _.color.lab._strToRgb( dst, src );
   for( let i = 0; i < expected.length; i++ )
-  test.identical( got[ i ], expected[ i ] );
+  test.equivalent( got[ i ], expected[ i ] );
   test.true( got === dst );
 
   test.case = 'White, dst = VectorAdapter';
@@ -166,7 +166,7 @@ function _strToRgbWithDst( test )
   var expected = [ 1, 1, 1 ];
   var got = _.color.lab._strToRgb( dst, src );
   for( let i = 0; i < expected.length; i++ )
-  test.identical( got.eGet( i ), expected[ i ] );
+  test.equivalent( got.eGet( i ), expected[ i ] );
   test.true( got === dst );
 
   test.close( 'basic colors' );
@@ -304,7 +304,7 @@ function _longToRgb( test )
   test.equivalent( got, expected );
 
   test.case = 'Magenta';
-  var src = [ 60.324,98.234,-60.825 ];
+  var src = [ 60.324, 98.234, -60.825 ];
   var expected = [ 1, 0, 1 ];
   var got = _.color.lab._longToRgb( null, src );
   test.equivalent( got, expected );
@@ -375,33 +375,33 @@ function _longToRgbWithDst( test )
   var dst = [ 1, 2, 3 ];
   var expected = [ 0, 0, 0 ];
   var got = _.color.lab._longToRgb( dst, src );
-  test.identical( got, expected );
+  test.equivalent( got, expected );
   test.true( got === dst );
 
   test.case = 'Green, dst = Long';
-  var src = [ 0.3333333333333333, 1, 0.5 ];
+  var src = [ 87.735, -86.183, 83.179 ];
   var dst = _.longFrom([ 1, 4, 13 ]);
   var expected = [ 0, 1, 0 ];
   var got = _.color.lab._longToRgb( dst, src );
-  test.identical( got, expected );
+  test.equivalent( got, expected );
   test.true( got === dst );
 
   test.case = 'Red, dst = TypedArray';
-  var src = [ 0, 1, 0.5 ];
+  var src = [ 53.241, 80.092, 67.203 ];
   var dst = new I8x([ 1, 5, 15 ]); /* 1 and 0 -> Integer Typed Array can be used */
   var expected = [ 1, 0, 0 ];
   var got = _.color.lab._longToRgb( dst, src );
   for( let i = 0; i < expected.length; i++ )
-  test.identical( got[ i ], expected[ i ] );
+  test.equivalent( got[ i ], expected[ i ] );
   test.true( got === dst );
 
   test.case = 'White, dst = VectorAdapter';
-  var src = [ 0, 0, 1 ];
+  var src = [ 100, 0, -0 ];
   var dst = _.vad.fromLong([ 1, 2, 3 ]);
   var expected = [ 1, 1, 1 ];
   var got = _.color.lab._longToRgb( dst, src );
   for( let i = 0; i < expected.length; i++ )
-  test.identical( got.eGet( i ), expected[ i ] );
+  test.equivalent( got.eGet( i ), expected[ i ] );
   test.true( got === dst );
 
   test.close( 'basic colors' );
@@ -410,24 +410,24 @@ function _longToRgbWithDst( test )
 
   test.open( 'non basic colors' );
 
-  test.case = '[ 0.125, 0.98, 0.33 ], dst = Array';
-  var src = [ 0.125, 0.98, 0.33 ];
+  test.case = '[ 54.385, 7.912, 59.883 ], dst = Array';
+  var src = [ 54.385, 7.912, 59.883 ];
   var dst = [ 1, 2, 3 ];
   var expected = [ 0.6531372549019608, 0.4823529411764706, 0.00784313725490196 ];
   var got = _.color.lab._longToRgb( dst, src );
   test.equivalent( got, expected );
   test.true( got === dst );
 
-  test.case = '[ 0.125, 0.98, 0.33 ], dst = Long';
-  var src = [ 0.125, 0.98, 0.33 ];
+  test.case = '[ 54.385, 7.912, 59.883 ], dst = Long';
+  var src = [ 54.385, 7.912, 59.883 ];
   var dst = _.longFrom([ 1, 2, 3 ]);
   var expected = [ 0.6531372549019608, 0.4823529411764706, 0.00784313725490196 ];
   var got = _.color.lab._longToRgb( dst, src );
   test.equivalent( got, expected );
   test.true( got === dst );
 
-  test.case = '[ 0.125, 0.98, 0.33 ], dst = TypedArray';
-  var src = [ 0.125, 0.98, 0.33 ];
+  test.case = '[ 54.385, 7.912, 59.883 ], dst = TypedArray';
+  var src = [ 54.385, 7.912, 59.883 ];
   var dst = new Float32Array([ 1, 2, 3 ]); /* ( 0, 1 ) -> Integer Typed Array can NOT be used */
   var expected = [ 0.6531372549019608, 0.4823529411764706, 0.00784313725490196 ];
   var got = _.color.lab._longToRgb( dst, src );
@@ -435,8 +435,8 @@ function _longToRgbWithDst( test )
   test.equivalent( got[ i ], expected[ i ] );
   test.true( got === dst );
 
-  test.case = '[ 0.125, 0.98, 0.33 ], dst = VectorAdapter';
-  var src = [ 0.125, 0.98, 0.33 ];
+  test.case = '[ 54.385, 7.912, 59.883 ], dst = VectorAdapter';
+  var src = [ 54.385, 7.912, 59.883 ];
   var dst = _.vad.fromLong([ 1, 2, 3 ]);
   var expected = [ 0.6531372549019608, 0.4823529411764706, 0.00784313725490196 ];
   var got = _.color.lab._longToRgb( dst, src );
@@ -444,16 +444,16 @@ function _longToRgbWithDst( test )
   test.equivalent( got.eGet( i ), expected[ i ] );
   test.true( got === dst );
 
-  test.case = '[ 0.125, 0.98, 0.33, 1 ] with alpha = 100, dst = Array';
-  var src = [ 0.125, 0.98, 0.33, 1 ];
+  test.case = '[ 54.385, 7.912, 59.883, 1 ] with alpha = 100, dst = Array';
+  var src = [ 54.385, 7.912, 59.883, 1 ];
   var dst = [ 1, 2, 3 ];
   var expected = [ 0.6531372549019608, 0.4823529411764706, 0.00784313725490196 ];
   var got = _.color.lab._longToRgb( dst, src );
   test.equivalent( got, expected );
   test.true( got === dst );
 
-  test.case = '[ 0.125, 0.98, 0.33, 1 ] with alpha = 100, dst = VectorAdapter';
-  var src = [ 0.125, 0.98, 0.33, 1 ];
+  test.case = '[ 54.385, 7.912, 59.883, 1 ] with alpha = 100, dst = VectorAdapter';
+  var src = [ 54.385, 7.912, 59.883, 1 ];
   var dst = _.vad.fromLong([ 1, 2, 3 ]);
   var expected = [ 0.6531372549019608, 0.4823529411764706, 0.00784313725490196 ];
   var got = _.color.lab._longToRgb( dst, src );
@@ -463,23 +463,24 @@ function _longToRgbWithDst( test )
 
   test.close( 'non basic colors' );
 
-  test.case = 'first arg > 360';
-  var src = [ 4.5, 0.9, 0.36 ]
-  var expected = null;
-  var got = _.color.lab._longToRgb( [ 1, 2, 3, 4 ], src );
-  test.identical( got, expected );
+  // test.case = 'first arg > 1';
+  // var src = [ 1.1, 0.9, 0.36 ]
+  // var expected = null;
+  // debugger;
+  // var got = _.color.lab._longToRgb( [ 1, 2, 3 ], src );
+  // test.identical( got, expected );
 
-  test.case = 'second arg > 100%';
-  var src = [ 0.45, 9, 0.36 ]
-  var expected = null;
-  var got = _.color.lab._longToRgb( [ 1, 2, 3 ], src );
-  test.identical( got, expected );
+  // test.case = 'second arg > 1';
+  // var src = [ 0.45, 130, 0.36 ]
+  // var expected = null;
+  // var got = _.color.lab._longToRgb( [ 1, 2, 3 ], src );
+  // test.identical( got, expected );
 
-  test.case = 'third arg > 100%';
-  var src = [ 0.45, 0.9, 1.2 ]
-  var expected = null;
-  var got = _.color.lab._longToRgb( [ 1, 2, 3 ], src );
-  test.identical( got, expected );
+  // test.case = 'third arg > 1';
+  // var src = [ 0.45, 0.9, 129 ]
+  // var expected = null;
+  // var got = _.color.lab._longToRgb( [ 1, 2, 3 ], src );
+  // test.identical( got, expected );
 
   /* - */
 
@@ -567,43 +568,39 @@ function _validate( test )
 function _formatStringParse( test )
 {
   test.case = 'normal 3';
-  var src = 'lab(0,0%,100%)';
+  var src = 'lab(0,0,100)';
   var expected = [ 0, 0, 100 ];
   var got = _.color.lab._formatStringParse( src );
   test.identical( got, expected );
 
   test.case = 'normal spaces 3';
-  var src = 'lab(0, 0%, 100%)';
+  var src = 'lab(0, 0, 100)';
   var expected = [ 0, 0, 100 ];
   var got = _.color.lab._formatStringParse( src );
   test.identical( got, expected );
 
   test.case = 'normal 4';
-  var src = 'lab(0,0%,0%,100%)';
+  var src = 'lab(0,0,0,100)';
   var expected = [ 0, 0, 0, 100 ];
   var got = _.color.lab._formatStringParse( src );
   test.identical( got, expected );
 
   test.case = 'normal spaces 4';
-  var src = 'lab(0, 0%, 0%, 100%)';
+  var src = 'lab(0, 0, 0, 100)';
   var expected = [ 0, 0, 0, 100 ];
   var got = _.color.lab._formatStringParse( src );
   test.identical( got, expected );
 
   test.case = 'wrong format';
-  var src = 'hwba(0,0%,0%)';
+  var src = 'hwba(0,0,0)';
   test.shouldThrowErrorSync( () => _.color.lab._formatStringParse( src ) );
 
   test.case = 'redundant channel';
-  var src = 'lab(0,0%,0%,0%,100%)';
+  var src = 'lab(0,0,0,0,100)';
   test.shouldThrowErrorSync( () => _.color.lab._formatStringParse( src ) );
 
-  test.case = 'without \'%\'';
-  var src = 'lab(0,0,0%)';
-  test.shouldThrowErrorSync( () => _.color.lab._formatStringParse( src ) );
-
-  test.case = 'more than 3 digits \'%\'';
-  var src = 'lab(0,0%,1000%)';
+  test.case = 'more than 3 digits';
+  var src = 'lab(0,0,1000)';
   test.shouldThrowErrorSync( () => _.color.lab._formatStringParse( src ) );
 }
 
@@ -623,11 +620,11 @@ let Self =
     // to rgb/a
 
     _strToRgb,
-    // _strToRgbWithDst,
-    // _longToRgb,
-    // _longToRgbWithDst,
-    // _validate,
-    // _formatStringParse
+    _strToRgbWithDst,
+    _longToRgb,
+    _longToRgbWithDst,
+    _validate,
+    _formatStringParse
 
   },
 

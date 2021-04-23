@@ -19,6 +19,7 @@ if( typeof module !== 'undefined' )
   require( '../l3/Xyza.s' );
   require( '../l3/Rgb.s' );
   require( '../l3/Rgba.s' );
+  require( '../l3/Lab.s' );
   module[ 'exports' ] = _global_.wTools;
 }
 

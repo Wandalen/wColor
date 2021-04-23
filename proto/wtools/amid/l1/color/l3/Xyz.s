@@ -71,8 +71,8 @@ function _longToRgb( dst, src )
   */
   // if( !_.color._validateNormalized( src ) )
   // return null;
-  if( src[ 0 ] < 0 || src[ 1 ] < 0 || src[ 2 ] < 0 )
-  return null;
+  // if( src[ 0 ] < 0 || src[ 1 ] < 0 || src[ 2 ] < 0 )
+  // return null;
 
   let r, g, b;
 

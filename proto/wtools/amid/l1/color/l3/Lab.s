@@ -51,8 +51,8 @@ function _strToRgb( dst, src )
   // labColors[ 0 ] = labColors[ 0 ] / 360;
   // labColors[ 1 ] = labColors[ 1 ] / 100;
   // labColors[ 2 ] = labColors[ 2 ] / 100;
-  // if( labColors[ 3 ] )
-  // labColors[ 3 ] = labColors[ 3 ] / 100;
+  if( labColors[ 3 ] )
+  labColors[ 3 ] = labColors[ 3 ] / 100;
 
   return _.color.lab._longToRgb( dst, labColors );
 
@@ -65,8 +65,8 @@ function _longToRgb( dst, src )
   _.assert( src.length === 3 || src.length === 4, `{-src-} length must be 3 or 4, but got : ${src.length}` );
   _.assert( src[ 3 ] === undefined || src[ 3 ] === 1, `alpha channel must be 1, but got : ${src[ 3 ]}` );
 
-  if( !_.color._validateNormalized( src ) )
-  return null;
+  // if( !_.color._validateNormalized( src ) )
+  // return null;
 
   let r, g, b;
 
@@ -155,19 +155,20 @@ function _labToXyz( lab )
   });
 
   const D65 = [ 95.047, 100, 108.883 ];
-  x = x * D65[ 0 ];
-  y = y * D65[ 1 ];
-  z = z * D65[ 2 ];
+  x = ( x * D65[ 0 ] ) / 100;
+  y = ( y * D65[ 1 ] ) / 100;
+  z = ( z * D65[ 2 ] ) / 100;
 
   return [ x, y, z ];
+
 }
 
 //
 
 function _formatStringParse( src )
 {
-  _.assert( /^lab\(-?\d{1,3}.?\d+?, ?-?\d{1,3}.?\d+?, ?-?\d{1,3}.?\d+?(, ?\d{1,3}%?)?\)$/g.test( src ), 'Wrong source string pattern' );
-  return src.match( /\d+(\.\d+)?/g ).map( ( el ) => +el );
+  _.assert( /^lab\(-?\d{1,3}.?\d*?, ?-?\d{1,3}.?\d*?, ?-?\d{1,3}.?\d*?(, ?\d{1,3}%?)?\)$/g.test( src ), 'Wrong source string pattern' );
+  return src.match( /-?\d+(\.\d+)?/g ).map( ( el ) => +el );
 }
 
 // --
