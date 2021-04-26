@@ -194,7 +194,7 @@ let Extension =
 
 }
 
-_.mapSupplement( _.color.hwba, Extension );
+_.props.supplement( _.color.hwba, Extension );
 
 // --
 // export

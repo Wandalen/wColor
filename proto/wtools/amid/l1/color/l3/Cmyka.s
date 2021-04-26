@@ -168,7 +168,7 @@ let Extension =
 
 }
 
-_.mapSupplement( _.color.cmyka, Extension );
+_.props.supplement( _.color.cmyka, Extension );
 
 // --
 // export

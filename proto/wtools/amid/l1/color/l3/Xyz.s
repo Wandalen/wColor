@@ -178,7 +178,7 @@ let Extension =
 
 }
 
-_.mapSupplement( _.color.xyz, Extension );
+_.props.supplement( _.color.xyz, Extension );
 
 // --
 // export

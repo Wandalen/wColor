@@ -160,7 +160,7 @@ let Extension =
 
 }
 
-_.mapSupplement( _.color.cmyk, Extension );
+_.props.supplement( _.color.cmyk, Extension );
 
 // --
 // export

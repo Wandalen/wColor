@@ -157,7 +157,7 @@ let Extension =
 
 }
 
-_.mapSupplement( _.color.hsl, Extension );
+_.props.supplement( _.color.hsl, Extension );
 
 // --
 // export

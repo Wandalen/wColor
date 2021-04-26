@@ -158,7 +158,7 @@ let Extension =
 
 }
 
-_.mapSupplement( _.color.hsla, Extension );
+_.props.supplement( _.color.hsla, Extension );
 
 // --
 // export

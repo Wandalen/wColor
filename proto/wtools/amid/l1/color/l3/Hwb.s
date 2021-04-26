@@ -192,7 +192,7 @@ let Extension =
 
 }
 
-_.mapSupplement( _.color.hwb, Extension );
+_.props.supplement( _.color.hwb, Extension );
 
 // --
 // export

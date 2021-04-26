@@ -25,7 +25,7 @@ function _fromTable( o )
 {
   let result = o.colorMap[ o.src ];
 
-  _.assertRoutineOptions( _fromTable, o );
+  _.routine.assertOptions( _fromTable, o );
 
   if( !result )
   result = o.def;
@@ -68,15 +68,15 @@ function fromTable( o )
   o =
   {
     src : arguments[ 0 ],
-    def : arguments[ 1 ],
-    colorMap : arguments[ 2 ],
+    def : ( arguments.length > 1 ? arguments[ 1 ] : null ),
+    colorMap : ( arguments.length > 2 ? arguments[ 2 ] : null ),
   }
 
   let result;
   if( !o.colorMap )
   o.colorMap = this.ColorMap;
 
-  _.routineOptions( fromTable, o );
+  _.routine.options_( fromTable, o );
   _.assert( arguments.length <= 3 );
   _.assert( _.strIs( o.src ) );
 
@@ -203,9 +203,9 @@ function rgbaFrom( o )
 {
 
   if( !_.mapIs( o ) )
-  o = { src : arguments[ 0 ], colorMap : arguments[ 1 ] };
+  o = { src : arguments[ 0 ], colorMap : ( arguments.length > 1 ? arguments[ 1 ] : null ) };
   _.assert( arguments.length === 1, 'Expects single argument' );
-  _.routineOptions( rgbaFrom, o );
+  _.routine.options_( rgbaFrom, o );
 
   let result = this.rgbaFromTry( o );
 
@@ -219,10 +219,10 @@ function rgbaFrom( o )
   // let result;
   //
   // if( !_.mapIs( o ) )
-  // o = { src : arguments[ 0 ], colorMap : arguments[ 1 ] };
+  // o = { src : arguments[ 0 ], colorMap : ( arguments.length > 1 ? arguments[ 1 ] : null ) };
   //
   // _.assert( arguments.length === 1, 'Expects single argument' );
-  // _.routineOptions( rgnaFrom, arguments );
+  // _.routine.options_( rgnaFrom, arguments );
   //
   // if( _.numberIs( o.src ) || _.longIs( o.src ) || ( !_.mapIs( o.src ) && _.objectIs( o.src ) ) )
   // return this._rgbaFromNotName( o.src );
@@ -341,7 +341,7 @@ function rgbaFromTry( o )
   o = { src : arguments[ 0 ] };
 
   _.assert( arguments.length === 1 );
-  _.routineOptions( rgbaFromTry, o );
+  _.routine.options_( rgbaFromTry, o );
 
   if( _.numberIs( o.src ) || _.longIs( o.src ) || ( !_.mapIs( o.src ) && _.objectIs( o.src ) ) )
   return this._rgbaFromNotName( o.src );
@@ -467,9 +467,9 @@ function rgbaHtmlFrom( o )
 {
 
   if( !_.mapIs( o ) )
-  o = { src : arguments[ 0 ], colorMap : arguments[ 1 ] };
+  o = { src : arguments[ 0 ], colorMap : ( arguments.length > 1 ? arguments[ 1 ] : null ) };
   _.assert( arguments.length === 1, 'Expects single argument' );
-  _.routineOptions( rgbaHtmlFrom, o );
+  _.routine.options_( rgbaHtmlFrom, o );
 
   let result = this.rgbaHtmlFromTry( o );
 
@@ -483,10 +483,10 @@ function rgbaHtmlFrom( o )
   // let result;
   //
   // if( !_.mapIs( o ) )
-  // o = { src : arguments[ 0 ], colorMap : arguments[ 1 ] };
+  // o = { src : arguments[ 0 ], colorMap : ( arguments.length > 1 ? arguments[ 1 ] : null ) };
   //
   // _.assert( arguments.length === 1, 'Expects single argument' );
-  // _.routineOptions( rgnaFrom, arguments );
+  // _.routine.options_( rgnaFrom, arguments );
   //
   // if( _.numberIs( o.src ) || _.longIs( o.src ) || ( !_.mapIs( o.src ) && _.objectIs( o.src ) ) )
   // return this._rgbaFromNotName( o.src );
@@ -556,7 +556,7 @@ function rgbaHtmlFromTry( o )
   o = { src : arguments[ 0 ] };
 
   _.assert( arguments.length === 1 );
-  _.routineOptions( rgbaHtmlFromTry, o );
+  _.routine.options_( rgbaHtmlFromTry, o );
 
   if( _.numberIs( o.src ) || _.longIs( o.src ) || ( !_.mapIs( o.src ) && _.objectIs( o.src ) ) )
   return this._rgbaFromNotName( o.src );
@@ -832,7 +832,7 @@ function colorNameNearest( color )
 // {
 //   let self = this;
 //
-//   _.routineOptions( _colorNearest, o );
+//   _.routine.options_( _colorNearest, o );
 //   _.assert( arguments.length === 1, 'Expects single argument' );
 //
 //   if( _.strIs( o.color ) )
@@ -1629,13 +1629,13 @@ let Extension =
 
 }
 
-_.mapSupplement( _.color, Extension );
-_.mapSupplement( _.color.ColorMap, ColorMap );
-_.mapSupplement( _.color.ColorMapGreyscale, ColorMapGreyscale );
-_.mapSupplement( _.color.ColorMapDistinguishable, ColorMapDistinguishable );
+_.props.supplement( _.color, Extension );
+_.props.supplement( _.color.ColorMap, ColorMap );
+_.props.supplement( _.color.ColorMapGreyscale, ColorMapGreyscale );
+_.props.supplement( _.color.ColorMapDistinguishable, ColorMapDistinguishable );
 
-_.mapSupplement( _.color.ColorMap, ColorMapGreyscale );
-_.mapSupplement( _.color.ColorMap, ColorMapDistinguishable );
+_.props.supplement( _.color.ColorMap, ColorMapGreyscale );
+_.props.supplement( _.color.ColorMap, ColorMapDistinguishable );
 
 // --
 // export
