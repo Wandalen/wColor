@@ -134,9 +134,9 @@ function _rgbaFromNotName( src )
 {
 
   _.assert( arguments.length === 1, 'Expects single argument' );
-  _.assert( _.numberIs( src ) || _.longIs( src ) || _.objectIs( src ) );
+  _.assert( _.numberIs( src ) || _.longIs( src ) || _.object.isBasic( src ) );
 
-  if( _.objectIs( src ) )
+  if( _.object.isBasic( src ) )
   {
     _.map.assertHasOnly( src, { r : null, g : null, b : null, a : null } );
     let result = [];
@@ -224,7 +224,7 @@ function rgbaFrom( o )
   // _.assert( arguments.length === 1, 'Expects single argument' );
   // _.routine.options_( rgnaFrom, arguments );
   //
-  // if( _.numberIs( o.src ) || _.longIs( o.src ) || ( !_.mapIs( o.src ) && _.objectIs( o.src ) ) )
+  // if( _.numberIs( o.src ) || _.longIs( o.src ) || ( !_.mapIs( o.src ) && _.object.isBasic( o.src ) ) )
   // return this._rgbaFromNotName( o.src );
   //
   // /* */
@@ -343,7 +343,7 @@ function rgbaFromTry( o )
   _.assert( arguments.length === 1 );
   _.routine.options_( rgbaFromTry, o );
 
-  if( _.numberIs( o.src ) || _.longIs( o.src ) || ( !_.mapIs( o.src ) && _.objectIs( o.src ) ) )
+  if( _.numberIs( o.src ) || _.longIs( o.src ) || ( !_.mapIs( o.src ) && _.object.isBasic( o.src ) ) )
   return this._rgbaFromNotName( o.src );
 
   /* */
@@ -488,7 +488,7 @@ function rgbaHtmlFrom( o )
   // _.assert( arguments.length === 1, 'Expects single argument' );
   // _.routine.options_( rgnaFrom, arguments );
   //
-  // if( _.numberIs( o.src ) || _.longIs( o.src ) || ( !_.mapIs( o.src ) && _.objectIs( o.src ) ) )
+  // if( _.numberIs( o.src ) || _.longIs( o.src ) || ( !_.mapIs( o.src ) && _.object.isBasic( o.src ) ) )
   // return this._rgbaFromNotName( o.src );
   //
   // /* */
@@ -558,7 +558,7 @@ function rgbaHtmlFromTry( o )
   _.assert( arguments.length === 1 );
   _.routine.options_( rgbaHtmlFromTry, o );
 
-  if( _.numberIs( o.src ) || _.longIs( o.src ) || ( !_.mapIs( o.src ) && _.objectIs( o.src ) ) )
+  if( _.numberIs( o.src ) || _.longIs( o.src ) || ( !_.mapIs( o.src ) && _.object.isBasic( o.src ) ) )
   return this._rgbaFromNotName( o.src );
 
   /* */
@@ -726,7 +726,7 @@ function _colorNameNearest( color, map )
   if( arguments.length === 1 )
   map = _.color.ColorMap;
 
-  _.assert( _.objectIs( map ) );
+  _.assert( _.object.isBasic( map ) );
 
   if( _.strIs( color ) )
   {
@@ -916,7 +916,7 @@ function colorToHex( rgb, def )
     let hex = Math.floor( rgb ).toString( 16 );
     return '#' + _.strDup( '0', 6 - hex.length  ) + hex;
   }
-  else if( _.objectIs( rgb ) )
+  else if( _.object.isBasic( rgb ) )
   {
     return '#' + ( ( 1 << 24 ) + ( Math.floor( rgb.r*255 ) << 16 ) + ( Math.floor( rgb.g*255 ) << 8 ) + Math.floor( rgb.b*255 ) )
     .toString( 16 ).slice( 1 );
@@ -961,14 +961,14 @@ function colorToRgbHtml( src )
 {
   let result = '';
 
-  _.assert( _.strIs( src ) || _.objectIs( src ) || _.arrayIs( src ) );
+  _.assert( _.strIs( src ) || _.object.isBasic( src ) || _.arrayIs( src ) );
   _.assert( arguments.length === 1, 'Expects single argument' );
 
 
   if( _.strIs( src ) )
   return src;
 
-  if( _.objectIs( src ) )
+  if( _.object.isBasic( src ) )
   src = [ src.r, src.g, src.b, src.a ];
 
   if( _.arrayIs( src ) )
@@ -995,13 +995,13 @@ function colorToRgbaHtml( src )
 {
   let result = '';
 
-  _.assert( _.strIs( src ) || _.objectIs( src ) || _.arrayIs( src ) || _.numberIs( src ) );
+  _.assert( _.strIs( src ) || _.object.isBasic( src ) || _.arrayIs( src ) || _.numberIs( src ) );
   _.assert( arguments.length === 1, 'Expects single argument' );
 
   if( _.strIs( src ) )
   return src;
 
-  if( _.objectIs( src ) )
+  if( _.object.isBasic( src ) )
   src = [ src.r, src.g, src.b, src.a ];
 
   if( _.arrayIs( src ) )
