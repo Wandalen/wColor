@@ -1,23 +1,117 @@
-submodule:
-  wTools:
-    path: 'npm:///wTools'
-    enabled: 0
-  wmathvector:
-    path: 'npm:///wmathvector'
-    enabled: 0
+about:
+  name: wColor
+  description: >-
+    Collection of cross-platform routines to operate colors conveniently. Color
+    provides functions to convert color from one color space to another color
+    space, from name to color and from color to the closest name of a color. The
+    module does not introduce any specific storage format of color what is a
+    benefit. Color has a short list of the most common colors. Use the module
+    for formatted colorful output or other sophisticated operations with colors.
+  version: 0.4.0
+  enabled: 1
+  license: MIT
+  npm.name: wColor
+  author: Kostiantyn Wandalen <wanalen@01.school>
+  keywords:
+    - wTools
+    - color
+    - colors
+    - colorful
+    - color conversion
+    - convert color
+    - rgb
+    - rgba
+    - hsl
+  contributors:
+    - Kostiantyn Wandalen <wanalen@01.school>
+    - Volodymyr M. <volodymyr.migdal@gmail.com>
+  interpreters:
+    - njs >= 10.0.0
+    - chrome >= 60.0.0
+    - firefox >= 60.0.0
+  npm.scripts:
+    test: wtest .run proto/**
+    docgen: wdocgen .build proto
+build:
+  proto.export:
     criterion:
-      optional: 1
-  wColor:
-    path: 'hd://.'
-    enabled: 0
+      content: proto
+      export: 1
+    steps:
+      - 'step::proto.export'
+  doc.export:
     criterion:
-      development: 1
-  wTesting:
-    path: 'npm:///wTesting'
-    enabled: 0
+      content: doc
+      export: 1
+    steps:
+      - 'step::doc.export'
+  npm.export:
     criterion:
-      development: 1
+      content: npm
+      export: 1
+    steps:
+      - 'step::npm.publish'
+  export:
+    criterion:
+      default: 1
+      export: 1
+    steps:
+      - 'build::proto.export'
+  debug:
+    criterion:
+      default: 1
+      debug: debug
+      raw: raw
+      content: prime
+    steps:
+      - 'step::clean.out*=2'
+      - reflect.proto.*=1
+  compiled.debug:
+    criterion:
+      debug: debug
+      raw: compiled
+      content: prime
+    steps:
+      - 'step::clean.out*=2'
+      - transpile.proto.no.tests*=1
+      - transpile.proto.only.tests*=1
+  raw.release:
+    criterion:
+      debug: release
+      raw: raw
+      content: prime
+    steps:
+      - 'step::clean.out*=2'
+      - transpile.proto.raw
+  release:
+    criterion:
+      debug: release
+      raw: compiled
+      content: prime
+    steps:
+      - 'step::clean.out*=2'
+      - transpile.proto.no.tests*=1
+      - transpile.proto.only.tests*=1
+  npm:
+    criterion:
+      debug: debug
+      raw: raw
+      content: npm
+    steps:
+      - npm.generate.*=1
+  all:
+    steps:
+      - 'build::debug'
+      - 'build::compiled.debug'
+      - 'build::raw.release'
+      - 'build::release'
+      - 'build::npm'
 path:
+  repository: 'git+https:///github.com/Wandalen/wColor.git'
+  origins:
+    - 'git+https:///github.com/Wandalen/wColor.git'
+    - 'npm:///wColor'
+  bugtracker: 'https:///github.com/Wandalen/wColor/issues'
   in: .
   out: out
   temp:
@@ -137,6 +231,26 @@ reflector:
       '**.test*': 1
       'path::proto': '{path::out.*=1}/Tests.test.s'
 step:
+  proto.export:
+    inherit: module.export
+    export: 'path::export'
+    tar: 0
+    criterion:
+      content: proto
+  doc.export:
+    inherit: module.export
+    export: 'path::doc'
+    tar: 0
+    criterion:
+      content: doc
+  npm.export:
+    inherit: module.export
+    export: out.npm
+    tar: 0
+    criterion:
+      content: npm
+  npm.publish:
+    shell: npm publish
   npm.generate:
     inherit: npm.generate
     entryPath: 'path::entry.out.*=1'
@@ -187,53 +301,22 @@ step:
     criterion:
       content: prime
       debug: release
-build:
-  debug:
+submodule:
+  wTools:
+    path: 'npm:///wTools'
+    enabled: 0
+  wmathvector:
+    path: 'npm:///wmathvector'
+    enabled: 0
     criterion:
-      default: 1
-      debug: debug
-      raw: raw
-      content: prime
-    steps:
-      - 'step::clean.out*=2'
-      - reflect.proto.*=1
-  compiled.debug:
+      optional: 1
+  wColor:
+    path: 'hd://.'
+    enabled: 0
     criterion:
-      debug: debug
-      raw: compiled
-      content: prime
-    steps:
-      - 'step::clean.out*=2'
-      - transpile.proto.no.tests*=1
-      - transpile.proto.only.tests*=1
-  raw.release:
+      development: 1
+  wTesting:
+    path: 'npm:///wTesting'
+    enabled: 0
     criterion:
-      debug: release
-      raw: raw
-      content: prime
-    steps:
-      - 'step::clean.out*=2'
-      - transpile.proto.raw
-  release:
-    criterion:
-      debug: release
-      raw: compiled
-      content: prime
-    steps:
-      - 'step::clean.out*=2'
-      - transpile.proto.no.tests*=1
-      - transpile.proto.only.tests*=1
-  npm:
-    criterion:
-      debug: debug
-      raw: raw
-      content: npm
-    steps:
-      - npm.generate.*=1
-  all:
-    steps:
-      - 'build::debug'
-      - 'build::compiled.debug'
-      - 'build::raw.release'
-      - 'build::release'
-      - 'build::npm'
+      development: 1
