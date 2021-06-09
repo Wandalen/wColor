@@ -1,6 +1,6 @@
 {
   "name" : "wColor",
-  "version" : "0.3.354",
+  "version" : "0.3.355",
   "engine" : "node >= 10.0.0",
   "license" : "MIT",
   "description" : "Collection of cross-platform routines to operate colors conveniently. Color provides functions to convert color from one color space to another color space, from name to color and from color to the closest name of a color. The module does not introduce any specific storage format of color what is a benefit. Color has a short list of the most common colors. Use the module for formatted colorful output or other sophisticated operations with colors.",
@@ -11,7 +11,7 @@
     { "name" : "Volodymyr M.", "email" : "volodymyr.migdal@gmail.com" }
   ],
   "main" : "proto/node_modules/wColor",
-  "files" : [ "proto/wtools/amid/l1/color", "out", "out", "proto/node_modules" ],
+  "files" : [ "proto/wtools/amid/l1/color", "out", "out", "proto/node_modules", "proto/node_modules/Tools", "proto/node_modules/wColor" ],
   "scripts" : { "test" : "wtest .run 'proto/**' rapidity:-1", "docgen" : "wdocgen proto" },
   "repository" : { "type" : "git", "url" : "https://github.com/Wandalen/wColor.git" },
   "bugs" :
